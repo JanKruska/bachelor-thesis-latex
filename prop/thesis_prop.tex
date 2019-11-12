@@ -18,6 +18,7 @@
 \usepackage[T1]{fontenc}
 \usepackage{float}
 \usepackage{csquotes}
+\usepackage{todonotes}
 
 \usepackage{placeins}
 \usepackage{afterpage}
@@ -65,8 +66,8 @@
   	  \end{large}
   	  \\ \begin{LARGE}
   	   \vspace{0.6cm}
-  	  {VORNAME NACHNAME}\\
-  	  STUDI-ID\\
+  	  {Jan Kruska}\\
+  	  9028385\\
   	  \vspace{0.8cm}
   	 
   	\end{LARGE}
@@ -82,8 +83,8 @@
 \begin{table}[h!]
 \begin{tabularx}{\textwidth}{l@{\hspace{2.0cm}}X}
 
-Betreut durch: & Prof. Dr. ???\\
-und: &  Prof. Dr. ???\\
+Betreut durch: & Prof. Dr. Alexander Asteroth\\
+und: &  Alexander Hagg, M.Sc.\\
 
 
 
@@ -104,17 +105,42 @@ und: &  Prof. Dr. ???\\
 \section{Einleitung}
 
 Evolutionäre Taktiken haben sich in der Vergangenheit als mächtige Heuristik zur Untersuchung komplexer Problemräume bewiesen.
+Genetische Algorithmen sind eine effektive  Methode um "kreative" Lösungen für komplexe Probleme zu generieren.
 Allerdings haben viele evolutionäre Algorithmen die Tendenz, das gefundene Lösungen im Verlauf der Algorithmen immer mehr zu einer Lösungklasse konvergieren.
 Das Ergebnis sind damit am Ende n minimal unterschiedliche Variationen der selben Lösung.
-Dies führt dazu, dass solche Algorithmen häufig in lokalen Optima stecken bleiben, wenn kein Mechanismus existiert, der nicht-optimale Lösungen, die als Zwischenschritt zu optimaleren Lösungen benötigt werden, zulässt.
-Es wurden verschiedene Ansätze vorgeschlagen um die Diversität einer Population zu gewährleisten.
-Diversitäts-Ansätze lassen sich allgemein in zwei Kategorien einteilen, solche die Diversität auf Genotyp-Ebene gewährleiste, und solche die diese auf Phänotyp-Ebene gewährleisten.
+Dies führt zu zwei Hauptproblemen. Erstens neigen solche Algorithmen dazu in lokalen Optima "stecken" zu bleiben, da das Verlassen eines lokalen Optimums immer mit einer Fitnesseinbuße verbunden ist.
+Zweitens produzieren solche Algorithmen zwar eine Lösung, warum diese Lösung allerdings geeignet ist, ist für einen menschlichen Beobachter im Nachhinein nicht unbedingt ersichtlich.
+Damit kann der menschliche Beobachter auch nicht einschätzen, ob die erhaltene Lösung tatsächlich die global beste Lösung ist, und wenn sie das nicht ist wie in Richtung des globalen Optimums weiteroptimiert werden kann.
+Es wurden verschiedene Diversitäts Ansätze vorgeschlagen, die sich in genotypische und phänotypische Diversitätsansätze unterscheiden lassen.
+Ansätze die Diversität auf Genotyp-Ebene gewährleisten, tendieren dazu nur die erste Problematik, die definitiv auch die größere ist, zu adressieren.
+Ansätze die Diversität im Phänotyp definieren sind hier wesentlich interessanter, da sie in der Lage sind Wissen über den tatsächlichen Lösungsraum zu erzeugen.
+Diese Ansätze werden allgemein unter dem Begriff von Quality-Diversity- und Illuminations-Algorithmen zusammengefasst.
+Diese liefern typischerweise eine Vielzahl an diversen möglichen Lösungen, durch die nicht selten das Problem und Zusammenhänge zwischen Lösungseigenschaften und Lösungsqualität besser verstanden werden kann.
+
+
+
+\section{Problembeschreibung}
+
+\subsection{MAP-Elites}
 
 MAP-Elites ist ein evolutionärer Ansatz, der den phänotypischen Lösungsraum entlang n Dimensionen aufteilt.
 Dadurch werden Zellen erzeugt, die phänotypisch unterschiedliche Lösungstypen enthalten und damit Diversität gewährleisten können.
 Neben einer Vielzahl von Lösungen kann diese Karte auch dabei helfen die Problemdomäne besser zu verstehen, indem Zusammenhänge zwischen den Kategorien, nach denen klassifiziert wurde und der Qualität der Lösungen, aufgedeckt werden.
 
-\section{Problembeschreibung}
+\subsection{Surrogat-Modell}
+
+Für die Selektion von Individuen innerhalb eines genetischen Algorithmus wird die Lösungsqualität dieser Individuen, typischerweise Fitness genannt, benötigt.
+Außerdem findet die Auswertung der Fitnessfunktion innerhalb des genetischen Algorithmus sehr häufig statt.
+Dies stellt bei relativ einfachen Fitnessfunktionen keine große Einschränkung dar, auf Problemdomänen in denen die Auswertung der Fitness eines Individuums allerdings komplexer und dadurch zeitaufwändiger wird, kann dies die Anwendbarkeit einfacher genetischer Algorithmen einschränken.
+
+Aerodynamische Probleme, für die zeitaufwendige Simulationen nötig sind, gehören ohne Zweifel zu der Klasse von Problemen für die die Anzahl der benötigten Funktionsauswertungen zu groß sind, als das der Algorithmus in vertretbarer Laufzeit abschließen kann.
+Um genetische Taktiken auf eine solche Problemdomäne anzuwenden, wird eine Möglichkeit benötigt die benötigten Funktionsauswertungen erheblich zu reduzieren.
+Eine solche Möglichkeit ist ein Surrogatmodell, eine Machine-Learning Modell, welches aufgrund echter Simulationen trainiert wird um deren Ergebnis annähernd vorherzusagen.
+Eine Auswertung des Modells erfordert dabei nur einen winzigen Bruchteil des Aufwands der für eine Simulation nötig wäre.
+Theoretisch sind verschiedenste Machine-Learning Verfahren für das Surrogatmodell denkbar, Gaußprozesse bieten sich durch die Eigenschaft an, dass sie neben einer Vorhersage auch immer ihre eigene Unsicherheit Liefern, und entsprechend Bereiche zeigen können in denen große Unsicherheit herrscht, sprich in denen der Gaußprozess wenig weiß.
+Der Nachteil der hohen Komplexität von Gaußprozessen \todo[inline]{genaue Komplexität? Quelle \cite{Rasmussen.2008}} ist durch die Limitierung auf eine geringe Anzahl an Simulationen, und damit der Limitierung auf einen kleinen Trainingsdatensatz vernachlässigbar.
+
+\todo[inline]{Abschnitt erfolgreiche Anwendung von Surrogat-Modellen und genetischen Algorithmen}
  
 \section{Literatur}
 
@@ -148,7 +174,7 @@ Maximalergebnis:
   
 \newpage{}
 \section{Literaturverzeichnis}
-\bibliography{expose}
+\bibliography{expose,citavi}
 \newpage{}
 
 \end{document}}
