@@ -106,24 +106,30 @@ und: &  Alexander Hagg, M.Sc.\\
 
 Die Domäne der Aerodynamik stellt durch ihre Komplexität sowohl für Mensch als auch Computer eine große Herausforderung dar.
 Die physikalischen Gesetze denen diese folgt sind zwar bekannt, deren Zusammenspiel allerdings so stark ineinander verwoben, das beim Design aerodynamischer Körper oft auf Faustregeln zurückgefallen werden muss.
-Durch computergestützte Assistenz könnte dieser Designprozess erheblich verbessert werden.
+%Durch computergestützte Assistenz könnte dieser Designprozess erheblich verbessert werden.
 
-Evolutionäre Taktiken haben sich in der Vergangenheit als mächtige Heuristik zur Untersuchung komplexer Problemräume bewiesen.
-Die Untersuchung inwieweit solche Taktiken für die Nutzung in der computergestützten Assistenz nützlich sind liegt nahe.
-Eine Methode die sowohl in der Lage ist neben Lösungen auch Wissen über den Lösungsraum zu generieren könnte den Designprozess erheblich vereinfachen indem sowohl Initiallösungen, von denen eine weitere menschliche Optimierung ausgehen kann, als auch Wissen über das Problem, womit diese weitere Optimierung zielstrebiger erfolgen kann, erzeugt werden.
+Evolutionäre Taktiken haben sich in der Vergangenheit als mächtige Heuristik zur Optimierung komplexer Problemräume bewiesen \cite{Vikhar.2016}.
+%Die Untersuchung inwieweit solche Taktiken für die Nutzung in der computergestützten Assistenz nützlich sind liegt nahe.
+%Eine Methode die sowohl in der Lage ist neben Lösungen auch Wissen über den Lösungsraum zu generieren könnte den Designprozess erheblich vereinfachen indem sowohl Initiallösungen, von denen eine weitere menschliche %Optimierung ausgehen kann, als auch Wissen über das Problem, womit diese weitere Optimierung zielstrebiger erfolgen kann, erzeugt werden.
 
-Genetische Algorithmen sind eine effektive  Methode um "kreative" Lösungen für komplexe Probleme zu generieren.
-Allerdings haben viele evolutionäre Algorithmen die Tendenz, das gefundene Lösungen im Verlauf der Algorithmen immer mehr zu einer Lösungsklasse konvergieren.
-Das Ergebnis sind damit am Ende $n$ minimal unterschiedliche Variationen der selben Lösung.
-Dies führt zu zwei Hauptproblemen. Erstens neigen solche Algorithmen dazu in lokalen Optima "stecken" zu bleiben, da das Verlassen eines lokalen Optimums immer mit einer Fitnesseinbuße verbunden ist.
-Zweitens produzieren solche Algorithmen zwar eine Lösung, warum diese Lösung allerdings geeignet ist, ist für einen menschlichen Beobachter im Nachhinein nicht unbedingt ersichtlich.
-Damit kann der menschliche Beobachter auch nicht einschätzen, ob die erhaltene Lösung tatsächlich die global beste Lösung ist, und wenn sie das nicht ist wie in Richtung des globalen Optimums weiteroptimiert werden kann.
+Genetische Algorithmen sind eine effektive  Methode um kreative Lösungen für komplexe Probleme zu generieren.
+Allerdings haben evolutionäre Algorithmen ohne Zusatzmechanismen die Tendenz, dass gefundene Lösungen im Verlauf der Algorithmen zu einer Lösungsklasse konvergieren \cite{Shir.2012}.
+Dies führt zu zwei Hauptproblemen. 
+Erstens neigen solche Algorithmen dadurch dazu in lokalen Optima "stecken" zu bleiben, da das Verlassen eines lokalen Optimums immer mit einer Fitnesseinbuße verbunden ist.
+Zweitens produzieren solche Algorithmen nur eine Lösung. 
+Sollten mehrere gute Lösungen existieren, deren Fitness sich nur gering unterscheidet wird trotzdem die Lösung die um einen Bruchteil besser ist bestehen bleiben.
+Häufig kann es allerdings sinnvoll sein auch diese Lösungen zu erhalten, da ein Menschlicher Beobachter dadurch mehr Wissen erhalten kann welche Eigenschaften, für gute Lösungen sorgen, wenn sie beispielsweise häufig vorkommen, oder ob bestimmte Eigenschaften nur in Kombination gute Lösungen ergeben.
+Dieses Wissen, was aus der Vielzahl an guten Lösungen gezogen werden kann, kann dabei helfen das Problem besser zu verstehen, was eine sehr wertvolle Eigenschaft ist.
+%Damit kann der menschliche Beobachter auch nicht einschätzen, ob die erhaltene Lösung tatsächlich die global beste Lösung ist, und wenn sie das nicht ist wie in Richtung des globalen Optimums weiteroptimiert werden kann.
 
-Es wurden verschiedene Diversitäts Ansätze vorgeschlagen, die sich grundsätzlich in genotypische und phänotypische Diversitätsansätze unterscheiden lassen.
-Ansätze die Diversität auf Genotyp-Ebene gewährleisten, tendieren dazu nur die erste Problematik, die definitiv auch die größere ist, zu adressieren.
-Ansätze die Diversität im Phänotyp definieren sind hier wesentlich interessanter, da sie in der Lage sind Wissen über den tatsächlichen Lösungsraum zu erzeugen.
+Es wurden verschiedene Diversitätsansätze vorgeschlagen, die sich grundsätzlich in genotypische und phänotypische Diversitätsansätze unterscheiden lassen.
+Ansätze wie Niching, gewährleisten genotypische Diversität durch die Ermittlung der genetischen Ähnlichkeit zweier Individuen.
+Das hat den Vorteil, dass der Genotyp eines Individuums typischerweise ein Vektor ist, und eine Vielzahl von Ähnlichkeitsmetriken für Vektoren existiert.
+Andere Ansätze verfolgen das Ziel phänotypischer, oder funktionaler, Diversität.
+Dies hat den Grund, dass die Funktion eines Individuums und nicht die Encodierung das eigentliche Problem ist, und in komplexen Problemdomänen sich genetisch sehr verschiedene Individuen trotzdem funktional ähneln können.
+Um phänotypische Diversität zu gewährleisten wird allerdings eine phänotypische Ähnlichkeitsmetrik benötigt, die sehr domänenspezifisch ist.
 Diese Ansätze werden allgemein unter dem Begriff der Quality-Diversity-Algorithmen zusammengefasst.
-Diese liefern typischerweise eine Vielzahl möglichen Lösungen, durch die das Problem und Zusammenhänge zwischen Lösungseigenschaften und Lösungsqualität besser verstanden werden kann.
+Diese liefern typischerweise eine Vielzahl möglicher Lösungen, durch die das Problem und Zusammenhänge zwischen Lösungseigenschaften und Lösungsqualität besser verstanden werden kann.
 
 
 
