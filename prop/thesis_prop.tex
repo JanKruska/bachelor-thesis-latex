@@ -112,14 +112,6 @@ Evolutionäre Taktiken haben sich in der Vergangenheit als mächtige Heuristik z
 Die Untersuchung inwieweit solche Taktiken für die Nutzung in der computergestützten Assistenz nützlich sind liegt nahe.
 Eine Methode die sowohl in der Lage ist neben Lösungen auch Wissen über den Lösungsraum zu generieren könnte den Designprozess erheblich vereinfachen indem sowohl Initiallösungen, von denen eine weitere menschliche Optimierung ausgehen kann, als auch Wissen über das Problem, womit diese weitere Optimierung zielstrebiger erfolgen kann, erzeugt werden.
 
-
-
-\section{Problembeschreibung}
-
-\subsection{Radkastendomäne}
-
-\subsection{E-Roller-Domäne}
-
 Genetische Algorithmen sind eine effektive  Methode um "kreative" Lösungen für komplexe Probleme zu generieren.
 Allerdings haben viele evolutionäre Algorithmen die Tendenz, das gefundene Lösungen im Verlauf der Algorithmen immer mehr zu einer Lösungsklasse konvergieren.
 Das Ergebnis sind damit am Ende $n$ minimal unterschiedliche Variationen der selben Lösung.
@@ -130,9 +122,33 @@ Damit kann der menschliche Beobachter auch nicht einschätzen, ob die erhaltene 
 Es wurden verschiedene Diversitäts Ansätze vorgeschlagen, die sich grundsätzlich in genotypische und phänotypische Diversitätsansätze unterscheiden lassen.
 Ansätze die Diversität auf Genotyp-Ebene gewährleisten, tendieren dazu nur die erste Problematik, die definitiv auch die größere ist, zu adressieren.
 Ansätze die Diversität im Phänotyp definieren sind hier wesentlich interessanter, da sie in der Lage sind Wissen über den tatsächlichen Lösungsraum zu erzeugen.
-Diese Ansätze werden allgemein unter dem Begriff von Quality-Diversity- und Illuminations-Algorithmen zusammengefasst.
-Diese liefern typischerweise eine Vielzahl an diversen möglichen Lösungen, durch die nicht selten das Problem und Zusammenhänge zwischen Lösungseigenschaften und Lösungsqualität besser verstanden werden kann.
+Diese Ansätze werden allgemein unter dem Begriff der Quality-Diversity-Algorithmen zusammengefasst.
+Diese liefern typischerweise eine Vielzahl möglichen Lösungen, durch die das Problem und Zusammenhänge zwischen Lösungseigenschaften und Lösungsqualität besser verstanden werden kann.
 
+
+
+\section{Problembeschreibung}
+
+\subsection{Radkastendomäne}
+\missingfigure{Radkästen}
+
+Die erste Problemdomäne befasst sich mit der Verformung der Radästen eines Velomobils. 
+In Abb. \ref{fig:wheelcase} ist das das Velomobil mit eingezeichneten Radkästen zu sehen.
+Es sollen beide Radkästen des Velomobils verformt werden, der Einfachheit halber kann diese Verformung aufgrund der Symmetrie des Velomobils symmetrisch zur xz-Ebene
+\footnote{\label{foot:coords} Unter Annahme, dass die x-Achse die horizontale Vor/Rückachse, die y-Achse die horizontale Links/Rechtsachse und die z-Achse die Vertikalachse ist} stattfinden.
+Die momentanen Radkästen ermöglichen nicht den vollen Lenkausschlag der Räder des Velomobils.
+Es ist das Ziel Lösungen zu ermitteln, die dies ermöglichen.
+                      
+\subsection{E-Roller-Domäne}
+\missingfigure{E-Roller-Abdeckung}
+
+Die zweite Problemdomäne ist ein E-Roller an dessen Unterseite ein Bauteil vor dem Hinterrad verformt werden soll.
+In Abb. \ref{fig:escooter} ist der E-Roller zu sehen. Das zu verformende Bauteil ist rot hervorgehoben.
+Auch für den E-Roller kann die Verformung symmetrisch zur xz-Ebene \footnote{Siehe Fußnote \ref{foot:coords}} erfolgen um den Suchraum zu verkleinern.
+Auch für den E-Roller müssen Constraints eingehalten werden. 
+So darf das Bauteil nicht beliebig weit nach unten verformt werden, da dies zu Kollisionen mit der Fahrbahn führen würde.
+Gleichzeitig darf das verformte Bauteil bestehende Elemente des E-Rollers nicht schneiden.
+Anders als in der Radkastendomäne erfüllt das Basisbauteil diese Constraints schon, Ziel ist also nur die Verbesserung des Luftwiederstands ohne dabei die Constraints zu verletzen.
  
 \section{Literatur}
 
