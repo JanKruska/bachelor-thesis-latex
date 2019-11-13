@@ -116,6 +116,10 @@ Eine Methode die sowohl in der Lage ist neben Lösungen auch Wissen über den L�
 
 \section{Problembeschreibung}
 
+\subsection{Radkastendomäne}
+
+\subsection{E-Roller-Domäne}
+
 Genetische Algorithmen sind eine effektive  Methode um "kreative" Lösungen für komplexe Probleme zu generieren.
 Allerdings haben viele evolutionäre Algorithmen die Tendenz, das gefundene Lösungen im Verlauf der Algorithmen immer mehr zu einer Lösungsklasse konvergieren.
 Das Ergebnis sind damit am Ende $n$ minimal unterschiedliche Variationen der selben Lösung.
@@ -132,15 +136,9 @@ Diese liefern typischerweise eine Vielzahl an diversen möglichen Lösungen, dur
  
 \section{Literatur}
 
-Eine Beschreibung des MAP-Elites Verfahrens kann in \cite{Mouret.4202015} gefunden werden.
-Ein Überblick über Surrogat-Modelling wird in \cite{Jin.2011} beschrieben, eine konkretere Nutzung in \cite{Preen.2016}.
-In \cite{Gaier.6152018} wird die Kombination von Surrogat-Assistenz und MAP-Elites auf eine aerodynamische Domäne angewandt.
- 
-\todo[inline]{Thesis von Sascha zwar nicht zitierfähig aber draufeingehen doch vermutlich sinnvoll}
-\section{Ansatz}
 \subsection{MAP-Elites}
 \label{sub:mapElites}
-MAP-Elites ist ein genetischer Algorithmus der phänotypische Diversität gewährleistet.
+MAP-Elites \cite{Mouret.4202015} ist ein genetischer Algorithmus der phänotypische Diversität gewährleistet.
 Dies geschieht durch eine Aufteilung des Lösungsraum entlang n Dimensionen, die Eigenschaften der Lösung darstellen.
 Dadurch wird der Lösungsraum in phänotypische Zellen eingeteilt.
 Jede dieser Zellen kann eine Lösung enthalten, die nur durch eine andere bessere Lösung, die in die gleiche Zelle passt ersetzt werden kann.
@@ -155,7 +153,7 @@ Dies stellt bei relativ einfachen Fitnessfunktionen keine große Einschränkung 
 
 Aerodynamische Probleme, für die zeitaufwendige Simulationen nötig sind, gehören ohne Zweifel zu der Klasse von Problemen für die die Anzahl der benötigten Funktionsauswertungen zu groß sind, als das der Algorithmus in vertretbarer Laufzeit abschließen kann.
 Um genetische Taktiken auf eine solche Problemdomäne anzuwenden, wird eine Möglichkeit benötigt die benötigten Funktionsauswertungen erheblich zu reduzieren.
-Eine solche Möglichkeit ist ein Surrogatmodell, eine Machine-Learning Modell, welches aufgrund echter Simulationen trainiert wird um deren Ergebnis annähernd vorherzusagen.
+Eine solche Möglichkeit ist ein Surrogatmodell \cite{Jin.2011}\cite{Preen.2016}, eine Machine-Learning Modell, welches aufgrund echter Simulationsauswertungen trainiert wird um deren Ergebnis annähernd vorherzusagen.
 Eine Auswertung des Modells erfordert dabei nur einen winzigen Bruchteil des Aufwands der für eine Simulation nötig wäre.
 Theoretisch sind verschiedenste Machine-Learning Verfahren für das Surrogatmodell denkbar, Gaußprozesse bieten sich durch die Eigenschaft an, dass sie neben einer Vorhersage auch immer ihre eigene Unsicherheit Liefern, und entsprechend Bereiche zeigen können in denen große Unsicherheit herrscht, sprich in denen der Gaußprozess wenig weiß.
 Der Nachteil der hohen Komplexität von Gaußprozessen \todo[inline]{genaue Komplexität? Quelle: \cite{Rasmussen.2008}} ist durch die Limitierung auf eine geringe Anzahl an Simulationen, und damit der Limitierung auf einen kleinen Trainingsdatensatz vernachlässigbar.
@@ -166,6 +164,10 @@ Der Nachteil der hohen Komplexität von Gaußprozessen \todo[inline]{genaue Komp
 SAIL (Surrogate-Assisted Illumination) vereint die in \ref{sub:mapElites} und \ref{sub:surrogate} beschriebenen Ansätze.
 In \cite{Gaier.6152018} wurde gezeigt, dass dieser Ansatz erfolgreich auf 2D und 3D aerodynamische Domänen angewandt werden kann.
 \todo[inline]{Inwieweit sollen Anpassungen vorgenommen werden? Feature-Dimensionen,zusätzliche Contraints etc. }
+
+\todo[inline]{Thesis von Sascha zwar nicht zitierfähig aber draufeingehen doch vermutlich sinnvoll}
+\section{Ansatz}
+
 
 \section{Leistungen}
 Mindestergebnis:
