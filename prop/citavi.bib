@@ -1,4 +1,55 @@
-﻿% This file was created with Citavi 6.2.0.12
+﻿% This file was created with Citavi 6.3.0.0
+
+@misc{Gaier.6152018,
+ abstract = {Design optimization techniques are often used at the beginning of the design process to explore the space of possible designs. In these domains illumination algorithms, such as MAP-Elites, are promising alternatives to classic optimization algorithms because they produce diverse, high-quality solutions in a single run, instead of only a single near-optimal solution. Unfortunately, these algorithms currently require a large number of function evaluations, limiting their applicability. In this article we introduce a new illumination algorithm, Surrogate-Assisted Illumination (SAIL), that leverages surrogate modeling techniques to create a map of the design space according to user-defined features while minimizing the number of fitness evaluations. On a 2-dimensional airfoil optimization problem SAIL produces hundreds of diverse but high-performing designs with several orders of magnitude fewer evaluations than MAP-Elites or CMA-ES. We demonstrate that SAIL is also capable of producing maps of high-performing designs in realistic 3-dimensional aerodynamic tasks with an accurate flow simulation. Data-efficient design exploration with SAIL can help designers understand what is possible, beyond what is optimal, by considering more than pure objective-based optimization.},
+ author = {Gaier, Adam and Asteroth, Alexander and Mouret, Jean-Baptiste},
+ date = {6/15/2018},
+ title = {Data-Efficient Design Exploration through Surrogate-Assisted  Illumination},
+ url = {\url{http://arxiv.org/pdf/1806.05865v1}},
+ keywords = {Computer Science - Computational Engineering Finance and Science;Computer Science - Learning;Computer Science - Neural and Evolutionary Computing;Statistics - Machine Learning},
+ doi = {\url{10.1162/evco{\textunderscore }a{\textunderscore }00231}},
+ file = {http://arxiv.org/abs/1806.05865v1}
+}
+
+
+@article{Jin.2011,
+ author = {Jin, Yaochu},
+ year = {2011},
+ title = {Surrogate-assisted evolutionary computation: Recent advances and future challenges},
+ pages = {61--70},
+ volume = {1},
+ number = {2},
+ issn = {2210-6502},
+ journal = {Swarm and Evolutionary Computation},
+ doi = {\url{10.1016/j.swevo.2011.05.001}}
+}
+
+
+@misc{Mouret.4202015,
+ abstract = {Many fields use search algorithms, which automatically explore a search space to find high-performing solutions: chemists search through the space of molecules to discover new drugs; engineers search for stronger, cheaper, safer designs, scientists search for models that best explain data, etc. The goal of search algorithms has traditionally been to return the single highest-performing solution in a search space. Here we describe a new, fundamentally different type of algorithm that is more useful because it provides a holistic view of how high-performing solutions are distributed throughout a search space. It creates a map of high-performing solutions at each point in a space defined by dimensions of variation that a user gets to choose. This Multi-dimensional Archive of Phenotypic Elites (MAP-Elites) algorithm illuminates search spaces, allowing researchers to understand how interesting attributes of solutions combine to affect performance, either positively or, equally of interest, negatively. For example, a drug company may wish to understand how performance changes as the size of molecules and their cost-to-produce vary. MAP-Elites produces a large diversity of high-performing, yet qualitatively different solutions, which can be more helpful than a single, high-performing solution. Interestingly, because MAP-Elites explores more of the search space, it also tends to find a better overall solution than state-of-the-art search algorithms. We demonstrate the benefits of this new algorithm in three different problem domains ranging from producing modular neural networks to designing simulated and real soft robots. Because MAP- Elites (1) illuminates the relationship between performance and dimensions of interest in solutions, (2) returns a set of high-performing, yet diverse solutions, and (3) improves finding a single, best solution, it will advance science and engineering.},
+ author = {Mouret, Jean-Baptiste and Clune, Jeff},
+ date = {4/20/2015},
+ title = {Illuminating search spaces by mapping elites},
+ url = {\url{http://arxiv.org/pdf/1504.04909v1}},
+ keywords = {Computer Science - Artificial Intelligence;Computer Science - Neural and Evolutionary Computing;Computer Science - Robotics;Quantitative Biology - Populations and Evolution},
+ file = {http://arxiv.org/abs/1504.04909v1}
+}
+
+
+@article{Preen.2016,
+ abstract = {An initial study has recently been presented of surrogate-assisted evolutionary algorithms used to design vertical-axis wind turbines wherein candidate prototypes are evaluated under fan-generated wind conditions after being physically instantiated by a 3D printer. Unlike other approaches, such as computational fluid dynamics simulations, no mathematical formulations were used and no model assumptions were made. This paper extends that work by exploring alternative surrogate modelling and evolutionary techniques. The accuracy of various modelling algorithms used to estimate the fitness of evaluated individuals from the initial experiments is compared. The effect of temporally windowing surrogate model training samples is explored. A surrogate-assisted approach based on an enhanced local search is introduced; and alternative coevolution collaboration schemes are examined.},
+ author = {Preen, Richard J. and Bull, Larry},
+ year = {2016},
+ title = {Design Mining Interacting Wind Turbines},
+ keywords = {Algorithms;Electric Power Supplies;Equipment Design;Models, Theoretical;Power Plants;Printing, Three-Dimensional;Renewable Energy;Wind},
+ pages = {89--111},
+ volume = {24},
+ number = {1},
+ journal = {Evolutionary computation},
+ doi = {\url{10.1162/EVCO{\textunderscore }a{\textunderscore }00144}},
+ file = {http://www.ncbi.nlm.nih.gov/pubmed/25635699}
+}
+
 
 @book{Rasmussen.2008,
  author = {Rasmussen, Carl Edward and Williams, Christopher K. I.},

@@ -104,31 +104,51 @@ und: &  Alexander Hagg, M.Sc.\\
 
 \section{Einleitung}
 
+Die Domäne der Aerodynamik stellt durch ihre Komplexität sowohl für Mensch als auch Computer eine große Herausforderung dar.
+Die physikalischen Gesetze denen diese folgt sind zwar bekannt, deren Zusammenspiel allerdings so stark ineinander verwoben, das beim Design aerodynamischer Körper oft auf Faustregeln zurückgefallen werden muss.
+Durch computergestützte Assistenz könnte dieser Designprozess erheblich verbessert werden.
+
 Evolutionäre Taktiken haben sich in der Vergangenheit als mächtige Heuristik zur Untersuchung komplexer Problemräume bewiesen.
-Genetische Algorithmen sind eine effektive  Methode um "kreative" Lösungen für komplexe Probleme zu generieren.
-Allerdings haben viele evolutionäre Algorithmen die Tendenz, das gefundene Lösungen im Verlauf der Algorithmen immer mehr zu einer Lösungklasse konvergieren.
-Das Ergebnis sind damit am Ende n minimal unterschiedliche Variationen der selben Lösung.
-Dies führt zu zwei Hauptproblemen. Erstens neigen solche Algorithmen dazu in lokalen Optima "stecken" zu bleiben, da das Verlassen eines lokalen Optimums immer mit einer Fitnesseinbuße verbunden ist.
-Zweitens produzieren solche Algorithmen zwar eine Lösung, warum diese Lösung allerdings geeignet ist, ist für einen menschlichen Beobachter im Nachhinein nicht unbedingt ersichtlich.
-Damit kann der menschliche Beobachter auch nicht einschätzen, ob die erhaltene Lösung tatsächlich die global beste Lösung ist, und wenn sie das nicht ist wie in Richtung des globalen Optimums weiteroptimiert werden kann.
-Es wurden verschiedene Diversitäts Ansätze vorgeschlagen, die sich in genotypische und phänotypische Diversitätsansätze unterscheiden lassen.
-Ansätze die Diversität auf Genotyp-Ebene gewährleisten, tendieren dazu nur die erste Problematik, die definitiv auch die größere ist, zu adressieren.
-Ansätze die Diversität im Phänotyp definieren sind hier wesentlich interessanter, da sie in der Lage sind Wissen über den tatsächlichen Lösungsraum zu erzeugen.
-Diese Ansätze werden allgemein unter dem Begriff von Quality-Diversity- und Illuminations-Algorithmen zusammengefasst.
-Diese liefern typischerweise eine Vielzahl an diversen möglichen Lösungen, durch die nicht selten das Problem und Zusammenhänge zwischen Lösungseigenschaften und Lösungsqualität besser verstanden werden kann.
+Die Untersuchung inwieweit solche Taktiken für die Nutzung in der computergestützten Assistenz nützlich sind liegt nahe.
+Eine Methode die sowohl in der Lage ist neben Lösungen auch Wissen über den Lösungsraum zu generieren könnte den Designprozess erheblich vereinfachen indem sowohl Initiallösungen, von denen eine weitere menschliche Optimierung ausgehen kann, als auch Wissen über das Problem, womit diese weitere Optimierung zielstrebiger erfolgen kann, erzeugt werden.
 
 
 
 \section{Problembeschreibung}
 
-\subsection{MAP-Elites}
+Genetische Algorithmen sind eine effektive  Methode um "kreative" Lösungen für komplexe Probleme zu generieren.
+Allerdings haben viele evolutionäre Algorithmen die Tendenz, das gefundene Lösungen im Verlauf der Algorithmen immer mehr zu einer Lösungsklasse konvergieren.
+Das Ergebnis sind damit am Ende $n$ minimal unterschiedliche Variationen der selben Lösung.
+Dies führt zu zwei Hauptproblemen. Erstens neigen solche Algorithmen dazu in lokalen Optima "stecken" zu bleiben, da das Verlassen eines lokalen Optimums immer mit einer Fitnesseinbuße verbunden ist.
+Zweitens produzieren solche Algorithmen zwar eine Lösung, warum diese Lösung allerdings geeignet ist, ist für einen menschlichen Beobachter im Nachhinein nicht unbedingt ersichtlich.
+Damit kann der menschliche Beobachter auch nicht einschätzen, ob die erhaltene Lösung tatsächlich die global beste Lösung ist, und wenn sie das nicht ist wie in Richtung des globalen Optimums weiteroptimiert werden kann.
 
-MAP-Elites ist ein evolutionärer Ansatz, der den phänotypischen Lösungsraum entlang n Dimensionen aufteilt.
-Dadurch werden Zellen erzeugt, die phänotypisch unterschiedliche Lösungstypen enthalten und damit Diversität gewährleisten können.
+Es wurden verschiedene Diversitäts Ansätze vorgeschlagen, die sich grundsätzlich in genotypische und phänotypische Diversitätsansätze unterscheiden lassen.
+Ansätze die Diversität auf Genotyp-Ebene gewährleisten, tendieren dazu nur die erste Problematik, die definitiv auch die größere ist, zu adressieren.
+Ansätze die Diversität im Phänotyp definieren sind hier wesentlich interessanter, da sie in der Lage sind Wissen über den tatsächlichen Lösungsraum zu erzeugen.
+Diese Ansätze werden allgemein unter dem Begriff von Quality-Diversity- und Illuminations-Algorithmen zusammengefasst.
+Diese liefern typischerweise eine Vielzahl an diversen möglichen Lösungen, durch die nicht selten das Problem und Zusammenhänge zwischen Lösungseigenschaften und Lösungsqualität besser verstanden werden kann.
+
+ 
+\section{Literatur}
+
+Eine Beschreibung des MAP-Elites Verfahrens kann in \cite{Mouret.4202015} gefunden werden.
+Ein Überblick über Surrogat-Modelling wird in \cite{Jin.2011} beschrieben, eine konkretere Nutzung in \cite{Preen.2016}.
+In \cite{Gaier.6152018} wird die Kombination von Surrogat-Assistenz und MAP-Elites auf eine aerodynamische Domäne angewandt.
+ 
+\todo[inline]{Thesis von Sascha zwar nicht zitierfähig aber draufeingehen doch vermutlich sinnvoll}
+\section{Ansatz}
+\subsection{MAP-Elites}
+\label{sub:mapElites}
+MAP-Elites ist ein genetischer Algorithmus der phänotypische Diversität gewährleistet.
+Dies geschieht durch eine Aufteilung des Lösungsraum entlang n Dimensionen, die Eigenschaften der Lösung darstellen.
+Dadurch wird der Lösungsraum in phänotypische Zellen eingeteilt.
+Jede dieser Zellen kann eine Lösung enthalten, die nur durch eine andere bessere Lösung, die in die gleiche Zelle passt ersetzt werden kann.
 Neben einer Vielzahl von Lösungen kann diese Karte auch dabei helfen die Problemdomäne besser zu verstehen, indem Zusammenhänge zwischen den Kategorien, nach denen klassifiziert wurde und der Qualität der Lösungen, aufgedeckt werden.
+\todo[inline]{umformulieren, umstrukturieren, Quelle}
 
 \subsection{Surrogat-Modell}
-
+\label{sub:surrogate}
 Für die Selektion von Individuen innerhalb eines genetischen Algorithmus wird die Lösungsqualität dieser Individuen, typischerweise Fitness genannt, benötigt.
 Außerdem findet die Auswertung der Fitnessfunktion innerhalb des genetischen Algorithmus sehr häufig statt.
 Dies stellt bei relativ einfachen Fitnessfunktionen keine große Einschränkung dar, auf Problemdomänen in denen die Auswertung der Fitness eines Individuums allerdings komplexer und dadurch zeitaufwändiger wird, kann dies die Anwendbarkeit einfacher genetischer Algorithmen einschränken.
@@ -138,27 +158,30 @@ Um genetische Taktiken auf eine solche Problemdomäne anzuwenden, wird eine Mög
 Eine solche Möglichkeit ist ein Surrogatmodell, eine Machine-Learning Modell, welches aufgrund echter Simulationen trainiert wird um deren Ergebnis annähernd vorherzusagen.
 Eine Auswertung des Modells erfordert dabei nur einen winzigen Bruchteil des Aufwands der für eine Simulation nötig wäre.
 Theoretisch sind verschiedenste Machine-Learning Verfahren für das Surrogatmodell denkbar, Gaußprozesse bieten sich durch die Eigenschaft an, dass sie neben einer Vorhersage auch immer ihre eigene Unsicherheit Liefern, und entsprechend Bereiche zeigen können in denen große Unsicherheit herrscht, sprich in denen der Gaußprozess wenig weiß.
-Der Nachteil der hohen Komplexität von Gaußprozessen \todo[inline]{genaue Komplexität? Quelle \cite{Rasmussen.2008}} ist durch die Limitierung auf eine geringe Anzahl an Simulationen, und damit der Limitierung auf einen kleinen Trainingsdatensatz vernachlässigbar.
+Der Nachteil der hohen Komplexität von Gaußprozessen \todo[inline]{genaue Komplexität? Quelle: \cite{Rasmussen.2008}} ist durch die Limitierung auf eine geringe Anzahl an Simulationen, und damit der Limitierung auf einen kleinen Trainingsdatensatz vernachlässigbar.
+\todo[inline]{Abschnitt erfolgreiche Anwendung von Surrogat-Modellen und genetischen Algorithmen, sth. about Orders of magnitude evaluation reduction}
 
-\todo[inline]{Abschnitt erfolgreiche Anwendung von Surrogat-Modellen und genetischen Algorithmen}
- 
-\section{Literatur}
+\subsection{SAIL}
 
-\section{Ansatz}
-
+SAIL (Surrogate-Assisted Illumination) vereint die in \ref{sub:mapElites} und \ref{sub:surrogate} beschriebenen Ansätze.
+In \cite{Gaier.6152018} wurde gezeigt, dass dieser Ansatz erfolgreich auf 2D und 3D aerodynamische Domänen angewandt werden kann.
+\todo[inline]{Inwieweit sollen Anpassungen vorgenommen werden? Feature-Dimensionen,zusätzliche Contraints etc. }
 
 \section{Leistungen}
 Mindestergebnis:
 \begin{itemize}  
-\item 
+\item Die Implementierung des produziert für die Radkastendomäne eine Karte aus semantisch korrekten Verformungen der Radkästen.
+\item Die Implementierung liefert für die Radkastendomäne diverse Lösungen.
+\todo[inline]{Arbeit enthält a,b,c}
 \end{itemize}
 Erwartetes Ergebnis:
 \begin{itemize}  
-\item 
+\item  Die Implementierung liefert für die Radkastendomäne Lösungen die den Constraint erfüllen.
 \end{itemize}
 Maximalergebnis:
 \begin{itemize}  
-\item 
+\item Die Implementierung liefert für die E-Roller-Domäne eine Karte aus diversen Lösungen
+\item Die Implementierung liefert für die E-Roller-Domäne Lösungen die die Constraints erfüllen
 \end{itemize}
 
 \newpage{}
@@ -167,6 +190,41 @@ Maximalergebnis:
 
 \begin{appendix}
 \section{Struktur Thesis}
+
+\begin{enumerate}
+	\item Eidesstattliche Erklärung
+	\item Abstract
+	\item Grundlagen
+	\begin{itemize}
+		\item Genetische Algorithmen
+		\item MAP-Elites
+		\item Surrogat-Modell
+		\item Probleme \& Herausforderungen von bestehenden Ansätzen \todo{Sascha?}
+	\end{itemize}
+\item Methode
+\begin{itemize}
+	\item Radkastendomäne
+	\item E-Roller-Domäne
+	\item Wahl der Features
+	\item Design-Constraints und das daraus resultierende Design der Fitnessfunktion
+\end{itemize}
+\item Ergebnis Radkastendomäne
+\begin{itemize}
+	\item Experimente
+	\item Analyse
+	\item Zusammenfassung
+\end{itemize}
+\item Ergebnis E-Rollerdomäne
+\begin{itemize}
+	\item Experimente
+	\item Analyse
+	\item Zusammenfassung
+\end{itemize}
+\item Diskussion
+\item Ausblick
+\item Literaturverzeichnis
+\item Anhang
+\end{enumerate}
 
 \section{Zeitplanung und Aufgaben}
 
