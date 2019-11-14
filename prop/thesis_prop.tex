@@ -19,6 +19,7 @@
 \usepackage{float}
 \usepackage{csquotes}
 \usepackage{todonotes}
+\usepackage{gensymb}
 
 \usepackage{placeins}
 \usepackage{afterpage}
@@ -59,7 +60,7 @@
     \textbf{Exposé}\end{Huge}\\
     \vspace{0.8cm}
   	\begin{huge}
-  	\textbf{TITEL}
+  	\textbf{Optimierung eines Velomobilradkastens sowie einer Abschlussplatte eines E-Rollers durch Surrogat-assistierte Illumination}
   	\end{huge}
   	 \vspace{0.6cm} \\
   	  	  \begin{large}von
@@ -141,9 +142,9 @@ Diese liefern typischerweise eine Vielzahl möglicher Lösungen, durch die das P
 Die erste Problemdomäne befasst sich mit der Verformung der Radästen eines Velomobils. 
 In Abb. \ref{fig:wheelcase} ist das das Velomobil mit eingezeichneten Radkästen zu sehen.
 Es sollen beide Radkästen des Velomobils verformt werden, der Einfachheit halber kann diese Verformung aufgrund der Symmetrie des Velomobils symmetrisch zur xz-Ebene
-\footnote{\label{foot:coords} Unter Annahme, dass die x-Achse die horizontale Vor/Rückachse, die y-Achse die horizontale Links/Rechtsachse und die z-Achse die Vertikalachse ist} stattfinden.
-Die momentanen Radkästen ermöglichen nicht den vollen Lenkausschlag der Räder des Velomobils.
-Es ist das Ziel Lösungen zu ermitteln, die dies ermöglichen.
+\footnote{\label{foot:coords} Unter Annahme, dass die x-Achse die horizontale Vor/Rückachse, die y-Achse die horizontale Links/Rechtsachse und die z-Achse die Vertikalachse ist} stattfinden, sodass eine Deformation die Anweisungen für beide Radkästen entält.
+Die momentanen Radkästen schränken den vollen Lenkausschlag der Räder des Velomobils ein.
+Es ist das Ziel Lösungen zu ermitteln, die den vollen Lenkausschlag ermöglichen.
                       
 \subsection{E-Roller-Domäne}
 \missingfigure{E-Roller-Abdeckung}
@@ -190,22 +191,58 @@ In \cite{Gaier.6152018} wurde gezeigt, dass dieser Ansatz erfolgreich auf 2D und
 \todo[inline]{Thesis von Sascha zwar nicht zitierfähig aber draufeingehen doch vermutlich sinnvoll}
 \section{Ansatz}
 
+\subsection{Velomobil}
+Aufgrund der Tatsache, dass im momentanen Zustand der Constraint noch nicht erfüllt ist ist ein harter Constraint, der solche Lösungen, die ihn nicht erfüllen nicht zulässt nur schwer umzusetzen, da am Anfang des Prozesses keine bekannte valide Lösung existiert.
+Weiche Constraints lassen es zu, dass Lösungen existieren die den Constraint erfüllen, in der Hoffnung, dass diese als Trittbrett zu Lösungen, die ihn erfüllen genutzt werden können.
+In einer vorigen Arbeit wurde ein solcher Ansatz verfolgt, allerdings wurde hier ein konstanter Strafwert addiert, wenn der Constraint verletzt war.
+Man könnte einen variablen Strafwert einfügen, der abhängig davon wie stark der Constraint verletzt wird größer oder kleiner ist, um dem Algorithmus einen Gradienten zu validen Lösungen zu geben.
+\todo[inline]{Wie formuliert man diesen variablen Strafwert, muss schnell berechnbar sein}
+
+Als Fehlermaß für die Qualität der am Ende produzierten Lösungen kann der Anteil am maximalen Radausschlag der erreicht wurde genutzt werden.
+\todo[inline]{konkrete formel, schnitt kugel radkasten? oder schnitt kreise in  bspw. 1$\degree$ azimuth}
+
+Um Verformungen an den Ränder der Radkästen, und die dadurch resultierenden scharfen Kanten zu vermeiden, sollten primär innere Punkte als Deformationspunkte gewählt werden.
+
+Als Kategorien für MAP-Elites sind die Gesamtbreite des Velomobils interessant, da die Hypothese aufgestellt werden kann, dass geringe Breiten den Contraint nicht erfüllen, größere Breiten allerdings die Aerodynamik verschlechtern.
+Daneben sind die Höhe des Velomobils, das Volumen und die Krümmung des Radkastens interessant.
+Sowohl die Berechnung des Volumens als auch die der Krümmung sind dabei nicht-trivial und aufgrund der Häufigkeit dieser müssten vermutlich Annäherungen herangezogen werden.
+Es kann aber auch die Hypothese aufgestellt werden, dass das Volumen als auch Krümmung positiv mit der Breite des Velomobils korreliert sind.
+Daneben sind allerdings auch noch andere Kategorien denkbar, falls sich im Laufe der Experimente Zusammenhänge aufzeigen sollten, die genauerer Untersuchung bedürfen.
+
+Die Überprüfung der Hypothese der Existenz eines Breitenoptimums, außerhalb dessen Lösungen entweder den Constraint nicht mehr erfüllen, oder sich die aerodynamischen Eigenschaftenen verschlechtern stellt eine interessante Forschungsfrage dar.
+Falls Kategorien gewählt werden für die die Annahme besteht, dass diese korreliert sind, könnte auch diese Annahme durch Experimente überprüft werden.
+
+\subsection{E-Roller}
+Anders als bei Velomobil ist die Nutzung von Hard-Contraints beim E-Roller einfacher möglich, um das Einführen von invaliden Lösungen zu verhindern.
+Um die Komplexität des Problems zu vermindern kann man sich auf Verformungen in z-Richtung beschränken.
+Dadurch können die Freiheitsgrade auf mehr Deformationspunkte aufgeteilt werden.
+
+Interessante Kategorien für den E-Roller könnten Höhe, Krümmung und Volumen des Bauteils sein.
+Die Höhe ist trivial aus den Verformungsparametern berechenbar.
+Für Krümmung und Volumen müssen Annäherungen, die weniger rechenaufwendig, sind genutzt werden.
+Vor allem für das Volumen könnten allerdings aufgrund der Tatsache, dass eine rechteckige Grundfläche in eine Richtung verformt wird schnelle und gute Annäherungen existieren.
+Auch hier könnten bei Bedarf andere Kategorien herangezogen werden.
+
+Genau wie bei den Radkästen kann die Hypothese einer positiven Korrelation zwischen Höhe und Volumen, bzw. Krümmung aufgestellt werden.
+Die Validierung oder Widerlegung dieser Hypothese könnte Einsicht in das Problem des Designs dieses Bauteils schaffen
+
 
 \section{Leistungen}
 Mindestergebnis:
 \begin{itemize}  
-\item Die Implementierung des produziert für die Radkastendomäne eine Karte aus semantisch korrekten Verformungen der Radkästen.
-\item Die Implementierung liefert für die Radkastendomäne diverse Lösungen.
-\todo[inline]{Arbeit enthält a,b,c}
+\item Die Implementierung des produziert für die Radkastendomäne eine Karte aus Verformungen der Radkästen.
 \end{itemize}
 Erwartetes Ergebnis:
 \begin{itemize}  
-\item  Die Implementierung liefert für die Radkastendomäne Lösungen die den Constraint erfüllen.
+\item  Die Implementierung liefert für die Radkastendomäne Lösungen die 90\% des maximalen Radausschlags ermöglichen.
+\todo[inline]{Vllt. noch? Hypothese der Korrelation zwischen Kategorien im Radkastenfall konnte bestätigt oder widerlegt werden}
 \end{itemize}
 Maximalergebnis:
 \begin{itemize}  
-\item Die Implementierung liefert für die E-Roller-Domäne eine Karte aus diversen Lösungen
+\item Die Implementierung liefert für die E-Roller-Domäne eine Karte aus Lösungen
 \item Die Implementierung liefert für die E-Roller-Domäne Lösungen die die Constraints erfüllen
+\item Eine Auswahl der besten gefunden Lösungen wurden auf dem nicht-vereinfachten E-Roller-Mesh verifiziert
+\todo[inline]{Vllt. noch? Hypothese der Korrelation zwischen Kategorien im E-Rollerfall konnte bestätigt oder widerlegt werden}
 \end{itemize}
 
 \newpage{}
@@ -256,7 +293,7 @@ Maximalergebnis:
   
 \newpage{}
 \section{Literaturverzeichnis}
-\bibliography{expose,citavi}
+\bibliography{citavi}
 \newpage{}
 
 \end{document}}
