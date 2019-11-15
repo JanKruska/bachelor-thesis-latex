@@ -60,7 +60,7 @@
     \textbf{Exposé}\end{Huge}\\
     \vspace{0.8cm}
   	\begin{huge}
-  	\textbf{Optimierung eines Velomobilradkastens sowie einer Abschlussplatte eines E-Rollers durch Surrogat-assistierte Illumination}
+  	\textbf{Einbindung von Constraints in eine divergente Optimierungsmethode am Beispiel der Surrogat-assistierten Illumination}
   	\end{huge}
   	 \vspace{0.6cm} \\
   	  	  \begin{large}von
@@ -136,20 +136,34 @@ Diese liefern typischerweise eine Vielzahl möglicher Lösungen, durch die das P
 
 \section{Problembeschreibung}
 
+Es ist bei allen Optimierungsmethoden, und damit auch bei genetischen Algorithmen im Speziellen, häufig der Fall, dass neben dem Primären Optimierungsziel, hier die Aerodynamik eines Bauteils, weitere Nebenbedingungen, auch Constraints genannt, eingehalten werden müssen.
+Solche Constraints können durch sekundäre Anforderungen an Bauteile entstehen, die erfüllt sein müssen, oder erfüllt sein sollten.
+Constraints, die erfüllt sein müssen, stellen absolute Ausschlusskriterien dar, und können im Verfahren durch einen Hard-Constraint ermöglicht werden, durch den solche Lösungen, die den Constraint nicht erfüllen, gar nicht zugelassen werden.
+Das führt dazu, dass nur Lösungen erzeugt werden können, die den Constraint auch erfüllen, hat allerdings den Nachteil, dass Diversität eingeschränkt werden kann und Optimierungsverfahren Random-Search beginnen zu ähneln, wenn der Constraint schwer zu erfüllen ist.
+Stattdessen kann ein Soft-Constraint genutzt werden, bei der Lösungen, die diesen nicht erfüllen mit einem Strafwert versehen werden.
+Dies hat den Vorteil, dass auch Lösungen die den Constraint nicht erfüllen als Trittbrett zu solchen, die ihn erfüllen, genutzt werden können.
+Dadurch besteht allerdings die Möglichkeit, dass ein Verfahren Lösungen produziert die den Constraint nicht erfüllen.
+Auch ist die Frage wie ein Soft-Constraint in ein Verfahren eingebaut und gewichtet wird komplizierter, ein zu schwach gewichteter Constraint kann dazu führen, dass das Verfahren diesen einfach ignoriert, was nicht Ziel der Optimierung war.
+Die Frage ob ein Hard- oder Soft-Constraint sinnvoller ist hängt stark von der Problemdomäne ab.
+
 \subsection{Radkastendomäne}
 \missingfigure{Radkästen}
 
-Die erste Problemdomäne befasst sich mit der Verformung der Radästen eines Velomobils. 
+Die erste Problemdomäne befasst sich mit der Verformung der Radkästen eines Velomobils. 
 In Abb. \ref{fig:wheelcase} ist das das Velomobil mit eingezeichneten Radkästen zu sehen.
 Es sollen beide Radkästen des Velomobils verformt werden, der Einfachheit halber kann diese Verformung aufgrund der Symmetrie des Velomobils symmetrisch zur xz-Ebene
-\footnote{\label{foot:coords} Unter Annahme, dass die x-Achse die horizontale Vor/Rückachse, die y-Achse die horizontale Links/Rechtsachse und die z-Achse die Vertikalachse ist} stattfinden, sodass eine Deformation die Anweisungen für beide Radkästen entält.
+\footnote{\label{foot:coords} Unter Annahme, dass die x-Achse die horizontale Vor/Rückachse, die y-Achse die horizontale Links/Rechtsachse und die z-Achse die Vertikalachse ist} stattfinden, sodass eine Deformation die Anweisungen für beide Radkästen enthält.
 Die momentanen Radkästen schränken den vollen Lenkausschlag der Räder des Velomobils ein.
 Es ist das Ziel Lösungen zu ermitteln, die den vollen Lenkausschlag ermöglichen.
+Dadurch das die bestehenden Radkästen den Constraint nicht erfüllen und damit die Suche nach aerodynamisch sinnvollen Lösungen, das Problem darstellt bietet sich ein Hard-Constraint nicht an.
+Ein Soft-Constraint, der Lösungen zulässt die den Constraint nicht erfüllen, scheint in einer solchen explorativen Suche nach Lösungen die den Constraint erfüllen weitaus sinnvoller.
+Dadurch eröffnet sich allerdings die Frage wie dieser berechnet werden kann, vor allem in Anbetracht der Tatsache, dass dieser sehr häufig berechnet werden und damit effizient berechenbar sein muss.
+
                       
 \subsection{E-Roller-Domäne}
 \missingfigure{E-Roller-Abdeckung}
 
-Die zweite Problemdomäne ist ein E-Roller an dessen Unterseite ein Bauteil vor dem Hinterrad verformt werden soll.
+Die zweite optionale Problemdomäne ist ein E-Roller an dessen Unterseite ein Bauteil vor dem Hinterrad verformt werden soll.
 In Abb. \ref{fig:escooter} ist der E-Roller zu sehen. Das zu verformende Bauteil ist rot hervorgehoben.
 Auch für den E-Roller kann die Verformung symmetrisch zur xz-Ebene \footnote{Siehe Fußnote \ref{foot:coords}} erfolgen um den Suchraum zu verkleinern.
 Auch für den E-Roller müssen Constraints eingehalten werden. 
@@ -161,12 +175,20 @@ Anders als in der Radkastendomäne erfüllt das Basisbauteil diese Constraints s
 
 \subsection{MAP-Elites}
 \label{sub:mapElites}
-MAP-Elites \cite{Mouret.4202015} ist ein genetischer Algorithmus der phänotypische Diversität gewährleistet.
-Dies geschieht durch eine Aufteilung des Lösungsraum entlang n Dimensionen, die Eigenschaften der Lösung darstellen.
-Dadurch wird der Lösungsraum in phänotypische Zellen eingeteilt.
-Jede dieser Zellen kann eine Lösung enthalten, die nur durch eine andere bessere Lösung, die in die gleiche Zelle passt ersetzt werden kann.
-Neben einer Vielzahl von Lösungen kann diese Karte auch dabei helfen die Problemdomäne besser zu verstehen, indem Zusammenhänge zwischen den Kategorien, nach denen klassifiziert wurde und der Qualität der Lösungen, aufgedeckt werden.
-\todo[inline]{umformulieren, umstrukturieren, Quelle}
+MAP-Elites \cite{Mouret.4202015} ist ein genetischer Algorithmus mit Diversitätsmanagement.
+Ein wichtiger Aspekt von MAP-Elites ist, dass Diversität des Phänotyps gewährleistet wird.
+Das bedeutet, dass die Morphologie bzw. Funktionalität einer konkreten ausgedrückten Lösung, wie beispielsweise Volumen oder Krümmung eines Bauteils, betrachtet wird, statt einer Distanz im Genotyp.
+Dazu wird der Lösungsraum entlang beliebig vieler Feature-Dimensionen, d.h. Merkmalen der Lösungen, aufgeteilt.
+Diese Feature-Dimensionen werden, mithilfe eines Minimums, Maximums und einer Anzahl an Schritten, diskretisiert wodurch der Lösungsraum in Zellen eingeteilt wird.
+Diese Aufteilung wird häufig auch Karte genannt.
+Jede dieser Zellen stellt dabei eine Kombination der Eigenschaften dar.
+Zu jeden Zeitpunkt kann jeder dieser Zellen nur eine oder keine Lösung enthalten
+\footnote{Eine Zelle kann nur keine Lösung enthalten wenn sie noch nicht befüllt wurde. Zellen können nicht entleert werden}.
+In jeder Genration werden aus den momentan in der Karten enthaltenen Lösung Kinder erzeugt.
+Jedes dieser Kinder wird bezüglich dessen Fitness evaluiert und nach den gewählten Features kategorisiert.
+Damit wird diesem eine Zelle zugewiesen, in der lokale Konkurrenz stattfindet.
+Ist die zugewiesene Zelle leer befüllt das Kind die Zelle, befindet sich bereits ein Individuum in der Zelle werden stattdessen die Fitnesswerte der beiden verglichen und das Individuum mit der höheren Fitness wird der Zelle zugewiesen.
+Neben einer Vielzahl von Lösungen kann diese Karte auch dabei helfen die Problemdomäne besser zu verstehen, indem Zusammenhänge zwischen den Features, nach denen klassifiziert wurde und der Qualität der Lösungen, aufgedeckt werden.
 
 \subsection{Surrogat-Modell}
 \label{sub:surrogate}
@@ -180,48 +202,58 @@ Eine solche Möglichkeit ist ein Surrogatmodell \cite{Jin.2011}\cite{Preen.2016}
 Eine Auswertung des Modells erfordert dabei nur einen winzigen Bruchteil des Aufwands der für eine Simulation nötig wäre.
 Theoretisch sind verschiedenste Machine-Learning Verfahren für das Surrogatmodell denkbar, Gaußprozesse bieten sich durch die Eigenschaft an, dass sie neben einer Vorhersage auch immer ihre eigene Unsicherheit Liefern, und entsprechend Bereiche zeigen können in denen große Unsicherheit herrscht, sprich in denen der Gaußprozess wenig weiß.
 Der Nachteil der hohen Komplexität von Gaußprozessen \todo[inline]{genaue Komplexität? Quelle: \cite{Rasmussen.2008}} ist durch die Limitierung auf eine geringe Anzahl an Simulationen, und damit der Limitierung auf einen kleinen Trainingsdatensatz vernachlässigbar.
-\todo[inline]{Abschnitt erfolgreiche Anwendung von Surrogat-Modellen und genetischen Algorithmen, sth. about Orders of magnitude evaluation reduction}
+
+\subsection{Freiformdeformation}
+
+Freiformdeformation\cite{Sederberg.1986} ist ein Verfahren zu Deformation von dreidimensionalen geometrischen Objekten.
+Es ist in der Lage 3D-Meshes anhand bestimmter Parameter zu verformen.
+Dazu wird eine Box aus Kontrollpunkten erzeugt.
+Jeder dieser Kontrollpunkte kann dann anhand von Verformungparametern verschoben werden, wodurch für alle Punkte innerhalb der FFD-Box eine Verschiebung berechnet wird, die von der relativen Position des Punkt zum Kontrollpunkt abhängt.
+Dadurch kann eine Deformation auf eine überschaubare Anzahl an Deformationsparametern reduziert werden.
+Außerdem kann eine Deformation auf einige bestimmte Punkte und/oder Richtungen
+\footnote{Deformation in x,y,y sind jeweils seperat} 
+beschränkt werden um die Komplexität weiter zu reduzieren.
+Dadurch das nur die Punkte des Meshes ihre Position ändern, hat das Verfahren, den Vorteil das die Dreiecke erhalten bleiben und somit beispielsweise das Entstehen von Löchern bei korrekter Anwendung praktisch ausgeschlossen ist.
 
 \subsection{SAIL}
 
 SAIL (Surrogate-Assisted Illumination) vereint die in \ref{sub:mapElites} und \ref{sub:surrogate} beschriebenen Ansätze.
 In \cite{Gaier.6152018} wurde gezeigt, dass dieser Ansatz erfolgreich auf 2D und 3D aerodynamische Domänen angewandt werden kann.
-\todo[inline]{Inwieweit sollen Anpassungen vorgenommen werden? Feature-Dimensionen,zusätzliche Contraints etc. }
+Es wurden Freiform-Deformationen auf 3D-Bauteile angewandt, welche dann wiederum bezüglich ihrer aerodynamischen Eigenschaften ausgewertet wurden um ein Surrogat-Modell zu trainieren.
 
-\todo[inline]{Thesis von Sascha zwar nicht zitierfähig aber draufeingehen doch vermutlich sinnvoll}
 \section{Ansatz}
+
+\todo[inline]{Irgendwo noch ein paar Worte zu OpenFoam}
 
 \subsection{Velomobil}
 Aufgrund der Tatsache, dass im momentanen Zustand der Constraint noch nicht erfüllt ist ist ein harter Constraint, der solche Lösungen, die ihn nicht erfüllen nicht zulässt nur schwer umzusetzen, da am Anfang des Prozesses keine bekannte valide Lösung existiert.
 Weiche Constraints lassen es zu, dass Lösungen existieren die den Constraint erfüllen, in der Hoffnung, dass diese als Trittbrett zu Lösungen, die ihn erfüllen genutzt werden können.
 In einer vorigen Arbeit wurde ein solcher Ansatz verfolgt, allerdings wurde hier ein konstanter Strafwert addiert, wenn der Constraint verletzt war.
 Man könnte einen variablen Strafwert einfügen, der abhängig davon wie stark der Constraint verletzt wird größer oder kleiner ist, um dem Algorithmus einen Gradienten zu validen Lösungen zu geben.
-\todo[inline]{Wie formuliert man diesen variablen Strafwert, muss schnell berechnbar sein}
-
 Als Fehlermaß für die Qualität der am Ende produzierten Lösungen kann der Anteil am maximalen Radausschlag der erreicht wurde genutzt werden.
 \todo[inline]{konkrete formel, schnitt kugel radkasten? oder schnitt kreise in  bspw. 1$\degree$ azimuth}
 
 Um Verformungen an den Ränder der Radkästen, und die dadurch resultierenden scharfen Kanten zu vermeiden, sollten primär innere Punkte als Deformationspunkte gewählt werden.
 
-Als Kategorien für MAP-Elites sind die Gesamtbreite des Velomobils interessant, da die Hypothese aufgestellt werden kann, dass geringe Breiten den Contraint nicht erfüllen, größere Breiten allerdings die Aerodynamik verschlechtern.
+Als Features für MAP-Elites sind die Gesamtbreite des Velomobils interessant, da die Hypothese aufgestellt werden kann, dass geringe Breiten den Constraint nicht erfüllen, größere Breiten allerdings die Aerodynamik verschlechtern.
 Daneben sind die Höhe des Velomobils, das Volumen und die Krümmung des Radkastens interessant.
 Sowohl die Berechnung des Volumens als auch die der Krümmung sind dabei nicht-trivial und aufgrund der Häufigkeit dieser müssten vermutlich Annäherungen herangezogen werden.
 Es kann aber auch die Hypothese aufgestellt werden, dass das Volumen als auch Krümmung positiv mit der Breite des Velomobils korreliert sind.
-Daneben sind allerdings auch noch andere Kategorien denkbar, falls sich im Laufe der Experimente Zusammenhänge aufzeigen sollten, die genauerer Untersuchung bedürfen.
+Daneben sind allerdings auch noch andere Features denkbar, falls sich im Laufe der Experimente Zusammenhänge aufzeigen sollten, die genauerer Untersuchung bedürfen.
 
-Die Überprüfung der Hypothese der Existenz eines Breitenoptimums, außerhalb dessen Lösungen entweder den Constraint nicht mehr erfüllen, oder sich die aerodynamischen Eigenschaftenen verschlechtern stellt eine interessante Forschungsfrage dar.
-Falls Kategorien gewählt werden für die die Annahme besteht, dass diese korreliert sind, könnte auch diese Annahme durch Experimente überprüft werden.
+Die Überprüfung der Hypothese der Existenz eines Breitenoptimums, außerhalb dessen Lösungen entweder den Constraint nicht mehr erfüllen, oder sich die aerodynamischen Eigenschaften verschlechtern stellt eine interessante Forschungsfrage dar.
+Falls Features gewählt werden für die die Annahme besteht, dass diese korreliert sind, könnte auch diese Annahme durch Experimente überprüft werden.
 
 \subsection{E-Roller}
 Anders als bei Velomobil ist die Nutzung von Hard-Contraints beim E-Roller einfacher möglich, um das Einführen von invaliden Lösungen zu verhindern.
 Um die Komplexität des Problems zu vermindern kann man sich auf Verformungen in z-Richtung beschränken.
 Dadurch können die Freiheitsgrade auf mehr Deformationspunkte aufgeteilt werden.
 
-Interessante Kategorien für den E-Roller könnten Höhe, Krümmung und Volumen des Bauteils sein.
+Interessante Features für den E-Roller könnten Höhe, Krümmung und Volumen des Bauteils sein.
 Die Höhe ist trivial aus den Verformungsparametern berechenbar.
 Für Krümmung und Volumen müssen Annäherungen, die weniger rechenaufwendig, sind genutzt werden.
 Vor allem für das Volumen könnten allerdings aufgrund der Tatsache, dass eine rechteckige Grundfläche in eine Richtung verformt wird schnelle und gute Annäherungen existieren.
-Auch hier könnten bei Bedarf andere Kategorien herangezogen werden.
+Auch hier könnten bei Bedarf andere Features herangezogen werden.
 
 Genau wie bei den Radkästen kann die Hypothese einer positiven Korrelation zwischen Höhe und Volumen, bzw. Krümmung aufgestellt werden.
 Die Validierung oder Widerlegung dieser Hypothese könnte Einsicht in das Problem des Designs dieses Bauteils schaffen
@@ -234,15 +266,15 @@ Mindestergebnis:
 \end{itemize}
 Erwartetes Ergebnis:
 \begin{itemize}  
-\item  Die Implementierung liefert für die Radkastendomäne Lösungen die 90\% des maximalen Radausschlags ermöglichen.
-\todo[inline]{Vllt. noch? Hypothese der Korrelation zwischen Kategorien im Radkastenfall konnte bestätigt oder widerlegt werden}
+\item Es fand eine Analyse statt inwieweit der gegebene Constraint die Lösungen und ihre morphologische Diversität beeinflusst
+\item Es fand eine Analyse der Korrelation zwischen den gewählten Features in der Radkastendomäne statt
 \end{itemize}
 Maximalergebnis:
 \begin{itemize}  
 \item Die Implementierung liefert für die E-Roller-Domäne eine Karte aus Lösungen
 \item Die Implementierung liefert für die E-Roller-Domäne Lösungen die die Constraints erfüllen
 \item Eine Auswahl der besten gefunden Lösungen wurden auf dem nicht-vereinfachten E-Roller-Mesh verifiziert
-\todo[inline]{Vllt. noch? Hypothese der Korrelation zwischen Kategorien im E-Rollerfall konnte bestätigt oder widerlegt werden}
+\item Es fand eine Analyse der Korrelation zwischen den gewählten Features in der E-Roller-Domäne statt
 \end{itemize}
 
 \newpage{}
@@ -260,7 +292,8 @@ Maximalergebnis:
 		\item Genetische Algorithmen
 		\item MAP-Elites
 		\item Surrogat-Modell
-		\item Probleme \& Herausforderungen von bestehenden Ansätzen \todo{Sascha?}
+		\item Optimierung mit Constraints
+		\item Probleme \& Herausforderungen von bestehenden Ansätzen
 	\end{itemize}
 \item Methode
 \begin{itemize}
@@ -275,7 +308,7 @@ Maximalergebnis:
 	\item Analyse
 	\item Zusammenfassung
 \end{itemize}
-\item Ergebnis E-Rollerdomäne
+\item (optional)Ergebnis E-Rollerdomäne
 \begin{itemize}
 	\item Experimente
 	\item Analyse
@@ -288,6 +321,19 @@ Maximalergebnis:
 \end{enumerate}
 
 \section{Zeitplanung und Aufgaben}
+\todo[inline]{Hier Montag nochmal drüber sprechen}
+\begin{itemize}
+	\item[2.12.2019] Beginn der Bachelorarbeit
+	\item[16.12.2019] Experimentsparameter der Radkastendomäne festsetzten(Features,Constraint)
+	\item[02.01.2020] Erste Experimentalergebnisse zur Radkastendomäne liegen vor
+	\item[02.01.2020] Festlegung der Finalen Struktur der Thesis
+	\item[02.01.2020] Experimentsparameter der E-Rollerdomäne festsetzten(Features,Constraint)
+	\item[02.01.2020] Erste Fassung des 2.Kapitels(Grundlage)
+	\item[17.01.2020] Erste Fassung des 3.Kapitels(Methode)
+	\item[24.01.2020] Experimente abgeschlossen
+	\item[14.02.2020] Vorfassung der Thesis
+	\item[28.02.2020] Abgabe der Bachelorthesis
+\end{itemize}
 
 \end{appendix}
   
