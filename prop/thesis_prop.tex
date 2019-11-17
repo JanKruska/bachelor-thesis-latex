@@ -108,28 +108,25 @@ und: &  Alexander Hagg, M.Sc.\\
 \section{Einleitung}
 
 Die Domäne der Aerodynamik stellt durch ihre Komplexität sowohl für Mensch als auch Computer eine große Herausforderung dar.
-Die physikalischen Gesetze denen diese folgt sind zwar bekannt, deren Zusammenspiel allerdings so stark ineinander verwoben, das beim Design aerodynamischer Körper oft auf Faustregeln zurückgefallen werden muss.
-%Durch computergestützte Assistenz könnte dieser Designprozess erheblich verbessert werden.
+Die physikalischen Gesetze, denen diese folgt, sind zwar bekannt, deren Zusammenspiel allerdings so stark ineinander verwoben, das beim Design aerodynamischer Körper oft auf Faustregeln zurückgefallen werden muss.
 
 Evolutionäre Taktiken haben sich in der Vergangenheit als mächtige Heuristik zur Optimierung komplexer Problemräume bewiesen \cite{Vikhar.2016}.
-%Die Untersuchung inwieweit solche Taktiken für die Nutzung in der computergestützten Assistenz nützlich sind liegt nahe.
-%Eine Methode die sowohl in der Lage ist neben Lösungen auch Wissen über den Lösungsraum zu generieren könnte den Designprozess erheblich vereinfachen indem sowohl Initiallösungen, von denen eine weitere menschliche %Optimierung ausgehen kann, als auch Wissen über das Problem, womit diese weitere Optimierung zielstrebiger erfolgen kann, erzeugt werden.
 
-Genetische Algorithmen sind eine effektive  Methode um kreative Lösungen für komplexe Probleme zu generieren.
+Genetische Algorithmen sind eine effektive Methode um kreative Lösungen für komplexe Probleme zu generieren.
 Allerdings haben evolutionäre Algorithmen ohne Zusatzmechanismen die Tendenz, dass gefundene Lösungen im Verlauf der Algorithmen zu einer Lösungsklasse konvergieren \cite{Shir.2012}.
-Dies führt zu zwei Hauptproblemen. 
+Dies führt zu zwei Hauptproblemen.
 Erstens neigen solche Algorithmen dadurch dazu in lokalen Optima "stecken" zu bleiben, da das Verlassen eines lokalen Optimums immer mit einer Fitnesseinbuße verbunden ist.
-Zweitens produzieren solche Algorithmen nur eine Lösung. 
-Sollten mehrere gute Lösungen existieren, deren Fitness sich nur gering unterscheidet wird trotzdem die Lösung die um einen Bruchteil besser ist bestehen bleiben.
-Häufig kann es allerdings sinnvoll sein auch diese Lösungen zu erhalten, da ein Menschlicher Beobachter dadurch mehr Wissen erhalten kann welche Eigenschaften, für gute Lösungen sorgen, wenn sie beispielsweise häufig vorkommen, oder ob bestimmte Eigenschaften nur in Kombination gute Lösungen ergeben.
+Zweitens produzieren solche Algorithmen nur eine Lösung.
+Sollten mehrere gute Lösungen existieren, deren Fitness sich nur gering unterscheidet, wird trotzdem die Lösung, die um einen Bruchteil besser ist bestehen bleiben.
+Häufig kann es allerdings sinnvoll sein auch diese Lösungen zu erhalten, da ein menschlicher Beobachter dadurch mehr Wissen erhalten kann welche Eigenschaften, für gute Lösungen sorgen, wenn sie beispielsweise häufig vorkommen, oder ob bestimmte Eigenschaften nur in Kombination gute Lösungen ergeben.
 Dieses Wissen, was aus der Vielzahl an guten Lösungen gezogen werden kann, kann dabei helfen das Problem besser zu verstehen, was eine sehr wertvolle Eigenschaft ist.
-%Damit kann der menschliche Beobachter auch nicht einschätzen, ob die erhaltene Lösung tatsächlich die global beste Lösung ist, und wenn sie das nicht ist wie in Richtung des globalen Optimums weiteroptimiert werden kann.
 
 Es wurden verschiedene Diversitätsansätze vorgeschlagen, die sich grundsätzlich in genotypische und phänotypische Diversitätsansätze unterscheiden lassen.
 Ansätze wie Niching, gewährleisten genotypische Diversität durch die Ermittlung der genetischen Ähnlichkeit zweier Individuen.
 Das hat den Vorteil, dass der Genotyp eines Individuums typischerweise ein Vektor ist, und eine Vielzahl von Ähnlichkeitsmetriken für Vektoren existiert.
-Andere Ansätze verfolgen das Ziel phänotypischer, oder funktionaler, Diversität.
-Dies hat den Grund, dass die Funktion eines Individuums und nicht die Encodierung das eigentliche Problem ist, und in komplexen Problemdomänen sich genetisch sehr verschiedene Individuen trotzdem funktional ähneln können.
+Andere Ansätze verfolgen das Ziel phänotypischer, sprich funktionaler, Diversität.
+Dies hat den Grund, dass die Funktion eines Individuums und nicht die Encodierung das eigentliche Optimierungsziel ist,
+und in komplexen Problemdomänen sich genetisch sehr verschiedene Individuen trotzdem funktional ähneln können.
 Um phänotypische Diversität zu gewährleisten wird allerdings eine phänotypische Ähnlichkeitsmetrik benötigt, die sehr domänenspezifisch ist.
 Diese Ansätze werden allgemein unter dem Begriff der Quality-Diversity-Algorithmen zusammengefasst.
 Diese liefern typischerweise eine Vielzahl möglicher Lösungen, durch die das Problem und Zusammenhänge zwischen Lösungseigenschaften und Lösungsqualität besser verstanden werden kann.
@@ -140,13 +137,13 @@ Diese liefern typischerweise eine Vielzahl möglicher Lösungen, durch die das P
 
 Es ist bei allen Optimierungsmethoden, und damit auch bei genetischen Algorithmen im Speziellen, häufig der Fall, dass neben dem Primären Optimierungsziel, hier die Aerodynamik eines Bauteils, weitere Nebenbedingungen, auch Constraints genannt, eingehalten werden müssen.
 Solche Constraints können durch sekundäre Anforderungen an Bauteile entstehen, die erfüllt sein müssen, oder erfüllt sein sollten.
-Constraints, die erfüllt sein müssen, stellen absolute Ausschlusskriterien dar, und können im Verfahren durch einen Hard-Constraint ermöglicht werden, durch den solche Lösungen, die den Constraint nicht erfüllen, gar nicht zugelassen werden.
-Das führt dazu, dass nur Lösungen erzeugt werden können, die den Constraint auch erfüllen, hat allerdings den Nachteil, dass Diversität eingeschränkt werden kann und Optimierungsverfahren Random-Search beginnen zu ähneln, wenn der Constraint schwer zu erfüllen ist.
-Stattdessen kann ein Soft-Constraint genutzt werden, bei der Lösungen, die diesen nicht erfüllen mit einem Strafwert versehen werden.
+Constraints, die erfüllt sein müssen, stellen absolute Ausschlusskriterien dar, und können im Verfahren durch einen Hard Constraint ermöglicht werden, durch den solche Lösungen, die den Constraint nicht erfüllen, gar nicht zugelassen werden.
+Das führt dazu, dass nur Lösungen erzeugt werden können, die den Constraint auch erfüllen, hat allerdings den Nachteil, dass Diversität eingeschränkt werden kann und Optimierungsverfahren keine oder nur wenige sinnvollen Lösungen generieren, wenn der Constraint schwer zu erfüllen ist.
+Stattdessen kann ein Soft Constraint genutzt werden, bei der Lösungen, die diesen nicht erfüllen mit einem Strafwert versehen werden.
 Dies hat den Vorteil, dass auch Lösungen die den Constraint nicht erfüllen als Trittbrett zu solchen, die ihn erfüllen, genutzt werden können.
 Dadurch besteht allerdings die Möglichkeit, dass ein Verfahren Lösungen produziert die den Constraint nicht erfüllen.
-Auch ist die Frage wie ein Soft-Constraint in ein Verfahren eingebaut und gewichtet wird komplizierter, ein zu schwach gewichteter Constraint kann dazu führen, dass das Verfahren diesen einfach ignoriert, was nicht Ziel der Optimierung war.
-Die Frage ob ein Hard- oder Soft-Constraint sinnvoller ist hängt stark von der Problemdomäne ab.
+Auch ist die Frage wie ein Soft Constraint in ein Verfahren eingebaut und gewichtet wird komplizierter, ein zu schwach gewichteter Constraint kann dazu führen, dass das Verfahren diesen einfach ignoriert, was nicht Ziel der Optimierung war.
+Die Frage ob ein Hard- oder Soft Constraint sinnvoller ist hängt stark von der Problemdomäne ab.
 
 \subsection{Radkastendomäne}
 \missingfigure{Radkästen}
@@ -157,8 +154,8 @@ Es sollen beide Radkästen des Velomobils verformt werden, der Einfachheit halbe
 \footnote{\label{foot:coords} Unter Annahme, dass die x-Achse die horizontale Vor/Rückachse, die y-Achse die horizontale Links/Rechtsachse und die z-Achse die Vertikalachse ist} stattfinden, sodass eine Deformation die Anweisungen für beide Radkästen enthält.
 Die momentanen Radkästen schränken den vollen Lenkausschlag der Räder des Velomobils ein.
 Es ist das Ziel Lösungen zu ermitteln, die den vollen Lenkausschlag ermöglichen.
-Dadurch das die bestehenden Radkästen den Constraint nicht erfüllen und damit die Suche nach aerodynamisch sinnvollen Lösungen, das Problem darstellt bietet sich ein Hard-Constraint nicht an.
-Ein Soft-Constraint, der Lösungen zulässt die den Constraint nicht erfüllen, scheint in einer solchen explorativen Suche nach Lösungen die den Constraint erfüllen weitaus sinnvoller.
+Dadurch das die bestehenden Radkästen den Constraint nicht erfüllen und damit die Suche nach aerodynamisch sinnvollen Lösungen, das Problem darstellt bietet sich ein Hard Constraint nicht an.
+Ein Soft Constraint, der Lösungen zulässt die den Constraint nicht erfüllen, scheint in einer solchen explorativen Suche nach Lösungen die den Constraint erfüllen weitaus sinnvoller.
 Dadurch eröffnet sich allerdings die Frage wie dieser berechnet werden kann, vor allem in Anbetracht der Tatsache, dass dieser sehr häufig berechnet werden und damit effizient berechenbar sein muss.
 
                       
@@ -202,7 +199,7 @@ Aerodynamische Probleme, für die zeitaufwendige Simulationen nötig sind, gehö
 Um genetische Taktiken auf eine solche Problemdomäne anzuwenden, wird eine Möglichkeit benötigt die benötigten Funktionsauswertungen erheblich zu reduzieren.
 Eine solche Möglichkeit ist ein Surrogatmodell \cite{Jin.2011}\cite{Preen.2016}, eine Machine-Learning Modell, welches aufgrund echter Simulationsauswertungen trainiert wird um deren Ergebnis annähernd vorherzusagen.
 Eine Auswertung des Modells erfordert dabei nur einen winzigen Bruchteil des Aufwands der für eine Simulation nötig wäre.
-Theoretisch sind verschiedenste Machine-Learning Verfahren für das Surrogatmodell denkbar, Gaußprozesse \cite{Rasmussen.2008} bieten sich durch die Eigenschaft an, dass sie neben einer Vorhersage auch immer ihre eigene Unsicherheit Liefern, und entsprechend Bereiche zeigen können in denen große Unsicherheit herrscht, sprich in denen der Gaußprozess wenig weiß.
+Theoretisch sind verschiedenste Machine-Learning Verfahren für das Surrogatmodell denkbar, Gaußprozesse \cite{Rasmussen.2008} bieten sich durch die Eigenschaft an, dass sie neben einer Vorhersage auch immer ihre eigene Unsicherheit Liefern, und entsprechend Bereiche zeigen können in denen große Unsicherheit herrscht, oder anders ausgedrückt in denen der Gaußprozess wenig weiß.
 Der Nachteil der hohen Speicher- und Berechnungskomplexität von Gaußprozessen ist durch die Limitierung auf eine geringe Anzahl an Simulationen, und damit der Limitierung auf einen kleinen Trainingsdatensatz vernachlässigbar.
 
 \subsection{Freiformdeformation}
@@ -210,10 +207,10 @@ Der Nachteil der hohen Speicher- und Berechnungskomplexität von Gaußprozessen 
 Freiformdeformation\cite{Sederberg.1986} ist ein Verfahren zu Deformation von geometrischen Objekten.
 Es ist in der Lage 3D-Meshes anhand bestimmter Parameter zu verformen.
 Dazu wird eine Box aus Kontrollpunkten erzeugt.
-Jeder dieser Kontrollpunkte kann dann anhand von Verformungparametern verschoben werden, wodurch für alle Punkte innerhalb der FFD-Box eine Verschiebung berechnet wird, die von der relativen Position des Punkt zum Kontrollpunkt abhängt.
+Jeder dieser Kontrollpunkte kann dann anhand von Verformungsparametern verschoben werden, wodurch für alle Punkte innerhalb der FFD-Box eine Verschiebung berechnet wird, die von der relativen Position des Punkt zum Kontrollpunkt abhängt.
 Dadurch kann eine Deformation auf eine überschaubare Anzahl an Deformationsparametern reduziert werden.
 Außerdem kann eine Deformation auf einige bestimmte Punkte und/oder Richtungen
-\footnote{Deformation in x,y,y sind jeweils seperat} 
+\footnote{Deformation in x,y,z finden jeweils separat statt} 
 beschränkt werden um die Komplexität weiter zu reduzieren.
 Dadurch das nur die Punkte des Meshes ihre Position ändern, hat das Verfahren, den Vorteil das die Dreiecke erhalten bleiben und somit beispielsweise das Entstehen von Löchern bei korrekter Anwendung praktisch ausgeschlossen ist.
 
@@ -225,8 +222,11 @@ Es wurden Freiform-Deformationen auf 3D-Bauteile angewandt, welche dann wiederum
 
 \section{Ansatz}
 
-\todo[inline]{Irgendwo noch ein paar Worte zu OpenFoam}
-Der bestehende Ansatz von SAIL 
+Der bestehende Ansatz von SAIL ist in der Lage dreidimensionale Objekte zu verformen, ein Surrogat-Modell auf Basis von OpenFOAM \cite{OpenCFD.} Strömungssimulationen zu trainieren und mit diesem Surrogatmodell MAP-Elites anzuwenden. 
+In diesen Ansatz sollen Constraints eingebunden werden.
+Eine sinnvolle Definition der Constraints ist dabei die Hauptaufgabe.
+In jeder Domäne muss eine Abwägung zwischen der Nutzung von Hard- oder Soft Constraints stattfinden.
+Diese Constraints sollen dann entsprechend eingebunden werden, um zu untersuchen wie sich unterschiedliche Constraints auf das Verfahren auswirken.
 
 
 
@@ -302,10 +302,21 @@ Maximalergebnis:
 	\end{itemize}
 \item Methode
 \begin{itemize}
+	\item Ansatz
+	\begin{itemize}
+		\item SAIL
+		\item OpenFOAM
+	\end{itemize}
 	\item Radkastendomäne
+	\begin{itemize}
+		\item Wahl der Features
+		\item Design-Constraints und das daraus resultierende Design der Fitnessfunktion
+	\end{itemize}
 	\item E-Roller-Domäne
-	\item Wahl der Features
-	\item Design-Constraints und das daraus resultierende Design der Fitnessfunktion
+	\begin{itemize}
+		\item Wahl der Features
+		\item Design-Constraints und das daraus resultierende Design der Fitnessfunktion
+	\end{itemize}
 \end{itemize}
 \item Ergebnis Radkastendomäne
 \begin{itemize}
@@ -313,7 +324,7 @@ Maximalergebnis:
 	\item Analyse
 	\item Zusammenfassung
 \end{itemize}
-\item (optional)Ergebnis E-Rollerdomäne
+\item Ergebnis E-Rollerdomäne
 \begin{itemize}
 	\item Experimente
 	\item Analyse
@@ -355,6 +366,7 @@ Maximalergebnis:
 			\ganttbar{Parameter der E-Roller-Domäne festlegen}{3}{4} \\
 			\ganttbar{Kapitel "Grundlagen" verfassen}{3}{4} \\
 			\ganttbar{Kapitel "Methode" verfassen}{5}{6} \\
+			\ganttbar{Weiterführende Experimente in Radkastendömane}{5}{7} \\
 			\ganttbar{E-Roller-Experimente}{5}{8} \\
 			\ganttbar{Erste Fassung der Thesis anfertigen}{8}{11} \\
 			\ganttbar{Thesis überarbeiten}{12}{13} \\
