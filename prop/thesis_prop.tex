@@ -163,10 +163,14 @@ Ein Soft Constraint, der Lösungen zulässt, die den Constraint nicht erfüllen,
 Dadurch eröffnet sich allerdings die Frage wie dieser berechnet werden kann, vor allem in Anbetracht der Tatsache, dass dieser sehr häufig berechnet werden und damit effizient berechenbar sein muss.
 
 \subsection{E-Roller-Domäne}
-\missingfigure{E-Roller-Abdeckung}
+\begin{figure}
+	\includegraphics[width=\linewidth]{escooter}
+	\caption{E-Roller}
+	\label{fig:escooter}
+\end{figure}
 
 Die zweite optionale Problemdomäne ist ein E-Roller, an dessen Unterseite ein Bauteil vor dem Hinterrad verformt werden soll.
-In Abb. \ref{fig:escooter} ist der E-Roller zu sehen. Das zu verformende Bauteil ist rot hervorgehoben.
+In Abb. \ref{fig:escooter} ist der E-Roller zu sehen. Das zu verformende Bauteil ist noch nicht enthalten, der Freiraum vor dem Hinterrad, den es füllen soll , ist aber zu sehen.
 Auch für den E-Roller kann die Verformung symmetrisch zur xz-Ebene \footnote{Siehe Fußnote \ref{foot:coords}} erfolgen, um den Suchraum zu verkleinern.
 Auch für den E-Roller müssen Constraints eingehalten werden.
 So darf das Bauteil nicht beliebig weit nach unten verformt werden, da dies zu Kollisionen mit der Fahrbahn führen würde.
