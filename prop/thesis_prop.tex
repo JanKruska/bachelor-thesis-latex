@@ -20,6 +20,8 @@
 \usepackage{csquotes}
 \usepackage{todonotes}
 \usepackage{gensymb}
+\usepackage{pgfgantt}
+\usepackage{pdflscape}
 
 \usepackage{placeins}
 \usepackage{afterpage}
@@ -200,12 +202,12 @@ Aerodynamische Probleme, für die zeitaufwendige Simulationen nötig sind, gehö
 Um genetische Taktiken auf eine solche Problemdomäne anzuwenden, wird eine Möglichkeit benötigt die benötigten Funktionsauswertungen erheblich zu reduzieren.
 Eine solche Möglichkeit ist ein Surrogatmodell \cite{Jin.2011}\cite{Preen.2016}, eine Machine-Learning Modell, welches aufgrund echter Simulationsauswertungen trainiert wird um deren Ergebnis annähernd vorherzusagen.
 Eine Auswertung des Modells erfordert dabei nur einen winzigen Bruchteil des Aufwands der für eine Simulation nötig wäre.
-Theoretisch sind verschiedenste Machine-Learning Verfahren für das Surrogatmodell denkbar, Gaußprozesse bieten sich durch die Eigenschaft an, dass sie neben einer Vorhersage auch immer ihre eigene Unsicherheit Liefern, und entsprechend Bereiche zeigen können in denen große Unsicherheit herrscht, sprich in denen der Gaußprozess wenig weiß.
-Der Nachteil der hohen Komplexität von Gaußprozessen \todo[inline]{genaue Komplexität? Quelle: \cite{Rasmussen.2008}} ist durch die Limitierung auf eine geringe Anzahl an Simulationen, und damit der Limitierung auf einen kleinen Trainingsdatensatz vernachlässigbar.
+Theoretisch sind verschiedenste Machine-Learning Verfahren für das Surrogatmodell denkbar, Gaußprozesse \cite{Rasmussen.2008} bieten sich durch die Eigenschaft an, dass sie neben einer Vorhersage auch immer ihre eigene Unsicherheit Liefern, und entsprechend Bereiche zeigen können in denen große Unsicherheit herrscht, sprich in denen der Gaußprozess wenig weiß.
+Der Nachteil der hohen Speicher- und Berechnungskomplexität von Gaußprozessen ist durch die Limitierung auf eine geringe Anzahl an Simulationen, und damit der Limitierung auf einen kleinen Trainingsdatensatz vernachlässigbar.
 
 \subsection{Freiformdeformation}
 
-Freiformdeformation\cite{Sederberg.1986} ist ein Verfahren zu Deformation von dreidimensionalen geometrischen Objekten.
+Freiformdeformation\cite{Sederberg.1986} ist ein Verfahren zu Deformation von geometrischen Objekten.
 Es ist in der Lage 3D-Meshes anhand bestimmter Parameter zu verformen.
 Dazu wird eine Box aus Kontrollpunkten erzeugt.
 Jeder dieser Kontrollpunkte kann dann anhand von Verformungparametern verschoben werden, wodurch für alle Punkte innerhalb der FFD-Box eine Verschiebung berechnet wird, die von der relativen Position des Punkt zum Kontrollpunkt abhängt.
@@ -224,6 +226,9 @@ Es wurden Freiform-Deformationen auf 3D-Bauteile angewandt, welche dann wiederum
 \section{Ansatz}
 
 \todo[inline]{Irgendwo noch ein paar Worte zu OpenFoam}
+Der bestehende Ansatz von SAIL 
+
+
 
 \subsection{Velomobil}
 Aufgrund der Tatsache, dass im momentanen Zustand der Constraint noch nicht erfüllt ist ist ein harter Constraint, der solche Lösungen, die ihn nicht erfüllen nicht zulässt nur schwer umzusetzen, da am Anfang des Prozesses keine bekannte valide Lösung existiert.
@@ -262,19 +267,19 @@ Die Validierung oder Widerlegung dieser Hypothese könnte Einsicht in das Proble
 \section{Leistungen}
 Mindestergebnis:
 \begin{itemize}  
-\item Die Implementierung des produziert für die Radkastendomäne eine Karte aus Verformungen der Radkästen.
+\item Die Implementierung des produziert für eine Domäne eine Karte aus Verformungen.
 \end{itemize}
 Erwartetes Ergebnis:
 \begin{itemize}  
 \item Es fand eine Analyse statt inwieweit der gegebene Constraint die Lösungen und ihre morphologische Diversität beeinflusst
-\item Es fand eine Analyse der Korrelation zwischen den gewählten Features in der Radkastendomäne statt
+\item Es fand eine Analyse der Korrelation zwischen den gewählten Features in einer Domäne statt
 \end{itemize}
 Maximalergebnis:
 \begin{itemize}  
-\item Die Implementierung liefert für die E-Roller-Domäne eine Karte aus Lösungen
-\item Die Implementierung liefert für die E-Roller-Domäne Lösungen die die Constraints erfüllen
-\item Eine Auswahl der besten gefunden Lösungen wurden auf dem nicht-vereinfachten E-Roller-Mesh verifiziert
-\item Es fand eine Analyse der Korrelation zwischen den gewählten Features in der E-Roller-Domäne statt
+\item Die Implementierung liefert für beide Domänen eine Karte aus Lösungen
+\item Die Implementierung liefert für beide Domänen Lösungen, die die jeweiligen Constraints erfüllen
+\item Eine Auswahl der besten gefunden Lösungen der E-Roller Domäne wurden auf dem nicht-vereinfachten E-Roller-Mesh verifiziert
+\item Es fand eine Analyse der Korrelation zwischen den gewählten Features in beiden Domänen statt
 \end{itemize}
 
 \newpage{}
@@ -320,21 +325,50 @@ Maximalergebnis:
 \item Anhang
 \end{enumerate}
 
+\begin{landscape}
 \section{Zeitplanung und Aufgaben}
-\todo[inline]{Hier Montag nochmal drüber sprechen}
-\begin{itemize}
-	\item[2.12.2019] Beginn der Bachelorarbeit
-	\item[16.12.2019] Experimentsparameter der Radkastendomäne festsetzten(Features,Constraint)
-	\item[02.01.2020] Erste Experimentalergebnisse zur Radkastendomäne liegen vor
-	\item[02.01.2020] Festlegung der Finalen Struktur der Thesis
-	\item[02.01.2020] Experimentsparameter der E-Rollerdomäne festsetzten(Features,Constraint)
-	\item[02.01.2020] Erste Fassung des 2.Kapitels(Grundlage)
-	\item[17.01.2020] Erste Fassung des 3.Kapitels(Methode)
-	\item[24.01.2020] Experimente abgeschlossen
-	\item[14.02.2020] Vorfassung der Thesis
-	\item[28.02.2020] Abgabe der Bachelorthesis
-\end{itemize}
+\vfill
+%\todo[inline]{Hier Montag nochmal drüber sprechen}
+%\begin{itemize}
+%	\item[2.12.2019] Beginn der Bachelorarbeit
+%	\item[16.12.2019] Experimentsparameter der Radkastendomäne festsetzten(Features,Constraint)
+%	\item[02.01.2020] Erste Experimentalergebnisse zur Radkastendomäne liegen vor
+%	\item[02.01.2020] Festlegung der Finalen Struktur der Thesis
+%	\item[02.01.2020] Experimentsparameter der E-Rollerdomäne festsetzten(Features,Constraint)
+%	\item[02.01.2020] Erste Fassung des 2.Kapitels(Grundlage)
+%	\item[17.01.2020] Erste Fassung des 3.Kapitels(Methode)
+%	\item[24.01.2020] Experimente abgeschlossen
+%	\item[14.02.2020] Vorfassung der Thesis
+%	\item[28.02.2020] Abgabe der Bachelorthesis
+%\end{itemize}
 
+
+\begin{figure}[!hb]
+	\begin{center}
+		\begin{ganttchart}[expand chart=\linewidth]{1}{13}
+			\gantttitle{Woche}{13} \\
+			\gantttitlelist{1,...,13}{1} \\
+%			\ganttgroup{Group 1}{1}{7} \\
+			\ganttbar{Parameter der Radkastendomäne festlegen}{1}{2} \\
+			\ganttbar{Erste Experimente in Radkastendomäne}{3}{4} \\
+			\ganttbar{Finale Struktur der Thesis festsetzen}{3}{4} \\
+			\ganttbar{Parameter der E-Roller-Domäne festlegen}{3}{4} \\
+			\ganttbar{Kapitel "Grundlagen" verfassen}{3}{4} \\
+			\ganttbar{Kapitel "Methode" verfassen}{5}{6} \\
+			\ganttbar{E-Roller-Experimente}{5}{8} \\
+			\ganttbar{Erste Fassung der Thesis anfertigen}{8}{11} \\
+			\ganttbar{Thesis überarbeiten}{12}{13} \\
+%			\ganttlinkedbar{Task 2}{3}{7} \ganttnewline
+%			\ganttmilestone{Milestone}{7} \ganttnewline
+%			\ganttbar{Final Task}{8}{12}
+%			\ganttlink{elem2}{elem3}
+%			\ganttlink{elem3}{elem4}
+		\end{ganttchart}
+	\end{center}
+	\caption{Zeitplanung}
+\end{figure}
+\vfill
+\end{landscape}
 \end{appendix}
   
 \newpage{}
