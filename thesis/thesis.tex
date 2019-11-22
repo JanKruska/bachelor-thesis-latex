@@ -1,0 +1,290 @@
+%###############################################################################
+% Template fuer eine Abschlussarbeit mit LaTeX
+
+\NeedsTeXFormat{LaTeX2e}
+\documentclass[a4paper]{book}
+
+% LaTeX-Zusatzpakete
+%\usepackage{german}                % deutsches Dokument (Trennung etc.)
+\usepackage[latin1]{inputenc}      % deutsche Eingabezeichen (äü etc. erlaubt)
+\usepackage{times}                 % Times Font
+\usepackage{graphicx}              % Grafiken einbinden (hängt von latex/dvipdf oder pdflatex ab!)
+\usepackage{tabularx}              % erweiterte Tabellenmöglichkeiten
+\usepackage{subfig}                % Teilgrafiken erlauben
+\usepackage{amsfonts}              % fuer zusätzliche math. Symbole
+\usepackage{amssymb}               % weitere math. Symbole
+\usepackage{theorem}               % Theorem-Umgebung
+\usepackage{todonotes}
+%\usepackage{listings}              % Programmlistings
+% Steuerung fuer Programmlistings (anpassen an Programmiersprache)
+%\lstset{language=Java, frame=single, breaklines=true, tabsize=2}
+
+
+%###############################################################################
+% Grössenangaben zum Dokument etc.
+
+% vertikal
+\setlength{\voffset}{-0.5cm}
+\setlength{\textheight}{23cm}
+\setlength{\topmargin}{0cm}
+\setlength{\headheight}{6mm}
+\setlength{\headsep}{1cm}
+\setlength{\topskip}{0cm}
+\setlength{\footskip}{1cm}
+
+% horizontal
+\setlength{\hoffset}{-0.4cm}
+\setlength{\textwidth}{15.5cm}
+\setlength{\oddsidemargin}{0.8cm}
+\setlength{\evensidemargin}{0.8cm}
+
+\setlength{\parindent}{0cm}        % kein Einzug bei Paragrafenbeginn
+
+
+%###############################################################################
+% Hier geht es los
+
+% Autor und Abgabedatum ändern
+\def\autor{Jan Kruska}
+\def\datum{\date}
+
+% Titelseite erzeugen
+\begin{document}
+
+
+%###############################################################################
+% Titelseite
+
+\sloppy
+\pagestyle{headings}
+\bibliographystyle{alphadin}
+\pagenumbering{roman}
+
+
+% Basierend auf der Fachschaftsvorlage
+\begin{titlepage}
+  \textbf{
+    \begin{tabular}[t]{>{\vspace*{0pt}}p{0.45\textwidth}c>{\vspace*{0pt}}p{0.45\textwidth}}
+      {
+        \begin{tabular}{ll}
+          \begin{tabular}{l}
+            \raisebox{1.5\height}{\includegraphics[width=0.13\textwidth]{fhlogo}} 
+          \end{tabular}
+          &
+          \begin{tabular}{l}
+            {\small{\sffamily Hochschule}}\\
+            {\small{\sffamily Bonn-Rhein-Sieg}}\\
+            {\footnotesize{\itshape University of Applied Sciences}}\\
+            \\
+              {\small{\sffamily Fachbereich Informatik}}\\
+              {\footnotesize{\itshape Computer Science Department}}\\
+          \end{tabular}
+        \end{tabular}
+      }
+      &
+      \hspace*{0.1\textwidth}
+      &
+      \begin{tabular}{r}
+% hier evtl. Firma nennen mit/ohne Logo, ansonsten auskommentieren
+%        \hfill \includegraphics[width=0.2\textwidth]{firmenlogo}\\
+      \end{tabular}
+    \end{tabular}
+  } %\textbf
+  
+  
+  \renewcommand{\baselinestretch}{1.4}\normalsize
+  
+  \vspace{3cm}
+  \begin{center}
+    
+% einen Typ auswählen
+    \begin{Huge}\textbf{Abschlussarbeit}\end{Huge}\\
+    \vspace{0.8cm}
+% einen Studiengang auswählen
+    \begin{Large}\textbf{im Bachelorstudiengang Informatik}\end{Large}\\
+    
+    \vspace{2.2cm}
+    \renewcommand{\baselinestretch}{1.2}\normalsize
+    \begin{huge}
+      \textbf{Thema der Arbeit\\}
+    \end{huge}
+    \renewcommand{\baselinestretch}{1.5}\normalsize
+    \vspace{0.7cm}
+    
+    
+    \begin{Large}\textbf{von \autor\ \\}
+    \end{Large}
+  \end{center}
+  
+  \vspace{5.0cm}
+  
+  \begin{large}
+    \textbf{
+      \begin{tabular}{ll}
+      Erstbetreuer:  & Prof. Dr.-Ing Franz Mustermann\\
+      Zweitbetreuer: & Dipl.-Ing Kloria Musterfrau\\
+                     & \\
+      Eingereicht am: & \datum\ \\
+      \end{tabular}
+    }
+  \end{large}
+\end{titlepage}
+
+
+%###############################################################################
+% Erklärung
+
+\cleardoublepage
+\section*{Erklärung}
+
+Hiermit erkläre ich an Eides Statt, dass ich die vorliegende Arbeit
+selbstständig und ohne Benutzung anderer als der angegebenen
+Hilfsmittel angefertigt habe. Die aus fremden Quellen direkt oder
+indirekt übernommenen Gedanken sind als solche kenntlich gemacht.  Die
+Arbeit wurde bisher in gleicher oder ähnlicher Form noch keiner
+anderen Prüfungsbehörde vorgelegt bzw. nicht veröffentlicht.
+
+\vspace{1cm}
+Sankt Augustin, den \datum\
+\vspace{2cm}
+
+
+\rule{10cm}{0.1mm} \\
+\autor\
+
+
+%###############################################################################
+% Abstract
+
+\clearpage
+\section*{Abstract}
+  Englische Zusammenfassung
+
+\clearpage
+\section*{Zusammenfassung}
+  Diese Arbeit befasst sich mit grundsätzlichen Überlegungen zur
+  Lastverteilung in Parallelrechnern mit einer großen
+  Prozessoranzahl. Als wesentliches Ergebnis dieser Arbeit wird
+  nachgewiesen, dass die Skalierbarkeit eines Algorithmus
+  grundsätzlich nach oben durch die Anzahl der Prozessoren bechränkt
+  ist.
+
+
+%###############################################################################
+% Inhaltsverzeichnis
+
+\tableofcontents           % Inhaltsverzeichnis generieren
+\cleardoublepage
+\pagenumbering{arabic}
+
+
+%###############################################################################
+% Kapitel 1
+
+\chapter{Einleitung}
+ca. 1-2 Seiten
+
+Motivation für die Arbeit
+
+Aufgabenbeschreibung, Abgrenzung
+
+
+%###############################################################################
+
+\chapter{Grundlagen}
+
+Wie schon in \cite{Goldberg1991} \cite{Balzert2001} \cite{Rump1988}
+gesagt wurde, ist das alles sehr wichtig. Auch \cite{Gosling2005} und
+\cite{Java2005} haben dies gezeigt.
+
+
+\section{Unterkapitel}
+
+\subsection{Unterunterkapitel}
+
+\subsubsection{Unterunterunterkapitel}
+Eine zu tiefe Gliederung des Textes erhöht nicht die Lesbarkeit.
+
+
+%###############################################################################
+
+\chapter{Konzept}
+
+Bilder sind manchmal gut zur Darstellung von komplexen
+Zusammenhängen. Dazu dient hier die Abbildung \ref{fig:Gliederung}.
+
+\begin{figure}
+\begin{center}
+\includegraphics[height=2cm]{fhlogo}
+\caption{Übersichtsbild.}
+\label{fig:Gliederung}
+\end{center}
+\end{figure}
+
+
+%###############################################################################
+
+\chapter{Realisierung}
+
+Zwei Bilder sind nicht immer besser als ein Bild, wie Abbildung
+\ref{fig:ZweiBilder} zeigt.
+
+\begin{figure}
+\centering
+\subfloat[Teilbild 1]{\includegraphics[width=0.2\hsize]{fhlogo}}
+\hspace*{0.05\hsize}
+%\subfloat[Teilbild 2]{\includegraphics[width=0.2\hsize]{firmenlogo}}
+\caption{Zwei Bilder in einem Bild.}
+\label{fig:ZweiBilder}
+\end{figure}
+
+
+%###############################################################################
+
+\chapter{Evaluierung}
+
+
+%###############################################################################
+
+\chapter{Zusammenfassung und Ausblick}
+
+
+%###############################################################################
+% Literaturverzeichnis und ggfs. Index
+
+\cleardoublepage
+\addcontentsline{toc}{chapter}{Literaturverzeichnis}
+\bibliography{literatur}
+
+% soweit gewünscht: Tabellen- und Abbildungsverzeichnis
+\cleardoublepage
+\listoftables              % Tabellenverzeichnis
+\cleardoublepage
+\listoffigures             % Abbildungsverzeichnis
+
+
+%###############################################################################
+% Appendix (falls nötig)
+
+\cleardoublepage
+\addcontentsline{toc}{chapter}{Anhang}
+\begin{appendix}           % Anhang
+
+\chapter{Liste aller Kommandos}
+Im Anhang finden sich technische Details, die für den eigentlichen
+Text zu umfangreich sind.  Es ist aber auch zu fragen, ob solche
+umfangreichen Informationen in einer schriftlichen Ausarbeitung
+überhaupt sinnvoll sind und nicht besser elektronisch zur Verfügung
+gestellt werden.
+
+\chapter{Ablaufprotokoll}
+...
+
+\end{appendix}
+
+
+%###############################################################################
+
+\end{document}
+
+%###############################################################################
