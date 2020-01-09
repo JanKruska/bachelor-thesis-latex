@@ -6,12 +6,12 @@
 
 % LaTeX-Zusatzpakete
 %\usepackage{german}                % deutsches Dokument (Trennung etc.)
-\usepackage[latin1]{inputenc}      % deutsche Eingabezeichen (äü etc. erlaubt)
+\usepackage[utf8]{inputenc}      % deutsche Eingabezeichen (ï¿½ï¿½ etc. erlaubt)
 \usepackage{times}                 % Times Font
-\usepackage{graphicx}              % Grafiken einbinden (hängt von latex/dvipdf oder pdflatex ab!)
-\usepackage{tabularx}              % erweiterte Tabellenmöglichkeiten
+\usepackage{graphicx}              % Grafiken einbinden (hï¿½ngt von latex/dvipdf oder pdflatex ab!)
+\usepackage{tabularx}              % erweiterte Tabellenmï¿½glichkeiten
 \usepackage{subfig}                % Teilgrafiken erlauben
-\usepackage{amsfonts}              % fuer zusätzliche math. Symbole
+\usepackage{amsfonts}              % fuer zusï¿½tzliche math. Symbole
 \usepackage{amssymb}               % weitere math. Symbole
 \usepackage{theorem}               % Theorem-Umgebung
 \usepackage{todonotes}
@@ -21,7 +21,7 @@
 
 
 %###############################################################################
-% Grössenangaben zum Dokument etc.
+% Grï¿½ssenangaben zum Dokument etc.
 
 % vertikal
 \setlength{\voffset}{-0.5cm}
@@ -44,7 +44,7 @@
 %###############################################################################
 % Hier geht es los
 
-% Autor und Abgabedatum ändern
+% Autor und Abgabedatum ï¿½ndern
 \def\autor{Jan Kruska}
 \def\datum{\date}
 
@@ -97,10 +97,10 @@
   \vspace{3cm}
   \begin{center}
     
-% einen Typ auswählen
+% einen Typ auswï¿½hlen
     \begin{Huge}\textbf{Abschlussarbeit}\end{Huge}\\
     \vspace{0.8cm}
-% einen Studiengang auswählen
+% einen Studiengang auswï¿½hlen
     \begin{Large}\textbf{im Bachelorstudiengang Informatik}\end{Large}\\
     
     \vspace{2.2cm}
@@ -132,17 +132,17 @@
 
 
 %###############################################################################
-% Erklärung
+% Erklï¿½rung
 
 \cleardoublepage
-\section*{Erklärung}
+\section*{ErklÃ¤rung}
 
-Hiermit erkläre ich an Eides Statt, dass ich die vorliegende Arbeit
-selbstständig und ohne Benutzung anderer als der angegebenen
+Hiermit erklÃ¤re ich an Eides Statt, dass ich die vorliegende Arbeit
+selbststÃ¤ndig und ohne Benutzung anderer als der angegebenen
 Hilfsmittel angefertigt habe. Die aus fremden Quellen direkt oder
-indirekt übernommenen Gedanken sind als solche kenntlich gemacht.  Die
-Arbeit wurde bisher in gleicher oder ähnlicher Form noch keiner
-anderen Prüfungsbehörde vorgelegt bzw. nicht veröffentlicht.
+indirekt Ã¼bernommenen Gedanken sind als solche kenntlich gemacht.  Die
+Arbeit wurde bisher in gleicher oder Ã¤hnlicher Form noch keiner
+anderen PrÃ¼fungsbehÃ¶rde vorgelegt bzw. nicht verÃ¶ffentlicht.
 
 \vspace{1cm}
 Sankt Augustin, den \datum\
@@ -156,18 +156,7 @@ Sankt Augustin, den \datum\
 %###############################################################################
 % Abstract
 
-\clearpage
-\section*{Abstract}
-  Englische Zusammenfassung
 
-\clearpage
-\section*{Zusammenfassung}
-  Diese Arbeit befasst sich mit grundsätzlichen Überlegungen zur
-  Lastverteilung in Parallelrechnern mit einer großen
-  Prozessoranzahl. Als wesentliches Ergebnis dieser Arbeit wird
-  nachgewiesen, dass die Skalierbarkeit eines Algorithmus
-  grundsätzlich nach oben durch die Anzahl der Prozessoren bechränkt
-  ist.
 
 
 %###############################################################################
@@ -182,44 +171,16 @@ Sankt Augustin, den \datum\
 % Kapitel 1
 
 \chapter{Einleitung}
-ca. 1-2 Seiten
 
-Motivation für die Arbeit
-
-Aufgabenbeschreibung, Abgrenzung
 
 
 %###############################################################################
 
-\chapter{Grundlagen}
 
-Wie schon in \cite{Goldberg1991} \cite{Balzert2001} \cite{Rump1988}
-gesagt wurde, ist das alles sehr wichtig. Auch \cite{Gosling2005} und
-\cite{Java2005} haben dies gezeigt.
-
-
-\section{Unterkapitel}
-
-\subsection{Unterunterkapitel}
-
-\subsubsection{Unterunterunterkapitel}
-Eine zu tiefe Gliederung des Textes erhöht nicht die Lesbarkeit.
+\section{}
 
 
 %###############################################################################
-
-\chapter{Konzept}
-
-Bilder sind manchmal gut zur Darstellung von komplexen
-Zusammenhängen. Dazu dient hier die Abbildung \ref{fig:Gliederung}.
-
-\begin{figure}
-\begin{center}
-\includegraphics[height=2cm]{fhlogo}
-\caption{Übersichtsbild.}
-\label{fig:Gliederung}
-\end{center}
-\end{figure}
 
 
 %###############################################################################
@@ -256,7 +217,7 @@ Zwei Bilder sind nicht immer besser als ein Bild, wie Abbildung
 \addcontentsline{toc}{chapter}{Literaturverzeichnis}
 \bibliography{literatur}
 
-% soweit gewünscht: Tabellen- und Abbildungsverzeichnis
+% soweit gewï¿½nscht: Tabellen- und Abbildungsverzeichnis
 \cleardoublepage
 \listoftables              % Tabellenverzeichnis
 \cleardoublepage
@@ -264,18 +225,14 @@ Zwei Bilder sind nicht immer besser als ein Bild, wie Abbildung
 
 
 %###############################################################################
-% Appendix (falls nötig)
+% Appendix (falls nï¿½tig)
 
 \cleardoublepage
 \addcontentsline{toc}{chapter}{Anhang}
 \begin{appendix}           % Anhang
 
 \chapter{Liste aller Kommandos}
-Im Anhang finden sich technische Details, die für den eigentlichen
-Text zu umfangreich sind.  Es ist aber auch zu fragen, ob solche
-umfangreichen Informationen in einer schriftlichen Ausarbeitung
-überhaupt sinnvoll sind und nicht besser elektronisch zur Verfügung
-gestellt werden.
+
 
 \chapter{Ablaufprotokoll}
 ...

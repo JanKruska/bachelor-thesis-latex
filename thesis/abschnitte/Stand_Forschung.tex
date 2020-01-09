@@ -1,0 +1,99 @@
+\section{Grundlagen}
+
+\subsection{Genetische Algorithmen}
+
+\subsubsection{MAP-Elites}
+
+\subsection{Surrogat-Modelle}
+
+\subsection{Gaußprozesse}
+
+Gaußprozesse sind ein in \todo{cite gp} entwickeltes Machine-Learning Verfahren, mit welchem beliebige mathematische Funktionenen approximiert werden können. in großer Vorteil von Gaußprozessen ist, dass sie durch ihre Herkunft aus der Statistik neben die zu approximierende Funktion als Kombination aus Normalverteilungen modellieren.
+Dadurch können Gaußprozesse neben einer Vorhersage auch die Varianz der Vorhersage an jedem Punkt liefern.
+Das bedeutet, dass zu jedem Punkt auch die Unsicherheit bekannt ist, was für die Exploration des Funktionsraum
+ein erheblicher Vorteil ist.
+Der Hauptnachteil von Gaußprozessen ist der relativ hohe Speicher und Rechenkomplexität, da die ANzahl an Funktionsauswertungen 
+\subsection{Constraints in Optimierungsprozessen}
+
+\subsubsection{Soft Constraints}
+
+\subsubsection{Hard Constraints}
+
+\section{Methode}
+
+\subsection{Radkästen des Velomobils}
+
+Die erste Problemdomäne stellt die Optimierung der Radkästen eines Velomobils dar.
+Da die momentanen Radkästen den Lenkausschlag des Velomobils erheblich einschränken, besteht das Ziel hierbei Radkästen zu generieren, die den maximalen oder zumindest einen weiteren Lenkausschlag ermöglichen und dabei trotzdem gute aerodynamische Eigenschaften aufweisen.
+
+\subsubsection{Constraint}
+Zur Erfüllung des Constraints wurden alle möglichen Radausschläge als Volumen modelliert (Volumen zu finden in ffd/turning\_volume.stl)
+
+\begin{table}[h]
+	\begin{tabularx}{.5\textwidth}{ll}\hline
+		
+		Position\footnote{Urpsprung des Koordinatensystems auf Boden an der Spitze des Velomobils. Linkshändiges Koordinatensystem mit z Höhenachse und Velomobil in -x-Richtung ausgerichtet} & \\
+		\hline
+		x &	$926mm$ \\
+		y &	$343mm$ \\
+		z &	$205mm$	\\
+	\end{tabularx}
+	\begin{tabularx}{.5\textwidth}{ll}\hline
+		Rotation & \\ \hline
+		$\phi$ & $16,6\degree$ \\
+		$\theta$ & $0\degree$ \\
+		$\psi$ & $0\degree$ \\
+	\end{tabularx}
+	\begin{tabularx}{.5\linewidth}{ll}
+		Radius des Rads & $230mm$ \\
+		
+		Radausschlag & $\pm24,37\degree$\\
+		
+	\end{tabularx}
+
+\label{tab:wheel_params}
+\caption{Parameter Radausschlag}
+\end{table}
+
+Da ein Ziel darin bestand, den Constraint nicht als binäres, erfüllt/nicht erfüllt Problem zu definieren, da zwischen zwei Lösungen, die den Constraint nicht erfüllen trotzdem qualitative Unterschiede bestehen können wie stark der Constraint verletzt wird, wird als Constraint das Differenzvolumen des Radausschlags minus verformten Radkastens gewählt.
+Da alle generierten Verformungen der Radkästen symmetrisch sind, wird der Constraint jeweils nur für den rechten Radkasten berechnet.
+Zwar besteht keine direkte Kausalität zwischen diesem Volumen und dem maximalen möglichen Radausschlag aber die Vermutung, dass eine geringeres Volumen dieser Different mit größerem möglichen Radausschlag korreliert ist liegt nahe.
+Zur Berechnung der Differenz zwischen Radausschlagsvolumen und Radkasten wird die Bibliothek \textit{gptoolbox} \todo{cite} genutzt, zur Generierung von Tetraedermeshes zur Volumenberechnung \textit{TetGen} \todo{cite}.
+Um eine Differenz berechnen zu können wurde der rechte Radkasten zu einem geschlossenen Volumen gemacht, da die Constraintberechnung in jeder Generation für jedes Kind erfolgen muss wurde der Radkasten außerdem runtergesamplet \todo{klingt komisch? besseres wort} um die Berechnung  des Constraints ausreichend schnell durchführen zu können.
+Aus dem Volumen wurde dann der Strafwert berechnet der in die Akquisefunktion integriert wurde.
+
+\subsection{Kategorien}
+Als Kategorien wurde die Breite des Velomobils gewählt.
+Hierzu kann die Hypothese aufgestellt werden, dass die Breite des Velomobils mit der Erfüllung des Constraint korreliert ist. Es wäre also zu erwarten, dass breitere Velomobile den Constraint tendenziell besser erfüllen, als schmalere.
+Auch kann die Hypothese aufgestellt werden, dass die Breite negativ mit dem Luftwiderstandsbeiwert korreliert ist.
+Insgesamt wäre also zu vermuten, dass entlang dieser Achse
+Als zweite Kategorie wurde die x-Koordinate des breitesten Punkts gewählt.
+Da das Velombil in negative x-Richtung zeigt, bedeuten kleinere Werte hier, dass der Punkt weiter vorne liegt, größere, dass er weiter hinten liegt.
+Zu dieser Kategorie lassen sich keine so direkten Hypothesen aufstellen wie zur ersteren.
+Die Frage ob sich hier klare Tendenzen bezüglich den aerodynamischen Eigenschaften und/oder des Constraints aufzeigen ist Ziel der Untersuchung.
+
+
+\subsubsection{E-Roller}
+
+Die zweite Problemdomäne ist die explorative Untersuchung eines Bauteils an der Unterseite eines E-Rollers.
+Hier besteht die Frage ob nicht-triviale Bauteile aerodynamische Vorteile bieten, und welche Eigenschaften solche Bauteile aufweisen.
+
+\subsection{OpenFOAM}
+
+OpenFoam \todo{cite openfoam} ist eine Open-Source Programm zur Durchführung von Fluiddynamiksimulationen.
+Alle Dateien für OpenFOAM-Simulationen sind in den Ordnern \textit{domains/wheelcase/pe} und \textit{domains/escooter/pe} zu finden.
+\todo{irgendetwas zu cases}
+OpenFOAM wird durch Dictionary-Dateien gesteuert.
+Mit diesen Dictionary-Dateien werden die in OpenFOAM enthaltenen Funktionen parametrisiert.
+OpenFOAM bietet native Unterstützung von Parallelität über die MPI-Bibliothek \todo{cite mpi}.
+Neben den Funktionen um die korrekte Aufteilung eines Cases auf mehrere Prozessoren aufzuteile und am ENde wieder zu rekonstruieren sind zwei Funktionen und deren dazugehörige Dateien hervorzuheben.
+
+Die erste dieser Funktionen ist \textit{snappyHexMesh}, das durch \textit{snappyHexMeshDict} parametrisiert wird, mit welchem das aus dem STL-Orginalmesh das für die Fluiddynamiksimulation benötigte Mesh generiert wird. Durch die Parametrisierung von snappyHexMesh wird kontrolliert wie detailliert das Mesh an welchen Stellen ist.
+Die wichtigen genutzten Definitionen in snappyHexMesh sind:
+\todo{snappyhexmesh definitionen}
+
+Die zweite dieser Funktione ist die eigentliche Fluiddynamiksimulation welche durch die Datei \textit{fvSolution} gesteuert wird. 
+Es stehen verschiedene Simulationen für verschiedene Zwecke zur Verfügung.
+Hier wurde \textit{simpleFoam} gewählt, da der Funktionsumfang für den Fokus dieser Arbeit völlig ausreicht.
+
+

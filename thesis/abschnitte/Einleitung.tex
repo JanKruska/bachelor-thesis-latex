@@ -1,0 +1,119 @@
+
+\clearpage
+\section*{Abstract}
+Englische Zusammenfassung
+
+\clearpage
+\section*{Zusammenfassung}
+Diese Arbeit befasst sich mit grundsätzlichen Überlegungen zur
+Lastverteilung in Parallelrechnern mit einer großen
+Prozessoranzahl. Als wesentliches Ergebnis dieser Arbeit wird
+nachgewiesen, dass die Skalierbarkeit eines Algorithmus
+grundsätzlich nach oben durch die Anzahl der Prozessoren beschränkt
+ist.
+
+
+\section{Einleitung}
+
+Evolutionäre Taktiken haben sich in der Vergangenheit als mächtige Heuristik zur Untersuchung komplexer Problemräume bewiesen.\todo{Quelle}
+Evolutionäre Taktiken sind dabei in der Lage kreative Lösungen, in komplexesten Problemräumen zu ermitteln.
+Genetische Algorithmen sind eine solche Taktik, die an der biologischen Evolution angelehnt entwickelt wurde.
+Genetische Algorithmen entwickeln erst eine Möglichkeit eine funktionale Lösung, auch Phänotyp genannt, durch einen Genotypen, was typischerweise ein Vektor eine bestimmten Länge ist, ausdrücken zu können.
+Dazu wird eine Funktion benötigt, die diesen Genotypen in einen Phänotypen übersetzt.
+Außerdem wird eine Zielfunktion, oder Fitnessfunktion benötigt, mit der die Lösungsqualität eines Individuums, d.h. dessen Phänotyps, ermittelt werden kann.
+Sind diese Dinge definiert, können die drei Mechanismen der Evolution, Mutation, Crossover
+\footnote{Manche genetische Algorithmen, wie beispielsweise die $(1+\lambda)$-ES verzichten auf Crossover} und Selektion angewandt werden um eine Population zu Lösung(en) konvergieren zu lassen.
+Bei der Anwendung evolutionärer Taktiken stellen sich allerdings einige Probleme.
+
+Eines dieser Probleme stellt sich recht häufig, da genetische Algorithmen ohne Diversitätsmanagement typischerweise sehr stark konvergieren und dadurch of tin lokalen Optima hängen bleiben.
+Um dieser Tendenz entgegenzuwirken und diverse Populationen aufrecht zu erhalten wurden verschiedene Taktiken vorgeschlagen, die sich grob in genotypische und phänotypische Diversitätsmanagementverfahren unterscheiden lassen.
+Verfahren zur Erhaltung genotypischer Diversität messen Diversität, die nichts anderes als das Inverse der Ähnlichkeit einer Population untereinander ist, durch die Ähnlichkeit zweier Genotypen zueinander.
+Da Genotypen Vektoren sind kann hier auf eines der vielen Ähnlichkeitsmaße, die für Vektoren existieren, zurückgegriffen werden.
+Daneben existieren auch solche Verfahren, die Diversität anhand der Ähnlichkeit der Phänotypen messen.
+Das hat den Vorteil, das der Phänotyp die Funktion, eines Individuums beschreibt, es wird also funktionale , statt genetischer Diversität hergestellt.
+Allerdings bringt dies das weitere Problem mit sich wie man die phänotypische Ähnlichkeit zweier Individuen definiert.
+Da der Phänotyp stark von der Problemdomäne abhängt muss diese Ähnlichkeitsdefinition für jede Domäne unterschiedlich erfolgen.
+Im Folgenden soll sich mit einer Möglichkeit zum phänotypischen Diversitätsmanagement auseinandergesetzt werden.
+
+Daneben ergeben sich häufig domänenspezifische Probleme.
+Eines dieser Probleme ist, dass genetische Algorithmen eine große Zahl von Auswertungen der Fitnessfunktion benötigen.
+Das kann dazu führen, dass genetische Algorithmen in Problemdomänen, in denen die Auswertung der Fitnessfunktion rechenaufwändig ist, nicht konkurrenzfähig sind.\todo{komishce formulierung}
+Um genetische Algorithmen für solche Probleme nutzen zu können werden somit Möglichkeiten benötigt, die Anzahl an rechenaufwändigen Evaluationen stark zu reduzieren.
+Eine solche Möglichkeit die Erfolg gezeigt hat sind Surrogat-Modelle.
+Diese werden mit tatsächlichen Evaluationen trainiert, deren Ergebnisse hervorzusagen.
+Das führt dazu, dass sie statt der tatsächlichen Evaluation im genetischen Algorithmus genutzt werden können.
+Die Auswertung eines Surrogat-Modells benötigt dabei nur einen Bruchteil der Zeit, die eine tatsächliche Evaluation benötigen würde.
+
+Das letzte große Problem, was sich stellt ist die Einbindung von Constraints.
+Häufig existieren neben der primären Zielfunktion die optimiert wird, weitere sekundäre Ziele.
+Wenn die Ressourcen für eine multivariate Optimierung fehlen, können solche sekundären Optimierungsparameter nicht einfach zu Zielfunktionen erklärt werden.
+Stattdessen müssen diese Constraints anderweitig in die Algorithmik eingebunden werden.
+Es gibt verschiedene Ansätze zu Integration von Constraints in Optimierungsprobleme, welcher dieser Ansätze aber am Besten funktioniert hängt stark von der Problemdomäne und den Constraints ab.
+
+In dieser Arbeit soll untersucht werden wie sich verschiedene Arten Constraints in die Algorithmik eines divergenten genetischen Verfahren auf die, von diesem Verfahren erzeugten Lösungen, auswirkt.
+Dies soll anhand der Lösung eines Problems der Aerodynamik-Domäne durch Anwendung der Surrogat-assistierten Illumination geschehen, einem Verfahren welches den divergenten genetischen Algorithmus MAP-Elites um eine Surrogat-Assistenz erweitert.
+
+% 
+%Die Domäne der Aerodynamik stellt eine solche komplexe Problemdomäne dar, deren grundlegende physikalische Regeln zwar verstanden sind, das Zusammenspiel dieser physikalischen Gesetze in der Praxis allerdings so komplex ist, dass häufig auf allgemeine Faustregeln zum aerodynamischen Design zurückgefallen wird.
+%Sowohl bei der allgemeinen genetischen Programmierung, als auch bei der konkreten Anwendungsdomäne stellen sich dabei einige Probleme.
+%Eines dieser Probleme ist Diversitätsmanagement.
+%Um nicht in lokalen Optima stecken zu bleiben wird häufig Taktiken zum Diversitätsmanagement eingesetzt.
+%
+
+%\subsubsection{Abbildungen}
+%\begin{figure}[!ht]
+%  \begin{center}
+%    \includegraphics[width=3cm]{bilder/fhlogo.pdf}
+%    \caption{Logo Hochschule Bonn-Rhein-Sieg}
+%    \label{an_tranciver}
+%  \end{center}
+%\end{figure}
+%
+%\begin{figure}[!ht]
+%  \begin{center}
+%    \includegraphics[width=3cm]{bilder/fhlogo.pdf}
+%    \caption{Logo Hochschule Bonn-Rhein-Sieg}
+%    \label{an_tranciver}
+%  \end{center}
+%\end{figure}
+%
+%\begin{figure}[!ht]
+%  \begin{center}
+%    \includegraphics[width=3cm]{bilder/fhlogo.pdf}
+%    \caption{Logo Hochschule Bonn-Rhein-Sieg}
+%    \label{an_tranciver}
+%  \end{center}
+%\end{figure}
+%
+%\begin{figure}[!ht]
+%  \begin{center}
+%    \begin{tabular}{|c|c||c|c|c|c|c|c|c|c|c||c||c|c|}
+%    \hline
+%    P & Q & $\neg$ & ( P & $\vee$ & Q ) & $\vee$ & ( $\neg$ & P & $\wedge$ & Q ) & $\equiv$ & $\neg$ & P  \\ \hline \hline
+%    0 & 0 & 1 & 0 & 0 & 0 & $\mathbf{1}$ & 1 & 0 & 0 & 0 & & $\mathbf{1}$ & 0\\ \hline
+%    0 & 1 & 0 & 0 & 1 & 1 & $\mathbf{1}$ & 1 & 0 & 1 & 1 & & $\mathbf{1}$ & 0\\ \hline
+%    1 & 0 & 0 & 1 & 1 & 0 & $\mathbf{0}$ & 0 & 1 & 0 & 0 & & $\mathbf{0}$ & 1\\ \hline
+%    1 & 1 & 0 & 1 & 1 & 1 & $\mathbf{0}$ & 0 & 1 & 0 & 1 & & $\mathbf{0}$ & 1\\ \hline
+%    \end{tabular}
+%    \caption{Wahrheitstabelle: $\neg$ ( P $\vee$ Q ) $\vee$ ( $\neg$ P $\wedge$ Q ) $\equiv$ $\neg$ P}
+%  \end{center}
+%\end{figure}
+%
+%\subsection{Zitate}
+%\cite{BarAhl08} sagen hier steht ein Text. \\
+%\citet{BruMurPerWygMcN09} sagen hier steht ein Text. \\
+%\citet*{BruMurPerWygMcN09} sagen hier steht ein Text. \\
+%"`Hier steht ein Text."' \citep{BarAhl08} \\
+%Hier steht ein Text. \citep[Vgl.][]{BarAhl08} \\
+%Hier steht ein Text. \citep[][S. 200]{BruMurPerWygMcN09} \\
+%Hier steht ein Text. \citep*[][S. 200]{BruMurPerWygMcN09} \\
+%Hier steht ein Text. \citep{wiki:001,BruMurPerWygMcN09} \\
+%
+%
+%\subsubsection{Abkürzungen}
+%\acf{GSM} \\
+%\acs{NUA} \\
+%\acl{BUT}  \\
+%\acp{UA} \\
+%
+%

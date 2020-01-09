@@ -1,67 +1,24 @@
-############################################################
-#
-# Makefile für Abschlussarbeit
-#
-# Mögliche Aufrufe:
-#  - make        : erzeugen der gesamten Arbeit als pdf
-#  - make clean  : löschen fast aller Dateien im Verzeichnis
-#
-# Mögliche/nötige Anpassungen gekennzeichnit mit ???
-#
-############################################################
+DOCUMENT_NAME = Arbeit
+XELATEX = xelatex
 
-# ??? Name des LaTeX-Datei mit Endung .tex (ggfs. anpassen)
-NAME	= thesis
-
-# Überschreiben Default-Regel für .tex Endungen
-%.dvi: %.tex
-
-# Regel, um aus .bib eine .bbl zu machen
-%.bbl: %.bib
-	bibtex $*
-
-# Verhindert das Löschen von Zwischendateien nach make
-.SECONDARY: $(NAME).bbl $(NAME).dvi
-
-.PHONY: default clean
+default: 
+	@echo 'make all    | Erstelle das komplette Dokument inklusive bib-Datei fÃ¼r das Literaturverzeichnis'
+	@echo 'make bib    | Erstelle bib-Datei fÃ¼r Literaturverzeichnis'
+	@echo 'make doc    | Erstelle komplettes Dokument und lese die Ausgabe. Falls Fehler auftreten fÃ¼hre make bib oder make doc erneut aus.'
+	@echo 'make clean  | SÃ¤ubere das Arbeitsverzeichnis von temporÃ¤ren Dateien und Verzeichnissen.'
 
 
-############################################################
-#
-# ??? LaTeX kennt entweder LaTeX+dvips oder pdflatex
-# Unterschiede selber rausfinden (z.B.- unterstützte Grafikformate)
-# Eine Version davon muss man sich aussuchen.
-#
-############################################################
+all: doc bib doc_twice
 
-# Version 1 (LaTeX + dvips; hier auskommentiert)
-#TEX	= latex
-#DVIPDF	= dvipdf
-# aus tex-Datei pdf-datei generieren inkl. aktuellem Literaturverzeichnis
-#%.pdf: %.tex
-#	$(TEX) $*
-#	-bibtex $*
-#	$(TEX) $*
-#	$(TEX) $*
-#	$(DVIPDF) $*
+bib: 
+	bibtex $(DOCUMENT_NAME)
 
-# Version 2 (pdflatex; derzeit auskommentiert)
-TEX	= pdflatex
-# aus tex-Datei pdf-datei generieren
-%.pdf: %.tex
-	$(TEX) $*
-	-bibtex $*
-	$(TEX) $*
-	$(TEX) $*
+doc: 
+	$(XELATEX) $(DOCUMENT_NAME).tex
 
-############################################################
-# das sind die möglich Ansprungziele beim Aufruf
+doc_twice: 
+	$(XELATEX) $(DOCUMENT_NAME).tex
+	$(XELATEX) $(DOCUMENT_NAME).tex
 
-default:: $(NAME).pdf
-
-clean::
-	-rm -f	*.aux *.toc *.dvi *.ind *.ilg *.cb *.cb2 *.idx *.log *.bbl *.blg *.pdf *.out *.lof *.lot
-
-############################################################
-
-
+clean:
+	rm -f .log quit.tex *.acn *gdf *.glg *. glo *. gls *.ist *.lol *.nlo *.nls *.ps *.out *.dvi *.log *.aux *.blg *.toc *.log *.bbl *.lof *.lot *.idx *.brf *.ilg *.ind abschnitte/*.aux bilder/*.aux
