@@ -23,17 +23,108 @@ Ob eine Fitness- oder Kostenfunktion genutzt wird hängt von der Problemformulie
 Die Fitness, bzw. der Kosten jedes Individuums kann dann ermittelt werden und die Selektion eliminiert dann schlechte Lösungen, sprich solche mit niedriger Fitness, bzw. hohen Kosten.
 Dadurch werden in jeder Generation neue Individuen generiert und schlechte Individuen aussortiert, was Stück für Stück zu einer Verbesserung der Population führt.
 
+\subsubsection{Divergente genetische Algorithmen}
+
+Eine sehr häufige Anforderung an genetische Algorithmen ist die Einbindung von Divergenz, bzw. Diversität.
+Dies hat verschiedene Gründe.
+Einerseits führt eine niedrige Diversität der Individuen dazu, dass nur ein kleiner Bereich des Suchraums, nämlich der in dem die Individuen liegen abgesucht wird.
+Sehr homogene Populationen können dadurch einfach in lokalen Optima stagnieren, da andere Optima zu weit im Suchraum entfernt sind.
+In einer diversen Population ist das Springen aus lokalen Optima hingegen einfacher, und selbst wenn Populationen stagnieren, dann geschieht dies in mehreren Optima gleichzeitig, wodurch die Wahrscheinlichkeit in einem im globalen Vergleich gutes lokalen Optimum zu finden steigt.
+Auch ist es nicht unbedingt wünschenswert eine sehr homogene Population als Ergebnis zu erhalten, da die Individuen mit hoher Wahrscheinlichkeit aller der gleichen Lösungsklasse angehören.
+Wenn man eine diverse Population aus Individuen erhält können Aussagen über unterschiedliche Lösungsklassen getroffen werden, Lösungsklassen und ihre Qualität können miteinander verglichen werden, und je nachdem kann größere Erkenntnis erlangt werden, was eine qualitativ hochwertige Lösung ausmacht wodurch wiederum das gestellte Problem besser verstanden werden kann.
+
+Es existieren verschiedenste Ansätze um Diversität zu gewährleisten, welche sind grundsätzlich in genotypische und phänotypische Ansätze aufteilen lassen, abhängig davon wo Diversitätsmanagement stattfindet.
+Ansätze wie Niching\todo{cite}, gewährleisten genotypische Diversität durch die Ermittlung der genetischen Ähnlichkeit zweier Individuen.
+Das hat den Vorteil, dass der Genotyp eines Individuums typischerweise ein Vektor ist, und eine Vielzahl von Ähnlichkeitsmetriken für Vektoren existiert.
+Dadurch fällt die Definition, was Diversität ausmacht sehr leicht.
+Auch ist die Berechnung einer Distanz zwischen Vektoren sehr effizient, was vorteilhaft ist, da die Berechnung von Diversität typischerweise sehr häufig stattfinden muss.
+Allerdings hat es den Nachteil, dass, besonders wenn die Genotyp-zu-Phänotyps-Mapping Funktion komplex ist, genetische Distanz nicht funktionaler Distanz zwischen Lösungen enspricht.
+D. h. es besteht die Möglichkeit, dass genetisch unähnliche Individuen trotzdem in die gleiche Lösungsklasse fallen.
+Deshalb wurden Ansätze wie Novelty-Search\todo{cite} oder MAP-Elites\cite{Mouret.4202015} zum Diversitätsmanagement vorgeschlagen, die Diversität auf der Ebene, des Phänotyps bestimmen und somit funktionale Distanz messen.
+Da der Phänotyp domänenspezifisch,  muss die Diversitätsmetrik für jede Domäne maßgeschneidert definiert werden, und es kann nicht auf Allgemeinlösungen zurückgegriffen werden.
+Auch besteht eine erhebliche Limitierung bezüglich der Komplexität einer solche Diversitätsmetrik, da die Diversität typischerweise sehr häufig berechnet werden muss.
+
 \subsubsection{MAP-Elites}
 
-\subsection{Surrogat-Modelle}
+\label{sub:mapElites}
+MAP-Elites \cite{Mouret.4202015} ist ein genetischer Algorithmus mit phänotypischem Diversitätsmanagement.
+Das bedeutet, dass die Morphologie bzw. Funktionalität einer konkreten ausgedrückten Lösung, wie beispielsweise Volumen oder Krümmung eines Bauteils, betrachtet wird.
+Dazu wird der Lösungsraum entlang beliebig vieler Feature-Dimensionen, d. h. Merkmalen der Lösungen, die unabhängig von der Zielfunktion sind, aufgeteilt.
+Diesen Feature-Dimensionen wird ein Minimum, Maximums sowie eine Schrittweite zugewiesen um den Lösungsraum in Zellen zu diskretisieren.
+Diese Diskretisierung zu Zellen wird häufig auch Karte genannt.
+%Jede dieser Zellen stellt dabei eine Kombination der Eigenschaften dar.
+Zu Beginn sind all diese Zellen leer, im Laufe des Algorithmus werden diese nach und nach gefüllt.
+Jede Zelle kann aber nur maximal eine Lösung enthalten.
+In jeder Generation werden aus den momentan in der Karten enthaltenen Lösung per Mutation Kinder erzeugt.
+Jedes dieser Kinder wird erst bezüglich dessen Fitness evaluiert und dessen Phänotyp wird nach den gewählten Features kategorisiert.
+Dadurch wird dem Kind abhängig von dessen Funktionalität eine Zelle zugewiesen, in der lokale Konkurrenz stattfindet.
+Ist die zugewiesene Zelle leer befüllt das Kind die Zelle, befindet sich bereits ein Individuum in der Zelle werden stattdessen die Fitnesswerte der Beiden verglichen und das Individuum mit der höheren Fitness wird der Zelle zugewiesen.
+Dadurch ist der Algorithmus divergent, denn dadurch, dass nur lokale Konkurrenz stattfindet kann ein Individuum nur durch ein phänotypisch ähnliches verdrängt werden, wodurch die phänotypische Diversität nicht sinkt.
+Nicht nur wird eine Vielzahl von Lösungen generiert, die unterschiedliche Lösungsklassen abdecken, sondern die regelmäßig aufgeteilte Karte kann auch dabei helfen die Effekte, die die Features auf die Lösungsqualität haben zu verstehen.
+
+
+\subsection{Surrogat-Modellierung}
+
+\label{sub:surrogate}
+Für die Selektion von Individuen innerhalb eines genetischen Algorithmus wird die Lösungsqualität dieser Individuen, typischerweise Fitness genannt, benötigt.
+Außerdem findet die Auswertung der Fitnessfunktion innerhalb des genetischen Algorithmus sehr häufig statt.
+Dies stellt bei relativ einfachen Fitnessfunktionen keine große Einschränkung dar, auf Problemdomänen in denen die Auswertung der Fitness eines Individuums allerdings komplexer und dadurch zeitaufwändiger wird, kann dies die Anwendbarkeit einfacher genetischer Algorithmen einschränken.
+
+Aerodynamische Probleme, für die zeitaufwändige Simulationen nötig sind, gehören ohne Zweifel zu der Klasse von Problemen, für die die Anzahl der benötigten Funktionsauswertungen zu groß sind, als das der Algorithmus in vertretbarer Laufzeit abschließen kann.
+Um genetische Taktiken auf eine solche Problemdomäne anzuwenden, wird eine Möglichkeit benötigt die benötigten Funktionsauswertungen erheblich zu reduzieren.
+Eine solche Möglichkeit ist ein Surrogatmodell \cite{Jin.2011}\cite{Preen.2016}, eine Machine-Learning Modell, welches aufgrund echter Simulationsauswertungen trainiert wird, um deren Ergebnis annähernd vorherzusagen.
+Eine Auswertung des Modells erfordert dabei nur einen winzigen Bruchteil des Aufwands, der für eine Simulation nötig wäre.
+%Theoretisch sind verschiedenste Machine-Learning Verfahren für das Surrogatmodell denkbar, Gaußprozesse \cite{Rasmussen.2008} bieten sich durch die Eigenschaft an, dass sie neben einer Vorhersage auch immer ihre eigene Unsicherheit Liefern, und entsprechend Bereiche zeigen können, in denen große Unsicherheit herrscht, oder anders ausgedrückt in denen der Gaußprozess wenig weiß.
+%Der Nachteil der hohen Speicher- und Berechnungskomplexität von Gaußprozessen ist durch die Limitierung auf eine geringe Anzahl an Simulationen und damit der Limitierung auf einen kleinen Trainingsdatensatz vernachlässigbar.
 
 \subsection{Gaußprozesse}
 
-Gaußprozesse sind ein in \todo{cite gp} entwickeltes Machine-Learning Verfahren, mit welchem beliebige mathematische Funktionenen approximiert werden können. in großer Vorteil von Gaußprozessen ist, dass sie durch ihre Herkunft aus der Statistik neben die zu approximierende Funktion als Kombination aus Normalverteilungen modellieren.
+Gaußprozesse sind ein in \cite{Rasmussen.2008} entwickeltes Machine-Learning Verfahren, mit welchem beliebige mathematische Funktionenen approximiert werden können. in großer Vorteil von Gaußprozessen ist, dass sie durch ihre Herkunft aus der Statistik neben die zu approximierende Funktion als Kombination aus Normalverteilungen modellieren.
 Dadurch können Gaußprozesse neben einer Vorhersage auch die Varianz der Vorhersage an jedem Punkt liefern.
 Das bedeutet, dass zu jedem Punkt auch die Unsicherheit bekannt ist, was für die Exploration des Funktionsraum
 ein erheblicher Vorteil ist.
-Der Hauptnachteil von Gaußprozessen ist der relativ hohe Speicher und Rechenkomplexität, da die Anzahl an Funktionsauswertungen 
+Der Hauptnachteil von Gaußprozessen ist der relativ hohe Speicher- und Rechenkomplexität \todo{komplexität}, da die Anzahl an Simulationen die durchgeführt werden kann aber ohnehin durch den Rechenaufwand, der mit diesen verbunden ist stark limitiert ist, wird die Anzahl an Trainingsdaten so gering bleiben, dass Komplexitätsüberlegungen hinfällig sind.
+
+\subsection{SAIL}
+
+SAIL (Surrogate-Assisted Illumination) vereint die in \ref{sub:mapElites} und \ref{sub:surrogate} beschriebenen Ansätze.
+In \cite{Gaier.6152018} wurde gezeigt, dass dieser Ansatz erfolgreich auf 2D und 3D aerodynamische Domänen angewandt werden kann.
+Es wurden Freiform-Deformationen auf 3D-Bauteile angewandt, welche dann wiederum bezüglich ihrer aerodynamischen Eigenschaften ausgewertet wurden, um ein Surrogat-Modell zu trainieren.
+
+\subsection{Freiformdeformation}
+
+Freiformdeformation\cite{Sederberg.1986} ist ein Verfahren zu Deformation von geometrischen Objekten.
+Mithilfe der Freiformdeformation können beliebige dreidimensionale Meshes robust deformiert werden.
+Dazu wird eine Box aus Kontrollpunkten erzeugt.
+Jeder dieser Kontrollpunkte kann dann anhand von Verformungsparametern verschoben werden, wodurch für alle Punkte innerhalb der FFD-Box eine Verschiebung berechnet wird, die von der relativen Position des Punktes zum Kontrollpunkt abhängt.
+Dadurch kann eine Deformation auf eine überschaubare Anzahl an Deformationsparametern reduziert werden.
+Außerdem kann eine Deformation auf einige bestimmte Punkte und/oder Richtungen
+\footnote{Deformation in x, y, z finden jeweils separat statt}
+beschränkt werden, um die Komplexität weiter zu reduzieren.
+Dadurch das nur die Punkte des Meshes ihre Position ändern, hat das Verfahren, den Vorteil das die Dreiecke erhalten bleiben und somit beispielsweise das Entstehen von Löchern bei korrekter Anwendung praktisch ausgeschlossen ist.
+
+\subsection{OpenFOAM}
+
+OpenFoam \todo{cite openfoam} ist eine Open-Source Programm zur Durchführung von Fluiddynamiksimulationen.
+Berechnungen in OpenFOAM sind in sogenannten "Cases" organisiert auf die nacheinander OpenFoam-Funktionen angewandt werden
+Diese Cases bestehen aus einer Basisstruktur, die Initiale Startparameter, sowie Dateien zur Steuerung von OpenFoam enthalten.
+%Diese basis ist in den Ordnern \textit{domains/wheelcase/pe} und \textit{domains/escooter/pe} zu finden.
+Diese Basis enthält typischerweise Skripts um die gesamte Kette aus verschiedenen OpenFoam Funktionen, die zur Durchführung einer Simulation notwendig sind, auszuführen (Allrun), sowie ein Skript, welches den Case wieder in den Case wieder in den Startzustand versetzt (Allclean).
+
+OpenFOAM wird durch Dictionary-Dateien gesteuert.
+Mit diesen Dictionary-Dateien werden die in OpenFOAM enthaltenen Funktionen parametrisiert.
+OpenFOAM bietet native Unterstützung von Parallelität über die MPI-Bibliothek \todo{cite mpi}.
+Neben den Funktionen um die korrekte Aufteilung eines Cases auf mehrere Prozessoren aufzuteile und am Ende wieder zu rekonstruieren sind zwei Funktionen und deren dazugehörige Dateien hervorzuheben.
+
+Die erste dieser Funktionen ist \textit{snappyHexMesh}, das durch \textit{snappyHexMeshDict} parametrisiert wird, mit welchem das aus dem STL-Orginalmesh das für die Fluiddynamiksimulation benötigte Mesh generiert wird. Durch die Parametrisierung von snappyHexMesh wird kontrolliert wie detailliert das Mesh an welchen Stellen ist.
+Die wichtigen genutzten Definitionen in snappyHexMesh sind:
+\todo{snappyhexmesh definitionen}
+
+Die zweite dieser Funktione ist die eigentliche Fluiddynamiksimulation welche durch die Datei \textit{fvSolution} gesteuert wird. 
+Es stehen verschiedene Simulationen für verschiedene Zwecke zur Verfügung.
+Hier wurde \textit{simpleFoam} gewählt, da der Funktionsumfang für den Fokus dieser Arbeit völlig ausreicht.
+
+
 \subsection{Constraints in Optimierungsprozessen}
 Constraints sind eine Möglichkeit sekundäre Optimierungsparemter, welche neben dem primären Optimierungsziel ebenfalls eingehalten werden sollen, in einen Optimierungsprozess einzuarbeiten, ohne auf multivariate Optimierung zurückgreifen zu müssen.
 Constraints lassen sich grundsätzlich in Soft Constraints, bei denen die Nichteinhaltung des Constraints zur Addition von Strafwerten auf die Optimierungsfunktion führt, und Hard Constraints, die eine binäre erfüllt/nicht erfüllt Auswahl treffen.
@@ -66,13 +157,20 @@ Ist diese Gewichtung fehlerhaft parametrisiert, kann dies dazu führen, dass Tei
 
 \section{Methode}
 
+\subsection{Allgemeines}
+
+\subsubsection{Parametrisierung des Gaußprozesses}
+
+
 \subsection{Radkästen des Velomobils}
 
 Die erste Problemdomäne stellt die Optimierung der Radkästen eines Velomobils dar.
 Da die momentanen Radkästen den Lenkausschlag des Velomobils erheblich einschränken, besteht das Ziel hierbei Radkästen zu generieren, die den maximalen oder zumindest einen weiteren Lenkausschlag ermöglichen und dabei trotzdem gute aerodynamische Eigenschaften aufweisen.
 
+\subsubsection{Setup}
+\subsubsection{OpenFOAM}
 \subsubsection{Constraint}
-Zur Erfüllung des Constraints wurden alle möglichen Radausschläge als Volumen modelliert (Volumen zu finden in ffd/turning\_volume.stl)
+Zur Erfüllung des Constraints wurden alle möglichen Radausschläge als Volumen modelliert (zu finden in ffd/turning\_volume.stl)
 
 \begin{table}[h]
 	\begin{tabularx}{.5\textwidth}{ll}\hline
@@ -91,7 +189,6 @@ Zur Erfüllung des Constraints wurden alle möglichen Radausschläge als Volumen
 	\end{tabularx}
 	\begin{tabularx}{.5\linewidth}{ll}
 		Radius des Rads & $230mm$ \\
-		
 		Radausschlag & $\pm24,37\degree$\\
 		
 	\end{tabularx}
@@ -107,7 +204,7 @@ Zur Berechnung der Differenz zwischen Radausschlagsvolumen und Radkasten wird di
 Um eine Differenz berechnen zu können wurde der rechte Radkasten zu einem geschlossenen Volumen gemacht, da die Constraintberechnung in jeder Generation für jedes Kind erfolgen muss wurde der Radkasten außerdem runtergesamplet \todo{klingt komisch? besseres wort} um die Berechnung  des Constraints ausreichend schnell durchführen zu können.
 Aus dem Volumen wurde dann der Strafwert berechnet der in die Akquisefunktion integriert wurde.
 
-\subsection{Kategorien}
+\subsection{Wahl der Features}
 Als Kategorien wurde die Breite des Velomobils gewählt.
 Hierzu kann die Hypothese aufgestellt werden, dass die Breite des Velomobils mit der Erfüllung des Constraint korreliert ist. Es wäre also zu erwarten, dass breitere Velomobile den Constraint tendenziell besser erfüllen, als schmalere.
 Auch kann die Hypothese aufgestellt werden, dass die Breite negativ mit dem Luftwiderstandsbeiwert korreliert ist.
@@ -117,28 +214,19 @@ Da das Velombil in negative x-Richtung zeigt, bedeuten kleinere Werte hier, dass
 Zu dieser Kategorie lassen sich keine so direkten Hypothesen aufstellen wie zur ersteren.
 Die Frage ob sich hier klare Tendenzen bezüglich den aerodynamischen Eigenschaften und/oder des Constraints aufzeigen ist Ziel der Untersuchung.
 
+Auch die Kategorisierung erfolgte mit dem für die Berechnung des Constraints vereinfachten Modell des Radkastens, da auch die Kategorisierung so häufig stattfindet, dass die Verformung und Kategorisierung anhand des originalen feinen Radkasten Rechenaufwand und damit Zeit in Anspruch nimmt.
 
-\subsubsection{E-Roller}
+\subsection{E-Roller}
 
 Die zweite Problemdomäne ist die explorative Untersuchung eines Bauteils an der Unterseite eines E-Rollers.
 Hier besteht die Frage ob nicht-triviale Bauteile aerodynamische Vorteile bieten, und welche Eigenschaften solche Bauteile aufweisen.
 
-\subsection{OpenFOAM}
+\subsubsection{Setup}
+\subsubsection{OpenFOAM}
+\subsubsection{Constraint}
+\subsubsection{Wahl der Features}
 
-OpenFoam \todo{cite openfoam} ist eine Open-Source Programm zur Durchführung von Fluiddynamiksimulationen.
-Alle Dateien für OpenFOAM-Simulationen sind in den Ordnern \textit{domains/wheelcase/pe} und \textit{domains/escooter/pe} zu finden.
-\todo{irgendetwas zu cases}
-OpenFOAM wird durch Dictionary-Dateien gesteuert.
-Mit diesen Dictionary-Dateien werden die in OpenFOAM enthaltenen Funktionen parametrisiert.
-OpenFOAM bietet native Unterstützung von Parallelität über die MPI-Bibliothek \todo{cite mpi}.
-Neben den Funktionen um die korrekte Aufteilung eines Cases auf mehrere Prozessoren aufzuteile und am ENde wieder zu rekonstruieren sind zwei Funktionen und deren dazugehörige Dateien hervorzuheben.
 
-Die erste dieser Funktionen ist \textit{snappyHexMesh}, das durch \textit{snappyHexMeshDict} parametrisiert wird, mit welchem das aus dem STL-Orginalmesh das für die Fluiddynamiksimulation benötigte Mesh generiert wird. Durch die Parametrisierung von snappyHexMesh wird kontrolliert wie detailliert das Mesh an welchen Stellen ist.
-Die wichtigen genutzten Definitionen in snappyHexMesh sind:
-\todo{snappyhexmesh definitionen}
 
-Die zweite dieser Funktione ist die eigentliche Fluiddynamiksimulation welche durch die Datei \textit{fvSolution} gesteuert wird. 
-Es stehen verschiedene Simulationen für verschiedene Zwecke zur Verfügung.
-Hier wurde \textit{simpleFoam} gewählt, da der Funktionsumfang für den Fokus dieser Arbeit völlig ausreicht.
 
 
