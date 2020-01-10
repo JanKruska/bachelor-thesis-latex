@@ -2,6 +2,27 @@
 
 \subsection{Genetische Algorithmen}
 
+Genetische Algorithmen sind eine Klasse von Optimierungsalgorithmen, die sich an den Mechanismen der natürlichen Evolution orientieren.
+Namentlich Mutation, Crossover und Selektion.
+Die Begrifflichkeiten orientieren sich entsprechen an der natürlichen Evolution.
+Genetische Algorithmen arbeiten typischerweise mit Populationen aus Individuen, welche sich über Generationen entwickeln.
+Jedes Individuum besitzt einen Genotypen sowie einen Phänotypen.
+\todo{Bild geno phäno}
+Der Genotyp eines Individuums ist typischerweise ein Vektor, das Genom des Individuums genannt, der aus einzelnen Zahlen, den Genen des Individuums, besteht. Dieser stellt die genetischen Informationen eines Individuums dar. Daneben existiert in genetischen Algorithmen eine Mapping-Funktion mit der eine Genotyp in einen Phänotyp, der nichts anderes als eine konkrete Lösung des Optimierungsproblems ist, übersetzt werden kann.
+
+Die Mechanismen der Mutation und des Crossovers agieren auf der Ebene des Genotyps.
+Mutation beschreibt die Situation, dass eine gewisse Wahrscheinlichkeit existiert, mit der sich ein Gen ändern kann. Abhängig vom Typen des Gens, ist eine Änderung unterschiedlich formuliert, eine reelle Zahl mag sich anhand einer Normalverteilten Zufallsvariable ändern, eine natürliche Zahl mit $\pm1$ und ein Index mag einen zufälligen möglichen Index annehmen. Wichtig ist nur, dass potenziell neue Eigenschaften in eine Population eingeführt werden können.
+Crossover beschreibt die Situation, dass zwei oder mehr Elternindividuuen zu einem Kindindividuum kombiniert werden. Auch hier ist die Implementierung nicht vorgeschrieben, wichtig ist nur, dass ein Kind als Kreuzung der Eltern erzeugt werden kann.
+Es ist allerdings anzumerken, dass Crossover einen optionalen Teil von genetischen Algorithmen darstellt, einige Algorithmen, wie beispielsweise ($1 + \lambda$)-ES verzichten aus verschiedenen Gründen auf Crossover und mutieren ihre Populationen nur.
+Diese beiden Methoden stellen sicher, dass neue Genotypen, und damit neue Lösungen generiert werden können, stellen aber keine Mechanismus zur Verfügung durch den der Algorithmus optimale Lösungen erreicht.
+Der Mechanismus, der der Optimierung eine Richtung gibt ist die Selektion.
+Diese agiert auf Phänotypen, sprich ausgedrückten Lösungen.
+Für jede Lösung kann die Güte oder der Kosten einer Lösung, entsprechend Fitness oder Kosten genannt, 
+mit einer Fitness- oder Kostenfunktion berechnet werden.
+Ob eine Fitness- oder Kostenfunktion genutzt wird hängt von der Problemformulierung ab, und ist letztendlich eine Frage ob minimiert oder maximiert wird.
+Die Fitness, bzw. der Kosten jedes Individuums kann dann ermittelt werden und die Selektion eliminiert dann schlechte Lösungen, sprich solche mit niedriger Fitness, bzw. hohen Kosten.
+Dadurch werden in jeder Generation neue Individuen generiert und schlechte Individuen aussortiert, was Stück für Stück zu einer Verbesserung der Population führt.
+
 \subsubsection{MAP-Elites}
 
 \subsection{Surrogat-Modelle}
@@ -12,12 +33,36 @@ Gaußprozesse sind ein in \todo{cite gp} entwickeltes Machine-Learning Verfahren
 Dadurch können Gaußprozesse neben einer Vorhersage auch die Varianz der Vorhersage an jedem Punkt liefern.
 Das bedeutet, dass zu jedem Punkt auch die Unsicherheit bekannt ist, was für die Exploration des Funktionsraum
 ein erheblicher Vorteil ist.
-Der Hauptnachteil von Gaußprozessen ist der relativ hohe Speicher und Rechenkomplexität, da die ANzahl an Funktionsauswertungen 
+Der Hauptnachteil von Gaußprozessen ist der relativ hohe Speicher und Rechenkomplexität, da die Anzahl an Funktionsauswertungen 
 \subsection{Constraints in Optimierungsprozessen}
+Constraints sind eine Möglichkeit sekundäre Optimierungsparemter, welche neben dem primären Optimierungsziel ebenfalls eingehalten werden sollen, in einen Optimierungsprozess einzuarbeiten, ohne auf multivariate Optimierung zurückgreifen zu müssen.
+Constraints lassen sich grundsätzlich in Soft Constraints, bei denen die Nichteinhaltung des Constraints zur Addition von Strafwerten auf die Optimierungsfunktion führt, und Hard Constraints, die eine binäre erfüllt/nicht erfüllt Auswahl treffen.
+Welche dieser beiden Arten von Constraints genutzt wird, hängt stark von der Problemstellung ab.
+
+\todo{Formulierung von Constraints aus nicht-mathematischer Formulierung}
+\subsubsection{Hard Constraints}
+Hard Constraints führen eine binäre Auswahl durch, bei der solche Lösungen, die den Constraint nicht erfüllen disqualifziert werden.
+Sie stellen eine sehr einfache Lösung zur Implementierung von Constraints dar.
+An der Stelle im Algorithmus an der neue Lösungen generiert werden werden alle ungültigen Lösungen herausgefiltert.
+Dies hat den Vorteil, dass ungültige Lösungen niemals in den Algorithmus einfließen, und damit weder Rechenkapazitäten für nicht-nutzbare Lösungen genutzt werden, und solche Eigenschaften, durch die eine Lösung die Constraints verletzt vom Algorithmus überhaupt nicht in Erwägung gezogen werden.
+
 
 \subsubsection{Soft Constraints}
+Soft Constraints disqualifizieren Lösungen, die die Constraints verletzen, nicht.
+Stattdessen wird beim Nichterfüllen von Constraints ein Strafwert auf die Kostenfunktion addiert, bzw. von einer Fitnessfunktion subtrahiert.
+Das Lösungen, die die Constraints nicht erfüllen, nicht disqualifiziert werden, hat den Vorteil, dass viele Optimierungmethoden iterativ zu (lokalen) Optima konvergieren\footnote{Auch ein divergentes Optimierungsverfahren wie MAP-Elites konvergiert zu Optima, es wird nur sichergestellt, das zu einer Vielzahl lokaler Optima konvergiert wird}, 
+und diese auch Lösungen, die die Constraints nicht erfüllen, als Trittbretter zu Lösungen, die die Constraints erfüllen, nutzen können.
 
-\subsubsection{Hard Constraints}
+Soft Constraint eignen sich in Fällen, in denen zu Beginn keine Lösungen bekannt sind, die die Constraints erfüllen, und in denen explorativ nach Lösungen gesucht werden soll, die die Constraints erfüllen.
+Auch eignen sie sich für solche Probleme, in denen qualitative Unterschiede bezüglich der Stärke der Verletzung der Constraints zwischen unterschiedlichen Lösungen exisistieren können.
+So kann argumentiert werden, dass im Falle, dass ein Constraint die Einhaltung eines Schwellenwerts ist, eine Lösung, die diesen um 1 überschreitet, qualitativ besser ist als eine, die diesen um 10 überschreitet.
+
+Eine der größten Gefahren bei Soft Constraints ist, dass diese typischerweise als Kostenfunktionen formuliert werden, deren Wert mit der eigentlichen Zielfunktion der Optimierung kombiniert wird.
+Eine solche Kombination enthält immer eine Gewichtung für alle Teilfunktionen die sie ausmacht.
+Ist diese Gewichtung fehlerhaft parametrisiert, kann dies dazu führen, dass Teilfunktionen über- oder unterpriorisiert werden, und Constraints vom Algorithmus ignoriert werden, oder, dass nicht mehr nach dem primären Optimierungsziel optimiert wird.
+
+
+
 
 \section{Methode}
 
