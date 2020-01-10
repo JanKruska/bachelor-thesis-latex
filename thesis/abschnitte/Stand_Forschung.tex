@@ -110,9 +110,8 @@ Berechnungen in OpenFOAM sind in sogenannten "Cases" organisiert auf die nachein
 Diese Cases bestehen aus einer Basisstruktur, die Initiale Startparameter, sowie Dateien zur Steuerung von OpenFoam enthalten.
 %Diese basis ist in den Ordnern \textit{domains/wheelcase/pe} und \textit{domains/escooter/pe} zu finden.
 Diese Basis enthält typischerweise Skripts um die gesamte Kette aus verschiedenen OpenFoam Funktionen, die zur Durchführung einer Simulation notwendig sind, auszuführen (Allrun), sowie ein Skript, welches den Case wieder in den Case wieder in den Startzustand versetzt (Allclean).
-
-OpenFOAM wird durch Dictionary-Dateien gesteuert.
-Mit diesen Dictionary-Dateien werden die in OpenFOAM enthaltenen Funktionen parametrisiert.
+Außerdem enthält diese basis den Ordner system, der C++-Dictionaries enthält, mit denen die einzelnen OPenFoam Funktionen parametrisiert und gesteuert werden.
+Zuletzt befindet sich in diesem Ordner auch noch der Initiale Startzustand mit dem die Simulation beginnt (0org)
 OpenFOAM bietet native Unterstützung von Parallelität über die MPI-Bibliothek \todo{cite mpi}.
 Neben den Funktionen um die korrekte Aufteilung eines Cases auf mehrere Prozessoren aufzuteile und am Ende wieder zu rekonstruieren sind zwei Funktionen und deren dazugehörige Dateien hervorzuheben.
 
