@@ -6,6 +6,8 @@ Englische Zusammenfassung
 \clearpage
 \section*{Zusammenfassung}
 
+%Genetische Algorithmen sind ein mächtiges Werkzeug zur Untersuchung komplexer Problemräume. Allerdings stellt die hohe Anzahl an benötigten Funktionsauswertungen ein Problem in solchen Domänen dar in denen die Funktionsauswertung mit erheblichem Rechenaufwand verbunden ist. Durch Surrogat-assistierte Ansätze können die benötigten Funktionsauswertungen um mehrere Größenordnungen reduziert werden, was ermöglicht genetische Algorithmen auch auf solche Problemdomänen anzuwenden. Trotzdem fehlen häufig die Ressourcen für eine multivariate Optimierung, wenn sekundäre Optimierungsziele existieren müssen diese als Constraints in Verfahren eingebunden werden. Die Arbeit untersucht in zwei Problemdomänen, wie Constraints innerhalb des Rahmens der Surrogat-assistierten Illumination, einer phänotypisch divergenten Optimierungsmethode, die MAP-Elites um Surrogat-Assistenz erweitert, verwirklicht werden können.
+
 \section{Einleitung}
 
 Evolutionäre Taktiken haben sich in der Vergangenheit als mächtige Heuristik zur Untersuchung komplexer Problemräume bewiesen.\todo{Quelle}
@@ -15,7 +17,7 @@ Genetische Algorithmen entwickeln erst eine Möglichkeit eine funktionale Lösun
 Dazu wird eine Funktion benötigt, die diesen Genotypen in einen Phänotypen übersetzt.
 Außerdem wird eine Zielfunktion, oder Fitnessfunktion benötigt, mit der die Lösungsqualität eines Individuums, d.h. dessen Phänotyps, ermittelt werden kann.
 Sind diese Dinge definiert, können die drei Mechanismen der Evolution, Mutation, Crossover
-\footnote{Manche genetische Algorithmen, wie beispielsweise die $(1+\lambda)$-ES verzichten auf Crossover} und Selektion angewandt werden um eine Population zu Lösung(en) konvergieren zu lassen.
+%\footnote{Manche genetische Algorithmen, wie beispielsweise die $(1+\lambda)$-ES verzichten auf Crossover} und Selektion angewandt werden um eine Population zu Lösung(en) konvergieren zu lassen.
 Bei der Anwendung evolutionärer Taktiken stellen sich allerdings einige Probleme.
 
 Eines dieser Probleme stellt sich recht häufig, da genetische Algorithmen ohne Diversitätsmanagement typischerweise sehr stark konvergieren und dadurch oft in lokalen Optima hängen bleiben.

@@ -2,28 +2,62 @@
 
 \subsection{Genetische Algorithmen}
 
-Genetische Algorithmen sind eine Klasse von Optimierungsalgorithmen, die sich an den Mechanismen der natürlichen Evolution orientieren.
+Genetische Algorithmen sind eine Klasse von Optimierungsalgorithmen, die sich an den Mechanismen der natürlichen Evolution orientieren\cite{Simon.2013}.
 Namentlich Mutation, Crossover und Selektion.
 Die Begrifflichkeiten orientieren sich entsprechen an der natürlichen Evolution.
 Genetische Algorithmen arbeiten typischerweise mit Populationen aus Individuen, welche sich über Generationen entwickeln.
 Jedes Individuum besitzt einen Genotypen sowie einen Phänotypen.
-\todo{Bild geno phäno}
+\missingfigure{Vllt. Bild geno phäno}
 Der Genotyp eines Individuums ist typischerweise ein Vektor, das Genom des Individuums genannt, der aus einzelnen Zahlen, den Genen des Individuums, besteht. Dieser stellt die genetischen Informationen eines Individuums dar. Daneben existiert in genetischen Algorithmen eine Mapping-Funktion mit der eine Genotyp in einen Phänotyp, der nichts anderes als eine konkrete Lösung des Optimierungsproblems ist, übersetzt werden kann.
 
+\begin{algorithm}
+\caption{Genetischer Algorithmus} \label{alg:geneticAlgorihtm}
+\begin{algorithmic}[1]
+	\Procedure{GeneticAlgorithm}{$fitnessFunction,hyperparameters$}
+	\State $population \gets initializePopulation$
+	\State $populationFitness \gets fitnessFunction(population)$
+	\For{$numberIterations$}
+		\State $children \gets crossover(population,hyperparameters)$
+		\State $children \gets mutate(children,hyperparameters)$
+		\State $childFitness = fitnessFunction(children)$
+		\State $population \gets selection(population,populationFitness,children,childFitness)$
+		\State $populationFitness \gets updateFitness(population)$
+	\EndFor
+	\EndProcedure
+\end{algorithmic}
+\end{algorithm}
+
 Die Mechanismen der Mutation und des Crossovers agieren auf der Ebene des Genotyps.
-Mutation beschreibt die Situation, dass eine gewisse Wahrscheinlichkeit existiert, mit der sich ein Gen ändern kann. Abhängig vom Typen des Gens, ist eine Änderung unterschiedlich formuliert, eine reelle Zahl mag sich anhand einer Normalverteilten Zufallsvariable ändern, eine natürliche Zahl mit $\pm1$ und ein Index mag einen zufälligen möglichen Index annehmen. Wichtig ist nur, dass potenziell neue Eigenschaften in eine Population eingeführt werden können.
-Crossover beschreibt die Situation, dass zwei oder mehr Elternindividuuen zu einem Kindindividuum kombiniert werden. Auch hier ist die Implementierung nicht vorgeschrieben, wichtig ist nur, dass ein Kind als Kreuzung der Eltern erzeugt werden kann.
-Es ist allerdings anzumerken, dass Crossover einen optionalen Teil von genetischen Algorithmen darstellt, einige Algorithmen, wie beispielsweise ($1 + \lambda$)-ES verzichten aus verschiedenen Gründen auf Crossover und mutieren ihre Populationen nur.
-Diese beiden Methoden stellen sicher, dass neue Genotypen, und damit neue Lösungen generiert werden können, stellen aber keine Mechanismus zur Verfügung durch den der Algorithmus optimale Lösungen erreicht.
+Mutation beschreibt die Situation, dass sich jedes Gen mit einer bestimmten Wahrscheinlichkeit ändern kann. 
+Abhängig vom Typen des Gens, ist eine Änderung unterschiedlich formuliert, eine reelle Zahl mag sich anhand einer Normalverteilten Zufallsvariable ändern, eine natürliche Zahl mit $\pm1$ und ein Index mag einen zufälligen möglichen Index annehmen. 
+Mutatation ist für einen genetischen Algorithmus wichtig, da sich durch diese neue Eigenschaften entwickeln können.
+
+Crossover beschreibt die Situation, dass zwei oder mehr Elternindividuuen zu einem Kindindividuum kombiniert werden. 
+Auch hier ist keine konkrete Implementierung nicht vorgeschrieben, wichtig ist nur, dass ein Kind als Kreuzung der Eltern erzeugt werden kann.
+Das Ziel des Crossovers ist es, dass sich positive Eigenschaften in Populationen verteilen und mehrere unabhängig entstandenen positiven Mutationen in einem Individuum vereint werden.
+Es ist allerdings anzumerken, dass Crossover einen optionalen Teil von genetischen Algorithmen darstellt, einige Algorithmen%, wie beispielsweise ($1 + \lambda$)-ES 
+verzichten aus verschiedenen Gründen auf Crossover und mutieren ihre Populationen nur.
+Diese beiden Methoden stellen sicher, dass neue Genotypen, und damit neue Lösungen generiert werden können, stellen aber keine Mechanismus zur Verfügung durch den dem Algorithmus eine Optimierungsrichtung gegeben wird.
+
 Der Mechanismus, der der Optimierung eine Richtung gibt ist die Selektion.
-Diese agiert auf Phänotypen, sprich ausgedrückten Lösungen.
-Für jede Lösung kann die Güte oder der Kosten einer Lösung, entsprechend Fitness oder Kosten genannt, 
-mit einer Fitness- oder Kostenfunktion berechnet werden.
-Ob eine Fitness- oder Kostenfunktion genutzt wird hängt von der Problemformulierung ab, und ist letztendlich eine Frage ob minimiert oder maximiert wird.
-Die Fitness, bzw. der Kosten jedes Individuums kann dann ermittelt werden und die Selektion eliminiert dann schlechte Lösungen, sprich solche mit niedriger Fitness, bzw. hohen Kosten.
-Dadurch werden in jeder Generation neue Individuen generiert und schlechte Individuen aussortiert, was Stück für Stück zu einer Verbesserung der Population führt.
+Anders als die ersten beiden agiert diese auf Phänotypen, sprich ausgedrückten Lösungen.
+Jeder genetische Algorithmus benötigt eine Funktion mit der Lösungen bewertet werden können.
+Dies kann entweder in Form einer Fitnessfunktion, die die Güte eines Individuums berechnet, bei der höhere Werte besser sind, oder in der Form einer Kostenfunktion, die die Kosten eines Individuums berechnet und bei der entsprechend niedrigere Werte besser sind, geschehen.
+Ob eine Fitness- oder Kostenfunktion genutzt wird hängt von der Problemformulierung ab, und ist letztendlich nur eine Frage der Algorithmus minimiert oder maximiert.
+Mit diesen Funktionen kann für jedes Individuum eine Qualität berechnet werden, und Individuen können bezüglich dieser verglichen werden.
+Durch Selektion werden in jeder Iteration dann schlechte Lösungen eliminiert, wodurch die Population sich zu Optima hinbewegt.
+%Die Fitness, bzw. der Kosten jedes Individuums kann dann ermittelt werden und die Selektion eliminiert dann schlechte Lösungen, sprich solche mit niedriger Fitness, bzw. hohen Kosten.
+Selektion ist häufig nicht so simpel, dass einfach die besten Individuen ausgewählt werden.
+Die in \ref{sub:divergetnGeneticAlgorithms} besprochenen Ansätze zum Diversitätsmanagement, berücksichtigen Diversität von Populationen und können diverse Lösungen bevorzugt auswählen.
+
+In der Gesamtschleife werden also in jeder Generation per Crossover Kinder erzeugt, die daraufhin mutiert werden.
+Für diese Kinder wird dann eine Fitness berechnet.
+Daraufhin werden durch die Selektion die besten Individuen ermittelt, welche zur nächste Elterngeneration werden.
+Diese Schleife wird solange wiederholt bis das Maximum an Generationen erreicht ist.
 
 \subsubsection{Divergente genetische Algorithmen}
+
+\label{sub:divergetnGeneticAlgorithms}
 
 Eine sehr häufige Anforderung an genetische Algorithmen ist die Einbindung von Divergenz, bzw. Diversität.
 Dies hat verschiedene Gründe.
@@ -34,19 +68,20 @@ Auch ist es nicht unbedingt wünschenswert eine sehr homogene Population als Erg
 Wenn man eine diverse Population aus Individuen erhält können Aussagen über unterschiedliche Lösungsklassen getroffen werden, Lösungsklassen und ihre Qualität können miteinander verglichen werden, und je nachdem kann größere Erkenntnis erlangt werden, was eine qualitativ hochwertige Lösung ausmacht wodurch wiederum das gestellte Problem besser verstanden werden kann.
 
 Es existieren verschiedenste Ansätze um Diversität zu gewährleisten, welche sind grundsätzlich in genotypische und phänotypische Ansätze aufteilen lassen, abhängig davon wo Diversitätsmanagement stattfindet.
-Ansätze wie Niching\todo{cite}, gewährleisten genotypische Diversität durch die Ermittlung der genetischen Ähnlichkeit zweier Individuen.
+Ansätze wie Niching\cite{Shir.2012}, gewährleisten genotypische Diversität durch die Ermittlung der genetischen Ähnlichkeit zweier Individuen.
 Das hat den Vorteil, dass der Genotyp eines Individuums typischerweise ein Vektor ist, und eine Vielzahl von Ähnlichkeitsmetriken für Vektoren existiert.
 Dadurch fällt die Definition, was Diversität ausmacht sehr leicht.
 Auch ist die Berechnung einer Distanz zwischen Vektoren sehr effizient, was vorteilhaft ist, da die Berechnung von Diversität typischerweise sehr häufig stattfinden muss.
 Allerdings hat es den Nachteil, dass, besonders wenn die Genotyp-zu-Phänotyps-Mapping Funktion komplex ist, genetische Distanz nicht funktionaler Distanz zwischen Lösungen enspricht.
 D. h. es besteht die Möglichkeit, dass genetisch unähnliche Individuen trotzdem in die gleiche Lösungsklasse fallen.
-Deshalb wurden Ansätze wie Novelty-Search\todo{cite} oder MAP-Elites\cite{Mouret.4202015} zum Diversitätsmanagement vorgeschlagen, die Diversität auf der Ebene, des Phänotyps bestimmen und somit funktionale Distanz messen.
+Deshalb wurden Ansätze wie Novelty-Search\cite{Lehman.2011} oder MAP-Elites\cite{Mouret.4202015} zum Diversitätsmanagement vorgeschlagen, die Diversität auf der Ebene, des Phänotyps bestimmen und somit funktionale Distanz messen.
 Da der Phänotyp domänenspezifisch,  muss die Diversitätsmetrik für jede Domäne maßgeschneidert definiert werden, und es kann nicht auf Allgemeinlösungen zurückgegriffen werden.
 Auch besteht eine erhebliche Limitierung bezüglich der Komplexität einer solche Diversitätsmetrik, da die Diversität typischerweise sehr häufig berechnet werden muss.
 
 \subsubsection{MAP-Elites}
 
 \label{sub:mapElites}
+\missingfigure{Pseudocode MAP-Elites}
 MAP-Elites \cite{Mouret.4202015} ist ein genetischer Algorithmus mit phänotypischem Diversitätsmanagement.
 Das bedeutet, dass die Morphologie bzw. Funktionalität einer konkreten ausgedrückten Lösung, wie beispielsweise Volumen oder Krümmung eines Bauteils, betrachtet wird.
 Dazu wird der Lösungsraum entlang beliebig vieler Feature-Dimensionen, d. h. Merkmalen der Lösungen, die unabhängig von der Zielfunktion sind, aufgeteilt.
@@ -79,6 +114,8 @@ Eine Auswertung des Modells erfordert dabei nur einen winzigen Bruchteil des Auf
 
 \subsection{Gaußprozesse}
 
+\missingfigure{Visualisierung Gaußprozess}
+
 Gaußprozesse sind ein in \cite{Rasmussen.2008} entwickeltes Machine-Learning Verfahren, mit welchem beliebige mathematische Funktionenen approximiert werden können. in großer Vorteil von Gaußprozessen ist, dass sie durch ihre Herkunft aus der Statistik neben die zu approximierende Funktion als Kombination aus Normalverteilungen modellieren.
 Dadurch können Gaußprozesse neben einer Vorhersage auch die Varianz der Vorhersage an jedem Punkt liefern.
 Das bedeutet, dass zu jedem Punkt auch die Unsicherheit bekannt ist, was für die Exploration des Funktionsraum
@@ -105,23 +142,15 @@ Dadurch das nur die Punkte des Meshes ihre Position ändern, hat das Verfahren, 
 
 \subsection{OpenFOAM}
 
-OpenFoam \todo{cite openfoam} ist eine Open-Source Programm zur Durchführung von Fluiddynamiksimulationen.
+OpenFoam \cite{OpenCFD.} ist eine Open-Source Programm zur Durchführung von Fluiddynamiksimulationen.
 Berechnungen in OpenFOAM sind in sogenannten "Cases" organisiert auf die nacheinander OpenFoam-Funktionen angewandt werden
 Diese Cases bestehen aus einer Basisstruktur, die Initiale Startparameter, sowie Dateien zur Steuerung von OpenFoam enthalten.
 %Diese basis ist in den Ordnern \textit{domains/wheelcase/pe} und \textit{domains/escooter/pe} zu finden.
 Diese Basis enthält typischerweise Skripts um die gesamte Kette aus verschiedenen OpenFoam Funktionen, die zur Durchführung einer Simulation notwendig sind, auszuführen (Allrun), sowie ein Skript, welches den Case wieder in den Case wieder in den Startzustand versetzt (Allclean).
-Außerdem enthält diese basis den Ordner system, der C++-Dictionaries enthält, mit denen die einzelnen OPenFoam Funktionen parametrisiert und gesteuert werden.
+Außerdem enthält diese basis den Ordner system, der C++-Dictionaries enthält, mit denen die einzelnen OpenFoam Funktionen parametrisiert und gesteuert werden.
 Zuletzt befindet sich in diesem Ordner auch noch der Initiale Startzustand mit dem die Simulation beginnt (0org)
-OpenFOAM bietet native Unterstützung von Parallelität über die MPI-Bibliothek \todo{cite mpi}.
+OpenFOAM bietet native Unterstützung von Parallelität über die MPI-Bibliothek \cite{OpenMPI.}.
 Neben den Funktionen um die korrekte Aufteilung eines Cases auf mehrere Prozessoren aufzuteile und am Ende wieder zu rekonstruieren sind zwei Funktionen und deren dazugehörige Dateien hervorzuheben.
-
-Die erste dieser Funktionen ist \textit{snappyHexMesh}, das durch \textit{snappyHexMeshDict} parametrisiert wird, mit welchem das aus dem STL-Orginalmesh das für die Fluiddynamiksimulation benötigte Mesh generiert wird. Durch die Parametrisierung von snappyHexMesh wird kontrolliert wie detailliert das Mesh an welchen Stellen ist.
-Die wichtigen genutzten Definitionen in snappyHexMesh sind:
-\todo{snappyhexmesh definitionen}
-
-Die zweite dieser Funktione ist die eigentliche Fluiddynamiksimulation welche durch die Datei \textit{fvSolution} gesteuert wird. 
-Es stehen verschiedene Simulationen für verschiedene Zwecke zur Verfügung.
-Hier wurde \textit{simpleFoam} gewählt, da der Funktionsumfang für den Fokus dieser Arbeit völlig ausreicht.
 
 
 \subsection{Constraints in Optimierungsprozessen}
@@ -129,8 +158,9 @@ Constraints sind eine Möglichkeit sekundäre Optimierungsparemter, welche neben
 Constraints lassen sich grundsätzlich in Soft Constraints, bei denen die Nichteinhaltung des Constraints zur Addition von Strafwerten auf die Optimierungsfunktion führt, und Hard Constraints, die eine binäre erfüllt/nicht erfüllt Auswahl treffen.
 Welche dieser beiden Arten von Constraints genutzt wird, hängt stark von der Problemstellung ab.
 
-\todo{Formulierung von Constraints aus nicht-mathematischer Formulierung}
+\todo{Herausforderung Formulierung von Constraints aus nicht-mathematischer Formulierung}
 \subsubsection{Hard Constraints}
+
 Hard Constraints führen eine binäre Auswahl durch, bei der solche Lösungen, die den Constraint nicht erfüllen disqualifziert werden.
 Sie stellen eine sehr einfache Lösung zur Implementierung von Constraints dar.
 An der Stelle im Algorithmus an der neue Lösungen generiert werden werden alle ungültigen Lösungen herausgefiltert.
@@ -152,24 +182,79 @@ Eine solche Kombination enthält immer eine Gewichtung für alle Teilfunktionen 
 Ist diese Gewichtung fehlerhaft parametrisiert, kann dies dazu führen, dass Teilfunktionen über- oder unterpriorisiert werden, und Constraints vom Algorithmus ignoriert werden, oder, dass nicht mehr nach dem primären Optimierungsziel optimiert wird.
 
 
-
+\newpage
 
 \section{Methode}
 
 \subsection{Allgemeines}
+
+\subsection{OpenFoam}
+Die zwei wichtigsten genutzten OpenFoam-Funktionen sind \path{snappyHexMesh} und \path{simpleFoam}.
+Mit snappyHexMesh, dessen Parametrisierung in \path{snappyHexMeshDict} zu finden ist, wird aus dem STL das für die Fluiddynamiksimulation benötigte Mesh generiert. Über snappyHexMesh kann die Auflösung des in der Fluiddynamiksimulation genutzen Meshes kontrolliert werden.
+Die Paramtrisierung von snappyHexMesh ist deshalb besonders wichtig, da die Auflösung des Meshes
+
+
+Die zweite dieser Funktionen ist die eigentliche Fluiddynamiksimulation welche durch die Datei \path{fvSolution} gesteuert wird. 
+Es stehen verschiedene Simulationen für verschiedene Zwecke zur Verfügung.
+Für den hier benötigten Zweck ist simpleFoam vollkommen ausreichend.
 
 \subsubsection{Parametrisierung des Gaußprozesses}
 
 
 \subsection{Radkästen des Velomobils}
 
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=.8\linewidth]{bilder/velo_wheelcase}
+	\caption{Radkasten des Velomobils}
+	\label{fig:wheelcase}
+\end{figure}
+
 Die erste Problemdomäne stellt die Optimierung der Radkästen eines Velomobils dar.
 Da die momentanen Radkästen den Lenkausschlag des Velomobils erheblich einschränken, besteht das Ziel hierbei Radkästen zu generieren, die den maximalen oder zumindest einen weiteren Lenkausschlag ermöglichen und dabei trotzdem gute aerodynamische Eigenschaften aufweisen.
 
-\subsubsection{Setup}
+\subsubsection{Struktur}
+
+\begin{figure}[h]
+%	\centering
+	\dirtree{%
+		.1 placeholder.
+	}
+\caption{Struktur von domains/wheelcase}
+\label{fig:dir_wheelcase}
+\end{figure}
+
+Alle spezifischen Daten zur wheelcase Domäne sind in \path{domains/wheelcase} zu finden.
+Auf der höchsten Ebene des Verzeichnisses sind die generellen Skripte für SAIL zu finden.
+Im Unterverzeichnis \path{ffd} befinden sich die STLs, die für die Freiformdeformation und Berechnung des Constraints benötigt werden.
+Alle Dateien zur Berechnung des Constraints leigen in \path{constraint}
+Der Basiscase für OpenFoam ist zu finden \path{pe/v1906}.
+Im Ordner \path{configs} befinden sich verschiedene Konfigurationen für die Freiformdeformation
+Eine solche Konfiguration enthält die Parametrisierung für die Freiformdeformation, sowie die Funktion zur Erzeugung einer konkreten Deformation aus einem Genom.
+Das letzte Unterverzeichnis ist \path{experiment}, was das Skript zum Starten eines Laufs, sowie Job-Skripte zur Ausführung als Slurm-Jobs
+
+
+
+\begin{itemize}
+	\item[wheelcase\_AcquisitionFunc]
+	\item[wheelcase\_Categorize] Dieses Skript ist für die Kategorisierung von Individuen verantwortlich. In der momentanen Implementierung wird in zwei Dimensionen kategorisiert.
+	\item[wheelcase\_CreateAcqFunc]
+	\item[wheelcase\_Domain] Sammlung aus Hyperparametern sowie Kontroll
+	\item[wheelcase\_DummyPreciseEvaluate]
+	\item[wheelcase\_Express] Diese Funktion dient dazu aus einen Genotypen als den zugehörigen Phänotypen auszudrücken
+	\item[wheelcase\_ExpressRight] Diese Funktion ist ähnlich wie \path{wheelcase_Express} dafür verantwortlich einen Genotypen als Phänotypen auszudrücken, 
+	tut dies allerdings nur für den vereinfachten rechten Radkasten. An einigen Stellen im Algorithmus, der Kategorisierung und der Berechnung des Constraints, wird nicht das gesamte Velomobil benötigt.
+	Da diese beiden Operationen häufig benötigt werden, ist es sinnvoll sich den Rechenaufwand für die Deformation beider Radkästen und der Konstruktion des gesamte Velomobils zu sparen.
+	\item[wheelcase\_OpenFoamResult] Diese Datei führt die OpenFoam Simulation für eine deformierte Velomobil-Hülle durch und berechnet den zugehörigen Fitnesswert.
+	Der Fitnesswert ist definiert als $ln(\frac{\sum_{t=101}^{200}cD(t)}{100})$
+	\item[wheelcase\_PreciseEvaluate]
+	\item[wheelcase\_ValidateChildren] Diese Funktion dient dazu ungültige Lösungen nicht zuzulassen. Da eine Soft Constraint bevorzugt wird, sind alle Lösungen valide und diese Funktion tut folglich wenig.
+\end{itemize}
+
 \subsubsection{OpenFOAM}
+
 \subsubsection{Constraint}
-Zur Erfüllung des Constraints wurden alle möglichen Radausschläge als Volumen modelliert (zu finden in ffd/turning\_volume.stl)
+Zur Erfüllung des Constraints wurden alle möglichen Radausschläge als Volumen modelliert (zu finden in \path{ffd/turning_volume.stl})
 
 \begin{table}[h]
 	\begin{tabularx}{.5\textwidth}{ll}\hline
@@ -199,11 +284,13 @@ Zur Erfüllung des Constraints wurden alle möglichen Radausschläge als Volumen
 Da ein Ziel darin bestand, den Constraint nicht als binäres, erfüllt/nicht erfüllt Problem zu definieren, da zwischen zwei Lösungen, die den Constraint nicht erfüllen trotzdem qualitative Unterschiede bestehen können wie stark der Constraint verletzt wird, wird als Constraint das Differenzvolumen des Radausschlags minus verformten Radkastens gewählt.
 Da alle generierten Verformungen der Radkästen symmetrisch sind, wird der Constraint jeweils nur für den rechten Radkasten berechnet.
 Zwar besteht keine direkte Kausalität zwischen diesem Volumen und dem maximalen möglichen Radausschlag aber die Vermutung, dass eine geringeres Volumen dieser Different mit größerem möglichen Radausschlag korreliert ist liegt nahe.
-Zur Berechnung der Differenz zwischen Radausschlagsvolumen und Radkasten wird die Bibliothek \textit{gptoolbox} \todo{cite} genutzt, zur Generierung von Tetraedermeshes zur Volumenberechnung \textit{TetGen} \todo{cite}.
+Zur Berechnung der Differenz zwischen Radausschlagsvolumen und Radkasten wird die Bibliothek \textit{gptoolbox} \cite{gptoolbox.b} genutzt, zur Generierung von Tetraedermeshes zur Volumenberechnung \textit{TetGen} \cite{Si.2015}.
 Um eine Differenz berechnen zu können wurde der rechte Radkasten zu einem geschlossenen Volumen gemacht, da die Constraintberechnung in jeder Generation für jedes Kind erfolgen muss wurde der Radkasten außerdem runtergesamplet \todo{klingt komisch? besseres wort} um die Berechnung  des Constraints ausreichend schnell durchführen zu können.
 Aus dem Volumen wurde dann der Strafwert berechnet der in die Akquisefunktion integriert wurde.
 
 \subsection{Wahl der Features}
+Die Kategorisierung wird von der \path{wheelcase_Categorize.m} verwaltet.
+
 Als Kategorien wurde die Breite des Velomobils gewählt.
 Hierzu kann die Hypothese aufgestellt werden, dass die Breite des Velomobils mit der Erfüllung des Constraint korreliert ist. Es wäre also zu erwarten, dass breitere Velomobile den Constraint tendenziell besser erfüllen, als schmalere.
 Auch kann die Hypothese aufgestellt werden, dass die Breite negativ mit dem Luftwiderstandsbeiwert korreliert ist.
@@ -216,6 +303,8 @@ Die Frage ob sich hier klare Tendenzen bezüglich den aerodynamischen Eigenschaf
 Auch die Kategorisierung erfolgte mit dem für die Berechnung des Constraints vereinfachten Modell des Radkastens, da auch die Kategorisierung so häufig stattfindet, dass die Verformung und Kategorisierung anhand des originalen feinen Radkasten Rechenaufwand und damit Zeit in Anspruch nimmt.
 
 \subsection{E-Roller}
+
+\missingfigure{E-Rollerbauteil}
 
 Die zweite Problemdomäne ist die explorative Untersuchung eines Bauteils an der Unterseite eines E-Rollers.
 Hier besteht die Frage ob nicht-triviale Bauteile aerodynamische Vorteile bieten, und welche Eigenschaften solche Bauteile aufweisen.
