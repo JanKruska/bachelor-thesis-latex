@@ -57,7 +57,7 @@ Diese Schleife wird solange wiederholt bis das Maximum an Generationen erreicht 
 
 \subsubsection{Divergente genetische Algorithmen}
 
-\label{sub:divergetnGeneticAlgorithms}
+\label{sub:divergentGeneticAlgorithms}
 
 Eine sehr häufige Anforderung an genetische Algorithmen ist die Einbindung von Divergenz, bzw. Diversität.
 Dies hat verschiedene Gründe.
@@ -81,7 +81,38 @@ Auch besteht eine erhebliche Limitierung bezüglich der Komplexität einer solch
 \subsubsection{MAP-Elites}
 
 \label{sub:mapElites}
-\missingfigure{Pseudocode MAP-Elites}
+\begin{algorithm}
+	\caption{MAP-Elites} \label{alg:mapElites}
+	\begin{algorithmic}[1]
+		\Procedure{MapElites}{$fitnessFunction,categorizationFunction,hyperparameters$}
+		\State $map \gets $ \Comment{Initialize empty n-dimensional map}
+		\State $fitness \gets $ \Comment{Initialize empty n-dimensional fitnessMap}
+		\State $population \gets initializeRandomPopulation$ \Comment{Start of with randomly generated intitial samples}
+		\For{$individual in population$}
+			\State $f = fitnessFunction(individual)$
+			\State $c = categorizationFunction(individual)$ \Comment{Categorization c is an Index to a cell in the map}
+			\If{$map(c) = \emptyset \lor f < fitness(c)$} \Comment{If cell is unoccupied or this solution is better put it in cell}
+				\State $map(c) \gets individual$
+				\State $fitness(c) \gets f$
+			\EndIf
+		\EndFor
+		
+		\For{$numberGenerations$}
+			\State $children \gets selectRandom(population,childrenPerGeneration)$ \Comment{Select samples randomly from existing solutions}
+			\State $children \gets variate(children,hyperparameters)$ \Comment{Variate these children with crossover and/or mutation}
+			\For{$individual in children$}
+				\State $f = fitnessFunction(individual)$
+				\State $c = categorizationFunction(individual)$
+				\If{$map(c) = \emptyset \lor f < fitness(c)$}
+					\State $map(c) \gets individual$
+					\State $fitness(c) \gets f$
+				\EndIf
+			\EndFor
+		\EndFor
+		\Return $map,fitness$
+		\EndProcedure
+	\end{algorithmic}
+\end{algorithm}
 MAP-Elites \cite{Mouret.4202015} ist ein genetischer Algorithmus mit phänotypischem Diversitätsmanagement.
 Das bedeutet, dass die Morphologie bzw. Funktionalität einer konkreten ausgedrückten Lösung, wie beispielsweise Volumen oder Krümmung eines Bauteils, betrachtet wird.
 Dazu wird der Lösungsraum entlang beliebig vieler Feature-Dimensionen, d. h. Merkmalen der Lösungen, die unabhängig von der Zielfunktion sind, aufgeteilt.
@@ -109,48 +140,50 @@ Aerodynamische Probleme, für die zeitaufwändige Simulationen nötig sind, geh�
 Um genetische Taktiken auf eine solche Problemdomäne anzuwenden, wird eine Möglichkeit benötigt die benötigten Funktionsauswertungen erheblich zu reduzieren.
 Eine solche Möglichkeit ist ein Surrogatmodell \cite{Jin.2011}\cite{Preen.2016}, eine Machine-Learning Modell, welches aufgrund echter Simulationsauswertungen trainiert wird, um deren Ergebnis annähernd vorherzusagen.
 Eine Auswertung des Modells erfordert dabei nur einen winzigen Bruchteil des Aufwands, der für eine Simulation nötig wäre.
-%Theoretisch sind verschiedenste Machine-Learning Verfahren für das Surrogatmodell denkbar, Gaußprozesse \cite{Rasmussen.2008} bieten sich durch die Eigenschaft an, dass sie neben einer Vorhersage auch immer ihre eigene Unsicherheit Liefern, und entsprechend Bereiche zeigen können, in denen große Unsicherheit herrscht, oder anders ausgedrückt in denen der Gaußprozess wenig weiß.
-%Der Nachteil der hohen Speicher- und Berechnungskomplexität von Gaußprozessen ist durch die Limitierung auf eine geringe Anzahl an Simulationen und damit der Limitierung auf einen kleinen Trainingsdatensatz vernachlässigbar.
 
-\subsection{Gaußprozesse}
+Die Einführung eines Surrogatmodells bringt allerdings einige Probleme mit sich.
+Das wichtigste zu lösende Problem ist, wie bestimmt wird anhand welcher realen Funktionsauswertungen das Surrogatmodell trainiert wird.
+Dabei müssen einige Ziele beachtet werden.
+Ersten sollte das Surrogatmodell möglichst präzise sein, da es seinen Zweck für reale Funktionsauswertungen einzustehen nur erfüllen kann, wenn die Vorhersagen des Surrogatmodells ausreichend gut reale Funktionauswertungen abbilden.
+Da das Surrogatmodell aber genau für den Zweck genutzt wird die Anzahl an benötigten teuren Funktionsauswertungen zu reduzieren, wäre es sinnvoll, wenn Funktionauswertungen so gewählt werde, dass sie maximalen Nutzen bringen.
+
+\subsubsection{Exploration Exploitation Problem}
+\todo[inline]{ausführen}
+Durch die Auswertung von Punkten mit hoher Varianz kann die Anzahl an benötigten realen Funktionsauswertungen gering gehalten werden.
+Die Auswertung von Punkten mit hoher Varianz, sprich die Auswertung von bisher nicht erkundeten Gebieten wird Exploration genannt.
+Wenn allderdings nur die Exploration des Suchraums durchgeführt wird, wird dies dazu führen, dass viele nicht-optimale Bereiche erkundet werden.
+Da der Gaußprozess im Kontext einer Optimierung genutzt wird hat die Präzision des Gaußprozesses in Bereichen um Optima besondere Bedeutung.
+Die Verbesserung der Präzision des Gaußprozesses in optimalen Regionen wird Exploitation genannt.
+Insgesamt muss eine Abwägung zwischen der Exploration unbekannter Bereiche der Funktion und der Exploitation bekannter optimaler Bereiche der Funktion stattfinden. 
+Eine Möglichkeit einer solchen Abwägung ist Upper-Confidence-Bound \todo{cite}, einer Kombination aus Mittelwert, der Exploitation bevorzugt, und Varianz, die Exploration bevorzugt.
+
+\subsubsection{Gaußprozesse}
 
 \missingfigure{Visualisierung Gaußprozess}
 
-Gaußprozesse sind ein in \cite{Rasmussen.2008} entwickeltes Machine-Learning Verfahren, mit welchem beliebige mathematische Funktionenen approximiert werden können. in großer Vorteil von Gaußprozessen ist, dass sie durch ihre Herkunft aus der Statistik neben die zu approximierende Funktion als Kombination aus Normalverteilungen modellieren.
-Dadurch können Gaußprozesse neben einer Vorhersage auch die Varianz der Vorhersage an jedem Punkt liefern.
-Das bedeutet, dass zu jedem Punkt auch die Unsicherheit bekannt ist, was für die Exploration des Funktionsraum
-ein erheblicher Vorteil ist.
-Der Hauptnachteil von Gaußprozessen ist der relativ hohe Speicher- und Rechenkomplexität \todo{komplexität}, da die Anzahl an Simulationen die durchgeführt werden kann aber ohnehin durch den Rechenaufwand, der mit diesen verbunden ist stark limitiert ist, wird die Anzahl an Trainingsdaten so gering bleiben, dass Komplexitätsüberlegungen hinfällig sind.
+Gaußprozesse sind ein in \cite{Rasmussen.2008} entwickeltes Machine-Learning Verfahren, mit welchem beliebige mathematische Funktionenen approximiert werden können. 
+Ein großer Vorteil von Gaußprozessen ist, dass sie durch ihre Herkunft aus der Statistik die zu approximierende Funktion als Kombination aus Normalverteilungen modellieren.
+Dadurch können Gaußprozesse neben einer Vorhersage, genauer gesagt dem Mittelwert der Vorhersage an einem Punkt, auch die Varianz der Vorhersage an jedem Punkt liefern.
+Durch diese Eigenschaft bieten sie gute Vorraussetzungen zur Anwendung von Upper-Confidence-Bound, und können dadurch Vorhersagen welche Funktionsauswertungen den statistisch höchsten Nutzen unter Abwägung zwischen Exploration und Exploitation haben.
+Damit können die benötigten Funktionsauswertungen weiter reduziert werden, beziehungsweise die Präzision des Modells bei begrenzter Zahl von Funktionsauswertungen maximiert werden.
+Diese Eigenschaft stellt den Hauptvorteil von Gaußprozessen gegenüber anderen Machine-Learning Verfahren dar und ist der Grund warum Gaußprozesse als Surrogatmodell in SAIL genutzt werden.
 
-\subsection{SAIL}
+%Dies ist für die Nutzung als Surrogatmodell genau deshalb wünschenswert, da es ein Maß der Präzision für jeden Punkt der Funktion darstellt.
+%Da die Auswertung eines Punktes und die Einführung dieses in den Gaußprozess, immer den Kollaps der Varianz an diesem Punkt zu null zu Folge hat, bietet der Gaußprozess eine Möglichkeit den Präzisionsgewinn durch die Auswertung eines Punktes zu quantifizieren.
+
+
+Der Hauptnachteil von Gaußprozessen ist die relativ hohe Speicher- und Rechenkomplexität \todo{komplexität}, da die Anzahl an Simulationen die durchgeführt werden können aber ohnehin durch den Rechenaufwand, der mit diesen verbunden, ist, stark limitiert ist, wird die Anzahl an Trainingsdaten so gering bleiben, dass Komplexitätsüberlegungen hinfällig sind.
+
+
+
+\subsubsection{SAIL}
+
+\missingfigure{pseudocode sail}
 
 SAIL (Surrogate-Assisted Illumination) vereint die in \ref{sub:mapElites} und \ref{sub:surrogate} beschriebenen Ansätze.
+
 In \cite{Gaier.6152018} wurde gezeigt, dass dieser Ansatz erfolgreich auf 2D und 3D aerodynamische Domänen angewandt werden kann.
 Es wurden Freiform-Deformationen auf 3D-Bauteile angewandt, welche dann wiederum bezüglich ihrer aerodynamischen Eigenschaften ausgewertet wurden, um ein Surrogat-Modell zu trainieren.
-
-\subsection{Freiformdeformation}
-
-Freiformdeformation\cite{Sederberg.1986} ist ein Verfahren zu Deformation von geometrischen Objekten.
-Mithilfe der Freiformdeformation können beliebige dreidimensionale Meshes robust deformiert werden.
-Dazu wird eine Box aus Kontrollpunkten erzeugt.
-Jeder dieser Kontrollpunkte kann dann anhand von Verformungsparametern verschoben werden, wodurch für alle Punkte innerhalb der FFD-Box eine Verschiebung berechnet wird, die von der relativen Position des Punktes zum Kontrollpunkt abhängt.
-Dadurch kann eine Deformation auf eine überschaubare Anzahl an Deformationsparametern reduziert werden.
-Außerdem kann eine Deformation auf einige bestimmte Punkte und/oder Richtungen
-\footnote{Deformation in x, y, z finden jeweils separat statt}
-beschränkt werden, um die Komplexität weiter zu reduzieren.
-Dadurch das nur die Punkte des Meshes ihre Position ändern, hat das Verfahren, den Vorteil das die Dreiecke erhalten bleiben und somit beispielsweise das Entstehen von Löchern bei korrekter Anwendung praktisch ausgeschlossen ist.
-
-\subsection{OpenFOAM}
-
-OpenFoam \cite{OpenCFD.} ist eine Open-Source Programm zur Durchführung von Fluiddynamiksimulationen.
-Berechnungen in OpenFOAM sind in sogenannten "Cases" organisiert auf die nacheinander OpenFoam-Funktionen angewandt werden
-Diese Cases bestehen aus einer Basisstruktur, die Initiale Startparameter, sowie Dateien zur Steuerung von OpenFoam enthalten.
-%Diese basis ist in den Ordnern \textit{domains/wheelcase/pe} und \textit{domains/escooter/pe} zu finden.
-Diese Basis enthält typischerweise Skripts um die gesamte Kette aus verschiedenen OpenFoam Funktionen, die zur Durchführung einer Simulation notwendig sind, auszuführen (Allrun), sowie ein Skript, welches den Case wieder in den Case wieder in den Startzustand versetzt (Allclean).
-Außerdem enthält diese basis den Ordner system, der C++-Dictionaries enthält, mit denen die einzelnen OpenFoam Funktionen parametrisiert und gesteuert werden.
-Zuletzt befindet sich in diesem Ordner auch noch der Initiale Startzustand mit dem die Simulation beginnt (0org)
-OpenFOAM bietet native Unterstützung von Parallelität über die MPI-Bibliothek \cite{OpenMPI.}.
-Neben den Funktionen um die korrekte Aufteilung eines Cases auf mehrere Prozessoren aufzuteile und am Ende wieder zu rekonstruieren sind zwei Funktionen und deren dazugehörige Dateien hervorzuheben.
 
 
 \subsection{Constraints in Optimierungsprozessen}
@@ -186,9 +219,38 @@ Ist diese Gewichtung fehlerhaft parametrisiert, kann dies dazu führen, dass Tei
 
 \section{Methode}
 
-\subsection{Allgemeines}
+\subsection{Domänenübergreifend}
 
-\subsection{OpenFoam}
+In beiden Domänen geht es um die Deformation von dreidimensionalen Bauteilen, und die Bewertung der aerodynamischen Effekte solcher Deformationen.
+D. h. es wird eine robuste Methode benötigt um dreidimensionale Bauteile zu deformieren und solche Deformationen auf wenige Parameter reduzieren zu können.
+Eine Methode, die diese Rahmenbedingungen erfüllt ist die Freiformdeformation \cite{Sederberg.1986} auf die in \ref{sub:ffd} genauer eingegangen wird, die Deformationen von komplexen geometrischen Objekten anhand Verschiebungen von Rahmenpunkten ausdrücken kann.
+Für aerodynamische Simulationen wird in beiden Domänen OpenFoam verwendet, ein Open-Source Programm welches unter anderem fähig ist Windkanalsimulationen durchzuführen.
+Auf die genaueren Eigenschaften von OpenFoam und den Aufbau einer passenden Simulationsumgebung wird in \ref{sub:openfoam} eingegangen.
+
+\subsubsection{Freiformdeformation}
+\label{sub:ffd}
+Freiformdeformation\cite{Sederberg.1986} ist ein Verfahren zu Deformation von geometrischen Objekten.
+Mithilfe der Freiformdeformation können beliebige dreidimensionale Meshes robust deformiert werden.
+Dazu wird eine Box aus Kontrollpunkten erzeugt.
+Jeder dieser Kontrollpunkte kann dann anhand von Verformungsparametern verschoben werden, wodurch für alle Punkte innerhalb der FFD-Box eine Verschiebung berechnet wird, die von der relativen Position des Punktes zum Kontrollpunkt abhängt.
+Dadurch kann eine Deformation auf eine überschaubare Anzahl an Deformationsparametern reduziert werden.
+Außerdem kann eine Deformation auf einige bestimmte Punkte und/oder Richtungen
+\footnote{Deformation in x, y, z finden jeweils separat statt}
+beschränkt werden, um die Komplexität weiter zu reduzieren.
+Dadurch das nur die Punkte des Meshes ihre Position ändern, hat das Verfahren, den Vorteil das die Dreiecke erhalten bleiben und somit beispielsweise das Entstehen von Löchern bei korrekter Anwendung praktisch ausgeschlossen ist.
+
+\subsubsection{OpenFOAM}
+\label{sub:openfoam}
+OpenFoam \cite{OpenCFD.} ist eine Open-Source Programm zur Durchführung von Fluiddynamiksimulationen.
+Berechnungen in OpenFOAM sind in sogenannten "Cases" organisiert auf die nacheinander OpenFoam-Funktionen angewandt werden
+Diese Cases bestehen aus einer Basisstruktur, die Initiale Startparameter, sowie Dateien zur Steuerung von OpenFoam enthalten.
+%Diese basis ist in den Ordnern \textit{domains/wheelcase/pe} und \textit{domains/escooter/pe} zu finden.
+Diese Basis enthält typischerweise Skripts um die gesamte Kette aus verschiedenen OpenFoam Funktionen, die zur Durchführung einer Simulation notwendig sind, auszuführen (Allrun), sowie ein Skript, welches den Case wieder in den Case wieder in den Startzustand versetzt (Allclean).
+Außerdem enthält diese basis den Ordner system, der C++-Dictionaries enthält, mit denen die einzelnen OpenFoam Funktionen parametrisiert und gesteuert werden.
+Zuletzt befindet sich in diesem Ordner auch noch der Initiale Startzustand mit dem die Simulation beginnt (0org)
+OpenFOAM bietet native Unterstützung von Parallelität über die MPI-Bibliothek \cite{OpenMPI.}.
+Neben den Funktionen um die korrekte Aufteilung eines Cases auf mehrere Prozessoren aufzuteile und am Ende wieder zu rekonstruieren sind zwei Funktionen und deren dazugehörige Dateien hervorzuheben.
+
 Die zwei wichtigsten genutzten OpenFoam-Funktionen sind \path{snappyHexMesh} und \path{simpleFoam}.
 Mit snappyHexMesh, dessen Parametrisierung in \path{snappyHexMeshDict} zu finden ist, wird aus dem STL das für die Fluiddynamiksimulation benötigte Mesh generiert. Über snappyHexMesh kann die Auflösung des in der Fluiddynamiksimulation genutzen Meshes kontrolliert werden.
 Die Paramtrisierung von snappyHexMesh ist deshalb besonders wichtig, da die Auflösung des Meshes
@@ -288,7 +350,7 @@ Zur Berechnung der Differenz zwischen Radausschlagsvolumen und Radkasten wird di
 Um eine Differenz berechnen zu können wurde der rechte Radkasten zu einem geschlossenen Volumen gemacht, da die Constraintberechnung in jeder Generation für jedes Kind erfolgen muss wurde der Radkasten außerdem runtergesamplet \todo{klingt komisch? besseres wort} um die Berechnung  des Constraints ausreichend schnell durchführen zu können.
 Aus dem Volumen wurde dann der Strafwert berechnet der in die Akquisefunktion integriert wurde.
 
-\subsection{Wahl der Features}
+\subsubsection{Wahl der Features}
 Die Kategorisierung wird von der \path{wheelcase_Categorize.m} verwaltet.
 
 Als Kategorien wurde die Breite des Velomobils gewählt.
