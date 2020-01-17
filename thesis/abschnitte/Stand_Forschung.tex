@@ -113,19 +113,30 @@ Auch besteht eine erhebliche Limitierung bezüglich der Komplexität einer solch
 		\EndProcedure
 	\end{algorithmic}
 \end{algorithm}
-MAP-Elites \cite{Mouret.4202015} ist ein genetischer Algorithmus mit phänotypischem Diversitätsmanagement.
+MAP-Elites (Multi-dimensional Archive of Phenotypic Elites)\cite{Mouret.4202015} ist ein genetischer Algorithmus mit phänotypischem Diversitätsmanagement.
 Das bedeutet, dass die Morphologie bzw. Funktionalität einer konkreten ausgedrückten Lösung, wie beispielsweise Volumen oder Krümmung eines Bauteils, betrachtet wird.
-Dazu wird der Lösungsraum entlang beliebig vieler Feature-Dimensionen, d. h. Merkmalen der Lösungen, die unabhängig von der Zielfunktion sind, aufgeteilt.
+Dazu wird der Lösungsraum entlang anhand beliebig vieler Features, deren Untersuchung als zielführend zum Verständnis des Problems befunden wird, aufgeteilt.
+Diese Feature Dimensionen sind direkte Merkmale der Phänotypen von Lösungen, wie beispielsweise das Volumen eines Phänotypos in einer dreidimensionalen Domäne.
+Als Features sollten solche Merkmale gewählt werden die unabhängig von der Zielfunktion sind, d. h. deren Einfluss auf die Fitness von Lösungen unklar ist.
+Gerade die Untersuchung wie Merkmale mit der Fitness interagieren ist ein typisches Untersuchungsziel für MAP-Elites.
 Diesen Feature-Dimensionen wird ein Minimum, Maximums sowie eine Schrittweite zugewiesen um den Lösungsraum in Zellen zu diskretisieren.
-Diese Diskretisierung zu Zellen wird häufig auch Karte genannt.
+Diese Diskretisierung zu Zellen wird typischerweise Karte oder Archiv genannt.
+Wichtig für MAP-Elites ist das jede Zelle nur maximal eine Lösung enthalten kann.
 %Jede dieser Zellen stellt dabei eine Kombination der Eigenschaften dar.
-Zu Beginn sind all diese Zellen leer, im Laufe des Algorithmus werden diese nach und nach gefüllt.
-Jede Zelle kann aber nur maximal eine Lösung enthalten.
-In jeder Generation werden aus den momentan in der Karten enthaltenen Lösung per Mutation Kinder erzeugt.
-Jedes dieser Kinder wird erst bezüglich dessen Fitness evaluiert und dessen Phänotyp wird nach den gewählten Features kategorisiert.
-Dadurch wird dem Kind abhängig von dessen Funktionalität eine Zelle zugewiesen, in der lokale Konkurrenz stattfindet.
-Ist die zugewiesene Zelle leer befüllt das Kind die Zelle, befindet sich bereits ein Individuum in der Zelle werden stattdessen die Fitnesswerte der Beiden verglichen und das Individuum mit der höheren Fitness wird der Zelle zugewiesen.
-Dadurch ist der Algorithmus divergent, denn dadurch, dass nur lokale Konkurrenz stattfindet kann ein Individuum nur durch ein phänotypisch ähnliches verdrängt werden, wodurch die phänotypische Diversität nicht sinkt.
+Zu Beginn des Algorithmus werden alle Zellen leer initialisiert, im Laufe des Algorithmus werden diese nach und nach gefüllt.
+Zuerst werden zufällige Individuen generiert um die Karte mit einer Initialpopulation zu befüllen.
+Daraufhin werden in jeder Generation aus den momentan in der Karte enthaltenen Lösung zufällig Individuen ausgewählt um die Kindpopulation zu erzeugen.
+Aus dieses ausgewählten Individuen wird eine Kindpopulation per Mutation und/oder Crossover erzeugt.
+Jedes dieser Kinder wird bezüglich dessen Fitness evaluiert und dessen zugehöriger Phänotyp wird nach den gewählten Features kategorisiert.
+Diese Kategoriesierung weist jedem Kind eine Zelle zu die es befüllen könnte.
+Ist diese Zelle noch leer befüllt das Kind diese, befindet sich bereits ein Individuum in der Zelle, findet zwischen diesem und dem Kind lokal Konkurrenz statt.
+Die lokale Konkurrenz innerhalb der Zellen ist was MAP-Elites zu einem divergenten Algorithmus macht.
+Da Lösungen nur durch Lösungen verdrängt werden können, denen die gleiche Zelle zugewiesen ist, können Lösungen nur durch ihnen phänotypisch ähnliche Lösungen verdrängt werden.
+Dadurch wird die phänotypische Diversität des Algorithmus gewährleistet.
+Außerdem kann die Größe des Archivs während des Algorithmus nur zunehmen, da Individuen nur verdrängt werden können wenn sie durch ein anderes ersetzt werden, aber im Laufe des Algoithmus immer mehr leere Zellen befüllt werden können.
+Dass bedeutet, dass die Anzahl an lokalen Optima, die der Algorithmus ermittelt hat über dessen Laufzeit wächst.
+
+%Dadurch ist der Algorithmus divergent, denn dadurch, dass nur lokale Konkurrenz stattfindet kann ein Individuum nur durch ein phänotypisch ähnliches verdrängt werden, wodurch die phänotypische Diversität nicht sinkt.
 Nicht nur wird eine Vielzahl von Lösungen generiert, die unterschiedliche Lösungsklassen abdecken, sondern die regelmäßig aufgeteilte Karte kann auch dabei helfen die Effekte, die die Features auf die Lösungsqualität haben zu verstehen.
 
 
@@ -148,14 +159,32 @@ Ersten sollte das Surrogatmodell möglichst präzise sein, da es seinen Zweck f�
 Da das Surrogatmodell aber genau für den Zweck genutzt wird die Anzahl an benötigten teuren Funktionsauswertungen zu reduzieren, wäre es sinnvoll, wenn Funktionauswertungen so gewählt werde, dass sie maximalen Nutzen bringen.
 
 \subsubsection{Exploration Exploitation Problem}
-\todo[inline]{ausführen}
-Durch die Auswertung von Punkten mit hoher Varianz kann die Anzahl an benötigten realen Funktionsauswertungen gering gehalten werden.
-Die Auswertung von Punkten mit hoher Varianz, sprich die Auswertung von bisher nicht erkundeten Gebieten wird Exploration genannt.
-Wenn allderdings nur die Exploration des Suchraums durchgeführt wird, wird dies dazu führen, dass viele nicht-optimale Bereiche erkundet werden.
-Da der Gaußprozess im Kontext einer Optimierung genutzt wird hat die Präzision des Gaußprozesses in Bereichen um Optima besondere Bedeutung.
-Die Verbesserung der Präzision des Gaußprozesses in optimalen Regionen wird Exploitation genannt.
-Insgesamt muss eine Abwägung zwischen der Exploration unbekannter Bereiche der Funktion und der Exploitation bekannter optimaler Bereiche der Funktion stattfinden. 
-Eine Möglichkeit einer solchen Abwägung ist Upper-Confidence-Bound \todo{cite}, einer Kombination aus Mittelwert, der Exploitation bevorzugt, und Varianz, die Exploration bevorzugt.
+
+Ein häufig auftretendes Dilemma beim Lernen von unbekannten Problemen ist die Spannung zwischen Exploration und Exploitation.
+Exploration beschreibt dabei die Untersuchung von unbekannten, bisher unerforschten Gebieten, um das zugrundeliegende Problem besser zu verstehen und damit Strategien besser optimieren zu können.
+Exploitation beschreibt die Ausnutzung von bekannten guten Strategien, um Nutzen zu maximieren.
+Die beiden Herangehensweisen stellen gegensätzliche Konzepte dar.
+Je mehr Exploration durchgeführt wird, desto weniger Exploitation kann durchgeführt werden und vice-versa.
+Ein zu starker Fokus auf Exploration führt allerdings dazu, dass viele niedrigwertige Gebiete erforsch werden, diese aber keinen Nutzen einbringen.
+Zu viel Exploitation hingegen kann zur Folge haben lokale Gewinne über globale Gewinne zu bevorzugen.
+
+Ein solches Problem stellt sich auch bei der Surrogatmodellierung.
+So ist einerseit die Exploration unerkundeter Gebiete wichtig zur Maximierung der globalen Präzision des Modells, die Exploitation allerdings wichtig zur Untersuchung von Regionen mit hoher Fitness, da in diesen Regionen der Hauptteil der Optimierung stattfindet.
+Auch ist die Anzahl an erlaubten realen Auswertungen stark begrenzt, die Reduzierung ist der Grund für die Nutzung eines Surrogatmodells.
+D. h. dass die Auswertungen die durchgeführt werden maximalen Nutzen für das Surrogatmodell haben sollten.
+
+Eine Möglichkeit mit dem Dilemma zwischen Exploration und Exploitation umzugehen ist das in \todo{cite Using Confidence Bounds forExploitation-Exploration Trade-offs} beschriebene Upper-Confidence-Bound. Dabei werden Exploration-Exploitation Probleme als statistischen Prozesse bestehend aus Mittelwert und Varianz aufgefasst.
+Der Mittelwert an einem Punkt spiegelt dabei den erwarteten Nutzen wieder, eine dem Mittelwert folgende Auswahl bevorzugt also Exploitation von Bereichen in denen der erwartete Nutzen hoch ist.
+Die Varianz spiegelt die Unsicherheit an einem Punkt wieder, eine Auswahl nach Varianz bevorzugt die Exploration von Bereichen in denen eine hohe Varianz auftritt, oder anders gesagt von bisher unerforschten Bereichen.
+Upper-Confidence-Bound kombiniert Mittelwert und Varianz zur Bestimmung der besten Punkte, und erreicht damit eine Balance in der sowohl Exploration als auch Exploitation stattfindet.
+
+%Durch die Auswertung von Punkten mit hoher Varianz kann die Anzahl an benötigten realen Funktionsauswertungen gering gehalten werden.
+%Die Auswertung von Punkten mit hoher Varianz, sprich die Auswertung von bisher nicht erkundeten Gebieten wird Exploration genannt.
+%Wenn allderdings nur die Exploration des Suchraums durchgeführt wird, wird dies dazu führen, dass viele nicht-optimale Bereiche erkundet werden.
+%Da der Gaußprozess im Kontext einer Optimierung genutzt wird hat die Präzision des Gaußprozesses in Bereichen um Optima besondere Bedeutung.
+%Die Verbesserung der Präzision des Gaußprozesses in optimalen Regionen wird Exploitation genannt.
+%Insgesamt muss eine Abwägung zwischen der Exploration unbekannter Bereiche der Funktion und der Exploitation bekannter optimaler Bereiche der Funktion stattfinden. 
+%Eine Möglichkeit einer solchen Abwägung ist Upper-Confidence-Bound \todo{cite}, einer Kombination aus Mittelwert, der Exploitation bevorzugt, und Varianz, die Exploration bevorzugt.
 
 \subsubsection{Gaußprozesse}
 
@@ -178,9 +207,45 @@ Der Hauptnachteil von Gaußprozessen ist die relativ hohe Speicher- und Rechenko
 
 \subsubsection{SAIL}
 
-\missingfigure{pseudocode sail}
+\begin{algorithm}
+	\caption{MAP-Elites} \label{alg:mapElites}
+	\begin{algorithmic}[1]
+		\Procedure{MapElites}{$evaluate,categorizationFunction,hyperparameters$}
+			\While{$numberEvaluatedSamples < totalSamples$}
+				\If{$notInitialized$}
+\State $evaluatedSamples \gets evaluate(randomSampling())$ \Comment Evaluate is the real costly Fitness-Function.
+\Else
+\State $surrogate \gets trainSurrogate(evaluatedSamples)$
+\State $acquisitionMap \gets MapElites(acquisitionFunction,categorizationFunction,hyperparameters)$
+\State $nextSamples \gets sampleRandomFromMap(acquisitionMap)$ \Comment SAIL utilizes Sobol-sequences to achieve optimal spread of the Sampling
+\State $evaluatedSamples \gets evaluatedSamples \union evaluate(nextSamples)$
+\EndIf
+			\EndWhile
+		\EndProcedure
+	\end{algorithmic}
+\end{algorithm}
 
-SAIL (Surrogate-Assisted Illumination) vereint die in \ref{sub:mapElites} und \ref{sub:surrogate} beschriebenen Ansätze.
+\missingfigure{Vllt. Graphik zu SAIL}
+
+\todo{cite sail}
+SAIL (Surrogate-Assisted Illumination) vereint die in \ref{sub:mapElites} und \ref{sub:surrogate} beschriebenen Ansätze, mit dem Ziel MAP-Elites in rechenintensiven Domänen anwendbar zu machen.
+
+Zur Initialisierung SAILs werden zuerst zufällig Samples ausgewählt und evaluiert.
+Um eine gleichmäßige Verteilung der Samples über den Problemraum zu garantieren werden diese Samples nicht aus einer Gleichverteilung, sondern aus einer Sobol Sequenz ausgewählt.\todo{cite sobol sequenz}
+Der eigentliche Kern von SAIL ist die graduelle Verfeinerung des Surrogatmodells.
+In jeder Iteration der Verfeierungsschleife wird ein Gaußprozess auf Basis aller bisher ausgewerteten Samples trainiert.
+Mit diesem Gaußprozess wird MAP-Elites durchgeführt, wobei als Fitnessfunktion für die Durchführung von MAP-Elites die Akquisefunktion genutzt wird.
+Dadurch wird die sogenannte Akquisekarte erzeugt, welche diverse Lösungen enthält, die die Akquisefunktion maximieren.
+Aus dieser Akquisekarte werden dann mehrere Lösungen für reale Fitnessevaluationen ausgewählt.
+Durch die Nutzung von Upper-Confidence-Bound als Akquisefunktion stellen diese Lösungen Optima bezüglich Exploration und Exploitation dar.
+Die ausgewählten Samples werden daraufhin ausgewertet  und den bereits ausgewerteten hinzugefügt um den Gaußprozess in der nächten Iteration besser zu trainieren.
+Dies kann abhängig von den verfügbaren Rechenkapazitäten beliebig oft wiederholt werden.
+Am Ende poduziert diese Schleife eine Menge an echten Ausgewerteten Samples auf deren Basis der Gaußprozess trainiert werden kann.
+
+Um am Ende Ergebnisse zu erzeugen kann MAP-Elites mit dem finalen Gaußprozess und dessen Mittelwert als Fitnessfunktion ausgeführt werden.
+Der Mittelwert des Gaußprozesses an einem Punkt entspricht gerade der mittleren Vorhersage zur Fitness einer realen Auswertung an diesem Punkt.
+Damit wird dann eine diverse Vorhersagekarte erzeugt, die die Optima des Gaußprozesses zeigt.
+Bei korrekter Parametrisierung von SAIL, dem Gaußprozess, und einer ausreichen großen Anzahl an realen Auswertungen korrespondieren OPtima im Gaußprozess mit Optima in der realen Fitnessfunktion.
 
 In \cite{Gaier.6152018} wurde gezeigt, dass dieser Ansatz erfolgreich auf 2D und 3D aerodynamische Domänen angewandt werden kann.
 Es wurden Freiform-Deformationen auf 3D-Bauteile angewandt, welche dann wiederum bezüglich ihrer aerodynamischen Eigenschaften ausgewertet wurden, um ein Surrogat-Modell zu trainieren.
@@ -191,7 +256,11 @@ Constraints sind eine Möglichkeit sekundäre Optimierungsparemter, welche neben
 Constraints lassen sich grundsätzlich in Soft Constraints, bei denen die Nichteinhaltung des Constraints zur Addition von Strafwerten auf die Optimierungsfunktion führt, und Hard Constraints, die eine binäre erfüllt/nicht erfüllt Auswahl treffen.
 Welche dieser beiden Arten von Constraints genutzt wird, hängt stark von der Problemstellung ab.
 
-\todo{Herausforderung Formulierung von Constraints aus nicht-mathematischer Formulierung}
+Auch stellt die Formulierung von Constraints häufig eine Herausforderung dar.
+So müssen diese offensichtlich berechenbar sein, Constraints sind allerdings häufig nicht in mathematischer Form formuliert sondern eher in einer Art die an Requirements erinnert.
+Es muss folglich zuerst eine mathematische Formulierung für den Constraint entwickelt werden, die den Constraint sow eit wie möglich entspricht.
+Zweitens werden Constraints in einem typischen evolutionären Optimierungsalgorithmus sehr häufig evaluiert werden. Das bedeutet, dass die Berechnung des Constraints entweder nicht besonders rechenintensiv sein darf, oder Hilfsmechanismen integriert werden wie beispielsweise die Modellierung des Constraint durch ein Surrogatnetzwerk, wie es in SAIL für die Fitness bereits genutzt wird.
+
 \subsubsection{Hard Constraints}
 
 Hard Constraints führen eine binäre Auswahl durch, bei der solche Lösungen, die den Constraint nicht erfüllen disqualifziert werden.
