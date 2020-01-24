@@ -342,50 +342,41 @@ Für den hier benötigten Zweck ist simpleFoam vollkommen ausreichend.
 \end{figure}
 
 Die erste Problemdomäne stellt die Optimierung der Radkästen eines Velomobils dar.
-Da die momentanen Radkästen den Lenkausschlag des Velomobils erheblich einschränken, besteht das Ziel hierbei Radkästen zu generieren, die den maximalen oder zumindest einen weiteren Lenkausschlag ermöglichen und dabei trotzdem gute aerodynamische Eigenschaften aufweisen.
+Da die momentanen Radkästen den Lenkausschlag des Velomobils erheblich einschränken, besteht das Ziel hierbei Radkästen zu generieren, die den maximalen, oder zumindest einen weiteren Lenkausschlag als den momentan möglichen, ermöglichen und dabei trotzdem gute aerodynamische Eigenschaften aufweisen.
+Es ist zu erwarten, dass eine zusätzliche Fokussierung auf ein zweites Ziel, mit einer Qualitätsabnahme des ersten Ziels verbunden ist.
+Trotzdem ergibt die Einführung eines Constraints nur Sinn, wenn die Abnahme an Optimalität bezüglich des Primärziels gering genug ist um eine Zunahme an Optimalität bezüglich des Sekundärziels vertretbar zu machen.
+Das Ziel besteht also darin Lösungen zu entwickelt, welche durch minimalen Fitnessverlust einen maximalen Constraintgewinn möglich machen.
 
 \subsubsection{Struktur}
 
-\begin{figure}[h]
-%	\centering
-	\dirtree{%
-		.1 placeholder.
-	}
-\caption{Struktur von domains/wheelcase}
-\label{fig:dir_wheelcase}
-\end{figure}
+%\begin{figure}[h]
+%%	\centering
+%	\dirtree{%
+%		.1 placeholder.
+%	}
+%\caption{Struktur von domains/wheelcase}
+%\label{fig:dir_wheelcase}
+%\end{figure}
 
-Alle spezifischen Daten zur wheelcase Domäne sind in \path{domains/wheelcase} zu finden.
-Auf der höchsten Ebene des Verzeichnisses sind die generellen Skripte für SAIL zu finden.
-Im Unterverzeichnis \path{ffd} befinden sich die STLs, die für die Freiformdeformation und Berechnung des Constraints benötigt werden.
-Alle Dateien zur Berechnung des Constraints leigen in \path{constraint}
-Der Basiscase für OpenFoam ist zu finden \path{pe/v1906}.
-Im Ordner \path{configs} befinden sich verschiedene Konfigurationen für die Freiformdeformation
-Eine solche Konfiguration enthält die Parametrisierung für die Freiformdeformation, sowie die Funktion zur Erzeugung einer konkreten Deformation aus einem Genom.
-Das letzte Unterverzeichnis ist \path{experiment}, was das Skript zum Starten eines Laufs, sowie Job-Skripte zur Ausführung als Slurm-Jobs
-
-
-
-\begin{itemize}
-	\item[wheelcase\_AcquisitionFunc]
-	\item[wheelcase\_Categorize] Dieses Skript ist für die Kategorisierung von Individuen verantwortlich. In der momentanen Implementierung wird in zwei Dimensionen kategorisiert.
-	\item[wheelcase\_CreateAcqFunc]
-	\item[wheelcase\_Domain] Sammlung aus Hyperparametern sowie Kontroll
-	\item[wheelcase\_DummyPreciseEvaluate]
-	\item[wheelcase\_Express] Diese Funktion dient dazu aus einen Genotypen als den zugehörigen Phänotypen auszudrücken
-	\item[wheelcase\_ExpressRight] Diese Funktion ist ähnlich wie \path{wheelcase_Express} dafür verantwortlich einen Genotypen als Phänotypen auszudrücken, 
-	tut dies allerdings nur für den vereinfachten rechten Radkasten. An einigen Stellen im Algorithmus, der Kategorisierung und der Berechnung des Constraints, wird nicht das gesamte Velomobil benötigt.
-	Da diese beiden Operationen häufig benötigt werden, ist es sinnvoll sich den Rechenaufwand für die Deformation beider Radkästen und der Konstruktion des gesamte Velomobils zu sparen.
-	\item[wheelcase\_OpenFoamResult] Diese Datei führt die OpenFoam Simulation für eine deformierte Velomobil-Hülle durch und berechnet den zugehörigen Fitnesswert.
-	Der Fitnesswert ist definiert als $ln(\frac{\sum_{t=101}^{200}cD(t)}{100})$
-	\item[wheelcase\_PreciseEvaluate]
-	\item[wheelcase\_ValidateChildren] Diese Funktion dient dazu ungültige Lösungen nicht zuzulassen. Da eine Soft Constraint bevorzugt wird, sind alle Lösungen valide und diese Funktion tut folglich wenig.
-\end{itemize}
+%Alle spezifischen Daten zur wheelcase Domäne sind in \path{domains/wheelcase} zu finden.
+%Auf der höchsten Ebene des Verzeichnisses sind die generellen Skripte für SAIL zu finden.
+%Im Unterverzeichnis \path{ffd} befinden sich die STLs, die für die Freiformdeformation und Berechnung des Constraints benötigt werden.
+%Alle Dateien zur Berechnung des Constraints leigen in \path{constraint}
+%Der Basiscase für OpenFoam ist zu finden \path{pe/v1906}.
+%Im Ordner \path{configs} befinden sich verschiedene Konfigurationen für die Freiformdeformation
+%Eine solche Konfiguration enthält die Parametrisierung für die Freiformdeformation, sowie die Funktion zur Erzeugung einer konkreten Deformation aus einem Genom.
+%Das letzte Unterverzeichnis ist \path{experiment}, was das Skript zum Starten eines Laufs, sowie Job-Skripte zur Ausführung als Slurm-Jobs
 
 \subsubsection{OpenFOAM}
 
 \subsubsection{Constraint}
-Zur Erfüllung des Constraints wurden alle möglichen Radausschläge als Volumen modelliert (zu finden in \path{ffd/turning_volume.stl})
+\missingfigure{Radausschlagvolumen mit und ohne velomobil}
+Zur Erfüllung des Constraints wurden alle möglichen Radausschläge als Volumen modelliert.
+Dafür wurden aus einer Kugel entsprechend der maximalen Radausschlags nach rechts und links ein dreieckiges Stück ausgeschnitten.
+Zusätzlich wurde die innere Hälfte der Kugel entfernt, da dort keine Überschneidungen stattfinden, und durch deren Entfernen, Berechnungen mit dieses Volumen effizienter sind.
+Dieses Volumen ist in Abb. \ref{fig:steering_volume} alleine, in Abb. \ref{fig:steering_volume_with_velo} zusammen mit dem restlichen Velomobil zu sehen.
+Es ist klar zu Erkennen, dass dieses Volumen die unverformten Radkästen schneidet, da diese den maximalen Lenkausschlag nicht ermöglichen.
+ 
 
 \begin{table}[h]
 	\begin{tabularx}{.5\textwidth}{ll}\hline
@@ -416,22 +407,39 @@ Da ein Ziel darin bestand, den Constraint nicht als binäres, erfüllt/nicht erf
 Da alle generierten Verformungen der Radkästen symmetrisch sind, wird der Constraint jeweils nur für den rechten Radkasten berechnet.
 Zwar besteht keine direkte Kausalität zwischen diesem Volumen und dem maximalen möglichen Radausschlag aber die Vermutung, dass eine geringeres Volumen dieser Different mit größerem möglichen Radausschlag korreliert ist liegt nahe.
 Zur Berechnung der Differenz zwischen Radausschlagsvolumen und Radkasten wird die Bibliothek \textit{gptoolbox} \cite{gptoolbox.b} genutzt, zur Generierung von Tetraedermeshes zur Volumenberechnung \textit{TetGen} \cite{Si.2015}.
-Um eine Differenz berechnen zu können wurde der rechte Radkasten zu einem geschlossenen Volumen gemacht, da die Constraintberechnung in jeder Generation für jedes Kind erfolgen muss wurde der Radkasten außerdem runtergesamplet \todo{klingt komisch? besseres wort} um die Berechnung  des Constraints ausreichend schnell durchführen zu können.
-Aus dem Volumen wurde dann der Strafwert berechnet der in die Akquisefunktion integriert wurde.
+Ein Beispiel des Differenzvolumens zur Constraintberechnung ist in Abb. \ref{fig:diff_volume} zu sehen.
+Dieses Volumen stellt die Differenz des Radausschlagvolumens und des unverformten Radkastens dar.
+Um eine Differenz berechnen zu können wurde der rechte Radkasten zu einem geschlossenen Volumen gemacht, da die Constraintberechnung in jeder Generation für jedes Kind erfolgen muss wurde der Radkasten außerdem vereinfacht um die Berechnung  des Constraints ausreichend schnell durchführen zu können.
+Aus dem Volumen wird dann der Strafwert berechnet der in Relation zum Differenzvolumen des unverformten Radkastens
+\footnote{Für den unverformten Radkasten beträgt das Differenzvolumen ca. $1,6L$} gesetzt wird.
+
+Da sich der Constraint durch die Vereinfachung des Radkastens ausreichend schnell berechnen ließ, dass eine direkte Berechnung dessen für jedes Individuum zeitlich möglich war, wurde dies getan.
+Das Trainieren eines zweiten Surrogatmodells zur Modellierung des Constraints hätte einen nicht unerheblichen Komplexitätszuwachs bedeutet , der an dieser Stelle nicht nötig war.
+Also wurde dieser Strafwert direkt in die Fitnessfunktion integriert und als $\frac{V_{verformt}}{V_{unverformt}} * w_{constraint}$ auf die Fitness jedes Individuums addiert
+\footnote{Die vorliegende SAIL-Implementation minimiert}.
+Allerdings wurde der Strafwert zusätzlich noch in die Akquisefunktion, mit der einnerhalb von SAIL die Akquisekarte zur Auswahl neuer Individuen zur Auswertung stattfindet auf die gleiche Weise integriert. Das hat den Grund, dass das Gaußprozessmodell in solchen Bereichen bevorzugt Exploitation durchführen soll, die sowohl bezüglich der Aerodynamik, als auch bezüglich des Constraints eine gewisse Optimalität aufweisen, da genau in diesen Bereichen, in der finalen Auswertung von MAP-Elites solche Lösungen zu erwarten sind die bezüglich der Kombination dieser beiden Kriterien optimal sind.
+
 
 \subsubsection{Wahl der Features}
-Die Kategorisierung wird von der \path{wheelcase_Categorize.m} verwaltet.
+%Die Kategorisierung wird von der \path{wheelcase_Categorize.m} verwaltet.
 
-Als Kategorien wurde die Breite des Velomobils gewählt.
-Hierzu kann die Hypothese aufgestellt werden, dass die Breite des Velomobils mit der Erfüllung des Constraint korreliert ist. Es wäre also zu erwarten, dass breitere Velomobile den Constraint tendenziell besser erfüllen, als schmalere.
+Als erste Kategorie wurde die Breite des Velomobils gewählt.
+Diese Kategorie wurde deshalb gewählt, da hier sehr klare Hypothesen aufgestellt werden können, wie die Breite des Velomobils mit der Aerodynamik und dem Constraint interagiert.
+Die erste Hypothese, die aufgestellt werden kann ist, dass breiteren Velomobilen die Erfüllung des Constraints leichter fällt. Es wäre also zu erwarten, dass breitere Velomobile den Constraint tendenziell besser erfüllen, als schmalere.
 Auch kann die Hypothese aufgestellt werden, dass die Breite negativ mit dem Luftwiderstandsbeiwert korreliert ist.
-Insgesamt wäre also zu vermuten, dass entlang dieser Achse
-Als zweite Kategorie wurde die x-Koordinate des breitesten Punkts gewählt.
-Da das Velombil in negative x-Richtung zeigt, bedeuten kleinere Werte hier, dass der Punkt weiter vorne liegt, größere, dass er weiter hinten liegt.
-Zu dieser Kategorie lassen sich keine so direkten Hypothesen aufstellen wie zur ersteren.
-Die Frage ob sich hier klare Tendenzen bezüglich den aerodynamischen Eigenschaften und/oder des Constraints aufzeigen ist Ziel der Untersuchung.
+Insgesamt wäre also zu vermuten, dass entlang dieser Achse der Luftwiderstandsbeiwert zunimmt während der Strafwert des Constraints abnimmt.
+Der Test ob diese Erwartungen erfüllt sind stellt eine einfache Möglichkeit zur semantischen Verfifizierung der Ergebnisse dar.
 
-Auch die Kategorisierung erfolgte mit dem für die Berechnung des Constraints vereinfachten Modell des Radkastens, da auch die Kategorisierung so häufig stattfindet, dass die Verformung und Kategorisierung anhand des originalen feinen Radkasten Rechenaufwand und damit Zeit in Anspruch nimmt.
+Als zweite Kategorie wurde die x-Koordinate des breitesten Punkts gewählt.
+Da das Velombil in negative x-Richtung ausgerichtet ist, bedeuten kleinere Werte hier, dass der Punkt weiter vorne liegt, größere, dass er weiter hinten liegt.
+Zu dieser Kategorie lassen sich keine so direkten Hypothesen aufstellen wie zur ersteren.
+Die Frage ob sich hier klare Tendenzen bezüglich den aerodynamischen Eigenschaften und/oder des Constraints aufzeigen ist auch ein Ziel der Untersuchung.
+
+Da auch die Kategorisierung so häufig stattfindet, wird auch diese mit dem für die Berechnung des Constraints vereinfachten Modell des Radkastens durchgeführt. 
+Dies stellt keinen signifikanten Verlust an Genauigkeit in der Kategorisierung dar, da sich die am feinsten gemeshten Teile des Radkastens an dessen Rändern befinden.
+Gerade die sind aber die Teile des Radkastens, die am unwahrscheinlichsten den breitesten Punkt darstellen.
+Auch führen minimale Genauigkeitsfehler in der kategorisierung nicht dazu, dass die von MAP-Elites geforderte Lokalität verletzt wird.
+Der Geschwindigkeitsgewinn bei der Berechnung hingegen mach es möglich solche Kategorien, für die eine Verformung des Radkastens notwendig ist, zu wählen, was in Relation einen wesentlich größeren Gewinn darstellt.
 
 \subsection{E-Roller}
 
