@@ -1,7 +1,9 @@
 \documentclass{beamer}
 
+\usepackage{graphicx}
+
 \titlepage
-\title{Integrating a secondary constraint into SAIL to generate wheelcases} 
+\title{Integrating a secondary constraint into SAIL to generate wheelcases that allow for more freedom} 
 \author[Jan Kruska]{Jan Kruska}
 \date[\today]{\today}
 
@@ -61,42 +63,86 @@ SAIL is a surrogate assisted phenotypically divergent version of the genetic alg
 
 \frame{\frametitle{Steering Volume}
 	The space needed by the wheel for all possible steering angles can be modeled as a volume:
+	\begin{figure}
+		\includegraphics[width=1\linewidth]{radausschlag00.png}
+	\end{figure}
 }
 
 \frame{\frametitle{Constraint + Velomobil}
 	This volume intersect with the current wheelcase 
+	\begin{figure}
+		\includegraphics[width=1\linewidth]{radausschlag_inclVelo01.png}
+	\end{figure}
 }
 
 \frame{\frametitle{Constraint Volume}
 	The Constraint can be calculated as the volume outside of the wheelcase, using mesh-difference operation
-	
+	\begin{figure}
+		\includegraphics[width=1\linewidth]{difference00.png}
+	\end{figure}
 	This does not perfectly map to the real constraint, but it is stipulated, that the volume outside of the wheelcase is negatively correlated with the largest possible steering angle.
 }
 
 \section{First Results}
-\frame{\frametitle{Comparison non-constrained vs. constrained}
-
+\frame{\frametitle{Setup}
+	\begin{itemize}
+		\item Two center points of a 3 by 4 grid used for deformation
+		\item 250 OpenFoam simulations
+		\item 1024 Generations for Acquisition
+		\item 2048 Generations for final MAP-Elites
+	\end{itemize}
 }
+\frame{\frametitle{Comparison non-constrained vs. constrained}
+	\vspace*{\fill}
+\begin{figure}
+%	\centering
+	
+	\includegraphics[width=\linewidth]{short_boxplot_constraint}
+\end{figure}
+}
+
+\frame{\frametitle{Comparison non-constrained vs. constrained}
+	\vspace*{\fill}
+	\begin{figure}
+		%	\centering
+		
+		\includegraphics[width=\linewidth]{short_boxplot_fitness}
+	\end{figure}
+}
+
 
 \frame{\frametitle{Fitness-maps}
-	
+	\begin{figure}
+		\centering
+		\includegraphics[height=.75\textheight]{short_map_fitness}
+	\end{figure}
 }
 
-\frame{\frametitle{Constraint-maps}
-	
+\frame{\frametitle{Top Left}
+	\begin{figure}
+		\centering
+		\includegraphics[width=\linewidth]{good00}
+	\end{figure}
 }
 
-\frame{\frametitle{Examples}
-
+\frame{\frametitle{Bottom Right}
+	\begin{figure}
+		\centering
+		\includegraphics[width=\linewidth]{bad00}
+	\end{figure}
 }
 
 \frame{\frametitle{Discussion}
-	
+	\begin{itemize}
+		\item Fitness is worse, but this was expected
+		\item The algorithm seems to work towards fulfilling the constraint
+	\end{itemize}
 }
 \section{Future experiments}
-\frame{\frametitle{Future experiments}
+\frame{\frametitle{Future changes}
 \begin{itemize}
 	\item Change FFD-parameters, to facilitate more degrees of freedom
+	\item Longer rund, more generations \& more OpenFoam Evaluations
 \end{itemize}
 }
 
