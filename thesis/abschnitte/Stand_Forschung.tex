@@ -218,7 +218,7 @@ Der Hauptnachteil von Gaußprozessen ist die relativ hohe Speicher- und Rechenko
 \State $surrogate \gets trainSurrogate(evaluatedSamples)$
 \State $acquisitionMap \gets MapElites(acquisitionFunction,categorizationFunction,hyperparameters)$
 \State $nextSamples \gets sampleRandomFromMap(acquisitionMap)$ \Comment SAIL utilizes Sobol-sequences to achieve optimal spread of the Sampling
-\State $evaluatedSamples \gets evaluatedSamples \union evaluate(nextSamples)$
+\State $evaluatedSamples \gets evaluatedSamples \cup evaluate(nextSamples)$
 \EndIf
 			\EndWhile
 		\EndProcedure
