@@ -370,7 +370,12 @@ Das Ziel besteht also darin Lösungen zu entwickelt, welche durch minimalen Fitn
 \subsubsection{OpenFOAM}
 
 \subsubsection{Constraint}
-\missingfigure{Radausschlagvolumen mit und ohne velomobil}
+\begin{figure}[h]
+	\includegraphics[width=.5\linewidth]{bilder/radausschlag.png}
+	\includegraphics[width=.5\linewidth]{bilder/radausschlag_inclVelo.png}
+	\caption{Das modellierte Radausschlagsvolumen}
+	\label{fig:steering_volume}
+\end{figure}
 Zur Erfüllung des Constraints wurden alle möglichen Radausschläge als Volumen modelliert.
 Dafür wurden aus einer Kugel entsprechend der maximalen Radausschlags nach rechts und links ein dreieckiges Stück ausgeschnitten.
 Zusätzlich wurde die innere Hälfte der Kugel entfernt, da dort keine Überschneidungen stattfinden, und durch deren Entfernen, Berechnungen mit dieses Volumen effizienter sind.
@@ -381,7 +386,7 @@ Es ist klar zu Erkennen, dass dieses Volumen die unverformten Radkästen schneid
 \begin{table}[h]
 	\begin{tabularx}{.5\textwidth}{ll}\hline
 		
-		Position\footnote{Urpsprung des Koordinatensystems auf Boden an der Spitze des Velomobils. Linkshändiges Koordinatensystem mit z Höhenachse und Velomobil in -x-Richtung ausgerichtet} & \\
+		Position & \\
 		\hline
 		x &	$926mm$ \\
 		y &	$343mm$ \\
@@ -400,12 +405,18 @@ Es ist klar zu Erkennen, dass dieses Volumen die unverformten Radkästen schneid
 	\end{tabularx}
 
 \label{tab:wheel_params}
-\caption{Parameter Radausschlag}
+\caption{Parameter Radausschlag. Urpsprung des Koordinatensystems für Position auf Boden an der Spitze des Velomobils. Linkshändiges Koordinatensystem mit z Höhenachse und Velomobil in -x-Richtung ausgerichtet}
 \end{table}
 
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=.5\linewidth]{bilder/difference.png}
+	\caption{Das Differenzvolumen für den unverformten Radkasten. Aus diesem wird der Strafwert berechnet}
+	\label{fig:diff_volume}
+\end{figure}
 Da ein Ziel darin bestand, den Constraint nicht als binäres, erfüllt/nicht erfüllt Problem zu definieren, da zwischen zwei Lösungen, die den Constraint nicht erfüllen trotzdem qualitative Unterschiede bestehen können wie stark der Constraint verletzt wird, wird als Constraint das Differenzvolumen des Radausschlags minus verformten Radkastens gewählt.
 Da alle generierten Verformungen der Radkästen symmetrisch sind, wird der Constraint jeweils nur für den rechten Radkasten berechnet.
-Zwar besteht keine direkte Kausalität zwischen diesem Volumen und dem maximalen möglichen Radausschlag aber die Vermutung, dass eine geringeres Volumen dieser Different mit größerem möglichen Radausschlag korreliert ist liegt nahe.
+Zwar besteht keine direkte Kausalität zwischen diesem Volumen und dem maximalen möglichen Radausschlag aber die Vermutung, dass eine geringeres Volumen dieser Differenz mit größerem möglichen Radausschlag korreliert ist liegt nahe.
 Zur Berechnung der Differenz zwischen Radausschlagsvolumen und Radkasten wird die Bibliothek \textit{gptoolbox} \cite{gptoolbox.b} genutzt, zur Generierung von Tetraedermeshes zur Volumenberechnung \textit{TetGen} \cite{Si.2015}.
 Ein Beispiel des Differenzvolumens zur Constraintberechnung ist in Abb. \ref{fig:diff_volume} zu sehen.
 Dieses Volumen stellt die Differenz des Radausschlagvolumens und des unverformten Radkastens dar.
