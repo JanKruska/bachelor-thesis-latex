@@ -63,6 +63,8 @@ Es gibt verschiedene Ansätze zu Integration von Constraints in Optimierungsprob
 In dieser Arbeit soll untersucht werden wie sich verschiedene Arten Constraints in die Algorithmik eines divergenten genetischen Verfahren auf die, von diesem Verfahren erzeugten Lösungen, auswirkt.
 Dies soll anhand der Lösung eines Problems der Aerodynamik-Domäne durch Anwendung der Surrogat-assistierten Illumination geschehen, einem Verfahren welches den divergenten genetischen Algorithmus MAP-Elites um eine Surrogat-Assistenz erweitert.
 Insbesondere die Frage ob eine Einbindung von Constraints in einen solchen divergenten evolutionären Algorithmus so möglich ist, dass sowohl die eigentliche Zielfunktion, in diesem Falle die aerodynamischen Eigenschaften, als auch der Constraint optimiert werden.
+Es ist zu erwarten, dass durch die Einbindung eines Constraints die Optimierung der Zielfunktion schlechter ausfallen wird.
+Es gilt diesen Qualitätsverlust zu quantifizieren und in Relation zum Gewinnin Erfüllung des Constraints zu setzen.
 Auch die Frage ob, und wenn ja wie stark, ein solcher Constraint sich auf die Diversität der Lösungen auswirkt gilt es zu untersuchen.
 
 % 
@@ -70,62 +72,4 @@ Auch die Frage ob, und wenn ja wie stark, ein solcher Constraint sich auf die Di
 %Sowohl bei der allgemeinen genetischen Programmierung, als auch bei der konkreten Anwendungsdomäne stellen sich dabei einige Probleme.
 %Eines dieser Probleme ist Diversitätsmanagement.
 %Um nicht in lokalen Optima stecken zu bleiben wird häufig Taktiken zum Diversitätsmanagement eingesetzt.
-%
-
-%\subsubsection{Abbildungen}
-%\begin{figure}[!ht]
-%  \begin{center}
-%    \includegraphics[width=3cm]{bilder/fhlogo.pdf}
-%    \caption{Logo Hochschule Bonn-Rhein-Sieg}
-%    \label{an_tranciver}
-%  \end{center}
-%\end{figure}
-%
-%\begin{figure}[!ht]
-%  \begin{center}
-%    \includegraphics[width=3cm]{bilder/fhlogo.pdf}
-%    \caption{Logo Hochschule Bonn-Rhein-Sieg}
-%    \label{an_tranciver}
-%  \end{center}
-%\end{figure}
-%
-%\begin{figure}[!ht]
-%  \begin{center}
-%    \includegraphics[width=3cm]{bilder/fhlogo.pdf}
-%    \caption{Logo Hochschule Bonn-Rhein-Sieg}
-%    \label{an_tranciver}
-%  \end{center}
-%\end{figure}
-%
-%\begin{figure}[!ht]
-%  \begin{center}
-%    \begin{tabular}{|c|c||c|c|c|c|c|c|c|c|c||c||c|c|}
-%    \hline
-%    P & Q & $\neg$ & ( P & $\vee$ & Q ) & $\vee$ & ( $\neg$ & P & $\wedge$ & Q ) & $\equiv$ & $\neg$ & P  \\ \hline \hline
-%    0 & 0 & 1 & 0 & 0 & 0 & $\mathbf{1}$ & 1 & 0 & 0 & 0 & & $\mathbf{1}$ & 0\\ \hline
-%    0 & 1 & 0 & 0 & 1 & 1 & $\mathbf{1}$ & 1 & 0 & 1 & 1 & & $\mathbf{1}$ & 0\\ \hline
-%    1 & 0 & 0 & 1 & 1 & 0 & $\mathbf{0}$ & 0 & 1 & 0 & 0 & & $\mathbf{0}$ & 1\\ \hline
-%    1 & 1 & 0 & 1 & 1 & 1 & $\mathbf{0}$ & 0 & 1 & 0 & 1 & & $\mathbf{0}$ & 1\\ \hline
-%    \end{tabular}
-%    \caption{Wahrheitstabelle: $\neg$ ( P $\vee$ Q ) $\vee$ ( $\neg$ P $\wedge$ Q ) $\equiv$ $\neg$ P}
-%  \end{center}
-%\end{figure}
-%
-%\subsection{Zitate}
-%\cite{BarAhl08} sagen hier steht ein Text. \\
-%\citet{BruMurPerWygMcN09} sagen hier steht ein Text. \\
-%\citet*{BruMurPerWygMcN09} sagen hier steht ein Text. \\
-%"`Hier steht ein Text."' \citep{BarAhl08} \\
-%Hier steht ein Text. \citep[Vgl.][]{BarAhl08} \\
-%Hier steht ein Text. \citep[][S. 200]{BruMurPerWygMcN09} \\
-%Hier steht ein Text. \citep*[][S. 200]{BruMurPerWygMcN09} \\
-%Hier steht ein Text. \citep{wiki:001,BruMurPerWygMcN09} \\
-%
-%
-%\subsubsection{Abkürzungen}
-%\acf{GSM} \\
-%\acs{NUA} \\
-%\acl{BUT}  \\
-%\acp{UA} \\
-%
 %

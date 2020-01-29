@@ -140,13 +140,41 @@ Dazu wird die Anzahl an Deformationspunkten auf 6 erhöht, wodurch sich 18 Freih
 		Kinder pro Generation Akquise-MAP-Elites & 32 \\
 		Auflösung der MAP-Elites Karte & 25 * 25  \\
 		\hline
+		\rowcolor{lightgray}Freiheitsgrade & 18 \\
+		Mittelwertgewichtung & 1 \\
+		Varianzgewichtung & 2 \\
+		Constraintgewichtung & 1 \\
+	\end{tabularx}
+	\label{tab:param2nd}
+	\caption{Parametrisierung des zweiten Experiments (Änderungen zum ersten Experiment hervorgehoben)}
+\end{figure}
+
+\subsubsection{3. Experiment}
+
+Das zweite Einschränkung des ersten Experiments war die Beschränkung auf eine kleinere Anzahl an ausgewerteten Samples und Generationen in Akquise- und Ergebnis-MAP-Elites.
+Durch die Beschränkung auf eine kleinere Anzahl an Samples besteht die Möglichkeit, dass der Suchraum nicht präzise genug und/oder nicht weitläufig genug abgebildet wurde.
+Die Beschränkung in Generationen des Akquise- und Ergebnis-MAP-Elites kann dazu führen, dass diese noch nicht vollständig auskonvergiert sind.
+Da die Überlegung nahe liegt, dass die Variante mit Constraint länger benötigen könnte um auszukonvergieren, sollte untersucht werden ob die Erhöhung dieser Parameter zu signifikanten Änderung im Vergleich zur kürzeren Version führt, indem die Gewinne nach 500 Samples und 1024 bzw. 2018 Generationen quantifiziert werden.
+
+\begin{figure}[h]
+	\centering
+	\begin{tabularx}{.75\textwidth}{ll}\hline
+		Anzahl initialer Samples & 100 \\
+		\rowcolor{lightgray}Anzahl Samples & 1000 \\
+		Anzahl neuer Samples pro Akquiseschleife & 20 \\
+		\rowcolor{lightgray}Anzahl Generationen Akquise-MAP-Elites & 2048 \\
+		Kinder pro Generation Akquise-MAP-Elites & 32 \\
+		\rowcolor{lightgray}Anzahl Generationen Ergebnis-MAP-Elites & 4096 \\
+		Kinder pro Generation Akquise-MAP-Elites & 32 \\
+		Auflösung der MAP-Elites Karte & 25 * 25  \\
+		\hline
 		Freiheitsgrade & 18 \\
 		Mittelwertgewichtung & 1 \\
 		Varianzgewichtung & 2 \\
 		Constraintgewichtung & 1 \\
 	\end{tabularx}
-	\label{tab:param1st}
-	\caption{Parametrisierung des ersten Experiments}
+	\label{tab:params3rd}
+	\caption{Parametrisierung des dritten Experiments (Änderungen zum zweiten Experiment hervorgehoben)}
 \end{figure}
 
 \subsubsection{Zusammenfassung}

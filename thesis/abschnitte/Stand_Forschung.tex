@@ -298,7 +298,7 @@ Auf die genaueren Eigenschaften von OpenFoam und den Aufbau einer passenden Simu
 
 \subsubsection{Freiformdeformation}
 \label{sub:ffd}
-Freiformdeformation\cite{Sederberg.1986} ist ein Verfahren zu Deformation von geometrischen Objekten.
+Freiformdeformation ist ein in \cite{Sederberg.1986} beschriebenes Verfahren zu Deformation von geometrischen Objekten.
 Mithilfe der Freiformdeformation können beliebige dreidimensionale Meshes robust deformiert werden.
 Dazu wird eine Box aus Kontrollpunkten erzeugt.
 Jeder dieser Kontrollpunkte kann dann anhand von Verformungsparametern verschoben werden, wodurch für alle Punkte innerhalb der FFD-Box eine Verschiebung berechnet wird, die von der relativen Position des Punktes zum Kontrollpunkt abhängt.
@@ -314,22 +314,35 @@ OpenFoam \cite{OpenCFD.} ist eine Open-Source Programm zur Durchführung von Flu
 Berechnungen in OpenFOAM sind in sogenannten "Cases" organisiert auf die nacheinander OpenFoam-Funktionen angewandt werden
 Diese Cases bestehen aus einer Basisstruktur, die Initiale Startparameter, sowie Dateien zur Steuerung von OpenFoam enthalten.
 %Diese basis ist in den Ordnern \textit{domains/wheelcase/pe} und \textit{domains/escooter/pe} zu finden.
-Diese Basis enthält typischerweise Skripts um die gesamte Kette aus verschiedenen OpenFoam Funktionen, die zur Durchführung einer Simulation notwendig sind, auszuführen (Allrun), sowie ein Skript, welches den Case wieder in den Case wieder in den Startzustand versetzt (Allclean).
-Außerdem enthält diese basis den Ordner system, der C++-Dictionaries enthält, mit denen die einzelnen OpenFoam Funktionen parametrisiert und gesteuert werden.
-Zuletzt befindet sich in diesem Ordner auch noch der Initiale Startzustand mit dem die Simulation beginnt (0org)
-OpenFOAM bietet native Unterstützung von Parallelität über die MPI-Bibliothek \cite{OpenMPI.}.
-Neben den Funktionen um die korrekte Aufteilung eines Cases auf mehrere Prozessoren aufzuteile und am Ende wieder zu rekonstruieren sind zwei Funktionen und deren dazugehörige Dateien hervorzuheben.
+Diese Basis enthält typischerweise Skripts um die gesamte Kette aus verschiedenen OpenFoam Funktionen, die zur Durchführung einer Simulation notwendig sind, auszuführen, sowie ein Skript, welches den Case wieder in den Startzustand versetzt.
+Außerdem enthält diese Basis das Verzeichnis system, das C++-Dictionaries enthält, mit denen die einzelnen OpenFoam Funktionen parametrisiert und gesteuert werden.
+Für jede der genutzte OpenFoam Funktion existiert dort eine Datei, in der beschrieben wird was die entsprechende Funktion wie tun soll. 
+Zuletzt befindet sich in diesem Ordner auch noch der Initiale Startzustand mit dem die Simulation beginnt.
 
-Die zwei wichtigsten genutzten OpenFoam-Funktionen sind \path{snappyHexMesh} und \path{simpleFoam}.
-Mit snappyHexMesh, dessen Parametrisierung in \path{snappyHexMeshDict} zu finden ist, wird aus dem STL das für die Fluiddynamiksimulation benötigte Mesh generiert. Über snappyHexMesh kann die Auflösung des in der Fluiddynamiksimulation genutzen Meshes kontrolliert werden.
-Die Paramtrisierung von snappyHexMesh ist deshalb besonders wichtig, da die Auflösung des Meshes
+OpenFOAM bietet native Unterstützung von Parallelität über MPI \cite{OpenMPI.}.
+Neben den Funktionen um die korrekte Aufteilung eines Cases auf mehrere Prozessoren aufzuteilen und am Ende wieder zu rekonstruieren sind zwei Funktionen und deren dazugehörige Dateien hervorzuheben.
 
+Diese beiden wichtigsten genutzten OpenFoam-Funktionen sind \path{snappyHexMesh} und \path{simpleFoam}.
+Mit snappyHexMesh, dessen Parametrisierung in \path{snappyHexMeshDict} zu finden ist, wird aus dem STL das für die Fluiddynamiksimulation benötigte Mesh generiert. Über snappyHexMesh kann die Auflösung des in der Fluiddynamiksimulation genutzten Meshes kontrolliert werden.
+Die Parametrisierung von snappyHexMesh ist deshalb besonders wichtig, da die Auflösung des Meshes die Simulation maßgeblich beeinflusst.
+snappyHexMesh ist ein auf Octrees \cite{quelle} basierender Verfeinerungsalgorithmus.
+Die Parametrisiereung von snappyHexMesh kontrolliert welche Bereiche stärker verfeinert werden.
+In diesen Bereichen wird der Baum tiefer und es werden mehr Zellen generiert.
+In der darauffolgenden Simulation bilden Zellen die atomare Einheit, wenn in bestimmten Bereichen nicht weit genug verfeinert wurde, besteht in der Simulation überhaupt nicht die Möglichkeit der Realität entsprechende Messwerte in dieser Zelle zu berechnen.
+Mit wachsender Anzahl der Zellen wächst allerdings auch die Zeit die für Verfeinerung und Simulation benötigt wird.
+Die korrekte Auswahl in welchen Bereichen es nötig ist für eine korrekte Simulation stärker zu verfeinern, und in welchen Bereichen eine weitere Verfeinerung nur weitere Berechnungskomplexität ohne Informationsgewinn hinzufügt. 
 
-Die zweite dieser Funktionen ist die eigentliche Fluiddynamiksimulation welche durch die Datei \path{fvSolution} gesteuert wird. 
-Es stehen verschiedene Simulationen für verschiedene Zwecke zur Verfügung.
-Für den hier benötigten Zweck ist simpleFoam vollkommen ausreichend.
+Die zweite dieser Funktionen ist die eigentliche Fluiddynamiksimulation.
+Abhängig von den benötigten Simulationsparametern stellt OpenFoam einige unterschiedliche Solver bereit.
+Da die Strömungsgeschwindigkeiten der Simulation weit unter $0.3Ma$ bleiben kann die Strömung als inkompressibel behandelt werden.
+Es existieren mehrere OpenFoam Solver für inkompressible Strömungen aus denen simpleFoam ausgewählt wurde.
+simpleFoam implementiert den SIMPLE (Semi-Implicit Method for Pressure Linked Equations) Algorithmus der in \todo{cite simple} beschrieben wurde.
+Für die hier benötigten Werte reicht simpleFoam vollkommen aus.
+
+Zudem werden die Koeffizienten der auf das Objekt wirkenden Kräfte berechnet, welche für die Berechnung der Fitness benötigt werden. 
 
 \subsubsection{Parametrisierung des Gaußprozesses}
+
 
 
 \subsection{Radkästen des Velomobils}
