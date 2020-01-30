@@ -173,7 +173,7 @@ So ist einerseit die Exploration unerkundeter Gebiete wichtig zur Maximierung de
 Auch ist die Anzahl an erlaubten realen Auswertungen stark begrenzt, die Reduzierung ist der Grund für die Nutzung eines Surrogatmodells.
 D. h. dass die Auswertungen die durchgeführt werden maximalen Nutzen für das Surrogatmodell haben sollten.
 
-Eine Möglichkeit mit dem Dilemma zwischen Exploration und Exploitation umzugehen ist das in \todo{cite Using Confidence Bounds forExploitation-Exploration Trade-offs} beschriebene Upper-Confidence-Bound. Dabei werden Exploration-Exploitation Probleme als statistischen Prozesse bestehend aus Mittelwert und Varianz aufgefasst.
+Eine Möglichkeit mit dem Dilemma zwischen Exploration und Exploitation umzugehen ist das in \cite{Auer.2002} beschriebene Upper-Confidence-Bound. Dabei werden Exploration-Exploitation Probleme als statistischen Prozesse bestehend aus Mittelwert und Varianz aufgefasst.
 Der Mittelwert an einem Punkt spiegelt dabei den erwarteten Nutzen wieder, eine dem Mittelwert folgende Auswahl bevorzugt also Exploitation von Bereichen in denen der erwartete Nutzen hoch ist.
 Die Varianz spiegelt die Unsicherheit an einem Punkt wieder, eine Auswahl nach Varianz bevorzugt die Exploration von Bereichen in denen eine hohe Varianz auftritt, oder anders gesagt von bisher unerforschten Bereichen.
 Upper-Confidence-Bound kombiniert Mittelwert und Varianz zur Bestimmung der besten Punkte, und erreicht damit eine Balance in der sowohl Exploration als auch Exploitation stattfindet.
@@ -201,7 +201,7 @@ Diese Eigenschaft stellt den Hauptvorteil von Gaußprozessen gegenüber anderen 
 %Da die Auswertung eines Punktes und die Einführung dieses in den Gaußprozess, immer den Kollaps der Varianz an diesem Punkt zu null zu Folge hat, bietet der Gaußprozess eine Möglichkeit den Präzisionsgewinn durch die Auswertung eines Punktes zu quantifizieren.
 
 
-Der Hauptnachteil von Gaußprozessen ist die relativ hohe Speicher- und Rechenkomplexität \todo{komplexität}, da die Anzahl an Simulationen die durchgeführt werden können aber ohnehin durch den Rechenaufwand, der mit diesen verbunden, ist, stark limitiert ist, wird die Anzahl an Trainingsdaten so gering bleiben, dass Komplexitätsüberlegungen hinfällig sind.
+Der Hauptnachteil von Gaußprozessen ist die relativ hohe Speicher- und Rechenkomplexität, da die Anzahl an Simulationen die durchgeführt werden können aber ohnehin durch den Rechenaufwand, der mit diesen verbunden, ist, stark limitiert ist, wird die Anzahl an Trainingsdaten so gering bleiben, dass Komplexitätsüberlegungen hinfällig sind.
 
 
 
@@ -227,13 +227,12 @@ Der Hauptnachteil von Gaußprozessen ist die relativ hohe Speicher- und Rechenko
 
 \missingfigure{Vllt. Graphik zu SAIL}
 
-\todo{cite sail}
-SAIL (Surrogate-Assisted Illumination) vereint die in \ref{sub:mapElites} und \ref{sub:surrogate} beschriebenen Ansätze, mit dem Ziel MAP-Elites in rechenintensiven Domänen anwendbar zu machen.
+SAIL (Surrogate-Assisted Illumination) ist ein in \cite{Gaier.6152018} beschriebenes Verfahren, welches die in \ref{sub:mapElites} und \ref{sub:surrogate} beschriebenen Ansätze vereint, mit dem Ziel MAP-Elites in rechenintensiven Domänen anwendbar zu machen.
 
 Zur Initialisierung SAILs werden zuerst zufällig Samples ausgewählt und evaluiert.
-Um eine gleichmäßige Verteilung der Samples über den Problemraum zu garantieren werden diese Samples nicht aus einer Gleichverteilung, sondern aus einer Sobol Sequenz ausgewählt.\todo{cite sobol sequenz}
+Um eine gleichmäßige Verteilung der Samples über den Problemraum zu garantieren werden diese Samples nicht aus einer Gleichverteilung, sondern aus einer Sobol Sequenz ausgewählt.\todo{Ausführen sobol sequenz}
 Der eigentliche Kern von SAIL ist die graduelle Verfeinerung des Surrogatmodells.
-In jeder Iteration der Verfeierungsschleife wird ein Gaußprozess auf Basis aller bisher ausgewerteten Samples trainiert.
+In jeder Iteration der Verfeinerungsschleife wird ein Gaußprozess auf Basis aller bisher ausgewerteten Samples trainiert.
 Mit diesem Gaußprozess wird MAP-Elites durchgeführt, wobei als Fitnessfunktion für die Durchführung von MAP-Elites die Akquisefunktion genutzt wird.
 Dadurch wird die sogenannte Akquisekarte erzeugt, welche diverse Lösungen enthält, die die Akquisefunktion maximieren.
 Aus dieser Akquisekarte werden dann mehrere Lösungen für reale Fitnessevaluationen ausgewählt.
@@ -248,7 +247,8 @@ Damit wird dann eine diverse Vorhersagekarte erzeugt, die die Optima des Gaußpr
 Bei korrekter Parametrisierung von SAIL, dem Gaußprozess, und einer ausreichen großen Anzahl an realen Auswertungen korrespondieren OPtima im Gaußprozess mit Optima in der realen Fitnessfunktion.
 
 In \cite{Gaier.6152018} wurde gezeigt, dass dieser Ansatz erfolgreich auf 2D und 3D aerodynamische Domänen angewandt werden kann.
-Es wurden Freiform-Deformationen auf 3D-Bauteile angewandt, welche dann wiederum bezüglich ihrer aerodynamischen Eigenschaften ausgewertet wurden, um ein Surrogat-Modell zu trainieren.
+Dort wurden per Freiform-Deformation dreidimensionale Objekte deformiert.
+Da die Auswertung der Fitnessfunktion in der Auswertung einer aerodynamische Simulation bestand wurde ein Surrogatnetzwerk genutzt.
 
 
 \subsection{Constraints in Optimierungsprozessen}
@@ -322,10 +322,10 @@ Zuletzt befindet sich in diesem Ordner auch noch der Initiale Startzustand mit d
 OpenFOAM bietet native Unterstützung von Parallelität über MPI \cite{OpenMPI.}.
 Neben den Funktionen um die korrekte Aufteilung eines Cases auf mehrere Prozessoren aufzuteilen und am Ende wieder zu rekonstruieren sind zwei Funktionen und deren dazugehörige Dateien hervorzuheben.
 
-Diese beiden wichtigsten genutzten OpenFoam-Funktionen sind \path{snappyHexMesh} und \path{simpleFoam}.
+Diese beiden wichtigsten genutzten OpenFoam-Funktionen sind snappyHexMesh und simpleFoam.
 Mit snappyHexMesh, dessen Parametrisierung in \path{snappyHexMeshDict} zu finden ist, wird aus dem STL das für die Fluiddynamiksimulation benötigte Mesh generiert. Über snappyHexMesh kann die Auflösung des in der Fluiddynamiksimulation genutzten Meshes kontrolliert werden.
 Die Parametrisierung von snappyHexMesh ist deshalb besonders wichtig, da die Auflösung des Meshes die Simulation maßgeblich beeinflusst.
-snappyHexMesh ist ein auf Octrees \cite{quelle} basierender Verfeinerungsalgorithmus.
+snappyHexMesh ist ein auf Octrees \cite{Meagher.1982} basierender Verfeinerungsalgorithmus.
 Die Parametrisiereung von snappyHexMesh kontrolliert welche Bereiche stärker verfeinert werden.
 In diesen Bereichen wird der Baum tiefer und es werden mehr Zellen generiert.
 In der darauffolgenden Simulation bilden Zellen die atomare Einheit, wenn in bestimmten Bereichen nicht weit genug verfeinert wurde, besteht in der Simulation überhaupt nicht die Möglichkeit der Realität entsprechende Messwerte in dieser Zelle zu berechnen.
@@ -336,7 +336,7 @@ Die zweite dieser Funktionen ist die eigentliche Fluiddynamiksimulation.
 Abhängig von den benötigten Simulationsparametern stellt OpenFoam einige unterschiedliche Solver bereit.
 Da die Strömungsgeschwindigkeiten der Simulation weit unter $0.3Ma$ bleiben kann die Strömung als inkompressibel behandelt werden.
 Es existieren mehrere OpenFoam Solver für inkompressible Strömungen aus denen simpleFoam ausgewählt wurde.
-simpleFoam implementiert den SIMPLE (Semi-Implicit Method for Pressure Linked Equations) Algorithmus der in \todo{cite simple} beschrieben wurde.
+simpleFoam implementiert den SIMPLE (Semi-Implicit Method for Pressure Linked Equations) Algorithmus der in \cite{Caretto.1973} beschrieben wurde.
 Für die hier benötigten Werte reicht simpleFoam vollkommen aus.
 
 Zudem werden die Koeffizienten der auf das Objekt wirkenden Kräfte berechnet, welche für die Berechnung der Fitness benötigt werden. 

@@ -110,13 +110,20 @@ Zum rechten extremen Rand schwächt die Constraintverbesserung ab, da dortige Ra
 Auch ist hervorzuheben, dass sich Verbesserungen bis zum linken Rand der Individuen durchziehen.
 Selbst in der linken, sprich schmalsten Spalte, ist eine Verbesserung der Individuen erkennbar, und die nächste Spalte enthält bereits ein Individuum welches nahe der besten gefundenen Constraint-Werte angesiedelt ist.
 
-In Abb. \ref{fig:1stmapConCompare} ist die Verbesserung bezüglich der Constraintwerte dargestellt.
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=.7\linewidth]{bilder/2pt500Samples/constraintImprovements}
 	\caption{Maps of final constraint values}
 	\label{fig:1stmapConCompare}
 \end{figure}
+
+In Abb. \ref{fig:1stmapConCompare} ist die Verbesserung der Constraintwerte von der Version ohne Constraint zur Version mit Constraint dargestellt.
+Der bereits oben erwähnte Effekt, dass die größten Verbesserungen besonders in der linken Hälfte der Karte stattfinden ist hier noch klarer ersichtlich.
+Gerade diese Hälfte ist allerdings die, die bessere Luftwiderstandswerte aufweist und in der die Erfüllung des Constraints aufgrund der geringeren Breite, die Velomobile in diesen Zellen auszeichnet, wesentlich schwerer fällt.
+\missingfigure{Einige Deformationen}
+Zusammenfassend kann man sagen, dass die Einbindung des Constraints mit den im ersten Experiment vorliegenden Einschränkungen merkliche Auswirkungen auf das Ergebnis hat.
+Auch ist herauszustellen, dass eine starke Verbesserung des Constraints bei einer schwachen Verschlechterung des Luftwiderstands stattfindet.
+%Weiterführenden Experimente sollten ohne die Einschränkungen bezüglich Freiheitsgraden und Länge des Experimentes
 
 \subsubsection{2. Experiment}
 
@@ -140,7 +147,8 @@ Dazu wird die Anzahl an Deformationspunkten auf 6 erhöht, wodurch sich 18 Freih
 		Kinder pro Generation Akquise-MAP-Elites & 32 \\
 		Auflösung der MAP-Elites Karte & 25 * 25  \\
 		\hline
-		\rowcolor{lightgray}Freiheitsgrade & 18 \\
+		%\rowcolor{lightgray}
+		Freiheitsgrade & 18 \\
 		Mittelwertgewichtung & 1 \\
 		Varianzgewichtung & 2 \\
 		Constraintgewichtung & 1 \\
@@ -160,11 +168,14 @@ Da die Überlegung nahe liegt, dass die Variante mit Constraint länger benötig
 	\centering
 	\begin{tabularx}{.75\textwidth}{ll}\hline
 		Anzahl initialer Samples & 100 \\
-		\rowcolor{lightgray}Anzahl Samples & 1000 \\
+		%\rowcolor{lightgray}
+		Anzahl Samples & 1000 \\
 		Anzahl neuer Samples pro Akquiseschleife & 20 \\
-		\rowcolor{lightgray}Anzahl Generationen Akquise-MAP-Elites & 2048 \\
+		%\rowcolor{lightgray}
+		Anzahl Generationen Akquise-MAP-Elites & 2048 \\
 		Kinder pro Generation Akquise-MAP-Elites & 32 \\
-		\rowcolor{lightgray}Anzahl Generationen Ergebnis-MAP-Elites & 4096 \\
+		%\rowcolor{lightgray}
+		Anzahl Generationen Ergebnis-MAP-Elites & 4096 \\
 		Kinder pro Generation Akquise-MAP-Elites & 32 \\
 		Auflösung der MAP-Elites Karte & 25 * 25  \\
 		\hline
