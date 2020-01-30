@@ -158,33 +158,6 @@ Dabei müssen einige Ziele beachtet werden.
 Ersten sollte das Surrogatmodell möglichst präzise sein, da es seinen Zweck für reale Funktionsauswertungen einzustehen nur erfüllen kann, wenn die Vorhersagen des Surrogatmodells ausreichend gut reale Funktionauswertungen abbilden.
 Da das Surrogatmodell aber genau für den Zweck genutzt wird die Anzahl an benötigten teuren Funktionsauswertungen zu reduzieren, wäre es sinnvoll, wenn Funktionauswertungen so gewählt werde, dass sie maximalen Nutzen bringen.
 
-\subsubsection{Exploration Exploitation Problem}
-
-Ein häufig auftretendes Dilemma beim Lernen von unbekannten Problemen ist die Spannung zwischen Exploration und Exploitation.
-Exploration beschreibt dabei die Untersuchung von unbekannten, bisher unerforschten Gebieten, um das zugrundeliegende Problem besser zu verstehen und damit Strategien besser optimieren zu können.
-Exploitation beschreibt die Ausnutzung von bekannten guten Strategien, um Nutzen zu maximieren.
-Die beiden Herangehensweisen stellen gegensätzliche Konzepte dar.
-Je mehr Exploration durchgeführt wird, desto weniger Exploitation kann durchgeführt werden und vice-versa.
-Ein zu starker Fokus auf Exploration führt allerdings dazu, dass viele niedrigwertige Gebiete erforsch werden, diese aber keinen Nutzen einbringen.
-Zu viel Exploitation hingegen kann zur Folge haben lokale Gewinne über globale Gewinne zu bevorzugen.
-
-Ein solches Problem stellt sich auch bei der Surrogatmodellierung.
-So ist einerseit die Exploration unerkundeter Gebiete wichtig zur Maximierung der globalen Präzision des Modells, die Exploitation allerdings wichtig zur Untersuchung von Regionen mit hoher Fitness, da in diesen Regionen der Hauptteil der Optimierung stattfindet.
-Auch ist die Anzahl an erlaubten realen Auswertungen stark begrenzt, die Reduzierung ist der Grund für die Nutzung eines Surrogatmodells.
-D. h. dass die Auswertungen die durchgeführt werden maximalen Nutzen für das Surrogatmodell haben sollten.
-
-Eine Möglichkeit mit dem Dilemma zwischen Exploration und Exploitation umzugehen ist das in \cite{Auer.2002} beschriebene Upper-Confidence-Bound. Dabei werden Exploration-Exploitation Probleme als statistischen Prozesse bestehend aus Mittelwert und Varianz aufgefasst.
-Der Mittelwert an einem Punkt spiegelt dabei den erwarteten Nutzen wieder, eine dem Mittelwert folgende Auswahl bevorzugt also Exploitation von Bereichen in denen der erwartete Nutzen hoch ist.
-Die Varianz spiegelt die Unsicherheit an einem Punkt wieder, eine Auswahl nach Varianz bevorzugt die Exploration von Bereichen in denen eine hohe Varianz auftritt, oder anders gesagt von bisher unerforschten Bereichen.
-Upper-Confidence-Bound kombiniert Mittelwert und Varianz zur Bestimmung der besten Punkte, und erreicht damit eine Balance in der sowohl Exploration als auch Exploitation stattfindet.
-
-%Durch die Auswertung von Punkten mit hoher Varianz kann die Anzahl an benötigten realen Funktionsauswertungen gering gehalten werden.
-%Die Auswertung von Punkten mit hoher Varianz, sprich die Auswertung von bisher nicht erkundeten Gebieten wird Exploration genannt.
-%Wenn allderdings nur die Exploration des Suchraums durchgeführt wird, wird dies dazu führen, dass viele nicht-optimale Bereiche erkundet werden.
-%Da der Gaußprozess im Kontext einer Optimierung genutzt wird hat die Präzision des Gaußprozesses in Bereichen um Optima besondere Bedeutung.
-%Die Verbesserung der Präzision des Gaußprozesses in optimalen Regionen wird Exploitation genannt.
-%Insgesamt muss eine Abwägung zwischen der Exploration unbekannter Bereiche der Funktion und der Exploitation bekannter optimaler Bereiche der Funktion stattfinden. 
-%Eine Möglichkeit einer solchen Abwägung ist Upper-Confidence-Bound \todo{cite}, einer Kombination aus Mittelwert, der Exploitation bevorzugt, und Varianz, die Exploration bevorzugt.
 
 \subsubsection{Gaußprozesse}
 
@@ -203,7 +176,34 @@ Diese Eigenschaft stellt den Hauptvorteil von Gaußprozessen gegenüber anderen 
 
 Der Hauptnachteil von Gaußprozessen ist die relativ hohe Speicher- und Rechenkomplexität, da die Anzahl an Simulationen die durchgeführt werden können aber ohnehin durch den Rechenaufwand, der mit diesen verbunden, ist, stark limitiert ist, wird die Anzahl an Trainingsdaten so gering bleiben, dass Komplexitätsüberlegungen hinfällig sind.
 
+\subsubsection{Exploration Exploitation Problem}
 
+Ein häufig auftretendes Dilemma beim Lernen von unbekannten Problemen ist die Spannung zwischen Exploration und Exploitation.
+Exploration beschreibt dabei die Untersuchung von unbekannten, bisher unerforschten Gebieten, um das zugrundeliegende Problem besser zu verstehen und damit Strategien besser optimieren zu können.
+Exploitation beschreibt die Ausnutzung von bekannten guten Strategien, um Nutzen zu maximieren.
+Die beiden Herangehensweisen stellen gegensätzliche Konzepte dar.
+Je mehr Exploration durchgeführt wird, desto weniger Exploitation kann durchgeführt werden und vice-versa.
+Ein zu starker Fokus auf Exploration führt allerdings dazu, dass viele niedrigwertige Gebiete erforsch werden, diese aber keinen Nutzen einbringen.
+Zu viel Exploitation hingegen kann zur Folge haben lokale Gewinne über globale Gewinne zu bevorzugen.
+
+Ein solches Problem stellt sich auch bei der Surrogatmodellierung.
+So ist einerseit die Exploration unerkundeter Gebiete wichtig zur Maximierung der globalen Präzision des Modells, die Exploitation allerdings wichtig zur Untersuchung von Regionen mit hoher Fitness, da in diesen Regionen der Hauptteil der Optimierung stattfindet.
+Auch ist die Anzahl an erlaubten realen Auswertungen stark begrenzt, die Reduzierung ist der Grund für die Nutzung eines Surrogatmodells.
+D. h. dass die Auswertungen die durchgeführt werden maximalen Nutzen für das Surrogatmodell haben sollten.
+
+\missingfigure{UCB}
+Eine Möglichkeit mit dem Dilemma zwischen Exploration und Exploitation umzugehen ist das in \cite{Auer.2002} beschriebene Upper-Confidence-Bound. Dabei werden Exploration-Exploitation Probleme als statistischen Prozesse bestehend aus Mittelwert und Varianz aufgefasst.
+Der Mittelwert an einem Punkt spiegelt dabei den erwarteten Nutzen wieder, eine dem Mittelwert folgende Auswahl bevorzugt also Exploitation von Bereichen in denen der erwartete Nutzen hoch ist.
+Die Varianz spiegelt die Unsicherheit an einem Punkt wieder, eine Auswahl nach Varianz bevorzugt die Exploration von Bereichen in denen eine hohe Varianz auftritt, oder anders gesagt von bisher unerforschten Bereichen.
+Upper-Confidence-Bound kombiniert Mittelwert und Varianz zur Bestimmung der besten Punkte, und erreicht damit eine Balance in der sowohl Exploration als auch Exploitation stattfindet.
+
+%Durch die Auswertung von Punkten mit hoher Varianz kann die Anzahl an benötigten realen Funktionsauswertungen gering gehalten werden.
+%Die Auswertung von Punkten mit hoher Varianz, sprich die Auswertung von bisher nicht erkundeten Gebieten wird Exploration genannt.
+%Wenn allderdings nur die Exploration des Suchraums durchgeführt wird, wird dies dazu führen, dass viele nicht-optimale Bereiche erkundet werden.
+%Da der Gaußprozess im Kontext einer Optimierung genutzt wird hat die Präzision des Gaußprozesses in Bereichen um Optima besondere Bedeutung.
+%Die Verbesserung der Präzision des Gaußprozesses in optimalen Regionen wird Exploitation genannt.
+%Insgesamt muss eine Abwägung zwischen der Exploration unbekannter Bereiche der Funktion und der Exploitation bekannter optimaler Bereiche der Funktion stattfinden. 
+%Eine Möglichkeit einer solchen Abwägung ist Upper-Confidence-Bound \todo{cite}, einer Kombination aus Mittelwert, der Exploitation bevorzugt, und Varianz, die Exploration bevorzugt.
 
 \subsubsection{SAIL}
 
@@ -261,6 +261,8 @@ So müssen diese offensichtlich berechenbar sein, Constraints sind allerdings h�
 Es muss folglich zuerst eine mathematische Formulierung für den Constraint entwickelt werden, die den Constraint sow eit wie möglich entspricht.
 Zweitens werden Constraints in einem typischen evolutionären Optimierungsalgorithmus sehr häufig evaluiert werden. Das bedeutet, dass die Berechnung des Constraints entweder nicht besonders rechenintensiv sein darf, oder Hilfsmechanismen integriert werden wie beispielsweise die Modellierung des Constraint durch ein Surrogatnetzwerk, wie es in SAIL für die Fitness bereits genutzt wird.
 
+\subsubsection{Ausschluss durch Genotyp-Phänotyp-Abbildung}
+
 \subsubsection{Hard Constraints}
 
 Hard Constraints führen eine binäre Auswahl durch, bei der solche Lösungen, die den Constraint nicht erfüllen disqualifziert werden.
@@ -283,10 +285,14 @@ Eine der größten Gefahren bei Soft Constraints ist, dass diese typischerweise 
 Eine solche Kombination enthält immer eine Gewichtung für alle Teilfunktionen die sie ausmacht.
 Ist diese Gewichtung fehlerhaft parametrisiert, kann dies dazu führen, dass Teilfunktionen über- oder unterpriorisiert werden, und Constraints vom Algorithmus ignoriert werden, oder, dass nicht mehr nach dem primären Optimierungsziel optimiert wird.
 
+\subsubsection{Vergleich}
+
 
 \newpage
 
 \section{Methode}
+
+\todo{Einleitung}
 
 \subsection{Domänenübergreifend}
 
@@ -298,6 +304,7 @@ Auf die genaueren Eigenschaften von OpenFoam und den Aufbau einer passenden Simu
 
 \subsubsection{Freiformdeformation}
 \label{sub:ffd}
+\missingfigure{ffd}
 Freiformdeformation ist ein in \cite{Sederberg.1986} beschriebenes Verfahren zu Deformation von geometrischen Objekten.
 Mithilfe der Freiformdeformation können beliebige dreidimensionale Meshes robust deformiert werden.
 Dazu wird eine Box aus Kontrollpunkten erzeugt.
@@ -338,7 +345,7 @@ Da die Strömungsgeschwindigkeiten der Simulation weit unter $0.3Ma$ bleiben kan
 Es existieren mehrere OpenFoam Solver für inkompressible Strömungen aus denen simpleFoam ausgewählt wurde.
 simpleFoam implementiert den SIMPLE (Semi-Implicit Method for Pressure Linked Equations) Algorithmus der in \cite{Caretto.1973} beschrieben wurde.
 Für die hier benötigten Werte reicht simpleFoam vollkommen aus.
-
+\todo{eingehen auf simple foam}
 Zudem werden die Koeffizienten der auf das Objekt wirkenden Kräfte berechnet, welche für die Berechnung der Fitness benötigt werden. 
 
 \subsubsection{Parametrisierung des Gaußprozesses}
@@ -360,7 +367,7 @@ Es ist zu erwarten, dass eine zusätzliche Fokussierung auf ein zweites Ziel, mi
 Trotzdem ergibt die Einführung eines Constraints nur Sinn, wenn die Abnahme an Optimalität bezüglich des Primärziels gering genug ist um eine Zunahme an Optimalität bezüglich des Sekundärziels vertretbar zu machen.
 Das Ziel besteht also darin Lösungen zu entwickelt, welche durch minimalen Fitnessverlust einen maximalen Constraintgewinn möglich machen.
 
-\subsubsection{Struktur}
+%\subsubsection{Struktur}
 
 %\begin{figure}[h]
 %%	\centering
@@ -381,6 +388,8 @@ Das Ziel besteht also darin Lösungen zu entwickelt, welche durch minimalen Fitn
 %Das letzte Unterverzeichnis ist \path{experiment}, was das Skript zum Starten eines Laufs, sowie Job-Skripte zur Ausführung als Slurm-Jobs
 
 \subsubsection{OpenFOAM}
+
+\todo{snappyhexmesh config, simple foam, kovergenz nach 200 zeitschritten}
 
 \subsubsection{Constraint}
 \begin{figure}[h]
