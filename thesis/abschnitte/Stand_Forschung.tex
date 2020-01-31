@@ -1,5 +1,5 @@
 \section{Grundlagen}
-
+\label{sub:grundlagen}
 \subsection{Genetische Algorithmen}
 
 Genetische Algorithmen sind eine Klasse von Optimierungsalgorithmen, die sich an den Mechanismen der natürlichen Evolution orientieren\cite{Simon.2013}.
@@ -144,7 +144,7 @@ Nicht nur wird eine Vielzahl von Lösungen generiert, die unterschiedliche Lösu
 
 \label{sub:surrogate}
 Für die Selektion von Individuen innerhalb eines genetischen Algorithmus wird die Lösungsqualität dieser Individuen, typischerweise Fitness genannt, benötigt.
-Außerdem findet die Auswertung der Fitnessfunktion innerhalb des genetischen Algorithmus sehr häufig statt.
+Durch die große Anzahl an Individuen die für den evolutionären Algorithmus benötigt werden, findet die Auswertung der Fitnessfunktion sehr häufig statt.
 Dies stellt bei relativ einfachen Fitnessfunktionen keine große Einschränkung dar, auf Problemdomänen in denen die Auswertung der Fitness eines Individuums allerdings komplexer und dadurch zeitaufwändiger wird, kann dies die Anwendbarkeit einfacher genetischer Algorithmen einschränken.
 
 Aerodynamische Probleme, für die zeitaufwändige Simulationen nötig sind, gehören ohne Zweifel zu der Klasse von Problemen, für die die Anzahl der benötigten Funktionsauswertungen zu groß sind, als das der Algorithmus in vertretbarer Laufzeit abschließen kann.
@@ -163,6 +163,7 @@ Da das Surrogatmodell aber genau für den Zweck genutzt wird die Anzahl an benö
 
 \missingfigure{Visualisierung Gaußprozess}
 
+\todo{Mehr Gaußprozess ausführen}
 Gaußprozesse sind ein in \cite{Rasmussen.2008} entwickeltes Machine-Learning Verfahren, mit welchem beliebige mathematische Funktionenen approximiert werden können. 
 Ein großer Vorteil von Gaußprozessen ist, dass sie durch ihre Herkunft aus der Statistik die zu approximierende Funktion als Kombination aus Normalverteilungen modellieren.
 Dadurch können Gaußprozesse neben einer Vorhersage, genauer gesagt dem Mittelwert der Vorhersage an einem Punkt, auch die Varianz der Vorhersage an jedem Punkt liefern.
@@ -178,18 +179,29 @@ Der Hauptnachteil von Gaußprozessen ist die relativ hohe Speicher- und Rechenko
 
 \subsubsection{Exploration Exploitation Problem}
 
-Ein häufig auftretendes Dilemma beim Lernen von unbekannten Problemen ist die Spannung zwischen Exploration und Exploitation.
-Exploration beschreibt dabei die Untersuchung von unbekannten, bisher unerforschten Gebieten, um das zugrundeliegende Problem besser zu verstehen und damit Strategien besser optimieren zu können.
-Exploitation beschreibt die Ausnutzung von bekannten guten Strategien, um Nutzen zu maximieren.
+Ein häufig auftretendes Dilemma, wenn der Gewinn eines unbekannten Problems maximiert werden soll, ist die Spannung zwischen Exploration und Exploitation.
+Das einfachste Beispiel in dem eine solche Spannung existiert ist das Problem des mehrarmigen Banditen.
+In diesem Problem existiert eine Reihe von Glücksspielautomaten, deren Gewinn durch statistische Verteilungen beschrieben wird.
+Der Gewinn jedes einzelnen Automaten wird durch eine andere Verteilung definiert.
+Diese Verteilungen sind einem Spieler, der das Ziel hat seinen Gewinn zu maximieren, allerdings nicht bekannt.
+Mit jedem Spiel an einem Automaten erhält der Spieler sowohl den Gewinn des Spiels, als auch Wissen über die Gewinnverteilung des Automaten und damit über das gesamte Problem.
+Das Problem ist die Frage mit welcher Strategie der Spieler seinen Gewinn maximieren kann.
+Der Spieler kann nur den Automaten Spielen der den besten bekannten erwarteten Gewinn hat, allerdings besteht die Möglichkeit, dass ein anderer unbekannter Automat einen höheren erwarteten Gewinn besitzt, von dem der Spieler allerdings nicht weiß.
+Stattdessen kann der Spieler versuchen Wissen über das Problem zu sammeln indem er an Automaten spielt über deren Verteilung er wenig weiß. 
+Dies führt aber dazu, dass der Spieler an vielen schlechten Automaten spielen wird um mehr Wissen über diese zu erlangen.
+Das Dilemma zwischen diesen Entscheidungen ist ein Beispiel Exploration Exploitation Problem.
+An dem besten bekannten Automaten zu spielen ist ein Beispiel der Exploitation, der Ausnutzung des Wissens, an unbekannten Automaten zu spielen ein Beispiel der Exploration, der Sammlung von Wissen.
+
+Allgemeiner formuliert beschreibt Exploration dabei die Untersuchung von unbekannten, bisher unerforschten Gebieten, um das zugrundeliegende Problem besser zu verstehen und damit Strategien besser optimieren zu können, während Exploitation die Ausnutzung des gesammelten Wissens beschreibt um den Nutzen zu maximieren.
 Die beiden Herangehensweisen stellen gegensätzliche Konzepte dar.
 Je mehr Exploration durchgeführt wird, desto weniger Exploitation kann durchgeführt werden und vice-versa.
-Ein zu starker Fokus auf Exploration führt allerdings dazu, dass viele niedrigwertige Gebiete erforsch werden, diese aber keinen Nutzen einbringen.
-Zu viel Exploitation hingegen kann zur Folge haben lokale Gewinne über globale Gewinne zu bevorzugen.
 
 Ein solches Problem stellt sich auch bei der Surrogatmodellierung.
-So ist einerseit die Exploration unerkundeter Gebiete wichtig zur Maximierung der globalen Präzision des Modells, die Exploitation allerdings wichtig zur Untersuchung von Regionen mit hoher Fitness, da in diesen Regionen der Hauptteil der Optimierung stattfindet.
-Auch ist die Anzahl an erlaubten realen Auswertungen stark begrenzt, die Reduzierung ist der Grund für die Nutzung eines Surrogatmodells.
-D. h. dass die Auswertungen die durchgeführt werden maximalen Nutzen für das Surrogatmodell haben sollten.
+So ist einerseits die Exploration unerkundeter Gebiete wichtig um die globale Präzision des Modells zu maximieren und Optima in unerforschten Bereichen zu finden.
+Andererseits ist die Exploitation wichtig um Regionen um lokale Optima möglichst präzise abzubilden, da in diesen Regionen der Hauptteil der Optimierung stattfindet.
+Ist das Surrogatmodell in Regionen hoher Fitness nicht präzise, beschränkt das die maximale Qualität der Lösungen, die der Optimierungsalgorithmus, der auf das Surrogatmodell zurückgreift, erzeugen kann.
+Außerdem ist die Anzahl an erlaubten realen Auswertungen stark begrenzt, die Reduzierung dieser ist der Grund für die Nutzung eines Surrogatmodells.
+D. h. dass die Auswertungen, die durchgeführt werden maximalen Nutzen für das Surrogatmodell haben sollten.
 
 \missingfigure{UCB}
 Eine Möglichkeit mit dem Dilemma zwischen Exploration und Exploitation umzugehen ist das in \cite{Auer.2002} beschriebene Upper-Confidence-Bound. Dabei werden Exploration-Exploitation Probleme als statistischen Prozesse bestehend aus Mittelwert und Varianz aufgefasst.
@@ -258,17 +270,37 @@ Welche dieser beiden Arten von Constraints genutzt wird, hängt stark von der Pr
 
 Auch stellt die Formulierung von Constraints häufig eine Herausforderung dar.
 So müssen diese offensichtlich berechenbar sein, Constraints sind allerdings häufig nicht in mathematischer Form formuliert sondern eher in einer Art die an Requirements erinnert.
-Es muss folglich zuerst eine mathematische Formulierung für den Constraint entwickelt werden, die den Constraint sow eit wie möglich entspricht.
+Es muss folglich zuerst eine mathematische Formulierung für den Constraint entwickelt werden, die den Constraint soweit wie möglich entspricht.
 Zweitens werden Constraints in einem typischen evolutionären Optimierungsalgorithmus sehr häufig evaluiert werden. Das bedeutet, dass die Berechnung des Constraints entweder nicht besonders rechenintensiv sein darf, oder Hilfsmechanismen integriert werden wie beispielsweise die Modellierung des Constraint durch ein Surrogatnetzwerk, wie es in SAIL für die Fitness bereits genutzt wird.
 
-\subsubsection{Ausschluss durch Genotyp-Phänotyp-Abbildung}
+\subsubsection{Ausschluss durch Definition der Repräsentation}
+
+Die einfachste Art mit äußeren Einschränkungen umzugehen, ist es die Repräsentation des Problems so zu formulieren, dass es nicht möglich ist Phänotypen zu generieren, die den Constraint verletzen.
+Im Gegensatz zum Phänotyp, dessen Definition von der Problemdomäne abhängt, kann der Genotyp frei definiert werden.
+Die einzigen Kriterien die dieser Erfüllen muss sind, dass eine Abbildung existiert mit der aus einem Genotyp ein zugehöriger Phänotyp generiert werden kann, dass die Methoden der evolutionären Optimierung, sprich Mutation und Crossover, mit ihm durchgeführt werden, und dass neue zufällige Genotypen generiert werden können.
+Die Wahl einer guten Repräsentation des Problems ist einer der wichtigsten Teile der evolutionären Optimierung.
+So existieren Beispiele, in denen das gleiche Problem mit einer Repräsentation nicht gelöst werden kann, während dies mit einer anderen Repräsentation möglich ist.
+Constraints können in der Wahl der Problemrepräsentation bereits behandelt werden.
+Ist es möglich, durch eine kluge Wahl der Repräsentation zu garantieren, dass nur solche Genotypen generiert werden können deren zugehöriger Phänotyp den Constraint erfüllt, ist sichergestellt, dass jede mögliche Lösung valide ist, und der Constraint nicht weiter behandelt werden muss.
+
+Dies hat den Vorteil, dass ungültige Lösungen niemals in den Algorithmus einfließen, und damit weder Rechenkapazitäten für nicht nutzbare Lösungen genutzt werden, noch solche Eigenschaften, durch die eine Lösung die Constraints verletzt, vom Algorithmus überhaupt in Erwägung gezogen werden.
+Dies kann eine sehr einfache und effektive Art sein um mit Constraints umzugehen, und sollte sofern es möglich ist die erste Wahl zu Behandlung von Constraints sein.
+Häufig ist es allerdings so, dass die Definition einer Repräsentation, die den Constraint erfüllt, eine große Herausforderung darstellt.
+Besonders in solchen Problemdomänen, in denen die Genotyp-Phänotyp Abbildung komplex ist, ist es häufig sehr schwer die Repräsentation so zu wählen, dass sie einen beliebigen Constraint ausschließt.
 
 \subsubsection{Hard Constraints}
 
-Hard Constraints führen eine binäre Auswahl durch, bei der solche Lösungen, die den Constraint nicht erfüllen disqualifziert werden.
-Sie stellen eine sehr einfache Lösung zur Implementierung von Constraints dar.
-An der Stelle im Algorithmus an der neue Lösungen generiert werden werden alle ungültigen Lösungen herausgefiltert.
-Dies hat den Vorteil, dass ungültige Lösungen niemals in den Algorithmus einfließen, und damit weder Rechenkapazitäten für nicht-nutzbare Lösungen genutzt werden, und solche Eigenschaften, durch die eine Lösung die Constraints verletzt vom Algorithmus überhaupt nicht in Erwägung gezogen werden.
+Ist es nicht möglich durch die Wahl der Repräsentation Lösungen auszuschließen, die den Constraint verletzen, dann ist ein Hard Constraint die nächste Wahl.
+Im Gegensatz zur Wahl der Repräsentation, findet die Auswahl durch einen Hard Constraint auf der Phänotypebene statt.
+Dazu existiert eine Funktion die für jeden Phänotyp testet, ob dieser den Constraint erfüllt.
+Solche Lösungen die den Constraint nicht erfüllen werden disqualifiziert, während solche die ihn erfüllen im Algorithmus genutzt werden dürfen.
+Da Constraints immer Constraints des Phänotyps sind, ist die Behandlung dieser auf Phänotypebene einfacher, als der Ausschluss invalider Phänotypen durch Änderung des Genotyps.
+Typischerweise werden bei der Nutzung von Hard Constraints an allen Stellen im Algorithmus an denen neue Lösungen generiert werden, sprich Zufallsinitialisierung, Mutation und Crossover, ungültige Lösungen herausgefiltert.
+
+Hard Constraints haben denselben Vorteil wie der Ausschluss durch die Wahl der Repräsentation, ungültige Lösungen niemals in den Algorithmus einfließen, und damit weder Rechenkapazitäten für nicht nutzbare Lösungen genutzt werden, noch solche Eigenschaften, durch die eine Lösung die Constraints verletzt, vom Algorithmus überhaupt in Erwägung gezogen werden.
+Im Gegensatz zu dieser Variante muss bei der Nutzung von Hard Constraints, für jedes generierte Individuum getestet werden ob es den Constraint erfüllt.
+Dies nimmt Rechenzeit in Anspruch und schränkt die Formulierung der Constraint-Funktion durch die hohe Zahl an Individuen insoweit ein, als dass diese angemessen schnell berechenbar sein muss.
+
 
 
 \subsubsection{Soft Constraints}
@@ -288,13 +320,20 @@ Ist diese Gewichtung fehlerhaft parametrisiert, kann dies dazu führen, dass Tei
 \subsubsection{Vergleich}
 
 
+
 \newpage
 
 \section{Methode}
 
-\todo{Einleitung}
+In diesem Kapitel werden die in \ref{sub:grundlagen} besprochenen Techniken auf zwei Domänen angewandt.
+Die erste dieser Domänen ist die Generierung von verformten Radkästen eines Velomobils, unter Beachtung eines Constraints.
+Die zweite Domäne ist die explorative Untersuchung verschiedener Bauteilformen an der Unterseite eines E-Rollers.
+In beiden Domänen ist die Verformung dreidimensionaler Bauteile und die darauffolgende Bewertung des Effektes auf die Aerodynamik, den diese Verformung hat, Untersuchungsziel.
+Auf die domänenübergreifende Teile der Repräsentation wird in \ref{sub:representation} eingegangen.
+Darauffolgend wird in \ref{sub:method_wheelcase} \ref{sub:method_escooter} auf die Spezifika, wie Constraints und Featurewahl, der Radkasten- beziehungsweise E-Roller-Domäne eingegangen.
 
-\subsection{Domänenübergreifend}
+\subsection{Repräsentation}
+\label{sub:representation}
 
 In beiden Domänen geht es um die Deformation von dreidimensionalen Bauteilen, und die Bewertung der aerodynamischen Effekte solcher Deformationen.
 D. h. es wird eine robuste Methode benötigt um dreidimensionale Bauteile zu deformieren und solche Deformationen auf wenige Parameter reduzieren zu können.
@@ -353,7 +392,7 @@ Zudem werden die Koeffizienten der auf das Objekt wirkenden Kräfte berechnet, w
 
 
 \subsection{Radkästen des Velomobils}
-
+\label{sub:method_wheelcase}
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=.8\linewidth]{bilder/velo_wheelcase}
@@ -366,26 +405,6 @@ Da die momentanen Radkästen den Lenkausschlag des Velomobils erheblich einschr�
 Es ist zu erwarten, dass eine zusätzliche Fokussierung auf ein zweites Ziel, mit einer Qualitätsabnahme des ersten Ziels verbunden ist.
 Trotzdem ergibt die Einführung eines Constraints nur Sinn, wenn die Abnahme an Optimalität bezüglich des Primärziels gering genug ist um eine Zunahme an Optimalität bezüglich des Sekundärziels vertretbar zu machen.
 Das Ziel besteht also darin Lösungen zu entwickelt, welche durch minimalen Fitnessverlust einen maximalen Constraintgewinn möglich machen.
-
-%\subsubsection{Struktur}
-
-%\begin{figure}[h]
-%%	\centering
-%	\dirtree{%
-%		.1 placeholder.
-%	}
-%\caption{Struktur von domains/wheelcase}
-%\label{fig:dir_wheelcase}
-%\end{figure}
-
-%Alle spezifischen Daten zur wheelcase Domäne sind in \path{domains/wheelcase} zu finden.
-%Auf der höchsten Ebene des Verzeichnisses sind die generellen Skripte für SAIL zu finden.
-%Im Unterverzeichnis \path{ffd} befinden sich die STLs, die für die Freiformdeformation und Berechnung des Constraints benötigt werden.
-%Alle Dateien zur Berechnung des Constraints leigen in \path{constraint}
-%Der Basiscase für OpenFoam ist zu finden \path{pe/v1906}.
-%Im Ordner \path{configs} befinden sich verschiedene Konfigurationen für die Freiformdeformation
-%Eine solche Konfiguration enthält die Parametrisierung für die Freiformdeformation, sowie die Funktion zur Erzeugung einer konkreten Deformation aus einem Genom.
-%Das letzte Unterverzeichnis ist \path{experiment}, was das Skript zum Starten eines Laufs, sowie Job-Skripte zur Ausführung als Slurm-Jobs
 
 \subsubsection{OpenFOAM}
 
@@ -442,7 +461,8 @@ Zwar besteht keine direkte Kausalität zwischen diesem Volumen und dem maximalen
 Zur Berechnung der Differenz zwischen Radausschlagsvolumen und Radkasten wird die Bibliothek \textit{gptoolbox} \cite{gptoolbox.b} genutzt, zur Generierung von Tetraedermeshes zur Volumenberechnung \textit{TetGen} \cite{Si.2015}.
 Ein Beispiel des Differenzvolumens zur Constraintberechnung ist in Abb. \ref{fig:diff_volume} zu sehen.
 Dieses Volumen stellt die Differenz des Radausschlagvolumens und des unverformten Radkastens dar.
-Um eine Differenz berechnen zu können wurde der rechte Radkasten zu einem geschlossenen Volumen gemacht, da die Constraintberechnung in jeder Generation für jedes Kind erfolgen muss wurde der Radkasten außerdem vereinfacht um die Berechnung  des Constraints ausreichend schnell durchführen zu können.
+Um eine Differenz berechnen zu können wurde der rechte Radkasten geschlossen.
+Da die Constraintberechnung in jeder Generation für jedes Kind erfolgen muss wurde der Radkasten außerdem vereinfacht um die Berechnung  des Constraints ausreichend schnell durchführen zu können.
 Aus dem Volumen wird dann der Strafwert berechnet der in Relation zum Differenzvolumen des unverformten Radkastens
 \footnote{Für den unverformten Radkasten beträgt das Differenzvolumen ca. $1,6L$} gesetzt wird.
 
@@ -459,9 +479,15 @@ Allerdings wurde der Strafwert zusätzlich noch in die Akquisefunktion, mit der 
 Als erste Kategorie wurde die Breite des Velomobils gewählt.
 Diese Kategorie wurde deshalb gewählt, da hier sehr klare Hypothesen aufgestellt werden können, wie die Breite des Velomobils mit der Aerodynamik und dem Constraint interagiert.
 Die erste Hypothese, die aufgestellt werden kann ist, dass breiteren Velomobilen die Erfüllung des Constraints leichter fällt. Es wäre also zu erwarten, dass breitere Velomobile den Constraint tendenziell besser erfüllen, als schmalere.
+\begin{center}
+	Breitere Velomobile sind positiv mit Erfüllung des Constraints korreliert.
+\end{center}
 Auch kann die Hypothese aufgestellt werden, dass die Breite negativ mit dem Luftwiderstandsbeiwert korreliert ist.
+\begin{center}
+	Breitere Velomobile sind negativ mit Luftwiderstandsbeiwert korreliert.
+\end{center}
 Insgesamt wäre also zu vermuten, dass entlang dieser Achse der Luftwiderstandsbeiwert zunimmt während der Strafwert des Constraints abnimmt.
-Der Test ob diese Erwartungen erfüllt sind stellt eine einfache Möglichkeit zur semantischen Verfifizierung der Ergebnisse dar.
+%Der Test ob diese Erwartungen erfüllt sind stellt eine einfache Möglichkeit zur semantischen Verfifizierung der Ergebnisse dar.
 
 Als zweite Kategorie wurde die x-Koordinate des breitesten Punkts gewählt.
 Da das Velombil in negative x-Richtung ausgerichtet ist, bedeuten kleinere Werte hier, dass der Punkt weiter vorne liegt, größere, dass er weiter hinten liegt.
@@ -471,20 +497,20 @@ Die Frage ob sich hier klare Tendenzen bezüglich den aerodynamischen Eigenschaf
 Da auch die Kategorisierung so häufig stattfindet, wird auch diese mit dem für die Berechnung des Constraints vereinfachten Modell des Radkastens durchgeführt. 
 Dies stellt keinen signifikanten Verlust an Genauigkeit in der Kategorisierung dar, da sich die am feinsten gemeshten Teile des Radkastens an dessen Rändern befinden.
 Gerade die sind aber die Teile des Radkastens, die am unwahrscheinlichsten den breitesten Punkt darstellen.
-Auch führen minimale Genauigkeitsfehler in der kategorisierung nicht dazu, dass die von MAP-Elites geforderte Lokalität verletzt wird.
+Auch führen minimale Genauigkeitsfehler in der Kategorisierung nicht dazu, dass die von MAP-Elites geforderte Lokalität verletzt wird.
 Der Geschwindigkeitsgewinn bei der Berechnung hingegen mach es möglich solche Kategorien, für die eine Verformung des Radkastens notwendig ist, zu wählen, was in Relation einen wesentlich größeren Gewinn darstellt.
 
-\subsection{E-Roller}
-
-\missingfigure{E-Rollerbauteil}
-
-Die zweite Problemdomäne ist die explorative Untersuchung eines Bauteils an der Unterseite eines E-Rollers.
-Hier besteht die Frage ob nicht-triviale Bauteile aerodynamische Vorteile bieten, und welche Eigenschaften solche Bauteile aufweisen.
-
-\subsubsection{Setup}
-\subsubsection{OpenFOAM}
-\subsubsection{Constraint}
-\subsubsection{Wahl der Features}
+%\subsection{E-Roller}
+%\label{sub:method_escooter}
+%\missingfigure{E-Rollerbauteil}
+%
+%Die zweite Problemdomäne ist die explorative Untersuchung eines Bauteils an der Unterseite eines E-Rollers.
+%Hier besteht die Frage ob nicht-triviale Bauteile aerodynamische Vorteile bieten, und welche Eigenschaften solche Bauteile aufweisen.
+%
+%\subsubsection{Setup}
+%\subsubsection{OpenFOAM}
+%\subsubsection{Constraint}
+%\subsubsection{Wahl der Features}
 
 
 
