@@ -131,10 +131,15 @@ Mit dem ersten Experiment konnte gezeigt werden, dass der Algorithmus sowohl Luf
 Das erste Experiment hatte allerdings einige Einschränkungen, bezüglich der Parametrisierung um es einfach zu halten.
 Die erste dieser Einschränkungen war die Reduzierung auf Deformation in 2 Punkten, sprich 6 Freiheitsgraden.
 Diese Reduzierung half dabei das Problem klein zu halten, hatte aber eine erhebliche Einschränkung des Lösungsraums zur Folge.
-Ziel des zweiten Experiments ist es die Anzahl an Freiheitsgraden erheblich zu erhöhen, damit die Zahl an möglichen Deformationen erheblich zu erhöhen, was den positiven Effekt der Einbindung eines Constraints hoffentlich erhöht.
-Dazu wird die Anzahl an Deformationspunkten auf 6 erhöht, wodurch sich 18 Freiheitsgrade ergeben.
+Ziel des zweiten Experiments ist es die Anzahl an Freiheitsgraden erheblich zu erhöhen, damit die Zahl an möglichen Deformationen erheblich zu erhöhen, was den positiven Effekt der Einbindung eines Constraints hoffentlich verstärkt.
+
 \missingfigure{FFD-Deformationspunkte}
 Die in \todo{} dargestellte Freiheitsgrade wurden mit einigen Vorüberlegungen gewählt.
+Die Anzahl an horizontaler Reihen wurde von einer auf zwei erhöht um Deformationen , wie eine Auseinanderziehen oder Zusammendrücken in z-Richtung zu erlauben.
+Es liegt die Vermutung nahe, dass die im vorigen Experiment gewählten Deformationspunkte die möglichen Phänotypen einschränken, besonders in Anbetracht auf die x-Position des breitesten Punkts.
+Da diese eine der Features der MAP-Elites-Karte ist, und die Karte im vorigen Experiment entlang dieser Dimension nicht vollständig ausgefüllt wurde, wurde die Anzahl der Deformationspunkte in x-Richtung von 2 auf drei erhöht, um mehr Deformationen zuzulassen, in denen der breiteste Punkt weiter vorne oder hinten liegt.
+Insgesamt ergeben sich dadurch 6 Deformationspunkte, welche in alle drei Richtungen bewegt werden können, wodurch sich 18 Freiheitsgrade ergeben.
+%Diese Erhöhung ist groß genug
 
 \begin{figure}[h]
 	\centering
@@ -174,7 +179,8 @@ Die in \todo{} dargestellte Freiheitsgrade wurden mit einigen Vorüberlegungen g
 	\end{minipage}
 \end{figure}
 
-Das erste was im vergleich zwischen ersten und zweitem Experiment auf
+Der erste Unterschied, der im Vergleich zum ersten Experiment auftritt, sind die stärkeren Unterschiede in Constraint und Luftwiderstand für.
+
 
 \begin{figure}[h]
 	\includegraphics[width=1\linewidth]{bilder/6pt500Samples/dragMapComparison}
@@ -182,11 +188,25 @@ Das erste was im vergleich zwischen ersten und zweitem Experiment auf
 	\label{fig:2ndmapDrag}
 \end{figure}
 
+In Abbildungen \ref{fig:2ndmapCon} \ref{fig:2ndmapDrag} ist klar zu Erkennen, dass die Karte aus Lösungen weitaus besser gefüllt wird als beim ersten Experiment.
+Die bessere Füllung entlang der Vertikalen ist leicht zu erklären.
+Die Aufteilung in 6 Deformationspunkte führt dazu, dass die beiden vorderen weiter vorne liegen, als der vordere aus dem vorigen Experiment und die beiden hinteren entsprechend auch weiter hinten liegen.
+Deformationen mit diesen Deformationspunkten können also mehr Lösungen generieren, in denen der breiteste Punkt sehr weit vorne oder sehr weit hinten liegt.
+Interessant ist allerdings, dass die Karte auch entlang der Horizontalen  besser gefüllt wird.
+An der Stärke der Deformationen in y-Richtung wurde allerdings nichts geändert, es sollte also nicht möglich sein wesentlich breitere Velomobile zu generieren.
+\todo{Erklärung warum mehr horiz}
+
 \begin{figure}[h]
 	\includegraphics[width=1\linewidth]{bilder/6pt500Samples/constraintMapComparison}
 	\caption{Maps of final constraint values}
 	\label{fig:2ndmapCon}
 \end{figure}
+
+Die Karte der Constraints bestätigt auch hier, die im ersten Experiment bereits beobachtete Tendenz, dass der Constraint in breiteren Velomobilen und in solchen in denen der breiteste Punkt weiter vorne liegt einfacher zu erfüllen ist.
+Es ist allerdings herauszustellen, dass in der Variante ohne Constraint selbst die Lösungen in der oberen rechten Ecke eine weniger gute Constrainterfüllung aufweisen als die besten Lösungen in der Variante ohne Constraint des ersten Experiments, trotz der Tatsache, dass diese sowohl breiter sind und die breiteste Stelle weiter vorne liegt.
+Zwar ist dieser Effekt auch im Vergleich der Varianten ohne Constraint festzustellen, er fällt dort aber wesentlich schwächer aus.
+Dies deckt sich mit der Tatsache, dass eine Erhöhung der Freiheitsgrade und die damit verbundene Vergrößerung des Suchraumses schwerer macht ähnlich gute Lösungen bei gleicher Laufzeit zu finden.
+Dass der Effekt in der Variante ohne Constraint aber stärker ist bestätigt, dass die Schwierigkeit des zufälligen Erfüllen des Constraints ohne spezielle Behandlung stärker wächst, als die Schwierigkeit der Erfüllung unter Beachtung des Constraints.
 
 \begin{figure}[h]
 	\centering
@@ -195,12 +215,16 @@ Das erste was im vergleich zwischen ersten und zweitem Experiment auf
 	\label{fig:2ndmapConCompare}
 \end{figure}
 
+Zur definitiven Auswertung sollte allerdings sichergestellt sein, dass Akquise- und Ergebnis-MAP-Elites ausreichend auskonvergiert sind.
+Dass kann aus in diesem Experiment noch nicht definitiv festgestellt werden.
+Um eine definitive Aussage über Konvergenz treffen zu können sollte das Experiment unter ausführlicheren Bedingungen wiederholt werden.
+
 \subsubsection{3. Experiment}
 
 Das zweite Einschränkung des ersten Experiments war die Beschränkung auf eine kleinere Anzahl an ausgewerteten Samples und Generationen in Akquise- und Ergebnis-MAP-Elites.
 Durch die Beschränkung auf eine kleinere Anzahl an Samples besteht die Möglichkeit, dass der Suchraum nicht präzise genug und/oder nicht weitläufig genug abgebildet wurde.
 Die Beschränkung in Generationen des Akquise- und Ergebnis-MAP-Elites kann dazu führen, dass diese noch nicht vollständig auskonvergiert sind.
-Da die Überlegung nahe liegt, dass die Variante mit Constraint länger benötigen könnte um auszukonvergieren, sollte untersucht werden ob die Erhöhung dieser Parameter zu signifikanten Änderung im Vergleich zur kürzeren Version führt, indem die Gewinne nach 500 Samples und 1024 bzw. 2018 Generationen quantifiziert werden.
+Da die Überlegung nahe liegt, dass die Variante mit Constraint länger benötigen könnte um auszukonvergieren, sollte untersucht werden ob die Erhöhung dieser Parameter zu signifikanten Änderung im Vergleich zur kürzeren Version führt, indem die Gewinne nach 500 Samples und 1024 bzw. 2048 Generationen quantifiziert werden.
 
 \begin{figure}[h]
 	\centering
