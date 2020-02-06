@@ -161,7 +161,12 @@ Da das Surrogatmodell aber genau für den Zweck genutzt wird die Anzahl an benö
 
 \subsubsection{Gaußprozesse}
 
-\missingfigure{Visualisierung Gaußprozess}
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=.7\linewidth]{bilder/gp}
+	\caption{Gaußprozess im Ausgangszustand (a) und nach dem Lernen von drei Datenpunkten (b) (aus \cite{Rasmussen.2008})}
+	\label{fig:gp}
+\end{figure}
 
 \todo{Mehr Gaußprozess ausführen}
 Gaußprozesse sind ein in \cite{Rasmussen.2008} entwickeltes Machine-Learning Verfahren, mit welchem beliebige mathematische Funktionenen approximiert werden können.
@@ -169,9 +174,12 @@ Ein großer Vorteil von Gaußprozessen ist, dass sie durch ihre Herkunft aus der
 Wie jedes überwachte Machine-Learning Verfahren zur Regression erhalten Gaußprozesse dabei eine Reihe an Beobachtungen auf deren Basis das Modell konstruiert wird.
 Vor dem Lernen sind Gaußprozesse als Basisvermutung initialisiert.
 Diese Basisvermutung besteht aus eine Mittelwerts- und einer Varianzfunktion, die entsprechend den Mittelwert und Varianz für alle Eingabewerte vorgeben.
-In \todo{} ist eine solche Basisannahme, mit konstanter Mittelwertfunktion $m(x)=0$ und konstanter Varianzfunktion $v(x)=2$ dargestellt.
 Die Funktionen sind frei wählbar, ist allerdings nichts über das Problem bekannt so wird meist auf konstante Funktionen zurückgegriffen.
-Diese Basisannahme wird daraufhin mit einer Reihe von Beobachtungen trainiert, wodurch sich das in \todo{} dargestellte Ergebnis ergibt.
+In \ref{fig:gp} (a) ist eine solche Basisannahme, mit konstanter Mittelwertfunktion $m(x)=0$ und konstanter Varianzfunktion $v(x)=2$ dargestellt (graues Band).
+Außerdem sind 3, der unendlich vielen möglichen Funktionen, die die Daten beschrieben eingezeichnet.
+
+Diese Basisannahme wird daraufhin mit einer Reihe von Beobachtungen trainiert, wodurch sich das in \ref{fig:gp} (b) dargestellte Ergebnis ergibt.
+Hier wurden fünf Beobachtungen 
 An jeder Beobachtung wird der Mittelwert auf den tatsächlichen Wert der Beobachtung gesetzt und die Varianz kollabiert zu null.
 
 \todo[inline]{hyperparam optimierung mit minimize?}
@@ -249,7 +257,18 @@ Upper-Confidence-Bound kombiniert Mittelwert und Varianz zur Bestimmung der best
 	\end{algorithmic}
 \end{algorithm}
 
-\missingfigure{Vllt. Graphik zu SAIL}
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=.7\linewidth]{bilder/sail}
+	\caption{Teilschritte von SAIL, 
+		1) zufälliges Sampling des Problemraums, 
+		2) Trainieren eines Surrogatmodells, 
+		3) Erstellung der Akquisekarte mit MAP-Elites mit Upper-Confidence-Bound als Fitness, 
+		4) Auswahl der Individuen mit höchstem UCB-Wert und reale Auswertung,
+		5) Finale Auswertung mit MAP-Elites
+	}
+	\label{fig:sail}
+\end{figure}
 
 SAIL (Surrogate-Assisted Illumination) ist ein in \cite{Gaier.6152018} beschriebenes Verfahren, welches die in \ref{sub:mapElites} und \ref{sub:surrogate} beschriebenen Ansätze vereint, mit dem Ziel MAP-Elites in rechenintensiven Domänen anwendbar zu machen.
 
@@ -331,39 +350,39 @@ Ist diese Gewichtung fehlerhaft parametrisiert, kann dies dazu führen, dass Tei
 
 \subsubsection{Vergleich}
 
-\begin{figure}
-	\centering
-	\begin{tabularx}{.9\textwidth}{ll}\hline
-		Variante 		& Vorteile 		& Nachteile \\\hline
-		Repräsentation 	& 
-		\begin{itemize}
-			\item Behandlung des Constraints im Algorithmus nicht mehr nötig
-			\item Keine zusätzlichen Berechnungen notwendig
-		\end{itemize} &
-		\begin{itemize}
-			\item Keine Trittbretter
-			\item Formulierung einer passenden Repräsentation in komplexen Domänen häufig aufwendig
-		\end{itemize} \\
-		Hard Constraint &
-		\begin{itemize}
-			\item Ergebnis kann keine invaliden Lösungen enthalten
-			\item Formulierung des Constraints auf Phänotypebene leichter
-		\end{itemize} &
-		\begin{itemize}
-			\item Keine Trittbretter
-		\end{itemize} \\
-		Soft Constraint &
-		\begin{itemize}
-			\item Nutzung von Trittbrettern wird ermöglicht
-			\item 
-		\end{itemize} &
-		\begin{itemize}
-			\item Ergebnis kann invalide Lösungen enthalten
-		\end{itemize} \\
-	\end{tabularx}
-	\caption{Vor-/Nachteile der verschiedenen Möglichkeiten einen Constraint zu modellieren}
-	\label{tab:methods_constraint}
-\end{figure}
+%\begin{figure}
+%	\centering
+%	\begin{tabularx}{.9\textwidth}{ll}\hline
+%		Variante 		& Vorteile 		& Nachteile \\\hline
+%		Repräsentation 	& 
+%		\begin{itemize}
+%			\item Behandlung des Constraints im Algorithmus nicht mehr nötig
+%			\item Keine zusätzlichen Berechnungen notwendig
+%		\end{itemize} &
+%		\begin{itemize}
+%			\item Keine Trittbretter
+%			\item Formulierung einer passenden Repräsentation in komplexen Domänen häufig aufwendig
+%		\end{itemize} \\
+%		Hard Constraint &
+%		\begin{itemize}
+%			\item Ergebnis kann keine invaliden Lösungen enthalten
+%			\item Formulierung des Constraints auf Phänotypebene leichter
+%		\end{itemize} &
+%		\begin{itemize}
+%			\item Keine Trittbretter
+%		\end{itemize} \\
+%		Soft Constraint &
+%		\begin{itemize}
+%			\item Nutzung von Trittbrettern wird ermöglicht
+%			\item 
+%		\end{itemize} &
+%		\begin{itemize}
+%			\item Ergebnis kann invalide Lösungen enthalten
+%		\end{itemize} \\
+%	\end{tabularx}
+%	\caption{Vor-/Nachteile der verschiedenen Möglichkeiten einen Constraint zu modellieren}
+%	\label{tab:methods_constraint}
+%\end{figure}
 
 Welcher der drei Ansätze am Besten für ein Problem ist hängt von dessen Formulierung ab.
 Grundsätzlich sollte der Ausschluss durch Modellierung Hard Constraints und diese wiederum Soft Constraints vorgezogen werden.
@@ -560,7 +579,7 @@ Um den Strafwert $p$ für ein Individuum zu berechnen wird $V(FV_{außen})$ des 
 Erfüllt ein Individuum den Constraint gleich gut wie der unverformte Radkasten gilt $p=1$.
 Ist ein Individuum besser gilt $0\leq p < 1$, ist es schlechter gilt $p>1$.
 \[
-	$p = \frac{V(FV_{außen})}{V(FV_{außenUnverformt})}$
+	p = \frac{V(FV_{außen})}{V(FV_{außenUnverformt})}
 \]
 
 Da sich der Constraint durch die Vereinfachung des Radkastens ausreichend schnell berechnen ließ, dass eine direkte Berechnung dessen für jedes Individuum zeitlich möglich war, wurde dies getan.

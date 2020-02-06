@@ -27,7 +27,11 @@
 
 Das Primärziel des ersten Experiments bestand darin zu verifizieren, dass der Algorithmus trotz Einbindung des Constraints korrekt funktioniert, d h. auch mit Constraint vergleichbare Werte bezüglich Luftwiderstandskoeefizienten erreicht werden, und der Algorithmus trotz des Constraints korrekt lernt.
 Deshalb wurde die Parametrisierung vergleichsweise einfach gewählt, FFD-Deformationen fanden in zwei Punkten, in jeweils drei Richtungen statt.
-\missingfigure{FFD-Deformationspunkte}
+\begin{figure}[h]
+	\includegraphics[width=1\linewidth]{bilder/}
+	\caption{Maps of final drag values}
+	\label{fig:ffd1st}
+\end{figure}
 Auch wurde die Laufzeit soweit beschränkt, dass sinnvolle Aussagen darüber getroffen werden können, ob und wie gut der Algorithmus lernt, für finale Ergebnisse hingegen wäre die Anzahl an Samples die ausgewertet werden sowie die Anzahl an Genrationen für Akquise, und finaler Auswertung höher zu wählen.
 Um bewerten zu können ob die Einbindung des Constraints einen Effekt auf den Algorithmus hat, und um diesen Effekt quantifizieren zu können wurde der Algorithmus unter den in Tabelle \ref{tab:param1st} beschriebenen Parametern sowohl mit Constraint als auch ohne Constraint durchgeführt. 
 \begin{figure}[h]
@@ -119,7 +123,21 @@ Selbst in der linken, sprich schmalsten Spalte, ist eine Verbesserung der Indivi
 In Abb. \ref{fig:1stmapConCompare} ist die Verbesserung der Constraintwerte von der Version ohne Constraint zur Version mit Constraint dargestellt.
 Der bereits oben erwähnte Effekt, dass die größten Verbesserungen besonders in der linken Hälfte der Karte stattfinden ist hier noch klarer ersichtlich.
 Gerade diese Hälfte ist allerdings die, die bessere Luftwiderstandswerte aufweist und in der die Erfüllung des Constraints aufgrund der geringeren Breite, die Velomobile in diesen Zellen auszeichnet, wesentlich schwerer fällt.
-\missingfigure{Einige Deformationen}
+%\begin{figure}[h]
+%	\centering
+%	\begin{minipage}{0.45\textwidth}
+%		\centering
+%		\includegraphics[width=1\linewidth]{bilder/2pt500Samples/bestUn}
+%		\caption{Comparison of final drag values}
+%		\label{fig:1stdragbox}
+%	\end{minipage}\hfill
+%	\begin{minipage}{0.45\textwidth}
+%		\centering
+%		\includegraphics[width=1\linewidth]{bilder/2pt500Samples/best}
+%		\caption{Comparison of final constraint values}
+%		\label{fig:1stconbox}
+%	\end{minipage}
+%\end{figure}
 Zusammenfassend kann man sagen, dass die Einbindung des Constraints mit den im ersten Experiment vorliegenden Einschränkungen merkliche Auswirkungen auf das Ergebnis hat.
 Auch ist herauszustellen, dass eine starke Verbesserung des Constraints bei einer schwachen Verschlechterung des Luftwiderstands stattfindet.
 %Weiterführenden Experimente sollten ohne die Einschränkungen bezüglich Freiheitsgraden und Länge des Experimentes
@@ -132,7 +150,11 @@ Die erste dieser Einschränkungen war die Reduzierung auf Deformation in 2 Punkt
 Diese Reduzierung half dabei das Problem klein zu halten, hatte aber eine erhebliche Einschränkung des Lösungsraums zur Folge.
 Ziel des zweiten Experiments ist es die Anzahl an Freiheitsgraden erheblich zu erhöhen, damit die Zahl an möglichen Deformationen erheblich zu erhöhen, was den positiven Effekt der Einbindung eines Constraints hoffentlich verstärkt.
 
-\missingfigure{FFD-Deformationspunkte}
+\begin{figure}[h]
+	\includegraphics[width=1\linewidth]{bilder/}
+	\caption{Maps of final drag values}
+	\label{fig:ffd2nd}
+\end{figure}
 Die in \todo{} dargestellte Freiheitsgrade wurden mit einigen Vorüberlegungen gewählt.
 Die Anzahl an horizontaler Reihen wurde von einer auf zwei erhöht um Deformationen , wie eine Auseinanderziehen oder Zusammendrücken in z-Richtung zu erlauben.
 Es liegt die Vermutung nahe, dass die im vorigen Experiment gewählten Deformationspunkte die möglichen Phänotypen einschränken, besonders in Anbetracht auf die x-Position des breitesten Punkts.
@@ -248,6 +270,36 @@ Da die Überlegung nahe liegt, dass die Variante mit Constraint länger benötig
 	\label{tab:params3rd}
 	\caption{Parametrisierung des dritten Experiments (Änderungen zum zweiten Experiment hervorgehoben)}
 \end{figure}
+
+\begin{figure}[h]
+	\centering
+	\begin{minipage}{0.45\textwidth}
+		\centering
+		\includegraphics[width=1\linewidth]{bilder/6pt500Samples/dragBoxplot}
+		\caption{Comparison of final drag values}
+		\label{fig:3rddragbox}
+	\end{minipage}\hfill
+	\begin{minipage}{0.45\textwidth}
+		\centering
+		\includegraphics[width=1\linewidth]{bilder/6pt500Samples/constraintBoxplot}
+		\caption{Comparison of final constraint values}
+		\label{fig:3rdconbox}
+	\end{minipage}
+\end{figure}
+
+\begin{figure}[h]
+	\includegraphics[width=1\linewidth]{bilder/6pt500Samples/dragMapComparison}
+	\caption{Maps of final drag values}
+	\label{fig:3rdmapDrag}
+\end{figure}
+
+
+\begin{figure}[h]
+	\includegraphics[width=1\linewidth]{bilder/6pt500Samples/constraintMapComparison}
+	\caption{Maps of final constraint values}
+	\label{fig:3rdmapCon}
+\end{figure}
+
 
 \subsubsection{Zusammenfassung}
 
