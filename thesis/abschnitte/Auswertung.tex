@@ -4,7 +4,7 @@
 
 \subsubsection{1. Experiment}
 
-\begin{figure}[h]
+\begin{table}[h]
 	\centering
 	\begin{tabularx}{.75\textwidth}{ll}\hline
 		Anzahl initialer Samples & 100 \\
@@ -23,17 +23,17 @@
 	\end{tabularx}
 	\caption{Parametrisierung des ersten Experiments}
 	\label{tab:param1st}
-\end{figure}
+\end{table}
 
 Das Primärziel des ersten Experiments bestand darin zu verifizieren, dass der Algorithmus trotz Einbindung des Constraints korrekt funktioniert, d h. auch mit Constraint vergleichbare Werte bezüglich Luftwiderstandskoeefizienten erreicht werden, und der Algorithmus trotz des Constraints korrekt lernt.
 Deshalb wurde die Parametrisierung vergleichsweise einfach gewählt, FFD-Deformationen fanden in zwei Punkten, in jeweils drei Richtungen statt.
 \begin{figure}[h]
-	\includegraphics[width=1\linewidth]{bilder/2ptDeformationPoints}
-	\caption{Maps of final drag values}
+	\includegraphics[width=.7\linewidth]{bilder/2ptDeformationPoints}
+	\caption{Deformationspunkte des ersten Experiments}
 	\label{fig:ffd1st}
 \end{figure}
 Auch wurde die Laufzeit soweit beschränkt, dass sinnvolle Aussagen darüber getroffen werden können, ob und wie gut der Algorithmus lernt, für finale Ergebnisse hingegen wäre die Anzahl an Samples die ausgewertet werden sowie die Anzahl an Genrationen für Akquise, und finaler Auswertung höher zu wählen.
-Um bewerten zu können ob die Einbindung des Constraints einen Effekt auf den Algorithmus hat, und um diesen Effekt quantifizieren zu können wurde der Algorithmus unter den in Tabelle \ref{tab:param1st} beschriebenen Parametern sowohl mit Constraint als auch ohne Constraint durchgeführt. 
+Um bewerten zu können ob die Einbindung des Constraints einen Effekt auf den Algorithmus hat, und um diesen Effekt quantifizieren zu können wurde der Algorithmus unter den in Tabelle \cref{tab:param1st} beschriebenen Parametern sowohl mit Constraint als auch ohne Constraint durchgeführt. 
 \begin{figure}[h]
 	\centering
 	\begin{minipage}{0.45\textwidth}
@@ -50,7 +50,7 @@ Um bewerten zu können ob die Einbindung des Constraints einen Effekt auf den Al
 	\end{minipage}
 \end{figure}
 
-Die Ergebnisse des ersten Experiments sehen vielversprechend aus In Abb. \ref{fig:1stdragbox} ist ein Vergleich der Luftwiderstandsergebnisse 
+Die Ergebnisse des ersten Experiments sehen vielversprechend aus In Abb. \cref{fig:1stdragbox} ist ein Vergleich der Luftwiderstandsergebnisse 
 \footnote{Im Experiment wurde statt der direkten Luftwiderstandswerte, der natürliche Logarithmus dieser genutzt.} 
 der erzeugten Lösungen abgebildet.
 Die erste Beobachtung die gemacht werden kann, ist dass die produzierten Werte aus der Variante mit Constraint in der gleichen Größenordnung liegen wie die aus der Variante ohne Constraint.
@@ -59,7 +59,7 @@ Es ist zu Erkennen, dass die Einbindung des Constraints zu einer Verschlechterun
 Trotzdem muss betont werden, dass die Verschlechterung erstaunlich klein ist, so beträgt der relative Unterschied zwischen dem Median der Version mit Constraint und dem Median der Version ohne nur \todo{genaue zahl}.
 
 Um eine solche Verschlechterung zu rechtfertigen sollte die Qualität des Sekundärziels herangezogen werden.
-Dazu ist in \ref{fig:1stconbox} ein Vergleich bezüglich des Constraintvolumens dargestellt.
+Dazu ist in \cref{fig:1stconbox} ein Vergleich bezüglich des Constraintvolumens dargestellt.
 Die erste Beobachtung hier ist, dass die Einbindung des Constraints zu einer stärkeren Beachtung dessen führt.
 Das ist offensichtlich das Ziel bei der Nutzung eines Constraints, dass diese Erwartung erfüllt wird zeigt, dass die Formulierung des Constraints insofern korrekt ist, dass eine Verbesserung dieses erreicht werden kann.
 Auch ist hervorzuheben, dass die relative Verbesserung des Constraints wesentlich stärker ist als die relative Verschlechterung des Luftwiderstands.
@@ -83,7 +83,7 @@ Besonders dadurch, dass das Feature der Breite des Velomobils mit der Schwierigk
 	\label{fig:1stmapDrag}
 \end{figure}
 
-In Abb. \ref{fig:1stmapDrag} sind die Karten von Luftwiderstandskoeffizienten der produzierten Ergebnisse in beiden Versionen aufgeführt.
+In Abb. \cref{fig:1stmapDrag} sind die Karten von Luftwiderstandskoeffizienten der produzierten Ergebnisse in beiden Versionen aufgeführt.
 Die Karte ohne Constraint bestätigt die Hypothese, dass breitere Velomobile mit schlechterem Luftwiderstandskoeffizienten korreliert sind.
 Auch ist erkennbar, dass es ein mittleres Optimum bezüglich der x-Position dieses Punktes zu geben scheint, da Luftwiderstandswerte sowohl bei Abweichungen nach oben als auch bei Abweichungen nach unten schlechter werden.
 Dass die oben aufgestellte Hypothese bestätigt werden kann und die Karte einen graduellen Verlauf aufweist, sind Zeichen für die korrekte Funktionalität des Algorithmus.
@@ -102,7 +102,7 @@ Um solche Verschlechterungen in Kontext setzten zu können müssen sich die Kart
 	\label{fig:1stmapCon}
 \end{figure}
 
-In Abb. \ref{fig:1stmapDrag} sind die Karten der korrespondierenden Constraint-Werte für beide Varianten zu sehen.
+In Abb. \cref{fig:1stmapDrag} sind die Karten der korrespondierenden Constraint-Werte für beide Varianten zu sehen.
 Ersteinmal lässt sich auch hier die Hypothese bestätigen, dass breitere Velomobile den Constraint besser erfüllen.
 Interessant ist allerdings auch, dass ohne Einbindung des Constraints, Lösungen, deren breitester Punkt weiter vorne ist den Constraint besser erfüllen.
 
@@ -120,7 +120,7 @@ Selbst in der linken, sprich schmalsten Spalte, ist eine Verbesserung der Indivi
 	\label{fig:1stmapConCompare}
 \end{figure}
 
-In Abb. \ref{fig:1stmapConCompare} ist die Verbesserung der Constraintwerte von der Version ohne Constraint zur Version mit Constraint dargestellt.
+In Abb. \cref{fig:1stmapConCompare} ist die Verbesserung der Constraintwerte von der Version ohne Constraint zur Version mit Constraint dargestellt.
 Der bereits oben erwähnte Effekt, dass die größten Verbesserungen besonders in der linken Hälfte der Karte stattfinden ist hier noch klarer ersichtlich.
 Gerade diese Hälfte ist allerdings die, die bessere Luftwiderstandswerte aufweist und in der die Erfüllung des Constraints aufgrund der geringeren Breite, die Velomobile in diesen Zellen auszeichnet, wesentlich schwerer fällt.
 %\begin{figure}[h]
@@ -151,7 +151,7 @@ Diese Reduzierung half dabei das Problem klein zu halten, hatte aber eine erhebl
 Ziel des zweiten Experiments ist es die Anzahl an Freiheitsgraden erheblich zu erhöhen, damit die Zahl an möglichen Deformationen erheblich zu erhöhen, was den positiven Effekt der Einbindung eines Constraints hoffentlich verstärkt.
 
 \begin{figure}[h]
-	\includegraphics[width=1\linewidth]{bilder/6ptDeformationPoints}
+	\includegraphics[width=.7\linewidth]{bilder/6ptDeformationPoints}
 	\caption{Deformationspunkte des 2. Experiments}
 	\label{fig:ffd2nd}
 \end{figure}
@@ -162,7 +162,7 @@ Da diese eine der Features der MAP-Elites-Karte ist, und die Karte im vorigen Ex
 Insgesamt ergeben sich dadurch 6 Deformationspunkte, welche in alle drei Richtungen bewegt werden können, wodurch sich 18 Freiheitsgrade ergeben.
 %Diese Erhöhung ist groß genug
 
-\begin{figure}[h]
+\begin{table}[h]
 	\centering
 	\begin{tabularx}{.75\textwidth}{ll}\hline
 		Anzahl initialer Samples & 100 \\
@@ -182,7 +182,8 @@ Insgesamt ergeben sich dadurch 6 Deformationspunkte, welche in alle drei Richtun
 	\end{tabularx}
 	\label{tab:param2nd}
 	\caption{Parametrisierung des zweiten Experiments (Änderungen zum ersten Experiment hervorgehoben)}
-\end{figure}
+\end{table}
+
 
 \begin{figure}[h]
 	\centering
@@ -209,7 +210,7 @@ Der erste Unterschied, der im Vergleich zum ersten Experiment auftritt, sind die
 	\label{fig:2ndmapDrag}
 \end{figure}
 
-In Abbildungen \ref{fig:2ndmapCon} \ref{fig:2ndmapDrag} ist klar zu Erkennen, dass die Karte aus Lösungen weitaus besser gefüllt wird als beim ersten Experiment.
+In Abbildungen \cref{fig:2ndmapCon} \cref{fig:2ndmapDrag} ist klar zu Erkennen, dass die Karte aus Lösungen weitaus besser gefüllt wird als beim ersten Experiment.
 Die bessere Füllung entlang der Vertikalen ist leicht zu erklären.
 Die Aufteilung in 6 Deformationspunkte führt dazu, dass die beiden vorderen weiter vorne liegen, als der vordere aus dem vorigen Experiment und die beiden hinteren entsprechend auch weiter hinten liegen.
 Deformationen mit diesen Deformationspunkten können also mehr Lösungen generieren, in denen der breiteste Punkt sehr weit vorne oder sehr weit hinten liegt.
@@ -247,7 +248,7 @@ Durch die Beschränkung auf eine kleinere Anzahl an Samples besteht die Möglich
 Die Beschränkung in Generationen des Akquise- und Ergebnis-MAP-Elites kann dazu führen, dass diese noch nicht vollständig auskonvergiert sind.
 Da die Überlegung nahe liegt, dass die Variante mit Constraint länger benötigen könnte um auszukonvergieren, sollte untersucht werden ob die Erhöhung dieser Parameter zu signifikanten Änderung im Vergleich zur kürzeren Version führt, indem die Gewinne nach 500 Samples und 1024 bzw. 2048 Generationen quantifiziert werden.
 
-\begin{figure}[h]
+\begin{table}[h]
 	\centering
 	\begin{tabularx}{.75\textwidth}{ll}\hline
 		Anzahl initialer Samples & 100 \\
@@ -269,7 +270,7 @@ Da die Überlegung nahe liegt, dass die Variante mit Constraint länger benötig
 	\end{tabularx}
 	\label{tab:params3rd}
 	\caption{Parametrisierung des dritten Experiments (Änderungen zum zweiten Experiment hervorgehoben)}
-\end{figure}
+\end{table}
 
 \begin{figure}[h]
 	\centering

@@ -48,7 +48,7 @@ Mit diesen Funktionen kann für jedes Individuum eine Qualität berechnet werden
 Durch Selektion werden in jeder Iteration dann schlechte Lösungen eliminiert, wodurch die Population sich zu Optima hinbewegt.
 %Die Fitness, bzw. der Kosten jedes Individuums kann dann ermittelt werden und die Selektion eliminiert dann schlechte Lösungen, sprich solche mit niedriger Fitness, bzw. hohen Kosten.
 Selektion ist häufig nicht so simpel, dass einfach die besten Individuen ausgewählt werden.
-Die in \ref{sub:divergetnGeneticAlgorithms} besprochenen Ansätze zum Diversitätsmanagement, berücksichtigen Diversität von Populationen und können diverse Lösungen bevorzugt auswählen.
+Die in \cref{sub:divergetnGeneticAlgorithms} besprochenen Ansätze zum Diversitätsmanagement, berücksichtigen Diversität von Populationen und können diverse Lösungen bevorzugt auswählen.
 
 In der Gesamtschleife werden also in jeder Generation per Crossover Kinder erzeugt, die daraufhin mutiert werden.
 Für diese Kinder wird dann eine Fitness berechnet.
@@ -163,7 +163,7 @@ Da das Surrogatmodell aber genau für den Zweck genutzt wird die Anzahl an benö
 
 \begin{figure}[h]
 	\centering
-	\includegraphics[width=.7\linewidth]{bilder/gp}
+	\includegraphics[width=1\linewidth]{bilder/gp}
 	\caption{Gaußprozess im Ausgangszustand (a) und nach dem Lernen von drei Datenpunkten (b) (aus \cite{Rasmussen.2008})}
 	\label{fig:gp}
 \end{figure}
@@ -175,30 +175,45 @@ Wie jedes überwachte Machine-Learning Verfahren zur Regression erhalten Gaußpr
 Vor dem Lernen sind Gaußprozesse als Basisvermutung initialisiert.
 Diese Basisvermutung besteht aus eine Mittelwerts- und einer Varianzfunktion, die entsprechend den Mittelwert und Varianz für alle Eingabewerte vorgeben.
 Die Funktionen sind frei wählbar, ist allerdings nichts über das Problem bekannt so wird meist auf konstante Funktionen zurückgegriffen.
-In \ref{fig:gp} (a) ist eine solche Basisannahme, mit konstanter Mittelwertfunktion $m(x)=0$ und konstanter Varianzfunktion $v(x)=2$ dargestellt (graues Band).
+In \cref{fig:gp} (a) ist eine solche Basisannahme, mit konstanter Mittelwertfunktion $m(x)=0$ und konstanter Varianzfunktion $v(x)=2$ dargestellt (graues Band).
 Außerdem sind 3, der unendlich vielen möglichen Funktionen, die die Daten beschrieben eingezeichnet.
 
-Diese Basisannahme wird daraufhin mit einer Reihe von Beobachtungen trainiert, wodurch sich das in \ref{fig:gp} (b) dargestellte Ergebnis ergibt.
-Hier wurden fünf Beobachtungen 
-An jeder Beobachtung wird der Mittelwert auf den tatsächlichen Wert der Beobachtung gesetzt und die Varianz kollabiert zu null.
+Diese Basisannahme wird daraufhin mit einer Reihe von Beobachtungen trainiert, wodurch sich das in \cref{fig:gp} (b) dargestellte Ergebnis ergibt.
+Vom Zustand \cref{fig:gp} (a) zu \cref{fig:gp} (b) wurde der gaußprozess auf Basis von fünf Datenpunkten trainiert (als $+$-Symbole dargestellt).
+An jeder Beobachtung wird der Mittelwert auf den beobachteten Wert gesetzt und die Varianz an dieser Stelle kollabiert zu null, da dort absolute Sicherheit bezüglich des Wertes besteht.
+Auch kollabieren die Varianzen um die Datenpunkte, allerdings nicht zu null und je weiter man sich von einer Beobachtung entfernt, desto größer sind die Varianzen.
+Dies ist durch die Grundannahme zu begründen, dass die zu approximierende Funktion als stetig behandelt werden kann, d.h. kleine Änderungen der Eingabewerte in kleinen Änderungen der Funktionswerte resultieren.
 
-\todo[inline]{hyperparam optimierung mit minimize?}
+Gaußprozesse werden primär durch die Wahl der vier innerhalb des Garprozesses benötigten Funktionen und deren Hyperparameter gesteuert.
 
-Dadurch können die unendlich vielen möglichen Funktionen, die die Punkte beschreiben vollständig dargestellt werden.
-Dadurch können Gaußprozesse neben einer Vorhersage, genauer gesagt dem Mittelwert der Vorhersage an jedem Punkt, auch die Varianz der Vorhersage an jedem Punkt liefern.
+\todo{parametrisierung}
+
+Der Hauptnachteil von Gaußprozessen ist die relativ hohe Speicher- und Rechenkomplexität, da die Anzahl an Simulationen die durchgeführt werden können aber ohnehin durch den Rechenaufwand, der mit diesen verbunden, ist, stark limitiert ist, wird die Anzahl an Trainingsdaten so gering bleiben, dass Komplexitätsüberlegungen hinfällig sind.
+
+Der Vorteil von Gaußprozessen liegt in der besonderen Eigenschaft der Ergebnisse.
+Ein Gaußprozess liefert im Gegensatz zu anderen Machine-Learning Verfahren nicht nur eine Vorhersage, sondern den Mittelwert und die Varianz der Vorhersage.
+Hauptvorteil dieser Tatsache ist, dass der Gaußprozess zwar Aussagen in Bereichen zu denen er keine Trainingsdaten erhalten hat trifft, aber die eigene Unsicherheit bezüglich dieser Ergebnisse Teil ebenjener ist.
+Dass führt dazu, dass fehlerhafte Aussagen durch fehlende Trainingsdaten wesentlich seltener auftreten als bei Machine-Learning Verfahren, die nur eine Vorhersage entwickeln.
+Dies ist allerdings nicht der Grund weshalb Gaußprozesse für SAIL genutzt werden.
+Stattdessen tritt auch in SAIL ein typisches Problem von Reinforcement Learning, die Spannung zwischen Exploration und Exploitation, auf.
+Gaußprozesse bieten mit ihrer Vorhersage von Mittelwert und Varianz eine perfekte Grundlage zur Anwendung von Upper-Confidence Bound, einer Methode zum Umgang mit diesem Dilemma.
+Auf das Dilemma und Upper-Confidence-Bound als Lösungsmöglichkeit wird im Folgenden in \ref{sub:exploration_exploitation} weiter eingegangen.
+Diese Eigenschaft ist allerdings der Grund warum Gaußprozesse als Surrogatmodell in SAIL genutzt werden.
+
+%Dadurch können die unendlich vielen möglichen Funktionen, die die Punkte beschreiben vollständig dargestellt werden.
+%Dadurch können Gaußprozesse neben einer Vorhersage, genauer gesagt dem Mittelwert der Vorhersage an jedem Punkt, auch die Varianz der Vorhersage an jedem Punkt liefern.
 %Durch diese Eigenschaft bieten sie gute Vorraussetzungen zur Anwendung von Upper-Confidence-Bound, und können dadurch Vorhersagen welche Funktionsauswertungen den statistisch höchsten Nutzen unter Abwägung zwischen Exploration und Exploitation haben.
 %Damit können die benötigten Funktionsauswertungen weiter reduziert werden, beziehungsweise die Präzision des Modells bei begrenzter Zahl von Funktionsauswertungen maximiert werden.
 %
 
 
 
-Der Hauptnachteil von Gaußprozessen ist die relativ hohe Speicher- und Rechenkomplexität, da die Anzahl an Simulationen die durchgeführt werden können aber ohnehin durch den Rechenaufwand, der mit diesen verbunden, ist, stark limitiert ist, wird die Anzahl an Trainingsdaten so gering bleiben, dass Komplexitätsüberlegungen hinfällig sind.
+
 
 Durch die Eigenschaft sowohl den Mittelwert als auch die Varianz an jedem Punkt, eignen sich Gaußprozesse besonders für das im nächsten Kapitel besprochene Upper-Confidence-Bound-Verfahren.
-Diese Eigenschaft stellt den Hauptvorteil von Gaußprozessen gegenüber anderen Machine-Learning Verfahren dar und ist der Grund warum Gaußprozesse als Surrogatmodell in SAIL genutzt werden.
 
 \subsubsection{Exploration Exploitation Problem}
-
+\label{sub:exploration_exploitation}
 Ein häufig auftretendes Dilemma, wenn der Gewinn eines unbekannten Problems maximiert werden soll, ist die Spannung zwischen Exploration und Exploitation.
 Das einfachste Beispiel in dem eine solche Spannung existiert ist das Problem des mehrarmigen Banditen.
 In diesem Problem existiert eine Reihe von Glücksspielautomaten, deren Gewinn durch statistische Verteilungen beschrieben wird.
@@ -270,7 +285,7 @@ Upper-Confidence-Bound kombiniert Mittelwert und Varianz zur Bestimmung der best
 	\label{fig:sail}
 \end{figure}
 
-SAIL (Surrogate-Assisted Illumination) ist ein in \cite{Gaier.6152018} beschriebenes Verfahren, welches die in \ref{sub:mapElites} und \ref{sub:surrogate} beschriebenen Ansätze vereint, mit dem Ziel MAP-Elites in rechenintensiven Domänen anwendbar zu machen.
+SAIL (Surrogate-Assisted Illumination) ist ein in \cite{Gaier.6152018} beschriebenes Verfahren, welches die in \cref{sub:mapElites} und \cref{sub:surrogate} beschriebenen Ansätze vereint, mit dem Ziel MAP-Elites in rechenintensiven Domänen anwendbar zu machen.
 
 Zur Initialisierung SAILs werden zuerst zufällig Samples ausgewählt und evaluiert.
 Um eine gleichmäßige Verteilung der Samples über den Problemraum zu garantieren werden diese Samples nicht aus einer Gleichverteilung, sondern aus einer Sobol Sequenz ausgewählt.\todo{Ausführen sobol sequenz}
@@ -350,76 +365,99 @@ Ist diese Gewichtung fehlerhaft parametrisiert, kann dies dazu führen, dass Tei
 
 \subsubsection{Vergleich}
 
-%\begin{figure}
-%	\centering
-%	\begin{tabularx}{.9\textwidth}{ll}\hline
-%		Variante 		& Vorteile 		& Nachteile \\\hline
-%		Repräsentation 	& 
-%		\begin{itemize}
-%			\item Behandlung des Constraints im Algorithmus nicht mehr nötig
-%			\item Keine zusätzlichen Berechnungen notwendig
-%		\end{itemize} &
-%		\begin{itemize}
-%			\item Keine Trittbretter
-%			\item Formulierung einer passenden Repräsentation in komplexen Domänen häufig aufwendig
-%		\end{itemize} \\
-%		Hard Constraint &
-%		\begin{itemize}
-%			\item Ergebnis kann keine invaliden Lösungen enthalten
-%			\item Formulierung des Constraints auf Phänotypebene leichter
-%		\end{itemize} &
-%		\begin{itemize}
-%			\item Keine Trittbretter
-%		\end{itemize} \\
-%		Soft Constraint &
-%		\begin{itemize}
-%			\item Nutzung von Trittbrettern wird ermöglicht
-%			\item 
-%		\end{itemize} &
-%		\begin{itemize}
-%			\item Ergebnis kann invalide Lösungen enthalten
-%		\end{itemize} \\
-%	\end{tabularx}
-%	\caption{Vor-/Nachteile der verschiedenen Möglichkeiten einen Constraint zu modellieren}
-%	\label{tab:methods_constraint}
-%\end{figure}
+
+\begin{table}[h]
+	\begin{tabularx}{.9\textwidth}{lXX}\hline
+		Variante 		& Vorteile 		& Nachteile \\ \hline
+		Repräsentation 	& 
+		\begin{itemize}
+			\item Behandlung des Constraints im Algorithmus nicht mehr nötig
+			\item Keine zusätzlichen Berechnungen notwendig
+		\end{itemize} &
+		\begin{itemize}
+			\item Keine Trittbretter
+			\item Formulierung einer passenden Repräsentation in komplexen Domänen häufig aufwendig
+		\end{itemize} \\
+		Hard Constraint &
+		\begin{itemize}
+			\item Ergebnis kann keine invaliden Lösungen enthalten
+			\item Formulierung des Constraints auf Phänotypebene leichter
+		\end{itemize} &
+		\begin{itemize}
+			\item Keine Trittbretter
+		\end{itemize} \\
+		Soft Constraint &
+		\begin{itemize}
+			\item Nutzung von Trittbrettern wird ermöglicht
+		\end{itemize} &
+		\begin{itemize}
+			\item Ergebnis kann invalide Lösungen enthalten
+		\end{itemize} \\
+	\end{tabularx}
+	\caption{Vor-/Nachteile der verschiedenen Möglichkeiten einen Constraint zu modellieren}
+	\label{tab:methods_constraint}
+\end{table}
+	
+
 
 Welcher der drei Ansätze am Besten für ein Problem ist hängt von dessen Formulierung ab.
 Grundsätzlich sollte der Ausschluss durch Modellierung Hard Constraints und diese wiederum Soft Constraints vorgezogen werden.
 Wenn der Ausschluss durch die Modellierung allerdings mit hohem Aufwand verbunden ist, wie es in komplexen Domänen häufig der Fall ist sollten stattdessen Hard Constraints in Erwägung gezogen werden.
 Wenn die Vermutung besteht, dass zum Erreichen ausreichend guter Lösungen Trittbrettlösungen, die die Constraints nicht erfüllen, benötigt werden sollten stattdessen Soft Constraints genutzt werden.
 
-\newpage
+\clearpage
 
 \section{Methode}
 
-In diesem Kapitel werden die in \ref{sub:grundlagen} besprochenen Techniken auf zwei Domänen angewandt.
+In diesem Kapitel werden die in \cref{sub:grundlagen} besprochenen Techniken auf zwei Domänen angewandt.
 Die erste dieser Domänen ist die Generierung von verformten Radkästen eines Velomobils, unter Beachtung eines Constraints.
 Die zweite Domäne ist die explorative Untersuchung verschiedener Bauteilformen an der Unterseite eines E-Rollers.
 In beiden Domänen ist die Verformung dreidimensionaler Bauteile und die darauffolgende Bewertung des Effektes auf die Aerodynamik, den diese Verformung hat, Untersuchungsziel.
-Auf die domänenübergreifende Teile der Repräsentation wird in \ref{sub:representation} eingegangen.
-Darauffolgend wird in \ref{sub:method_wheelcase} \ref{sub:method_escooter} auf die Spezifika, wie Constraints und Featurewahl, der Radkasten- beziehungsweise E-Roller-Domäne eingegangen.
+Auf die domänenübergreifende Teile der Repräsentation wird in \cref{sub:representation} eingegangen.
+Darauffolgend wird in \cref{sub:method_wheelcase} \cref{sub:method_escooter} auf die Spezifika, wie Constraints und Featurewahl, der Radkasten- beziehungsweise E-Roller-Domäne eingegangen.
 
 \subsection{Repräsentation der Domänen}
 \label{sub:representation}
 
 In beiden Domänen geht es um die Deformation von dreidimensionalen Bauteilen, und die Bewertung der aerodynamischen Effekte solcher Deformationen.
 D. h. es wird eine robuste Methode benötigt um dreidimensionale Bauteile zu deformieren und solche Deformationen auf wenige Parameter reduzieren zu können.
-Eine Methode, die diese Rahmenbedingungen erfüllt ist die Freiformdeformation \cite{Sederberg.1986} auf die in \ref{sub:ffd} genauer eingegangen wird, die Deformationen von komplexen geometrischen Objekten anhand Verschiebungen von Rahmenpunkten ausdrücken kann.
+Eine Methode, die diese Rahmenbedingungen erfüllt ist die Freiformdeformation \cite{Sederberg.1986} auf die in \cref{sub:ffd} genauer eingegangen wird, die Deformationen von komplexen geometrischen Objekten anhand Verschiebungen von Rahmenpunkten ausdrücken kann.
 Für aerodynamische Simulationen wird in beiden Domänen OpenFoam verwendet, ein Open-Source Programm welches unter anderem fähig ist Windkanalsimulationen durchzuführen.
-Auf die genaueren Eigenschaften von OpenFoam und den Aufbau einer passenden Simulationsumgebung wird in \ref{sub:openfoam} eingegangen.
+Auf die genaueren Eigenschaften von OpenFoam und den Aufbau einer passenden Simulationsumgebung wird in \cref{sub:openfoam} eingegangen.
 
 \subsubsection{Freiformdeformation}
 \label{sub:ffd}
-\missingfigure{ffd}
+\begin{figure}[h]
+	\centering
+	\begin{minipage}{0.45\textwidth}
+		\centering
+		\includegraphics[width=1\linewidth]{bilder/sphere_lattice}
+		\caption{3D-Mesh einer Kugel in 4x4x4 FFD-Box}
+		\label{fig:ffd_undeformed}
+	\end{minipage}\hfill
+	\begin{minipage}{0.45\textwidth}
+		\centering
+		\includegraphics[width=1\linewidth]{bilder/sphere_lattice_deformed2}
+		\caption{Deformiertes 3D-Mesh ezeugt durch Bewegung der Deformationspunkte}
+		\label{fig:ffd_deformed}
+	\end{minipage}
+\end{figure}
 Freiformdeformation ist ein in \cite{Sederberg.1986} beschriebenes Verfahren zu Deformation von geometrischen Objekten.
 Mithilfe der Freiformdeformation können beliebige dreidimensionale Meshes robust deformiert werden.
-Dazu wird eine Box aus Kontrollpunkten erzeugt.
+Dazu wird eine Box aus Kontrollpunkten erzeugt, die manipuliert werden können um das Mesh zu deformieren.
+In \cref{fig:ffd_deformed} ist das 3D-Mesh einer Kugel umgeben von einer FFD-Box aus vier Punkten in jeder Dimension.
+Damit ergeben sich 56 Deformationspunkte\footnote{$4^3$ Punkte $- 2^3$ innere Punkte $=$ 56 Deformationspunkte} 
 Jeder dieser Kontrollpunkte kann dann anhand von Verformungsparametern verschoben werden, wodurch für alle Punkte innerhalb der FFD-Box eine Verschiebung berechnet wird, die von der relativen Position des Punktes zum Kontrollpunkt abhängt.
-Dadurch kann eine Deformation auf eine überschaubare Anzahl an Deformationsparametern reduziert werden.
-Außerdem kann eine Deformation auf einige bestimmte Punkte und/oder Richtungen
+Eine Deformierte Variante der Kugel ist in \cref{fig:ffd_deformed} abgebildet.
+Dort wurden alle Punkte der rechten Ebene der FFD-Box nach außen bewegt und die vier inneren Punkte auf der Oberseite der FFD-Box nach oben und hinten bewegt.
+Die Knoten der Kugel werden durch die Freiformdeformation entsprechend bewegt, wodurch das deformiert Mesh entsteht.
+So können beliebige dreidimensionale Meshes robust anhand einiger Punkte deformiert werden.
+Auch können Deformationen durch relativ wenige Deformationsparameter definiert werden.
+Im Beispiel läge die Anzahl an Freiheitsgraden bei $56 * 3 = 168$.
+Durch eine weitere Auswahl an welchen Punkten Deformationen in welche Richtungen 
 \footnote{Deformation in x, y, z finden jeweils separat statt}
-beschränkt werden, um die Komplexität weiter zu reduzieren.
+stattfinden dürfen kann diese Zahl noch weiter reduziert werden.
+Dadurch eignet sich das Verfahren zur Anwendungen in evolutionären Algorithmen, in denen die Anzahl der möglichen Freiheitsgrade, was der Länge des Genoms entspricht, nach oben weich begrenzt ist.
 Dadurch das nur die Punkte des Meshes ihre Position ändern, hat das Verfahren, den Vorteil das die Dreiecke erhalten bleiben und somit beispielsweise das Entstehen von Löchern bei korrekter Anwendung praktisch ausgeschlossen ist.
 
 \subsubsection{OpenFOAM}
@@ -512,7 +550,7 @@ Auch die Berechnungen des Constraints und der Kategorisierung können dadurch nu
 Zur Erfüllung des Constraints wurden alle möglichen Radausschläge als Mesh modelliert.
 Dafür wurden aus einer Kugel entsprechend der maximalen Radausschlags nach rechts und links ein dreieckiges Stück ausgeschnitten.
 Zusätzlich wurde die innere Hälfte der Kugel entfernt, da dort keine Überschneidungen stattfinden, und durch deren Entfernen, Berechnungen effizienter sind.
-Das Mesh $FV_{radausschlag}$ ist in Abb. \ref{fig:steering_volume} alleine, in Abb. \ref{fig:steering_volume_with_velo} zusammen mit dem restlichen Velomobil dargestellt.
+Das Mesh $FV_{radausschlag}$ ist in Abb. \cref{fig:steering_volume} alleine, in Abb. \cref{fig:steering_volume_with_velo} zusammen mit dem restlichen Velomobil dargestellt.
 Es ist klar zu Erkennen, dass dieses Volumen die unverformten Radkästen schneidet, da diese den maximalen Lenkausschlag nicht ermöglichen.
  
 
@@ -564,14 +602,14 @@ Es ist klar zu Erkennen, dass dieses Volumen die unverformten Radkästen schneid
 \end{figure}
 Da ein Ziel darin bestand, den Constraint nicht als binäres, erfüllt/nicht erfüllt Problem zu definieren, da zwischen zwei Lösungen, die den Constraint nicht erfüllen trotzdem qualitative Unterschiede bestehen können wie stark der Constraint verletzt wird, wird ein Soft Constraint zur Modellierung gewählt.
 Dazu wird die Meshdifferenz des Radausschlags und des verformten Radkastens berechnet um $FV_{außen} = FV_{radausschlag} - FV_{radkasten}$ zu ermitteln.
-Das Ergebnis einer solchen Meshdifferenz für den unverformten Radkasten ist in \ref{fig:diff_volume} abgebildet.
+Das Ergebnis einer solchen Meshdifferenz für den unverformten Radkasten ist in \cref{fig:diff_volume} abgebildet.
 Die Größe des Volumens $V(FV_{außen})$ wird zur Berechnung des Constraints herangezogen.
 Zwar besteht keine direkte Kausalität zwischen diesem Volumen und dem maximalen möglichen Radausschlag aber die Vermutung, dass eine geringeres Volumen dieser Differenz mit größerem möglichen Radausschlag korreliert ist liegt nahe.
 %als Constraint das Differenzvolumen des Radausschlags minus verformten Radkastens gewählt.
 
 Da alle generierten Verformungen der Radkästen symmetrisch sind, wird der Constraint jeweils nur für den rechten Radkasten berechnet.
 Zur Berechnung der Differenz zwischen Radausschlagsvolumen und Radkasten wird die Bibliothek \textit{gptoolbox} \cite{gptoolbox.b} genutzt, zur Generierung von Tetraedermeshes zur Volumenberechnung \textit{TetGen} \cite{Si.2015}.
-%Ein Beispiel des Differenzvolumens zur Constraintberechnung ist in Abb. \ref{fig:diff_volume} zu sehen.
+%Ein Beispiel des Differenzvolumens zur Constraintberechnung ist in Abb. \cref{fig:diff_volume} zu sehen.
 %Dieses Volumen stellt die Differenz des Radausschlagvolumens und des unverformten Radkastens dar.
 Um die Meshdifferenz berechnen zu können wurde der rechte Radkasten zudem geschlossen.
 Da die Constraintberechnung in jeder Generation für jedes Kind erfolgen muss wurde der Radkasten außerdem vereinfacht um die Berechnung  des Constraints ausreichend schnell durchführen zu können.
