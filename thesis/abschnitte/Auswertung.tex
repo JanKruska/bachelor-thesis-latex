@@ -28,7 +28,7 @@
 Das Primärziel des ersten Experiments bestand darin zu verifizieren, dass der Algorithmus trotz Einbindung des Constraints korrekt funktioniert, d h. auch mit Constraint vergleichbare Werte bezüglich Luftwiderstandskoeefizienten erreicht werden, und der Algorithmus trotz des Constraints korrekt lernt.
 Deshalb wurde die Parametrisierung vergleichsweise einfach gewählt, FFD-Deformationen fanden in zwei Punkten, in jeweils drei Richtungen statt.
 \begin{figure}[h]
-	\includegraphics[width=1\linewidth]{bilder/}
+	\includegraphics[width=1\linewidth]{bilder/2ptDeformationPoints}
 	\caption{Maps of final drag values}
 	\label{fig:ffd1st}
 \end{figure}
@@ -151,8 +151,8 @@ Diese Reduzierung half dabei das Problem klein zu halten, hatte aber eine erhebl
 Ziel des zweiten Experiments ist es die Anzahl an Freiheitsgraden erheblich zu erhöhen, damit die Zahl an möglichen Deformationen erheblich zu erhöhen, was den positiven Effekt der Einbindung eines Constraints hoffentlich verstärkt.
 
 \begin{figure}[h]
-	\includegraphics[width=1\linewidth]{bilder/}
-	\caption{Maps of final drag values}
+	\includegraphics[width=1\linewidth]{bilder/6ptDeformationPoints}
+	\caption{Deformationspunkte des 2. Experiments}
 	\label{fig:ffd2nd}
 \end{figure}
 Die in \todo{} dargestellte Freiheitsgrade wurden mit einigen Vorüberlegungen gewählt.
@@ -275,27 +275,27 @@ Da die Überlegung nahe liegt, dass die Variante mit Constraint länger benötig
 	\centering
 	\begin{minipage}{0.45\textwidth}
 		\centering
-		\includegraphics[width=1\linewidth]{bilder/6pt500Samples/dragBoxplot}
+		\includegraphics[width=1\linewidth]{bilder/6pt1000Samples/dragBoxplot}
 		\caption{Comparison of final drag values}
 		\label{fig:3rddragbox}
 	\end{minipage}\hfill
 	\begin{minipage}{0.45\textwidth}
 		\centering
-		\includegraphics[width=1\linewidth]{bilder/6pt500Samples/constraintBoxplot}
+		\includegraphics[width=1\linewidth]{bilder/6pt1000Samples/constraintBoxplot}
 		\caption{Comparison of final constraint values}
 		\label{fig:3rdconbox}
 	\end{minipage}
 \end{figure}
 
 \begin{figure}[h]
-	\includegraphics[width=1\linewidth]{bilder/6pt500Samples/dragMapComparison}
+	\includegraphics[width=1\linewidth]{bilder/6pt1000Samples/dragMapComparison}
 	\caption{Maps of final drag values}
 	\label{fig:3rdmapDrag}
 \end{figure}
 
 
 \begin{figure}[h]
-	\includegraphics[width=1\linewidth]{bilder/6pt500Samples/constraintMapComparison}
+	\includegraphics[width=1\linewidth]{bilder/6pt1000Samples/constraintMapComparison}
 	\caption{Maps of final constraint values}
 	\label{fig:3rdmapCon}
 \end{figure}
