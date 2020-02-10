@@ -28,6 +28,7 @@
 Das Primärziel des ersten Experiments bestand darin zu verifizieren, dass der Algorithmus trotz Einbindung des Constraints korrekt funktioniert, d h. auch mit Constraint vergleichbare Werte bezüglich Luftwiderstandskoeefizienten erreicht werden, und der Algorithmus trotz des Constraints korrekt lernt.
 Deshalb wurde die Parametrisierung vergleichsweise einfach gewählt, FFD-Deformationen fanden in zwei Punkten, in jeweils drei Richtungen statt.
 \begin{figure}[h]
+	\centering
 	\includegraphics[width=.7\linewidth]{bilder/2ptDeformationPoints}
 	\caption{Deformationspunkte des ersten Experiments}
 	\label{fig:ffd1st}
@@ -151,6 +152,7 @@ Diese Reduzierung half dabei das Problem klein zu halten, hatte aber eine erhebl
 Ziel des zweiten Experiments ist es die Anzahl an Freiheitsgraden erheblich zu erhöhen, damit die Zahl an möglichen Deformationen erheblich zu erhöhen, was den positiven Effekt der Einbindung eines Constraints hoffentlich verstärkt.
 
 \begin{figure}[h]
+	\centering
 	\includegraphics[width=.7\linewidth]{bilder/6ptDeformationPoints}
 	\caption{Deformationspunkte des 2. Experiments}
 	\label{fig:ffd2nd}
@@ -237,13 +239,22 @@ Dass der Effekt in der Variante ohne Constraint aber stärker ist bestätigt, da
 	\label{fig:2ndmapConCompare}
 \end{figure}
 
+Es fällt eine interessanter Unterschied zum ersten Experiment auf.
+Die Karten der Variante ohne Constraint und der mit Constraint sind im Gegensatz diesen nicht mehr gleich.
+Stattdessen ist die Karte ohne Constraint besser gefüllt als die mit Constraint.
+Dies fällt vor allem an den Rändern der Karten auf.
+Das kann damit zusammenhängen, dass durch die Einführung des Constraints Exploration in Bereichen in denen der Constraint verletzt ist weniger stattfindet.
+Außerdem besteht die Vermutung, dass weite Teile des Problemraums den Constraint nicht erfüllen, sondern stark verletzen.
+
+\missingfigure{boxplots akquiseindividuen}
+
 Zur definitiven Auswertung sollte allerdings sichergestellt sein, dass Akquise- und Ergebnis-MAP-Elites ausreichend auskonvergiert sind.
 Dass kann aus in diesem Experiment noch nicht definitiv festgestellt werden.
 Um eine definitive Aussage über Konvergenz treffen zu können sollte das Experiment unter ausführlicheren Bedingungen wiederholt werden.
 
 \subsubsection{Erhöhung der Laufzeit}
 
-Das zweite Einschränkung des ersten Experiments war die Beschränkung auf eine kleinere Anzahl an ausgewerteten Samples und Generationen in Akquise- und Ergebnis-MAP-Elites.
+Das zweite Einschränkung der beiden vorigen Experimente war die Beschränkung auf eine kleinere Anzahl an ausgewerteten Samples und Generationen in Akquise- und Ergebnis-MAP-Elites.
 Durch die Beschränkung auf eine kleinere Anzahl an Samples besteht die Möglichkeit, dass der Suchraum nicht präzise genug und/oder nicht weitläufig genug abgebildet wurde.
 Die Beschränkung in Generationen des Akquise- und Ergebnis-MAP-Elites kann dazu führen, dass diese noch nicht vollständig auskonvergiert sind.
 Da die Überlegung nahe liegt, dass die Variante mit Constraint länger benötigen könnte um auszukonvergieren, sollte untersucht werden ob die Erhöhung dieser Parameter zu signifikanten Änderung im Vergleich zur kürzeren Version führt, indem die Gewinne nach 500 Samples und 1024 bzw. 2048 Generationen quantifiziert werden.
@@ -259,7 +270,7 @@ Da die Überlegung nahe liegt, dass die Variante mit Constraint länger benötig
 		Anzahl Generationen Akquise-MAP-Elites & 2048 \\
 		Kinder pro Generation Akquise-MAP-Elites & 32 \\
 		%\rowcolor{lightgray}
-		Anzahl Generationen Ergebnis-MAP-Elites & 4096 \\
+		Anzahl Generationen Ergebnis-MAP-Elites & 8192 \\
 		Kinder pro Generation Akquise-MAP-Elites & 32 \\
 		Auflösung der MAP-Elites Karte & 25 * 25  \\
 		\hline
@@ -271,6 +282,9 @@ Da die Überlegung nahe liegt, dass die Variante mit Constraint länger benötig
 	\label{tab:params3rd}
 	\caption{Parametrisierung des dritten Experiments (Änderungen zum zweiten Experiment hervorgehoben)}
 \end{table}
+
+Auf ersten Blick sehen die Ergebnisse des dritten Experiments denen des zweiten Experiments sehr ähnlich.
+Die Karten werden etwas besser gefüllt, was durch Erhöhung der Zahl der ausgewerteten Samples und der Akquise- und Ergebnisgenerationen grundsätzlich zu erwarten war.
 
 \begin{figure}[h]
 	\centering
@@ -287,6 +301,14 @@ Da die Überlegung nahe liegt, dass die Variante mit Constraint länger benötig
 		\label{fig:3rdconbox}
 	\end{minipage}
 \end{figure}
+
+Die Luftwiderstandskoeffizienten der Variante ohne Constraint haben sich nicht verändert, während bei der Variante mit Constraint ist eine leichte Verbesserung zu verzeichnen.
+Dies deckt sich mit der Vermutung, dass die Variante mit Constraint mehr Zeit benötigt um ausreichend auszukonvergieren.
+Interessant ist auch die Veränderung der Constraintwerte.
+Hier ist bei der Variante mit Constraint keine redenswerte Änderung zu verzeichnen, die Constraintwerte der Variante ohne Constraint verschlechtern sich allerdings.
+Das ist durchaus interessant, da es bedeuten kann dass die weitere feine Optimierung bezüglich des Luftwiderstands im Laufe des Algorithmus eine Abkehr von solchen Lösungen darstellt, die den Constraint besser erfüllen.
+Das dieser Trend in der Variante ohne Constraint nicht zu beobachten ist ein großer Vorteil.
+Auch ist das interessant, da kein nenneswerter Gewinn bezüglich des Luftwiderstands zischen ersten und zweitem Experiment zu beobachten ist.
 
 \begin{figure}[h]
 	\includegraphics[width=1\linewidth]{bilder/6pt1000Samples/dragMapComparison}

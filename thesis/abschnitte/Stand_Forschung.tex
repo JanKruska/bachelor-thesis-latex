@@ -160,7 +160,7 @@ Da das Surrogatmodell aber genau für den Zweck genutzt wird die Anzahl an benö
 
 
 \subsubsection{Gaußprozesse}
-
+\label{sub:gp}
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=1\linewidth]{bilder/gp}
@@ -206,7 +206,7 @@ Damit wird durch die Kovarianzfunktion gesteuert welche Punkte für wie ähnlich
 Der wichtigste Hyperparameter der Kovarianzfunktion ist das Längenmaß $\ell$.
 \begin{figure}[h]
 	\centering
-	\includegraphics[width=1\linewidth]{bilder/gp}
+	\includegraphics[width=1\linewidth]{bilder/lengthscale}
 	\caption{Mittelwert und $2\sigma$-Intervall von Gaußprozessen mit unterschiedlichen Längenmaßen, Beobachtungen sind als "+" dargestellt (aus \cite{Rasmussen.2008})}
 	\label{fig:lengthscale}
 \end{figure}
@@ -215,7 +215,7 @@ Bei kleinen Längenmaßen steigt die Varianz schnell an je weiter man sich von e
 In \cref{fig:lengthscale} ist ein Gaußprozess mit unterschiedlichen Längenmaßen dargestellt.
 Es ist zu Erkennen das \cref{fig:lengthscale} (b) wesentlich steiler ist als \cref{fig:lengthscale} (a \& c).
 Auch ist zu Erkennen, dass für $\ell=0.3$ die Varianz schnell ansteigt, wenn man sich von Beobachtungen entfernt.
-Im Gegensatz dazu ist in \cref{fig:lengthscale} (c) der gaußprozess mit $\ell = 3$ dargestellt. Dieser ist wesentlich glatter kann die Punkte aber aus sich selbst nicht gut beschreiben. 
+Im Gegensatz dazu ist in \cref{fig:lengthscale} (c) der Gaußprozess mit $\ell = 3$ dargestellt. Dieser ist wesentlich glatter kann die Punkte aber aus sich selbst nicht gut beschreiben. 
 Stattdessen wird für diese höheren Längenmaße ein größeres $\sigma_n$ der Likelihood-Funktion benötigt. 
 Kurz gesagt beschreibt der Gaußprozess mit $\ell=3$ eine glatte Funktion mit starkem Rauschen.
 Es sollte klar Erkennbar sein, dass Gaußprozess (a) die Daten am besten beschreiben kann, (b) führt sehr viele Bereiche mit hoher Varianz ein, die für diese Daten nicht angemessen sind, und (c) kann die Punkte nicht ordentlich approximieren und benötigt zur Beschreibung der Daten stattdessen ein starkes Rauschen.
@@ -273,11 +273,23 @@ Ist das Surrogatmodell in Regionen hoher Fitness nicht präzise, beschränkt das
 Außerdem ist die Anzahl an erlaubten realen Auswertungen stark begrenzt, die Reduzierung dieser ist der Grund für die Nutzung eines Surrogatmodells.
 D. h. dass die Auswertungen, die durchgeführt werden maximalen Nutzen für das Surrogatmodell haben sollten.
 
-\missingfigure{UCB}
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=1\linewidth]{bilder/ucb}
+	\caption{Gaußprozess im Ausgangszustand (a) und nach dem Lernen von fünf Datenpunkten (b). Die drei nächsten Punkte die per UCB ausgewählt werden sind mit "x" markiert (aus \cite{Rasmussen.2008})}
+	\label{fig:ucb}
+\end{figure}
 Eine Möglichkeit mit dem Dilemma zwischen Exploration und Exploitation umzugehen ist das in \cite{Auer.2002} beschriebene Upper-Confidence-Bound. Dabei werden Exploration-Exploitation Probleme als statistischen Prozesse bestehend aus Mittelwert und Varianz aufgefasst.
 Der Mittelwert an einem Punkt spiegelt dabei den erwarteten Nutzen wieder, eine dem Mittelwert folgende Auswahl bevorzugt also Exploitation von Bereichen in denen der erwartete Nutzen hoch ist.
 Die Varianz spiegelt die Unsicherheit an einem Punkt wieder, eine Auswahl nach Varianz bevorzugt die Exploration von Bereichen in denen eine hohe Varianz auftritt, oder anders gesagt von bisher unerforschten Bereichen.
 Upper-Confidence-Bound kombiniert Mittelwert und Varianz zur Bestimmung der besten Punkte, und erreicht damit eine Balance in der sowohl Exploration als auch Exploitation stattfindet.
+
+Gaußprozesse eignen sich durch ihre Eigenschaft an jedem Punkt Mittelwert und Varianz des Gaußprozesses zu berechnen hervorragend zur Anwendung von Upper Confidence Bound.
+In \cref{fig:ucb} sind in die in \cref{sub:gp} vorgestellte Abbildung die drei nächsten Punkte die durch Upper Confidence Bound zu Auswertung bestimmt würden dargestellt.
+Die beiden Punkte nahe null stellen dabei Beispiele von Exploitation dar. 
+Beide Punkte liegen nahe an einer tatsächlichen Auswertung, durch den hohen Mittelwert in diesem Bereich sollte dieser aber genauer untersucht werden.
+Der Punk am rechten Rand bei $x=5$ stellt ein Beispiel von Exploration dar.
+Der Gaußprozess weiß über diesen Bereich noch nichts, folglich besteht dort eine hohe Varianz.
 
 %Durch die Auswertung von Punkten mit hoher Varianz kann die Anzahl an benötigten realen Funktionsauswertungen gering gehalten werden.
 %Die Auswertung von Punkten mit hoher Varianz, sprich die Auswertung von bisher nicht erkundeten Gebieten wird Exploration genannt.
@@ -714,19 +726,74 @@ Gerade die sind aber die Teile des Radkastens, die am unwahrscheinlichsten den b
 Auch führen minimale Genauigkeitsfehler in der Kategorisierung nicht dazu, dass die von MAP-Elites geforderte Lokalität verletzt wird.
 Der Geschwindigkeitsgewinn bei der Berechnung hingegen mach es möglich solche Kategorien, für die eine Verformung des Radkastens notwendig ist, zu wählen, was in Relation einen wesentlich größeren Gewinn darstellt.
 
-%\subsection{E-Roller}
-%\label{sub:method_escooter}
-%\missingfigure{E-Rollerbauteil}
-%
-%Die zweite Problemdomäne ist die explorative Untersuchung eines Bauteils an der Unterseite eines E-Rollers.
-%Hier besteht die Frage ob nicht-triviale Bauteile aerodynamische Vorteile bieten, und welche Eigenschaften solche Bauteile aufweisen.
-%
-%\subsubsection{Setup}
-%\subsubsection{OpenFOAM}
-%\subsubsection{Constraint}
-%In der E-Roller Domäne existierten einige Constraints. Anders als beim Velomobil konnten diese allerdings durch die Wahl der Repräsentation bereits ausgeschlossen werden.
-%Der wichtigste dieser Constraints
-%\subsubsection{Wahl der Features}
+\subsection{E-Roller}
+\label{sub:method_escooter}
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=.8\linewidth]{bilder/escooter_component}
+	\caption{E-Roller (weiß) und das zu deformierende Bauteil (rot)}
+	\label{fig:escooter_component}
+\end{figure}
+
+Die zweite Problemdomäne ist die explorative Untersuchung eines Bauteils an der Unterseite eines E-Rollers.
+Hier besteht die Frage ob nicht-triviale Bauteile aerodynamische Vorteile bieten, und welche Eigenschaften solche Bauteile aufweisen.
+In \cref{fig:escooter_component} ist der E-Roller von unten mit dem Bauteil rot markiert dargestellt.
+Es ist ersichtlich, dass ein vereinfachtes Modell des E-Rollers genutzt wird.
+Um den Rechenaufwand in der Fluiddynamiksimulation zu reduzieren wurden Teile des E-Rollers die mit großer Wahrscheinlichkeit keinen Einfluss auf die Strömung um das Bauteil haben, wie beispielsweise der Lenkerbereich entfernt.
+Auch der Detailgrad am sonstigen E-Roller wurde reduziert und mit dem vereinfachten Modell gerechnet.
+
+\subsubsection{OpenFOAM}
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=.8\linewidth]{bilder/gp}
+	\caption{Konvergenz}
+	\label{fig:escooter_convergence}
+\end{figure}
+
+Auch der E-Roller wird zuerst mit snappyHexMesh gemesht, worauf die Fluziddynamiksimulation mit simpleFoam folgt. 
+Es wurde wieder der "distance" Modus von snappyHexMesh genutzt um abhängig von der Distanz zum E-Roller Zellen mehr oder weniger zu verfeinern.
+In den Openfoam Simulationen stellte sich allerdings heraus, dass die cD-Werte, wie in \cref{fig:escooter_convergence} zu sehen ist, nicht ausreichend konvergieren.
+Selbst wenn die nach 1000 simulierten Sekunden ist eine Konvergenz nicht absehbar, im Gegenteil ist vom hundertsten bist zum tausendsten Zeitschritt keine Verbesserung bezüglich der Konvergenz festzustellen.
+Auch entsteht keine regelmäßige Oszillation aus der der Mittelwert einfacher ermittelt werden kann.
+Stattdessen schwingt der cD-Wert eher unregelmäßig, was die Berechnung eines Fitnesswerts erheblich erschwert.
+Das die Simulation nicht konvergiert kann verschiedene Gründe, wie beispielsweise die falsche Parametrisierung der Simulation oder die falsche Auswahl der Simulationsfunktion, haben.
+Die Untersuchung und Anpassung von Openfoam zur Behebung dieses Problems sprengt allerdings den Rahmen dieser Arbeit, zur Fitnessberechnung wurden die Simulationen daher mit 1000 Zeitschritten durchgeführt und der cD-Wert über die letzten 900 Zeitschritte gemittelt.
+Ergebnisse in der E-Rollerdomäne müssen daher unter Vorbehalt getroffen werden, da die Möglichkeit besteht, dass die Ergebnisse der Openfoam-Simulationen inkorrekt oder zumindest ungenau sind.
+
+\subsubsection{Constraint}
+
+In der E-Roller Domäne existierten einige Constraints. Anders als beim Velomobil konnten diese allerdings durch die Wahl der Repräsentation bereits ausgeschlossen werden.
+Zuerst muss das Bauteil einen gewissen Abstand zur Fahrbahn haben um mit dieser nicht zu kollidieren.
+Bauteile, die dies nicht erfüllen können durch die Wahl der maximalen Deformationstärke ausgeschlossen werden.
+Außerdem muss das Bauteil am restlichen E-Roller befestigt werden. Dafür darf die vordere Kante des Bauteils nicht deformiert werden.
+Dies kann vermieden werden indem die Dimensionen der FFD-Box so gewählt werden, dass die vordere Kante nicht in dieser liegt.
+Dadurch wird ausgeschlossen dass diese Kante deformiert wird und der korrekte Anschluss von Bauteil zum Rest des Rollers ist gewährleistet.
+
+\subsubsection{Wahl der Features}
+
+Die Wahl der Features in der E-Roller Domäne ist relativ ähnlich zu der der Radkastendomäne.
+Statt der Breite ist hier die Höhe beziehungsweise Tiefe des Bauteils interessant.
+Als erstes Feature wurde daher der als die z-Koordinate des tiefsten Punkt des Bauteils gewählt.
+Im Gegensatz zum Velomobil kann keine klare Hypothese aufgestellt werden ob die Höhe des Bauteils mit dessen Effekt auf den Luftwiderstand des E-Rollers korreliert ist.
+Zwar ist zu erwarten, dass der Luftwiderstand des Bauteils durch eine höhere Angriffsfläche steigt, es ist aber möglich, dass ein höheres Bauteil die Strömung im hinteren Bereich soweit verbessert, dass insgesamt eine Minderung des Luftwiderstands stattfindet.
+
+Als zweites Feature wurde die x-Koordinate des tiefsten Punktes gewählt.
+Effektiv bedeutet das, dass unterschieden wird ob dieser weiter vorne oder hinten liegt.
+Auch hierzu ist keine klare Hypothese aufzustellen ob und wenn ja welchen Effekt die Position des tiefsten Punkts auf die Aerodynamik hat.
+
+\subsubsection{Deformationspunkte}
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=.8\linewidth]{bilder/escooter_deformationPoints}
+	\caption{Die FFD-Box und Deformationspunkte des E-Roller Bauteils. Pfeil zeigt in Fahrtrichtung}
+	\label{fig:escooter_deformation}
+\end{figure}
+Grundsätzlich interessant sind Deformationen des Bauteils nach unten.
+In \cref{fig:escooter_deformation} sind die Deformationspunkte dargestellt mit denen das Bauteil deformiert wird.
+Da die Vertikale die interessante Dimension ist werden diese Punkte nur in y-Richtung deformiert.
+Dadurch kann eine höherer Anzahl an Deformationspunkten gewählt werden.
+
 
 
 
