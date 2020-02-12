@@ -3,7 +3,7 @@
 \subsection{Radkasten}
 
 \subsubsection{Initiales Validierungsexperiment}
-
+\label{sub:exp1st}
 \begin{table}[h]
 	\centering
 	\begin{tabularx}{.75\textwidth}{ll}\hline
@@ -144,7 +144,7 @@ Auch ist herauszustellen, dass eine starke Verbesserung des Constraints bei eine
 %Weiterführenden Experimente sollten ohne die Einschränkungen bezüglich Freiheitsgraden und Länge des Experimentes
 
 \subsubsection{Erhöhung der Freiheitsgrade}
-
+\label{sub:exp2nd}
 Mit dem ersten Experiment konnte gezeigt werden, dass der Algorithmus sowohl Luftwiderstandskoeffizienten als auch Constraint optimiert, und dabei relativ geringe Kosten in Bezug zum erreichten Luftwiderstand entstehen.
 Das erste Experiment hatte allerdings einige Einschränkungen, bezüglich der Parametrisierung um es einfach zu halten.
 Die erste dieser Einschränkungen war die Reduzierung auf Deformation in 2 Punkten, sprich 6 Freiheitsgraden.
@@ -246,19 +246,14 @@ Dies fällt vor allem an den Rändern der Karten auf.
 Das kann damit zusammenhängen, dass durch die Einführung des Constraints Exploration in Bereichen in denen der Constraint verletzt ist weniger stattfindet.
 Außerdem besteht die Vermutung, dass weite Teile des Problemraums den Constraint nicht erfüllen, sondern stark verletzen.
 
-\missingfigure{boxplots akquiseindividuen}
+%\missingfigure{boxplots akquiseindividuen}
 
 Zur definitiven Auswertung sollte allerdings sichergestellt sein, dass Akquise- und Ergebnis-MAP-Elites ausreichend auskonvergiert sind.
 Dass kann aus in diesem Experiment noch nicht definitiv festgestellt werden.
 Um eine definitive Aussage über Konvergenz treffen zu können sollte das Experiment unter ausführlicheren Bedingungen wiederholt werden.
 
 \subsubsection{Erhöhung der Laufzeit}
-
-Das zweite Einschränkung der beiden vorigen Experimente war die Beschränkung auf eine kleinere Anzahl an ausgewerteten Samples und Generationen in Akquise- und Ergebnis-MAP-Elites.
-Durch die Beschränkung auf eine kleinere Anzahl an Samples besteht die Möglichkeit, dass der Suchraum nicht präzise genug und/oder nicht weitläufig genug abgebildet wurde.
-Die Beschränkung in Generationen des Akquise- und Ergebnis-MAP-Elites kann dazu führen, dass diese noch nicht vollständig auskonvergiert sind.
-Da die Überlegung nahe liegt, dass die Variante mit Constraint länger benötigen könnte um auszukonvergieren, sollte untersucht werden ob die Erhöhung dieser Parameter zu signifikanten Änderung im Vergleich zur kürzeren Version führt, indem die Gewinne nach 500 Samples und 1024 bzw. 2048 Generationen quantifiziert werden.
-
+\label{sub:exp3rd}
 \begin{table}[h]
 	\centering
 	\begin{tabularx}{.75\textwidth}{ll}\hline
@@ -282,6 +277,11 @@ Da die Überlegung nahe liegt, dass die Variante mit Constraint länger benötig
 	\label{tab:params3rd}
 	\caption{Parametrisierung des dritten Experiments (Änderungen zum zweiten Experiment hervorgehoben)}
 \end{table}
+
+Das zweite Einschränkung der beiden vorigen Experimente war die Beschränkung auf eine kleinere Anzahl an ausgewerteten Samples und Generationen in Akquise- und Ergebnis-MAP-Elites.
+Durch die Beschränkung auf eine kleinere Anzahl an Samples besteht die Möglichkeit, dass der Suchraum nicht präzise genug und/oder nicht weitläufig genug abgebildet wurde.
+Die Beschränkung in Generationen des Akquise- und Ergebnis-MAP-Elites kann dazu führen, dass diese noch nicht vollständig auskonvergiert sind.
+Da die Überlegung nahe liegt, dass die Variante mit Constraint länger benötigen könnte um auszukonvergieren, sollte untersucht werden ob die Erhöhung dieser Parameter zu signifikanten Änderung im Vergleich zur kürzeren Version führt, indem die Gewinne nach 500 Samples und 1024 bzw. 2048 Generationen quantifiziert werden.
 
 Auf ersten Blick sehen die Ergebnisse des dritten Experiments denen des zweiten Experiments sehr ähnlich.
 Die Karten werden etwas besser gefüllt, was durch Erhöhung der Zahl der ausgewerteten Samples und der Akquise- und Ergebnisgenerationen grundsätzlich zu erwarten war.
@@ -308,7 +308,7 @@ Interessant ist auch die Veränderung der Constraintwerte.
 Hier ist bei der Variante mit Constraint keine redenswerte Änderung zu verzeichnen, die Constraintwerte der Variante ohne Constraint verschlechtern sich allerdings.
 Das ist durchaus interessant, da es bedeuten kann dass die weitere feine Optimierung bezüglich des Luftwiderstands im Laufe des Algorithmus eine Abkehr von solchen Lösungen darstellt, die den Constraint besser erfüllen.
 Das dieser Trend in der Variante ohne Constraint nicht zu beobachten ist ein großer Vorteil.
-Auch ist das interessant, da kein nenneswerter Gewinn bezüglich des Luftwiderstands zischen ersten und zweitem Experiment zu beobachten ist.
+Auch ist das interessant, da kein nenneswerter Gewinn bezüglich des Luftwiderstands zwischen ersten und zweitem Experiment zu beobachten ist.
 
 \begin{figure}[h]
 	\includegraphics[width=1\linewidth]{bilder/6pt1000Samples/dragMapComparison}
@@ -316,6 +316,11 @@ Auch ist das interessant, da kein nenneswerter Gewinn bezüglich des Luftwiderst
 	\label{fig:3rdmapDrag}
 \end{figure}
 
+In \cref{fig:3rdmapDrag} ist der Vergleich der Luftwiderstände der berechneten Lösungen der beiden Versionen dargestellt.
+Die Karte der Variante ohne Constraint bestätigt noch einmal die in \cref{sub:exp1st,sub:exp2nd} bereits beobachteten Trends, dass die Breite des Velomobils negativ mit dem Luftwiderstandskoeffizienten korreliert ist und ein mittiges Optimum bezüglich der x-Koordinate des breitesten Punkts existiert.
+Es ist festzustellen, dass die Karte etwas besser gefüllt wird als dies noch beim zweiten Experiment der Fall war, dieser Unterschied ist allerdings nur minimal.
+Auch kann an dieser Karte besser als an den vorigen Karten gesehen werden, dass eine Minimalbreite des Velomobils existiert.
+Auch wenn Deformationen nach innen erlaubt werden können diese keinen Einzug in die Karte halten, da alle Lösungen bei denen sich der breiteste Punkt am Rand des Radkasten befindet in die gleiche Spalte eingeordnet werden.
 
 \begin{figure}[h]
 	\includegraphics[width=1\linewidth]{bilder/6pt1000Samples/constraintMapComparison}
@@ -323,12 +328,184 @@ Auch ist das interessant, da kein nenneswerter Gewinn bezüglich des Luftwiderst
 	\label{fig:3rdmapCon}
 \end{figure}
 
+Auch der Vergleich der Constraintwerte der finalen Lösungen beider Varianten,  der in \cref{fig:3rdmapCon} abgebildet ist, bestätigen sich bereits vorher festgestellte Tendenzen.
+Die interessanteste Änderung zum zweiten Experiment stellt dabei eine Verschlechterung der Constraintwerte der Variante ohne Constraint im linken unteren Dreieck der Karte dar.
+Hier bestätigt sich die bei der Betrachtung der Boxplots gemachte Beobachtung, dass vom zweiten aufs dritte Experiment eine Verschlechterung der Constraintwerte stattfindet.
+An der Karte ist zusätzlich noch zu erkennen, dass dies keine globale Verschlechterung ist sondern diese nur bestimmte Regionen der Karte betrifft.
+Dies ist besonders wichtig, da der linke Bereich der Karte, der Bereich ist in dem die Luftwiderstandswerte am besten sind, und damit genau der Bereich ist in dem Lösungen attraktiver sind.
+Dass eine Erhöhung der Generationen für Akquise und Ergebnis-MAP-Elites die Verschlechterung von Lösungen bezüglich des Constraints zur Folge hat, wenn dieser nicht explizit behandelt wird deutet daraufhin, dass die Variante mit Constraint bei längeren Laufzeiten im Vergleich zur Variante ohne Constraint besser abschneidet. 
+
+\begin{figure}[h]
+	\centering
+	\begin{minipage}{0.45\textwidth}
+		\centering
+		\includegraphics[width=1\linewidth]{bilder/6pt1000Samples/acqImprovementsUncon}
+		\caption{Improvement over generations in acquisition without the constraint}
+		\label{fig:acqImprovementUncon}
+	\end{minipage}\hfill
+	\begin{minipage}{0.45\textwidth}
+		\centering
+		\includegraphics[width=1\linewidth]{bilder/6pt1000Samples/acqImprovementsCon}
+		\caption{Improvement over generations in acquisition with the constraint}
+		\label{fig:acqImprovementCon}
+	\end{minipage}
+%	\todo{merge graphs}
+\end{figure}
+
+In \cref{fig:acqSamplesUncon,fig:acqImprovementCon} sind die prozentualen Verbesserungen von Individuen der Akquise-MAP-Elites dargestellt.
+Die prozentualen Verbesserungen aller generierten Akquisekarten wurden gemittelt und mit einem gleitenden Mittelwert geglättet.
+Mit dem $2\sigma$ Intervall wurde gleichermaßen verfahren.
+Es ist klar erkennbar, dass beide Variante über die Generationen konvergieren.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=1\linewidth]{bilder/6pt1000Samples/acquisitionDiversityUncon}
+	\caption{Genotypes of Samples chosen for precise Evaluations}
+	\label{fig:geneticDivUncon}
+\end{figure}
+
+\Cref{fig:geneticDivCon,fig:geneticDivUncon} zeigen die Genotypen der zur präzisen Auswertung ausgewählten Individuen in beiden Varianten.
+Jeder Boxplot repräsentiert dabei ein Gen des Genotyps.
+Da in dieser Variante mit 18 Freiheitsgraden gearbeitet wurde ergeben sich 18 Gene.
+Alle Werte sind auf den Intervall $[0;1]$ skaliert wobei 0 die minimale (negative) Deformation und 1 die maximale Deformation darstellt.
+Zuerst ist festzustellen, dass der genetische Raum in beiden Varianten gut ausgefüllt wird.
+Der Großteil der Gene deckt den gesamten Intervall $[0;1]$ in deren $2\sigma$ Intervall ab.
+In beiden Varianten existieren fünf unterschiedliche Gene, die das nicht tun, alle dieser Gene weisen allerdings Ausreißer über den gesamten Intervall aus und mit Ausnahme der Gene 13-15 der Variante mit Constraint decken sie den Intervall mit ihrem $2\sigma$ Intervall beinahe ab.
+Die Tatsache, dass der genetische Problemraum vollständig ausgefüllt wird ist ein Zeichen, dass nicht zu viele Freiheitsgrade oder zu wenige präzise Funktionsauswertungen genutzt wurden.
+Das Mapping von Genotyp auf FFD-Deformation fand nach dem folgenden Schema statt:
+\begin{enumerate}
+	\item[1-3] x-Deformation der drei unteren Deformationspunkte
+	\item[4-6] x-Deformation der drei oberen Deformationspunkte
+	\item[7-9] y-Deformation der drei unteren Deformationspunkte
+	\item[10-12] y-Deformation der drei oberen Deformationspunkte
+	\item[13-15] z-Deformation der drei unteren Deformationspunkte
+	\item[16-18] z-Deformation der drei oberen Deformationspunkte
+\end{enumerate}
+
+Einige dieser Tripletts sind entweder in sich selbst interessant andere weisen interessante Unterschiede zwischen den beiden Varianten auf.
+
+Das erste besondere Triplett sind die Gene 10-12.
+Diese sind für die Deformation in y-Richtung der oberen Reihe der Deformationspunkte verantwortlich.
+In der Variante ohne Constraint fällt auf, dass das gesamte Triplett sehr stark zu kleinen Werten tendiert. 
+Bei allen drei Genen liegt das obere Quartil unter $0,5$ und der Median um $0,2$.
+Dies ist eine starke Tendenz zu schwachen beziehungsweise teilweise negativen Deformationen in y-Richtung.
+Das in der Auswahl der Akquiseindividuen so eine starke Tendenz bezüglich einer der Richtungen existiert lässt darauf schließen, dass in Bereichen mit niedrigen Deformationen der oberen Punkte in y-Richtung mehr Exploitation stattfindet.
+Besonders interessant ist dies vor allem, wenn man die gleichen Gene in der Version mit Constraint betrachtet.
+Dort ist die gegensätzliche Tendenz zu erkennen.
+Zwar fällt die Tendenz zu $1$ hier weniger stark aus, als die zu $0$ in der Variante ohne Constraint, so ist es doch eine merkliche Tendenz, die durch die Tatsache, dass sie die vorige völlig umkehrt noch interessanter wird.
+Die Einführung des Constraints macht Bereiche, die diesen nicht gut erfüllt unattraktiver zur Exploitation.
+Es ist naheliegend, dass die Deformationen in y-Richtung die sind, die den stärksten Einfluss auf die Erfüllung des Constraints haben.
+Ebenso ist naheliegend, dass negative Deformationen in y-Richtung den Constraint voraussichtlich nicht gut erfüllen werden.
+An der Beobachtung, dass der Trend nicht nur neutralisiert, sondern umgekehrt wird, ist erkennbar wie wichtig diese Deformationen zur Erfüllung des Constraints sind.
+
+Diese Beobachtung ist vor allem im Vergleich zu den anderen drei Genen, die auf eine y-Deformation abgebildet werden (7-9) signifikant.
+Bei diesen sind weder so starke Tendenzen, noch eine so starke Umkehr zu beobachten.
+Daraus kann geschlussfolgert werden, dass y-Deformationen der oberen Reihe signifikante Teile der Lösung des Problems darstellen.
+Besonders unter dem Blick das diese Genen sowohl zur Optimierung des Luftwiderstands, als auch zur Optimierung des Constraints wichtig sind und diese Gene damit ein Spannungsfeld zwischen diesen beiden Zielen darstellt sollte die Signifikanz dieser Gene für das Problem herausgestellt werden.
+
+Das zweite interessante Triplett sind die Gene 13-15.
+Diese werden Deformationen der unteren Reihe an Deformationspunkten in z-Richtung abgebildet.
+In der Variante ohne Constraint ist der Unterschied zwischen dem den Genen 13,15 und 14 durchaus interessant.
+Offensichtlich scheint das Sampling von Individuen in denen die beiden äußeren Punkte nach oben deformiert werden bevorzugt werden.
+Gleichzeitig gilt für den mittleren Punkt das Gegenteil, dieser scheint eher nach unten deformiert\footnote{z-Deformationen sind symmetrisch um $0.5$, alles größer $0,5$ ist deformation nach oben, alles kleiner $0,5$ Deformation nach unten} zu werden.
+
+Diese Werte dieser Gene sind aber besonders in der Variante mit Constraint interessant.
+Hier ist ein sehr starker Trend zu negativen Deformationen erkennbar.
+Der Median der Werte dieser Gene liegt für all unter $0,2$.
+Die Tendenz den mittleren Punkt stärker nach unten zu deformieren bleibt erhalten
+Aber zumindest für die Gene 13 \& 15 ist eine Umkehr von positiven Deformationen in der Variante ohne Constraint zu stark negativen Deformationen in der Variante mit Constraint erkennbar.
+Die Gene 13 \& 15 scheinen also moderat wichtig zur Optimierung des Luftwiderstands zu sein, gleichzeitig aber auch signifikant zur Optimierung des Constraints zu sein.
+Gleiches gilt auch für Gen 14, nur dass hier die gleichen Tendenzen für beide Optimierungen entstehen.
+Im Gegensatz zu dem vorigen Triplett und den Genen 13 \& 15 entsteht hier also kein Spannungsfeld.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=1\linewidth]{bilder/6pt1000Samples/acquisitionDiversityCon}
+	\caption{Genotypes of Samples chosen for precise Evaluations}
+	\label{fig:geneticDivCon}
+\end{figure}
+
+Das letzte interessant Triplett sind die Gene 16-18.
+Diese werden auf z-Deformationen der oberen Reihe an Deformationspunkten abgebildet.
+Hier ist ein Trend zu negativen Deformationen in der Variante ohne Constraint zu erkennen.
+Im Vergleich zur Variante ohne Constraint ist für die Gene 16 \& 17 wieder ein umgekehrter Trend zu erkennen, auch wenn dieser nicht so stark wie bei den vorigen beiden Tripletts ist.
+Interessanterweise ist diese Spannung allerdings für das letzte Gen welches auf den hinteren oberen Deformationspunkt abgebildet wird nicht zu erkennen.
+Insgesamt ist auch hier festzustellen, dass die Gerne 16 \& 17 wichtig für beide Optimierungsziele sind während diese Spannung für Gen 18 nicht existiert.
+
+Zusammenfassend kann man feststellen, dass die ersten 6 Gene, die auf x-Deformationen abgebildet werden eher unwichtig zu sein scheinen.
+Stattdessen schienen die größten Spannungsfelder in den Genen zu liegen, die auf y- und z-Deformationen abgebildet werden.
+Hier sind beträchtliche Änderungen bezüglich der Auswahl der Akquiseindividuen zwischen den beiden Varianten zu erkennen.
+Interessant ist das die oberen y-Deformationen dabei wichtiger zu sein scheinen als die unteren y-Deformationen, und z-Deformationen signifikanter sind als eingangs vermutet.
+Auch wichtig ist, dass nicht alle z-Deformationen gleich signifikant sind.
+Die Gene 14 und 18 scheinen weniger wichtig zu sein, während für die anderen vier Gene Spannungen erkennbar sind.
+
+\begin{figure}[h]
+	\centering
+	\begin{minipage}{0.45\textwidth}
+		\centering
+		\includegraphics[width=1\linewidth]{bilder/6pt1000Samples/acqSamplesUncon}
+		\caption{Phenotypic categorization of Samples chosen for precise Evaluations}
+		\label{fig:acqSamplesUncon}
+	\end{minipage}\hfill
+	\begin{minipage}{0.45\textwidth}
+		\centering
+		\includegraphics[width=1\linewidth]{bilder/6pt1000Samples/acqSamplesCon}
+		\caption{Phenotypic categorization of Samples chosen for precise Evaluations}
+		\label{fig:acqSamplesCon}
+	\end{minipage}
+\end{figure}
+
+In \cref{fig:acqSamplesUncon,fig:acqSamplesCon} sind die phänotypischen Einordnungen der Individuen die mithilfe der Akquisekarte zur Auswertung ermittelt wurden für die Variante ohne und mit Constraint dargestellt.
+Die Dimensionen sind dieselben wie in den vorigen Karten.
+Zuerst ist zu beiden Varianten zu sagen, dass diese den Problemraum weitestgehend abdecken.
+Einzig in der obere rechten und der unteren linke Ecke scheint weniger Exploration stattzufinden.
+Abgesehen von diesen beiden Bereichen wird der Problemraum allerdings gut abgedeckt.
+Interessant ist allerdings, dass die Abdeckung des Problemraums in der Variante ohne Constraint wesentlich regelmäßiger ist, als in der Variante mit Constraint
+Zwar existieren einige Stellen an denen in der Variante ohne Constraint viele Auswertungen nah beieinander liegen, vor allem im linken Bereich des Graphen, insgesamt wird der Problemraum aber ausreichend weit erkundet.
+
+Im Gegensatz dazu ist eine große Häufung an Akquiseindividuen im mittigen Bereich in der Version mit Constraint zu erkennen
+und eine sehr geringe Konzentration an Akquiseindiviuen im linken Bereich bei $0,2 \leq x \leq 0,4$.
+Dies ist besonders interessant dadurch, dass gerade der Bereich $0,2 \leq x \leq 0,4$ der ist, in dem die aerodynamisch besten Individuen liegen.
+Durch die Einführung des Constraints, der effektiv eine Manipulation des Mittelwerts von UCB darstellt, wird der Bereich in dem Exploitation stattfindet dorthin verschoben, wo dieser Constraint besser erfüllt ist.
+Dies ist grundsätzlich so gewollt, die Anhäufung von Punkten im Mittleren Bereich kann allerding ein Zeichen dafür sein, dass der Constraint im Vergleich zum Luftwiderstand zu stark gewichtet ist.
+Gegebenenfalls wäre es sinnvoll den Constraint schwächer zu gewichten, oder in der Akquisefunktion vollkommen wegzulassen und nur in der finalen Auswertung mit MAP-Elites zu betrachten.
 
 \subsubsection{Zusammenfassung}
 
+\todo[inline]{Alle drei Experimente, Trends unterschiede etc.}
 
-%\subsection{E-Roller}
-%\subsubsection{Experimente}
+\subsection{E-Roller}
+
+\begin{table}[h]
+	\centering
+	\begin{tabularx}{.75\textwidth}{ll}\hline
+		Anzahl initialer Samples & 60 \\
+		%\rowcolor{lightgray}
+		Anzahl Samples & 500 \\
+		Anzahl neuer Samples pro Akquiseschleife & 10 \\
+		%\rowcolor{lightgray}
+		Anzahl Generationen Akquise-MAP-Elites & 2048 \\
+		Kinder pro Generation Akquise-MAP-Elites & 32 \\
+		%\rowcolor{lightgray}
+		Anzahl Generationen Ergebnis-MAP-Elites & 4096 \\
+		Kinder pro Generation Akquise-MAP-Elites & 32 \\
+		Auflösung der MAP-Elites Karte & 25 * 25  \\
+		\hline
+		Freiheitsgrade & 20 \\
+		Mittelwertgewichtung & 1 \\
+		Varianzgewichtung & 2 \\
+	\end{tabularx}
+	\label{tab:parmasEscooter}
+	\caption{Parametrisierung des E-Roller Experiments}
+\end{table}
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=.7\linewidth]{bilder/dragMapEscooter}
+	\caption{Map of final drag results in the E-Scooter domain}
+	\label{fig:dragMapEscooter}
+\end{figure}
+%\subsubsection{Experiment}
 %\subsubsection{Analyse}
 %\subsubsection{Zusammenfassung}
 
