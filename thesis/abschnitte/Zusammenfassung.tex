@@ -2,3 +2,28 @@
 
 
 \section{Ausblick}
+
+\subsection{Radkasten}
+
+\subsection{E-Roller}
+
+Aufgrund der Schwierigkeiten der Anwendung von SAIL auf die E-Rollerdomäne lag der Fokus der Untersuchung dieser Arbeit in der Radkastendomäne.
+Das Hauptproblem der in dieser Arbeit erzeugten Ergebnisse ist die Unsicherheit bezüglich deren Korrektheit.
+Der Grund dafür ist der Fakt, dass die cD-Werte in der gewählten Konfiguration OpenFoam nicht konvergierten.
+Der Grund dafür kann eine fehlerhafte Parametrisierung Openfoams sein, die Anpassung dieser Konfiguration sprengt allerdings den Umfang dieser Arbeit.
+In zukünftigen Untersuchungen sollte also, vor der Nutzung von SAIL, zuerst sichergestellt werden, dass die zugrundeliegende Simulation in Openfoam realitätsgetreue Ergebnisse liefert.
+Ist das nicht garantiert können alle möglichen Ergebnisse von SAIL nur beschränkte Aussagekraft haben.
+
+Des weiteren sind die erzeugten Formen für das Bauteil nicht besonders kreativ oder bahnbrechend.
+Das kann daran liegen, dass für dieses Bauteil keine guten unintuitiven Lösungen existieren.
+Die Anzahl an möglichen Lösungen wird allerdings durch die gewählte Deformationskonfiguration eingeschränkt.
+Es sollte möglicherweise über andere FFD-Konfigurationen, beziehungsweise Deformatiormationen in anderen Punkten und/oder Richtungen nachgedacht werden.
+Besonders, dass die seitlichen Ränder des Bauteils in der hier gewählten Konfiguration nicht deformiert werden können stellt eine starke Einschränkung dar.
+
+Zuletzt sind noch die Kategorien zu erwähnen nach denen die Bauteile phänotypisch kategorisiert worden.
+Die gewählten Kategorien wurden hauptsächlich aus dem Grund gewählt, dass diese einfach berechenbar und klar verständlich sind.
+Es wäre vermutlich sinnvoll für die Domäne abgewägte Kategorien zu wählen, und zu untersuchen wie sich dies auf die Lösungen auswirkt.
+
+Zuletzt stellte die benötigte Laufzeit für OpenFoam trotz der Nutzung des vereinfachten E-Roller Modells eine nicht unbeträchliche Hürde dar.
+Dies ist vor allem auf die komplexere Form des E-Rollers im Vergleich zur aerodynamisch optimierten Projektilform des Velomobils und die längere Simulationsdauer von 1000 Sekunden zurückzuführen.
+Eine qualitative Untersuchung welche Teile des E-Rollers wegrationalisiert werden können, ohne signifikante Ungenauigkeit in die Ergebnisse einzuführen, könnte die Laufzeit reduzieren wodurch beispielsweise wieder präzise Funktionsauswertungen ermöglicht werden, was mehr Freiheitsgrade erlauben kann.
