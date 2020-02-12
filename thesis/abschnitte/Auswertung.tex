@@ -499,15 +499,75 @@ Gegebenenfalls wäre es sinnvoll den Constraint schwächer zu gewichten, oder in
 	\caption{Parametrisierung des E-Roller Experiments}
 \end{table}
 
+
+
 \begin{figure}[h]
 	\centering
-	\includegraphics[width=.7\linewidth]{bilder/dragMapEscooter}
-	\caption{Map of final drag results in the E-Scooter domain}
+	\includegraphics[width=.7\linewidth]{bilder/escooter/dragMapEscooter}
+	\caption{Karte der Luftwiderstandswerte der E-Roller Domäne}
 	\label{fig:dragMapEscooter}
 \end{figure}
-%\subsubsection{Experiment}
-%\subsubsection{Analyse}
-%\subsubsection{Zusammenfassung}
+
+In \cref{fig:dragMapEscooter} ist die von SAIL für die E-Roller-Domäne produzierte Karte abgebildet.
+Es ist erkennbar, dass die berechneten Fitnesswerteeinen erstaunlich großen Bereich abdecken, dafür, dass nur ein eher kleines Bauteil an der Unterseite des E-Rollers deformiert wird.
+Aufgrund der oben erwähnten Einschränkung bezüglich der Ergebnisse, sollte dies nicht als Zeichen gedeutet werden, dass Deformationen in diesem Bauteil tatsächlich so große Änderungen bewirken können.
+Dass solche signifikante Änderungen existieren ist zur Anwendung von SAIL allerdings gut, sind die Variationen zwischen Individuen zu gering kann SAIL nicht korrekt arbeiten, da der als Surrogatmodell genutzte Gaußprozess auf solchen Daten nur schlecht trainiert werden kann.
+Der Gradient der auf den generierten Daten erkennbar ist lässt allerdings auch darauf schließen, dass die Ergebnisse von Openfoam nicht zu stark Rauschen.
+Wäre alle Varianz der Ergebnisse von Openfoam bloß auf Rauschen zurückzuführen, wäre es nicht zu erwarten, dass eine Karte mit einem relativ glatten Gradienten erzeugt wird.
+\begin{table}[h]
+	\begin{tabularx}{.5\textwidth}{ll}\hline
+		$\ell$ & 2,2791 \\
+		$\sigma_f$ & -3.051 \\
+		Mittelwert & -1,4904 \\
+		$\sigma_n$ & 0,0114 \\
+	\end{tabularx}
+	\label{tab:hyperparamsEscooter}
+	\caption{Die Hyperparameter des Gaußprozesses nach Anpassung}
+\end{table}
+Diese Tatsache kann auch an den Hyperparametern die für die E-Roller-Daten optimiert werden abgelesen werden.
+Diese sind in \cref{tab:hyperparamsEscooter} aufgeführt.
+Das benötigte Signalrauschen welches von der Optimierungsfunktion berechnet wird um die Daten ausreichend beschreiben zu können beträgt 0,0114, und ist damit ungefähr zehnmal kleiner als die Reichweite der Lösungen in der Karte.
+Aus diesen Beobachtungen kann geschlossen werden, dass die Ergebnisse der Openfoam-Simulation zumindest ausreichen um SAIL mit diesen durchführen zu können.
+Dies sagt selbstverständlich nichts über die Korrektheit der Openfoam-Simulation aus nur, dass die vorliegenden Daten von ihren qualitativen Eigenschaften für SAIL geeignet sind.
+
+Auch die sonstigen Hyperparameter des Gaußprozesses liegen in plausiblen Größenordnungen.
+Der Mittelwert von -1,49 liegt sehr exakt bei den in der Karte dargestellten Werten.
+Ein Längenmaß von $\ell=2,28$ ist zwar eher groß, problematischer wäre es allerdings, wenn dieses zu klein wäre.
+Ei typisches Zeichen von einem zu groß gewählten Längenmaß ist, dass starkes Rauschen benötigt wird um die Daten zu erklären.
+Da das Rauschen, durch $\sigma_n$ bestimmt, allerdings relativ klein ist ist ein solches Längenmaß nicht außergewöhnlich.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=.7\linewidth]{bilder/escooter/acqImprovements}
+	\caption{Prozentuale Verbesserung der Kinder pro Akquisegeneration}
+	\label{fig:escooteracqImprovement}
+\end{figure}
+
+In \cref{fig:escooteracqImprovement} ist die prozentuale Verbesserung über die Akquisegenerationen abgebildet.
+Auch diese sieht soweit nicht uncharakteristisch aus.
+Es werden Verbesserungen zu Lösungen gefunden, und über die Generationen konvergiert die Anzahl an Verbesserungen immer stärker, wodurch die charakteristische logarithmische Form entsteht.
+
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=.7\linewidth]{bilder/escooter/peRuntime}
+	\caption{Laufzeiten zur parallelen Evaluation von 10 präzisen Evaluationen}
+	\label{fig:escooterpeRuntime}
+\end{figure}
+
+Ein nicht unwichtiger Teil in der E-Roller-Domäne, der zwar nur indirekt etwas mit SAIL zu tun hat, sind die Openfoam-Simulationen.
+Besonders auffällig war, dass diese in der E-Roller-Domäne wesentlich rechenaufwendiger ausfielen.
+In \cref{fig:escooterpeRuntime} sind die Laufzeiten der präzisen Auswertungen pro Schleifeniteration dargestellt.
+Insgesamt wurden in jeder der 44 Schleifeniterationen 10 Individuen\footnote{500 Gesamtsamples - 60 Initialsamples = 440 Akquisesamples} parallel ausgewertet.
+Die dargestellten Zeiten sind nicht nur die für die Openfoam, sprich Zerlegung snappyHexMesh, Simulation etc., benötigten Zeiten sondern beinhalten einen Overhead von Matlab, wie die Datenverteilung auf 10 Worker und die Fitnessberechnung.
+Nichtsdestotrotz stellen die Openfoam-Funktionen den größten Teil des Zeitbedarfs dar.
+Die beträchtliche Laufzeit, die für Openfoam benötigt wird erzeugt eine Obergrenze an präzisen Funktionsauswertungen die durchgeführt werden können.
+Ein großer Teil der Laufzeit ist auf die 1000 simulierten Sekunden zurückzuführen.
+Eine Analyse der Darstellung durch Openfoam sollte aber neben einer qualitativen Untersuchung der Korrektheit der Simulation auch eine Untersuchung der Laufzeit umfangen.
+Die Verbesserung der Laufzeit ist durch unterschiedliche Methoden möglich.
+Kann eine Openfoamparametrisierung gefunden werden in der die cD-Werte schneller konvergieren, könnte die simulierte Dauer vermindert werden.
+Es könnte unnötiger File-I/O in Openfoam minimiert werden, und die Dekompositions zur parallelen Bearbeitung der Cases analysiert werden.
+Zuletzt wäre eine Analyse welche Teile des E-Rollers einen signifikanten Einfluss auf die Strömung um das Bauteil habe, und welche das nicht haben und folglich ohne Präzisionsverlust wegrationalisiert werden können angebracht.
 
 
 %\begin{figure}
