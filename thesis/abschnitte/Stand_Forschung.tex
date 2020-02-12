@@ -582,12 +582,12 @@ Somit kann erreicht werden, dass Zellen nahe des Velomobils stark verfeinert wer
 Da aerodynamische Effekte primär am Velomobil stattfinden bot diese Einstellung eine Möglichkeit dafür angemessene Verfeinerungen herzustellen.
 Als Parametrisierung wurde (0.2 5) (0.5 4) (1.0 2) gewählt, d.h. alles mit einer Enfernung kleiner $0.2m$ zum Velomobil wird zu Level 5 verfeinert, alles mit einem Abstand bis $0.5m$ mit Level 4 und alles mit einem Abstand bis zu $1m$ mit Level 2.
 
-\begin{figure}[h]
-	\centering
-	\includegraphics[width=.8\linewidth]{bilder/velo_wheelcase}
-	\caption{Konvergenz}
-	\label{fig:wheelcase_convergence}
-\end{figure}
+%\begin{figure}[h]
+%	\centering
+%	\includegraphics[width=.8\linewidth]{bilder/velo_wheelcase}
+%	\caption{Konvergenz}
+%	\label{fig:wheelcase_convergence}
+%\end{figure}
 Es wurden mehrere OpenFoam-Simulationen des Velomobils durchgeführt um zu testen ob und wann die berechneten cD-Werte ausreichend konvergieren.
 In \cref{fig:wheelcase_convergence} sind die berechneten cD-Werte über den Simulationslauf dargestellt. 
 Es ist erkennbar, dass diese zum Start der Simulation stark schwanken, sich aber relativ schnell auf den finalen Wert einpendeln.
@@ -663,19 +663,19 @@ Es ist klar zu Erkennen, dass dieses Volumen die unverformten Radkästen schneid
 		\centering
 		\includegraphics[width=.5\linewidth]{bilder/difference.png}
 		\caption{Das Mesh des Radkastens $FV_{radkasten}$}
-		\label{fig:wheelcase}
+		\label{fig:wheelcase_volume}
 	\end{minipage}\hfill
 	\begin{minipage}{0.45\textwidth}
 		\centering
 		\includegraphics[width=.5\linewidth]{bilder/difference.png}
-		\caption{Das Differenzvolumen $FV_{außen}$ für den unverformten Radkasten. Aus diesem wird der Strafwert berechnet}
+		\caption{Das Differenzvolumen $FV_{diff}$ für den unverformten Radkasten. Aus diesem wird der Strafwert berechnet}
 		\label{fig:diff_volume}
 	\end{minipage}
 \end{figure}
 Da ein Ziel darin bestand, den Constraint nicht als binäres, erfüllt/nicht erfüllt Problem zu definieren, da zwischen zwei Lösungen, die den Constraint nicht erfüllen trotzdem qualitative Unterschiede bestehen können wie stark der Constraint verletzt wird, wird ein Soft Constraint zur Modellierung gewählt.
-Dazu wird die Meshdifferenz des Radausschlags und des verformten Radkastens berechnet um $FV_{außen} = FV_{radausschlag} - FV_{radkasten}$ zu ermitteln.
+Dazu wird die Meshdifferenz des Radausschlags und des verformten Radkastens berechnet um $FV_{diff} = FV_{radausschlag} - FV_{radkasten}$ zu ermitteln.
 Das Ergebnis einer solchen Meshdifferenz für den unverformten Radkasten ist in \cref{fig:diff_volume} abgebildet.
-Die Größe des Volumens $V(FV_{außen})$ wird zur Berechnung des Constraints herangezogen.
+Die Größe des Volumens $V(FV_{diff})$ wird zur Berechnung des Constraints herangezogen.
 Zwar besteht keine direkte Kausalität zwischen diesem Volumen und dem maximalen möglichen Radausschlag aber die Vermutung, dass eine geringeres Volumen dieser Differenz mit größerem möglichen Radausschlag korreliert ist liegt nahe.
 %als Constraint das Differenzvolumen des Radausschlags minus verformten Radkastens gewählt.
 
@@ -685,11 +685,11 @@ Zur Berechnung der Differenz zwischen Radausschlagsvolumen und Radkasten wird di
 %Dieses Volumen stellt die Differenz des Radausschlagvolumens und des unverformten Radkastens dar.
 Um die Meshdifferenz berechnen zu können wurde der rechte Radkasten zudem geschlossen.
 Da die Constraintberechnung in jeder Generation für jedes Kind erfolgen muss wurde der Radkasten außerdem vereinfacht um die Berechnung  des Constraints ausreichend schnell durchführen zu können.
-Um den Strafwert $p$ für ein Individuum zu berechnen wird $V(FV_{außen})$ des Individuums berechnet und in Relation zum Außenvolumen des unverformten Radkastens gesetzt \footnote{Für den unverformten Radkasten beträgt das Differenzvolumen ca. $1,6L$}.
+Um den Strafwert $p$ für ein Individuum zu berechnen wird $V(FV_{diff})$ des Individuums berechnet und in Relation zum Außenvolumen des unverformten Radkastens gesetzt \footnote{Für den unverformten Radkasten beträgt das Differenzvolumen ca. $1,6L$}.
 Erfüllt ein Individuum den Constraint gleich gut wie der unverformte Radkasten gilt $p=1$.
 Ist ein Individuum besser gilt $0\leq p < 1$, ist es schlechter gilt $p>1$.
 \[
-	p = \frac{V(FV_{außen})}{V(FV_{außenUnverformt})}
+	p = \frac{V(FV_{diff})}{V(FV_{diffUnverformt})}
 \]
 
 Da sich der Constraint durch die Vereinfachung des Radkastens ausreichend schnell berechnen ließ, dass eine direkte Berechnung dessen für jedes Individuum zeitlich möglich war, wurde dies getan.
@@ -744,12 +744,12 @@ Auch der Detailgrad am sonstigen E-Roller wurde reduziert und mit dem vereinfach
 
 \subsubsection{OpenFOAM}
 
-\begin{figure}[h]
-	\centering
-	\includegraphics[width=.8\linewidth]{bilder/gp}
-	\caption{Konvergenz}
-	\label{fig:escooter_convergence}
-\end{figure}
+%\begin{figure}[h]
+%	\centering
+%	\includegraphics[width=.8\linewidth]{bilder/gp}
+%	\caption{Konvergenz}
+%	\label{fig:escooter_convergence}
+%\end{figure}
 
 Auch der E-Roller wird zuerst mit snappyHexMesh gemesht, worauf die Fluziddynamiksimulation mit simpleFoam folgt. 
 Es wurde wieder der "distance" Modus von snappyHexMesh genutzt um abhängig von der Distanz zum E-Roller Zellen mehr oder weniger zu verfeinern.
