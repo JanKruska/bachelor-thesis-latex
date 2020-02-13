@@ -533,7 +533,7 @@ Die korrekte Auswahl in welchen Bereichen es nötig ist für eine korrekte Simul
 
 Die zweite dieser Funktionen ist die eigentliche Fluiddynamiksimulation.
 Abhängig von den benötigten Simulationsparametern stellt OpenFoam einige unterschiedliche Solver bereit.
-Da die Strömungsgeschwindigkeiten der Simulation weit unter $0.3Ma$ bleiben kann die Strömung als inkompressibel behandelt werden.
+Da die Strömungsgeschwindigkeiten der Simulation weit unter $0.3Ma$ bleiben kann die Strömung als inkompressibel behandelt werden\cite{Anderson.2017}.
 Es existieren mehrere OpenFoam Solver für inkompressible Strömungen aus denen simpleFoam ausgewählt wurde.
 simpleFoam implementiert den SIMPLE (Semi-Implicit Method for Pressure Linked Equations) Algorithmus der in \cite{Caretto.1973} beschrieben wurde.
 Für die hier benötigten Werte reicht simpleFoam vollkommen aus.
@@ -582,12 +582,12 @@ Somit kann erreicht werden, dass Zellen nahe des Velomobils stark verfeinert wer
 Da aerodynamische Effekte primär am Velomobil stattfinden bot diese Einstellung eine Möglichkeit dafür angemessene Verfeinerungen herzustellen.
 Als Parametrisierung wurde (0.2 5) (0.5 4) (1.0 2) gewählt, d.h. alles mit einer Enfernung kleiner $0.2m$ zum Velomobil wird zu Level 5 verfeinert, alles mit einem Abstand bis $0.5m$ mit Level 4 und alles mit einem Abstand bis zu $1m$ mit Level 2.
 
-%\begin{figure}[h]
-%	\centering
-%	\includegraphics[width=.8\linewidth]{bilder/velo_wheelcase}
-%	\caption{Konvergenz}
-%	\label{fig:wheelcase_convergence}
-%\end{figure}
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=.8\linewidth]{bilder/wheelcaseCDConvergence}
+	\caption{Luftwiderstandswerte über Simulationen von vier zufällig verformten Radkästen}
+	\label{fig:wheelcase_convergence}
+\end{figure}
 Es wurden mehrere OpenFoam-Simulationen des Velomobils durchgeführt um zu testen ob und wann die berechneten cD-Werte ausreichend konvergieren.
 In \cref{fig:wheelcase_convergence} sind die berechneten cD-Werte über den Simulationslauf dargestellt. 
 Es ist erkennbar, dass diese zum Start der Simulation stark schwanken, sich aber relativ schnell auf den finalen Wert einpendeln.

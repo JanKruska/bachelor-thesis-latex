@@ -536,6 +536,21 @@ Ein Längenmaß von $\ell=2,28$ ist zwar eher groß, problematischer wäre es al
 Ei typisches Zeichen von einem zu groß gewählten Längenmaß ist, dass starkes Rauschen benötigt wird um die Daten zu erklären.
 Da das Rauschen, durch $\sigma_n$ bestimmt, allerdings relativ klein ist ist ein solches Längenmaß nicht außergewöhnlich.
 
+Unter der Annahme, das die Werte aus den Openfoam-Simulationen ausreichen präzise sind, lassen sich einige Dinge aus der Karte ablesen.
+Das erste ist der Gradient in der Horizontalen.
+Lösungen deren tiefster Punkt tiefer liegt weisen schlechtere Luftwiderstandskoeffizienten auf als solche, die flacher sind.
+Die zweite Sache die in der Horizontalen auffällt, ist der strenge Abriss von Lösungen nach der 23ten Spalte.
+Dies ist durch die Auswahl der ersten Kategorie zu erklären.
+So ändert sich der tiefste Punkt für Deformationen nach unten, und wird meist einer der deformierten Punkte sein.
+Für Deformationen nach oben gilt dies nicht, stattdessen wird dort ein Punk am Rand der FFD-Box zum tiefsten Punkt, der unabhängig von der Stärke der Deformation immer der tiefste Punkt bleiben wird.
+Alle Bauteile, die entweder sehr flach sind oder nach oben deformiert werden, werden also in die rechteste Befüllt Spalte eingeordnet, da es mit der momentanen FFD-Konfiguration nicht möglich ist Individuen Bauteile zu generieren, deren tiefster Punkt höher liegt.
+Entlang der anderen Dimension ist kein so starker Effekt zu beobachten, hier fallen allerdings zwei Dinge auf.
+Hier scheint eine Optimum, etwa in der fünften Zeile, zu existieren.
+Sowohl Lösungen deren tiefster Punkt weiter vorne liegt, als auch solche, deren tiefster Punkt weiter hinten liegt besitzen leicht schlechtere Luftwiderstandswerte.
+Die zweite auffällige Eigenschaft in der Vertikalen ist, dass die Anzahl an Lösungen pro Spalte nicht vergleichbar ist, sondern zunimmt, je höher der tiefste Punkt der Bauteile der Spalte liegt.
+Dies ist durchaus interessant, da die momentanen Deformationspunkte grundsätzlich in der Lage sein sollten einen tiefsten Punkt weiter vorne zu generieren.
+\todo{warum trotzdem?}
+
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=.7\linewidth]{bilder/escooter/acqImprovements}
@@ -547,6 +562,70 @@ In \cref{fig:escooteracqImprovement} ist die prozentuale Verbesserung über die 
 Auch diese sieht soweit nicht uncharakteristisch aus.
 Es werden Verbesserungen zu Lösungen gefunden, und über die Generationen konvergiert die Anzahl an Verbesserungen immer stärker, wodurch die charakteristische logarithmische Form entsteht.
 
+\newcommand{\escooterpheno}[1]{
+\begin{figure}[h]
+	\centering
+	\begin{minipage}{0.5\textwidth}
+		\centering
+		\includegraphics[width=1\linewidth]{bilder/escooter/#1-front.png}
+		\caption{Phänotyp des Individuums (#1), vorne}
+		\label{fig:escooterpheno1-1-front}
+	\end{minipage}\hfill
+	\begin{minipage}{0.5\textwidth}
+		\centering
+		\includegraphics[width=1\linewidth]{bilder/escooter/#1-side.png}
+		\caption{Phänotyp des Individuums (#1), Seite}
+		\label{fig:escooterpheno#1-side}
+	\end{minipage}
+\end{figure}
+}
+
+\escooterpheno{1-1}
+
+In \cref{fig:escooterpheno1-1-front} ist der Phänotyp des ersten Individuums in der ersten Spalte von vorne dargestellt.
+In \cref{fig:escooterpheno1-1-side} ist der selbe Phänotyp von der Seite dargestellt.
+Individuen der ersten Spalte zeichnet aus, dass deren tiefster Punkt besonders tief ist.
+Individuen der ersten Zeile zeichnet aus, dass deren tiefster Punkt weiter hinten liegt.
+Es ist sehr klar erkennbar, dass der dargestellte Phänotyp diese Kategorien erfüllt.
+
+
+\escooterpheno{23-22}
+
+Der Phänotyp in Zelle (23,22)(3. Spalte von links, 4. Zeile von unten) dargestellt in \cref{fig:escooterpheno23-22-front,fig:escooterpheno23-22-side} stellt das Gegenteil des vorigen Phänotyps dar.
+Dessen tiefster Punkt sollte besonders weit oben, und eher vorne liegen.
+Insgesamt ergibst sich dadurch eine sehr flache Form, deren tiefster Punkt weit vorne liegt und die sogar leicht das Gestänge der Radhalterung schneidet.
+
+\escooterpheno{9-16}
+
+Das dritte Beispiel ist im Gegensatz zu den vorigen beiden keines der Extrema, sondern ein Indivduum aus dem mittigen Bereich der Karte.
+Das Individuum (9,16) dargestellt in \cref{fig:escooterpheno9-16-front,fig:escooterpheno9-16-side} befindet sich am Dreiecksrand der Karte.
+Dieses Individuum ist nicht so schlecht wie das erste ausgewählte Individuum, bietet aber trotzdem eine interessantere deformierte Form als das untere rechte Individuum.
+Es ist klar erkenntlich, dass eine Deformation nach unten stattfindet, diese aber wesentlich schwächer ausfällt als im ersten Beispielindividuum.
+Sehr interessant ist auch, dass das Individuum (9-16) nach hinten wieder abflacht beziehungsweise geschlossen ist.
+Dies steht im Gegensatz zum ersten Beispielindividuum, welches nach hinten geöffnet war.
+Das bedeutet, dass das Ziel von SAIL nicht nur morphologisch unterschiedliche Lösungen der selben Lösungsklasse zu generieren, sondern eine Diversität an Lösungsklassen zu generieren teilweise erfüllt wird.
+
+\escooterpheno{20-5}
+
+Das letzte Beispiel, dessen Phänotyp genauer angeschaut wird liegt im letzten Bereich der Karte auf den bisher noch kein Blick geworfen wurde, der oberen rechten Ecke.
+In \cref{fig:escooterpheno20-5-front,fig:escooterpheno20-5-side} ist das Individuum (20,5) abgebildet, welches nicht das extremste Individuum der rechten Ecke ist, sondern, das welches den optimalen Fitnesswert aufweist.
+Es ist herauszustellen wie ähnlich dieses Individuum dem Individuum (23,22) ist.
+Zwar liegt der tiefste Punkt weiter hinten, da beide Individuen allerdings sehr flach sind, ändert die Position des tiefsten Punkts, der nur leicht unter dem restlichen Bauteil liegt, die Form nicht signifikant.
+Dadurch fallen beide in die gleiche Lösungsklasse.
+
+Dies zeigt eine Problematik der gewählten Kategorien auf.
+Da die Position des tiefsten Punktes bei einer Platte keinen wirklichen Einfluss auf den erzeugten Phänotypen hat werden hier am rechten Rand eine Reihe von Lösungen entwickelt, die am Ende keine wirkliche phänotypische Diversität aufweisen.
+Dies bezieht sich zwar nur auf den rechten Rand und weiter links entstehen signifikante phänotypische Unterschiede zwischen Individuen in einer Spalte, allerdings sind die Spalten, weiter links in der Karte immer spärlicher gefüllt.
+Dass heißt, sowohl zum linken Rand als auch zum rechten Rand der karte nimmt die Diversität der Spalten aus unterschiedlichen Gründen ab.
+Das ist ein klares Indiz, dafür, dass die x-Position des tiefsten Punktes keine gute Kategorie darstellt und vermutlich durch eine andere Kategorie, die in der Lage ist mehr Diversität zu erzeugen ausgetauscht werden sollte.
+Auch ist die Anzahl an verschiedenen Lösungsklassen gering. Die Lösungen lassen sich hauptsächlich in nach hinten offene, nach hinten geschlossene und flache Lösungen aufteilen.
+
+Zudem ist interessant, dass die generierten Lösungen alle fast symmetrisch sind.
+Die Lösungen sind so nah an einer symmetrischen Lösung, dass die Asymmetrie nicht auf einen expliziten Vorteil dieser hindeutet, sondern dass die Erzeugung perfekter symmetrischer Bauteile bei 20 Freiheitsgraden aufwendig für den evolutionären Algorithmus ist und deshalb nur fast symmetrische Bauteile entstehen.
+Besonders in Anbetracht der Tatsache wie viele asymmetrische Lösungen theoretisch möglich sind, stellt die Erzeugung von nur praktisch symmetrischen Teilen einen Trend dar.
+Das war zwar grundsätzlich zu erwarten, da der E-Roller symmetrisch ist und damit die Erwartung besteht, dass Strömungen um diesen auch symmetrisch sind.
+In solchen Strömungen wären Bauteile die symmetrisch sind erwartungsgemäß optimal. 
+Die Ergebnisse bestätigen diese Erwartungen weitgehend
 
 \begin{figure}[h]
 	\centering
