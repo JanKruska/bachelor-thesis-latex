@@ -1,9 +1,53 @@
 \section{Diskussion}
 
+\subsection{Radkasten}
+
+\subsection{E-Roller}
+
+Für den E-Roller wurde in dieser Arbeit nur ein Experiment durchgeführt.
+Aus dessen Ergebnisse können trotzdem einige Schlussfolgerungen gezogen werden.
+
+Zuerst muss klargestellt werden, dass  die berechneten Lösungen aufgrund der Unsicherheit, die mit der Korrektheit der Openfoam-Simulationen zusammenhängt, nicht als absolute Wahrheit behandelt werden dürfen.
+Alle Beobachtungen, die auf Basis dieses Experiments getätigt wurden, benötigen weitere Verifikation der Korrektheit der Simulationen.
+Trotzdem können einige Dinge an diesem Experiment analysiert werden und für eventuelle zukünftige Experimente genutzt werden.
+
+Die erste Beobachtung, die an diesem Experiment gemacht werden konnte, ist, dass die Anwendung von SAIL auf diese Problemdomäne möglich ist.
+Es konnte erfolgreich ein Surrogatmodell trainiert werden auf dessen Basis MAP-Elites durchgeführt werden konnte.
+Es konnte eine Karte aus phänotypisch diversen Lösungen generiert werden, auch wenn diese Karte nur wenige Lösungsklassen enthielt.
+Es kann nicht abschließend gesagt werden ob für das Problem nur Lösungen aus diesen Lösungsklassen brauchbar sind, oder ob die Limitierung auf diese Lösungsklassen ein Produkt der Konfiguration ist.
+Auch ist es möglich, dass durch die Fehlkonfiguration von Openfoam Effekte, die nicht-triviale Lösungen haben könnten überhaupt nicht gemessen werden können, oder von der Stärke der Oszillation überdeckt werden.
+
+Es konnte festgestellt werden, dass praktisch nur symmetrische Bauteile generiert wurden.
+Damit konnte die Hypothese \todo{nummer}, dass symmetrische Bauteile für den symmetrischen E-Roller optimal sind bestätigt werden.
+
+Es wurde grundsätzlich die Tendenz beobachtet, dass flachere Bauteile bessere Luftwiderstandswerte aufweisen.
+Dieses Ergebnis ist zwar etwas ernüchternd, da die Hoffnung bestand außergewöhnliche Bauteile zu generieren, die bessere aerodynamischen Eigenschaften aufweisen, als ein sehr triviales.
+Allerdings gilt wie bereits erwähnt, dass die Ungenauigkeit der Openfoam-Simulation kleine Effekte, die durch anders förmige Bauteile entstehen würden schlicht ignoriert.
 
 \section{Ausblick}
 
 \subsection{Radkasten}
+
+In der Arbeit konnte gezeigt werden, dass eine Einbindung eines Constraints in ein divergentes Optimierungsverfahren möglich ist.
+
+In der Arbeit wurden nur zwei FFD-Konfigurationen genutzt.
+Die erste war sehr einfach um an dieser zu testen, dass der Algorithmus die richtigen Tendenzen aufzeigt.
+Nachdem das erfolgt war wurde eine komplexere FFD-Konfiguration mit 18 Freiheitsgraden gewählt um mehr Deformationen zu erlauben.
+Selbst diese erlaubt allerdings nur begrenzt viele Deformationen.
+Es wäre sinnvoll die Anzahl an Freiheitsgraden weiter zu steigern und besonders auf die Punkte zu achten, die wichtig für Lösungen sind.
+So wurde in der Arbeit festgestellt, dass Deformationen in y, wie erwartet sehr wichtig sind, aber auch, dass auch Deformationen in z wichtig sind.
+Deformationen in x-Richtung waren weitergehend unwichtig und stellten damit Dimensionen dar, die keine interessanten zusätzlichen Deformationen erlaubten.
+Es sollt also auch vermieden werden alle Punkte in allen Dimensionen zu deformieren und es sollte sich stattdessen auf y-Deformationen in allen und z-Deformationen in den oberen und unteren Rändern fokussiert werden.
+
+Es könnte in Erwägung gezogen werden den Constraint statt Strafwert als Feature-Dimension aufzunehmen.
+Dadurch würde die problematische Gewichtung zwischen Luftwiderstand und Strafwert wegfallen und es würde eine Diversität an Lösungen entlang der Constrainterfüllung generiert.
+Dadurch würde garantiert, dass Lösungen verschiedener Constrainterfüllung generiert werden und es könnte eine Untersuchung stattfinden wo überhaupt Lösungen generiert werden, die den Constraint erfüllen, da diese nicht wie in der momentanen Version von aerodynamisch besseren Lösungen die den Constraint schlechter erfüllen verdrängt werden können.
+
+Auch sollte über die Parametrisierung des Gaußprozesses nachgedacht werden.
+Besonders die isotropische Kovarianzfunktion sollte gegen eine mit Automatic relevance determination ausgetauscht werden, da es denkbar ist, dass Dimensionen, die auf y-Deformationen abgebildet werden andere Längenmaße benötigen, als solche, die auf z-Deformationen abgebildet werden.
+
+Die hier durchgeführten Experimente wurden mit einem vereinfachten Modell des Velomobils, welches die Räder nicht enthält, berechnet.
+Da die Radkästen mit hoher Wahrscheinlichkeit Einfluss auf die Turbulenzen um die Räder des Velomobils haben werden, wären Experimente, die die Räder des Velomobils einschließen wünschenswert.
 
 \subsection{E-Roller}
 
@@ -20,7 +64,7 @@ Die Anzahl an möglichen Lösungen wird allerdings durch die gewählte Deformati
 Es sollte möglicherweise über andere FFD-Konfigurationen, beziehungsweise Deformatiormationen in anderen Punkten und/oder Richtungen nachgedacht werden.
 Besonders, dass die seitlichen Ränder des Bauteils in der hier gewählten Konfiguration nicht deformiert werden können stellt eine starke Einschränkung dar.
 Auch sollte in Erwägung gezogen werden die linke und rechte Hälfte symmetrisch zu verformen.
-Erstens ist anzunehmen, dass dadurch, dass der E-Roller an sich symmetrisch ist die Ströumunge die das Bauteil treffen ebenso symmetrisch sind.
+Erstens ist anzunehmen, dass dadurch, dass der E-Roller an sich symmetrisch ist die Strömungen die das Bauteil treffen ebenso symmetrisch sind.
 Lösungen die in solchen Strömungen am besten abschneiden werden mit hoher Wahrscheinlichkeit symmetrisch sein.
 Im Experiment konnte auch beobachtet werden, dass alle erzeugten Bauteile fast symmetrisch waren.
 Alle Asymmetrien waren meist leicht und eher auf die Größe des genetischen Suchraums zurückzuführen, als auf einen Vorteil durch eine asymmetrische Bauart.
@@ -38,7 +82,7 @@ Zwar muss dann eine Möglichkeit gefunden werden, dass solche Bauteile, den rest
 Dies könnte beispielsweise durch die Einführung eines Constraints geschehen, der testet, ob das Bauteil mit anderen Teilen des E-Rollers kollidiert.
 
 Durch die Wahl des tiefsten Punkt als eines der Features war es selbst für leicht nach oben deformierte Bauteile schwer Einzug in die Karte zu erhalten.
-Deshalb sollte zusätlich über die die Kategorien zu nachgedacht werden, nach denen die Bauteile phänotypisch kategorisiert werden.
+Deshalb sollte zusätzlich über die die Kategorien zu nachgedacht werden, nach denen die Bauteile phänotypisch kategorisiert werden.
 Die gewählten Kategorien wurden hauptsächlich aus dem Grund gewählt, dass diese einfach berechenbar und klar verständlich sind.
 Es wäre vermutlich sinnvoll für die Domäne abgewägte Kategorien zu wählen, und zu untersuchen wie sich dies auf die Lösungen auswirkt.
 

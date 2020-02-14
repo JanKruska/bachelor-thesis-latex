@@ -164,7 +164,7 @@ Da das Surrogatmodell aber genau für den Zweck genutzt wird die Anzahl an benö
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=1\linewidth]{bilder/gp}
-	\caption{Gaußprozess im Ausgangszustand (a) und nach dem Lernen von drei Datenpunkten (b) (aus \cite{Rasmussen.2008})}
+	\caption{Gaußprozess im Ausgangszustand (a) und nach dem Lernen von fünf Datenpunkten (b) (aus \cite{Rasmussen.2008})}
 	\label{fig:gp}
 \end{figure}
 
@@ -193,12 +193,12 @@ In \cref{fig:gp} ist ein Beispiel einer konstante Mittelwertfunktion abbgebildet
 Die Hyperparameter der Mittelwertsfunktion hängen stark von der Funktion ab, die hier gewählt wird, im Falle von polynomiellen Funktionen wären dies die Koeffizienten.
 
 Typischerweise wird davon ausgegangen, dass die Eingabedaten mit denen der Gaußprozess trainiert wird nicht rauschfrei sind.
-Zur Beschreibung des Rauschens des Signals existiert die Likelihood-Funktion.
+Zur Beschreibung des Rauschens des Signals existiert die Wahrscheinlichkeits-Funktion.
 Diese Funktion ist eine Wahrscheinlichkeitsverteilung, die das Rauschen beschreibt.
 Die typische Annahme ist, dass das Rauschen normalverteilt ist.
-Ist die Likelihood-Funktion eine Normalverteilung wird diese nur nur $\sigma$ parametrisiert.
+Ist die Wahrscheinlichkeits-Funktion eine Normalverteilung wird diese nur nur $\sigma$ parametrisiert.
 In Szenarien in denen ein Normalverteilung zur Beschreibung des Rauschen nicht korrekt ist, müssen stattdessen andere Verteilungen herangezogen werden.
-Hyperparameter der Likelihood-Funktion sind die Hyperparameter der gewählten Verteilung.
+Hyperparameter der Wahrscheinlichkeits-Funktion sind die Hyperparameter der gewählten Verteilung.
 
 Die letzte und wichtigste der Funktionen ist die Kovarianzfunktion.
 Die Aufgabe der Kovarianzfunktion ist es die Kovarianz zwischen Punkte zu Berechnen.
@@ -216,7 +216,7 @@ In \cref{fig:lengthscale} ist ein Gaußprozess mit unterschiedlichen Längenmaß
 Es ist zu Erkennen das \cref{fig:lengthscale} (b) wesentlich steiler ist als \cref{fig:lengthscale} (a \& c).
 Auch ist zu Erkennen, dass für $\ell=0.3$ die Varianz schnell ansteigt, wenn man sich von Beobachtungen entfernt.
 Im Gegensatz dazu ist in \cref{fig:lengthscale} (c) der Gaußprozess mit $\ell = 3$ dargestellt. Dieser ist wesentlich glatter kann die Punkte aber aus sich selbst nicht gut beschreiben. 
-Stattdessen wird für diese höheren Längenmaße ein größeres $\sigma_n$ der Likelihood-Funktion benötigt. 
+Stattdessen wird für diese höheren Längenmaße ein größeres $\sigma_n$ der Wahrscheinlichkeits-Funktion benötigt. 
 Kurz gesagt beschreibt der Gaußprozess mit $\ell=3$ eine glatte Funktion mit starkem Rauschen.
 Es sollte klar Erkennbar sein, dass Gaußprozess (a) die Daten am besten beschreiben kann, (b) führt sehr viele Bereiche mit hoher Varianz ein, die für diese Daten nicht angemessen sind, und (c) kann die Punkte nicht ordentlich approximieren und benötigt zur Beschreibung der Daten stattdessen ein starkes Rauschen.
 Die Frage wie die "beste" Parametrisierung eines Gaußprozesses systematischer gefunden werden kann ist enorm wichtig.
@@ -276,7 +276,7 @@ D. h. dass die Auswertungen, die durchgeführt werden maximalen Nutzen für das 
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=1\linewidth]{bilder/ucb}
-	\caption{Gaußprozess im Ausgangszustand (a) und nach dem Lernen von fünf Datenpunkten (b). Die drei nächsten Punkte die per UCB ausgewählt werden sind mit "x" markiert (aus \cite{Rasmussen.2008})}
+	\caption{Gaußprozess im Ausgangszustand (a) und nach dem Lernen von fünf Datenpunkten (b).}{Gaußprozess im Ausgangszustand (a) und nach dem Lernen von fünf Datenpunkten (b). Die drei nächsten Punkte die per UCB ausgewählt werden sind mit "x" markiert (aus \cite{Rasmussen.2008})}
 	\label{fig:ucb}
 \end{figure}
 Eine Möglichkeit mit dem Dilemma zwischen Exploration und Exploitation umzugehen ist das in \cite{Auer.2002} beschriebene Upper-Confidence-Bound. Dabei werden Exploration-Exploitation Probleme als statistischen Prozesse bestehend aus Mittelwert und Varianz aufgefasst.
@@ -322,7 +322,7 @@ Der Gaußprozess weiß über diesen Bereich noch nichts, folglich besteht dort e
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=.7\linewidth]{bilder/sail}
-	\caption{Teilschritte von SAIL, 
+	\caption}{Teilschritte von SAIL}{Teilschritte von SAIL, 
 		1) zufälliges Sampling des Problemraums, 
 		2) Trainieren eines Surrogatmodells, 
 		3) Erstellung der Akquisekarte mit MAP-Elites mit Upper-Confidence-Bound als Fitness, 
@@ -542,6 +542,54 @@ Zudem werden die Koeffizienten der auf das Objekt wirkenden Kräfte berechnet, w
 
 \subsubsection{Parametrisierung des Gaußprozesses}
 
+Die Parametrisierung des Gaußprozesses besteht aus drei Schritten.
+Zuerst werden die Funktionen für Kovarianz, Mittelwert und Wahrscheinlichkeit ausgewählt werden.
+Daraufhin müssen die Hyperparameter dieser drei Funktionen gesetzt werden.
+Da das setzen der richtigen Hyperparameter schwer ist, können diese daraufhin nachdem Datenpunkte vorhanden sind so optimiert werden, dass die Daten am besten beschrieben werden.
+
+Die erste Funktion die ausgewählt wurde ist die Kovarianzfunktion.
+Es wurde die isotropische Squared exponential Konvarianz Funktion 
+\[
+	k(x,x') = \sigma_f * exp(-\frac{(x-x')^2}{2\ell^2})
+\]
+gewählt.
+Diese besitzt die Hyperparameter $\sigma_f$, welcher die Standardabweichung des Signals bestimmt, und $\ell$, wodurch das Längemaß bestimmt wird.
+Die Squared exponential Funktion wird manchmal auch als Radial basis function (RBF) bezeichnet und stellt einen der meist genutzten Kernelfunktionen dar.
+Da sie unendlich differenzierbar ist werden sehr glatte Funktionen generiert.
+Isotropisch bedeutet in diesem Fall, dass das Längenmaß $\ell$ in allen Dimensionen gleich ist.
+Da alle Dimensionen auf den Intervall $[0;1]$ normiert sind kann das gleiche Längenmaß für alle Dimensionen genutzt werden.
+Die Nutzung eines Längenmaßes vereinfacht die Parametrisierung, häufig kann es trotzdem der Fall sein, dass bestimmte Dimensionen wichtiger für die Korrelation zwischen zwei Punkten sind, eine Möglichkeit damit umzugehen ist das sogenannte Automatic relevance determination (ARD), wodurch jede Dimension eine unabhängiges Längenmaß erhält.
+
+Die zweite Funktion die ausgewählt werden muss ist die Mittelwertsfunktion. Da unser Wissen über den Problemraum sich hauptsächlich auf Hypothese und Schätzungen beschränkt wurde hier die einfachste der Mittelwertsfunktionen gewählt. 
+Der konstante Mittelwert
+\[
+	m(x) = c
+\]
+besitzt nur einen Hyperparameter $c$, der festlegt auf welcher Konstanten der Mittelwert liegt.
+
+Als letztes muss noch eine Entscheidung bezüglich der Wahrscheinlichkeitsfunktion getroffen werden.
+Diese steuert die Varianz des Gaußprozesses.
+Da es keinen Grund gibt davon auszugehen, dass diese nicht Normalverteilt ist, wurde hier die Normalverteilung mit
+\[
+	\mathcal{N}(y_i \mid f_i, \sigma_n^2) = \frac{1}{\sqrt{2\pi*\sigma_n^2}*exp(-\frac{(y_i - f_i)^2}{2\sigma_n^2})}
+\]
+gewählt.
+Auch diese Funktion hat nur einen Hyperparameter $\sigma_n$, der steuert wie breit das Varianzband ist.
+Liegt auf den Daten ein größeres Rauschen wird ein größeres $\sigma_n$ benötigt um nahe Datenpunkte mit sehr verschiedenen Werten beschreiben zu können.
+
+Die initiale Parametrisierung der Hyperparameter erfolgte gemäß 
+
+\begin{table}[h]
+	\centering
+	\begin{tabularx}{.25\textwidth}{ll}\hline
+		$\ell$ & $0.5$ \\
+		$\sigma_f$ & $0$ \\
+		$c$ & $0$ \\
+		$\sigma_n$ & $1$ \\
+	\end{tabularx}
+	\caption{Initiale Hyperparameter des Gaußprozesses}
+	\label{tab:initialParams}
+\end{table}
 
 
 \subsection{Radkästen des Velomobils}
@@ -568,7 +616,7 @@ Dies führt dazu, dass der linke Radkasten symmetrisch zum rechten verformt wird
 Dadurch kann die Anzahl an benötigten Freiheitsgrade halbiert werden. 
 Auch die Berechnungen des Constraints und der Kategorisierung können dadurch nur für den rechten Radkasten durchgeführt werden, was auch dafür den benötigten Aufwand halbiert.
 
-Um möglichst glatte Übergänge zwischen Radkasten und Velobmobil herstellen zu können wurden die Radkästen nicht seperat verformt un daraufhin mit dem Rest des Velomobils kombiniert, sondern es wurden mit FFD-Boxen um die Radkästen das komplette Modell verformt.
+Um möglichst glatte Übergänge zwischen Radkasten und Velobmobil herstellen zu können wurden die Radkästen nicht separat verformt un daraufhin mit dem Rest des Velomobils kombiniert, sondern es wurden mit FFD-Boxen um die Radkästen das komplette Modell verformt.
 Dies ist zwar eine leichte Abweichung von der Aufgabenstellung, allerdings sind scharfe Ränder aerodynamisch suboptimal und daher zu vermeiden, und genau das wird dadurch erreicht.
 
 \subsubsection{OpenFOAM}
@@ -580,7 +628,7 @@ Zur Verfeinerung wurde der "distance"-Modus genutzt, bei dem Zellen abhängig vo
 Die Oberfläche zur Messung dieser Distanz ist in diesem Fall das Velomobil.
 Somit kann erreicht werden, dass Zellen nahe des Velomobils stark verfeinert werden, und weiter entfernte Zellen nicht zu stark verfeinert werden.
 Da aerodynamische Effekte primär am Velomobil stattfinden bot diese Einstellung eine Möglichkeit dafür angemessene Verfeinerungen herzustellen.
-Als Parametrisierung wurde (0.2 5) (0.5 4) (1.0 2) gewählt, d.h. alles mit einer Enfernung kleiner $0.2m$ zum Velomobil wird zu Level 5 verfeinert, alles mit einem Abstand bis $0.5m$ mit Level 4 und alles mit einem Abstand bis zu $1m$ mit Level 2.
+Als Parametrisierung wurde (0.2 5) (0.5 4) (1.0 2) gewählt, d.h. alles mit einer Entfernung kleiner $0.2m$ zum Velomobil wird zu Level 5 verfeinert, alles mit einem Abstand bis $0.5m$ mit Level 4 und alles mit einem Abstand bis zu $1m$ mit Level 2.
 
 \begin{figure}[h]
 	\centering
@@ -691,6 +739,10 @@ Ist ein Individuum besser gilt $0\leq p < 1$, ist es schlechter gilt $p>1$.
 \[
 	p = \frac{V(FV_{diff})}{V(FV_{diffUnverformt})}
 \]
+
+Auch wenn die genutzten Bibliotheken zwar recht robust sind ist es trotzdem so, dass sie in ihrer Kombination aber immer noch für ca. 1 aus 10000 Lösungen abstürzen.
+Statt den Grund dieser Abstürze zu ermittel, wurde deren Häufigkeit als gering genug eingestuft, als dass dies nicht nötig ist.
+Stattdessen werden solche Lösungen im Algorithmus als unendlich schlecht bewertet und damit ausgeschlossen.
 
 Da sich der Constraint durch die Vereinfachung des Radkastens ausreichend schnell berechnen ließ, dass eine direkte Berechnung dessen für jedes Individuum zeitlich möglich war, wurde dies getan.
 Das Trainieren eines zweiten Surrogatmodells zur Modellierung des Constraints hätte einen nicht unerheblichen Komplexitätszuwachs bedeutet , der an dieser Stelle nicht nötig war.
