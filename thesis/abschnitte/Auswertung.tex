@@ -460,27 +460,27 @@ Gegebenenfalls wäre es sinnvoll den Constraint schwächer zu gewichten, oder in
 		\centering
 		\begin{minipage}{0.5\textwidth}
 			\centering
-			\includegraphics[width=1\linewidth]{bilder/escooter/#1-front.png}
-			\caption{Phänotyp des Individuums (#1), vorne}
-			\label{fig:wheelcasepheno#1-front}
+			\includegraphics[width=1\linewidth]{bilder/6pt1000Samples/#1-uncon-top.png}
+			\caption{Phänotyp des Individuums (#1), oben (ohne Constraint)}
+			\label{fig:wheelcasepheno#1-uncon-front}
 		\end{minipage}\hfill
 		\begin{minipage}{0.5\textwidth}
 			\centering
-			\includegraphics[width=1\linewidth]{bilder/escooter/#1-side.png}
-			\caption{Phänotyp des Individuums (#1), Seite}
-			\label{fig:wheelcasepheno#1-side}
+			\includegraphics[width=1\linewidth]{bilder/6pt1000Samples/#1-uncon-angled.png}
+			\caption{Phänotyp des Individuums (#1), perspektivisch (ohne Constraint)}
+			\label{fig:wheelcasepheno#1-uncon-angled}
 		\end{minipage}
 		\begin{minipage}{0.5\textwidth}
 			\centering
-			\includegraphics[width=1\linewidth]{bilder/escooter/#1-front.png}
-			\caption{Phänotyp des Individuums (#1), oben rechts}
-			\label{fig:wheelcasepheno#1-isometric}
+			\includegraphics[width=1\linewidth]{bilder/6pt1000Samples/#1-con-top.png}
+			\caption{Phänotyp des Individuums (#1), oben (mit Constraint)}
+			\label{fig:wheelcasepheno#1-con-front}
 		\end{minipage}\hfill
 		\begin{minipage}{0.5\textwidth}
 			\centering
-			\includegraphics[width=1\linewidth]{bilder/escooter/#1-side.png}
-			\caption{Phänotyp des Individuums (#1), Seite}
-			\label{fig:wheelcasepheno#1-side}
+			\includegraphics[width=1\linewidth]{bilder/6pt1000Samples/#1-con-angled.png}
+			\caption{Phänotyp des Individuums (#1), perspektivisch (mit Constraint)}
+			\label{fig:wheelcasepheno#1-con-angled}
 		\end{minipage}
 	\end{figure}
 }
@@ -488,6 +488,16 @@ Gegebenenfalls wäre es sinnvoll den Constraint schwächer zu gewichten, oder in
 \newcommand{\wheelcaseref}[2]{
 	fig:wheelcasepheno#1-#2
 }
+
+\wheelcasepheno{4-2}
+
+\wheelcasepheno{4-25}
+
+\wheelcasepheno{25-1}
+
+\wheelcasepheno{25-22}
+
+\wheelcasepheno{12-12}
 
 
 \subsubsection{Zusammenfassung}

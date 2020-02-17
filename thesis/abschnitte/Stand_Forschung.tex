@@ -322,7 +322,7 @@ Der Gaußprozess weiß über diesen Bereich noch nichts, folglich besteht dort e
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=.7\linewidth]{bilder/sail}
-	\caption}{Teilschritte von SAIL}{Teilschritte von SAIL, 
+	\caption{Teilschritte von SAIL}{Teilschritte von SAIL, 
 		1) zufälliges Sampling des Problemraums, 
 		2) Trainieren eines Surrogatmodells, 
 		3) Erstellung der Akquisekarte mit MAP-Elites mit Upper-Confidence-Bound als Fitness, 
@@ -485,7 +485,7 @@ Auf die genaueren Eigenschaften von OpenFoam und den Aufbau einer passenden Simu
 	\begin{minipage}{0.45\textwidth}
 		\centering
 		\includegraphics[width=1\linewidth]{bilder/sphere_lattice_deformed2}
-		\caption{Deformiertes 3D-Mesh ezeugt durch Bewegung der Deformationspunkte}
+		\caption{Deformiertes 3D-Mesh erzeugt durch Bewegung der Deformationspunkte}
 		\label{fig:ffd_deformed}
 	\end{minipage}
 \end{figure}
@@ -493,14 +493,14 @@ Freiformdeformation ist ein in \cite{Sederberg.1986} beschriebenes Verfahren zu 
 Mithilfe der Freiformdeformation können beliebige dreidimensionale Meshes robust deformiert werden.
 Dazu wird eine Box aus Kontrollpunkten erzeugt, die manipuliert werden können um das Mesh zu deformieren.
 In \cref{fig:ffd_deformed} ist das 3D-Mesh einer Kugel umgeben von einer FFD-Box aus vier Punkten in jeder Dimension.
-Damit ergeben sich 56 Deformationspunkte\footnote{$4^3$ Punkte $- 2^3$ innere Punkte $=$ 56 Deformationspunkte} 
+Damit ergeben sich 64 Deformationspunkte.
 Jeder dieser Kontrollpunkte kann dann anhand von Verformungsparametern verschoben werden, wodurch für alle Punkte innerhalb der FFD-Box eine Verschiebung berechnet wird, die von der relativen Position des Punktes zum Kontrollpunkt abhängt.
 Eine Deformierte Variante der Kugel ist in \cref{fig:ffd_deformed} abgebildet.
 Dort wurden alle Punkte der rechten Ebene der FFD-Box nach außen bewegt und die vier inneren Punkte auf der Oberseite der FFD-Box nach oben und hinten bewegt.
 Die Knoten der Kugel werden durch die Freiformdeformation entsprechend bewegt, wodurch das deformiert Mesh entsteht.
 So können beliebige dreidimensionale Meshes robust anhand einiger Punkte deformiert werden.
 Auch können Deformationen durch relativ wenige Deformationsparameter definiert werden.
-Im Beispiel läge die Anzahl an Freiheitsgraden bei $56 * 3 = 168$.
+Im Beispiel läge die Anzahl an Freiheitsgraden bei $64 * 3 = 192$.
 Durch eine weitere Auswahl an welchen Punkten Deformationen in welche Richtungen 
 \footnote{Deformation in x, y, z finden jeweils separat statt}
 stattfinden dürfen kann diese Zahl noch weiter reduziert werden.
@@ -571,7 +571,7 @@ Als letztes muss noch eine Entscheidung bezüglich der Wahrscheinlichkeitsfunkti
 Diese steuert die Varianz des Gaußprozesses.
 Da es keinen Grund gibt davon auszugehen, dass diese nicht Normalverteilt ist, wurde hier die Normalverteilung mit
 \[
-	\mathcal{N}(y_i \mid f_i, \sigma_n^2) = \frac{1}{\sqrt{2\pi*\sigma_n^2}*exp(-\frac{(y_i - f_i)^2}{2\sigma_n^2})}
+	\mathcal{N}(y_i \mid f_i, \sigma_n^2) = \frac{1}{\sqrt{2\pi*\sigma_n^2}}*exp(-\frac{(y_i - f_i)^2}{2\sigma_n^2})
 \]
 gewählt.
 Auch diese Funktion hat nur einen Hyperparameter $\sigma_n$, der steuert wie breit das Varianzband ist.
