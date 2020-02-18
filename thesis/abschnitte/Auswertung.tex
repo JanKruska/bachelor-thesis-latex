@@ -485,19 +485,66 @@ Gegebenenfalls wäre es sinnvoll den Constraint schwächer zu gewichten, oder in
 	\end{figure}
 }
 
-\newcommand{\wheelcaseref}[2]{
+\newcommand{\wref}[2]{
 	fig:wheelcasepheno#1-#2
 }
 
+\newcommand{\allrefWheelcase}[1]{
+	\cref{\wref{#1}{uncon-top},\wref{#1}{uncon-angled},\wref{#1}{con-top},\wref{#1}{con-angled}}
+}
+
+Im folgenden werden die Phänotypen einiger Individuen betrachtet und jeweils die Lösung der Zelle der beiden Versionen verglichen.
+In den folgenden Abbildungen sind jeweils die Draufsicht sowie eine perspektivische Sicht auf den rechten Radkasten abgebildet.
+Neben dem Velomobil ist auch das modellierte Constraintvolumen dargestellt und zur Differenzierung rot hervorgehoben.
+
 \wheelcasepheno{4-2}
 
+In \allrefWheelcase{4-2} sind die von MAP-Elites gefundenen Lösungen der Zelle (4-2) beider Versionen abgebildet.
+Lösungen in dieser Zelle sind schmal, haben allerdings einen weit vorne liegenden breitesten Punkt.
+Es ist ersichtlich, dass dies der Fall ist.
+Es ist allerdings auch erkennbar, dass der Constraint in beiden Versionen nicht nur nicht erfüllt wird, sondern sogar sehr stark verletzt wird.
+Es findet zwar eine klare Verbesserung des Constraints statt, wenn dieser explizit behandelt wird, der gewünschte Effekt, dass dieser aber vollkommen erfüllt wird ist hier nicht erreicht worden.
+Dies hängt einerseits mit der Kategorisierung zusammen. Aus den beiden Draufsichten ist klar erkennbar, dass ein so schmales Velomobil den Constraint nie vollständig erfüllen kann.
+Trotzdem interessant ist die Tatsache, dass die Variante mit Constraint nicht die maximal mögliche Constrainterfüllung aufweist, die bei der Breite möglich ist.
+Stattdessen gehören beide Lösungen zur gleichen Lösungsklasse, die durch eine breitere Oberseite aber schmalere Unterseite charakterisiert wird.
+Dass die Lösung, die in der Variante mit Constraint generiert wird, die physikalisch maximal möglich Constrainterfüllung nicht erlaubt, ist dadurch zu begründen, dass Constraint und Luftwiderstand gegeneinander gewichtet werden.
+Die in der Variante ohne Constraint generierte Lösung stellt hierbei die in dieser Zelle optimale Lösung da.
+Ein Abweichen von dieser Form muss jede Verschlechterung der aerodynamischen Eigenschaften durch eine Verbesserung des Constraint aufwiegen.
+Dadurch entsteht aber das Problem der Gewichtung der beiden Ziele gegeneinander, welches enorm schwer zu lösen ist.
+Will man Lösungen generieren, die den Constraint so gut wie möglich erfüllen unabhängig der damit verbundenen Kosten in der Aerodynamik, oder will man einen Kompromiss, wie er hier generiert wurde finden.
+Wenn man einen Kompromiss finden will muss man sich die Frage stellen wo dieser liegen soll, bei einer 1:1-Gewichtung wie hier oder beispielsweise bei eine 2:1-Gewichtung.
+
+
 \wheelcasepheno{4-25}
+
+
 
 \wheelcasepheno{25-1}
 
 \wheelcasepheno{25-22}
 
 \wheelcasepheno{12-12}
+
+Alle vorigen Individuen befanden sich an den Rändern der Karte und stellten damit Extrema dar, zum Verständnis sollten sich daneben allerdings auch zentraler gelegene Individuen angeschaut werden.
+In \allrefWheelcase{12-12} sind zwei solcher weniger extremen Individuen abgebildet.
+Die größte Sache, die im Vergleich zu den vorher betrachteten Individuen auffällt ist die signifikante Änderung bezüglich des Constraints.
+Sowohl bei sehr schmalen als auch bei sehr breiten Individuen waren nur relativ kleine Änderungen bezüglich des Constraints zu erkennen.
+Bei schmaleren Velomobilen lag dies daran, dass die geringe Breite eine vollständige Constrainterfüllung nicht zulässt und dass die Gewichtung zwischen Aerodynamik und Constraint so gewählt wurde, dass keine weiteren Verschlechterungen der Aerodynamik für Constraintgewinne in Kauf genommen wurden.
+Bei breiten Velomobilen war der Constraint in der Variante ohne Constraint bereits weitesgehen erfüllt, wodurch keine signifikante Verbesserung durch die Einführung eines Constraints erreicht werden konnte.
+
+Beide dieser Dinge gelten nicht für ein ausgeglichenes Individuum.
+In der Variante ohne Constraint ist dieser offensichtlich nicht erfüllt.
+Die Verbesserung in der Variante mit Constraint ist allerdings wesentlich signifikanter.
+Der Constraint ist in dieser Variante bereits nahezu erfüllt, es sind noch zwei leichte Bänder auszumachen in denen das Constraintvolumen aus dem Velomobil ragt, allerdings sind diese sehr klein.
+Interessant ist auch der Unterschied zwischen der Lösungsklassen.
+Während in der Variante ohne Constraint noch eine unten breitere oben schmalere Form präferiert wird -- Im Gegensatz zu dem bei schmaleren Lösungen präferierten Form, die oben breiter und unten schmaler war -- ist die Form in der Variante mit Constraint wesentlich gleichmäßig breiter.
+Dies gilt in der Vertikalen, in der sowohl der untere Teil des Radkastens als auch der obere Teil breit sind, aber auch in der Horizontalen, in der der Radkasten wesentlich länger breit bleibt.
+
+Was sich aus den betrachteten Phänotypen ablesen lässt ist, dass der Constraint überall beachtet wird und sich verbessert oder zumindest nicht verschlechtert.
+Bei besonders breiten Velomobilen konnten keine signifikanten Verbesserungen erreicht werden, da der Constraint bei solchen breiten Lösungen meist schon fast vollständig erfüllt ist.
+Hauptgewinne bezüglich des Constraints konnten bei zentraler Individuen gesehen werden, besonders bezüglich der Breite.
+Bei schmaleren Individuen wurden die Constraintgewinne schmaler was auf eine Kombination aus Konflikt zwischen Aerodynamik und Constraint und in der Tatsache, dass COnstrainterfüllende Individuen schwerer zu generieren sind, je schmaler diese sein sollen.
+
 
 
 \subsubsection{Zusammenfassung}
