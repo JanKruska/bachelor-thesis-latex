@@ -2,6 +2,10 @@
 
 \subsection{Radkasten}
 
+Im folgenden Kapitel werden auf Basis der in \ref{sub:method_wheelcase} eingeführten Methodik Experimente durchgeführt.
+Es wird so vorgegangen, dass zuerst ein eher einfaches Experiment durchgeführt wird auf dessen Basis die grundsätzlichen Annahmen über das Problem der Radkastenoptimierung geprüft werden können.
+Darauf aufbauend werden aufwendigere und ausführlichere Experimente durchgeführt, um für die Realität nutzbare Ergebnisse zu erhalten.
+
 \subsubsection{Initiales Validierungsexperiment}
 \label{sub:exp1st}
 \begin{table}[h]
@@ -66,7 +70,7 @@ Das ist offensichtlich das Ziel bei der Nutzung eines Constraints, dass diese Er
 Auch ist hervorzuheben, dass die relative Verbesserung des Constraints wesentlich stärker ist als die relative Verschlechterung des Luftwiderstands.
 Eine Verschlechterung des Medians bezüglich des Luftwiderstands von \todo{genaue zahl} geht hier mit einer Verbesserung des Medians bezüglich des Constraints von \todo{genaue zahl} einher.
 
-Interessant sind auch die Grenzen der Verteilungen, beide Verteilungen weisen eine untere Grenze von ca. 0.1, sprich 10\% des Außenvolumens des unverformten Radkastens auf.
+Interessant sind auch die Grenzen der Verteilungen, beide Verteilungen weisen eine untere Grenze von ca. 0.1, sprich 10\% des Außenvolumens des nicht verformten Radkastens auf.
 Dies lässt sich dadurch erklären, dass das Radausschlagsvolumen einen Teil unterhalb des Radkastens hat, der durch eine seitliche Deformation des Radkastens nicht eliminiert werden kann.
 Die zweite interessante Grenze stellt die Obergrenze von 0.8 dar.
 Selbst die schlechteste Lösung in der Version ohne Constraint ist damit besser als der undeformierte Radkasten.
@@ -214,7 +218,7 @@ An der Stärke der Deformationen in y-Richtung wurde allerdings nichts geändert
 Die Karte der Constraints bestätigt auch hier, die im ersten Experiment bereits beobachtete Tendenz, dass der Constraint in breiteren Velomobilen und in solchen in denen der breiteste Punkt weiter vorne liegt einfacher zu erfüllen ist.
 Es ist allerdings herauszustellen, dass in der Variante ohne Constraint selbst die Lösungen in der oberen rechten Ecke eine weniger gute Constrainterfüllung aufweisen als die besten Lösungen in der Variante ohne Constraint des ersten Experiments, trotz der Tatsache, dass diese sowohl breiter sind und die breiteste Stelle weiter vorne liegt.
 Zwar ist dieser Effekt auch im Vergleich der Varianten ohne Constraint festzustellen, er fällt dort aber wesentlich schwächer aus.
-Dies deckt sich mit der Tatsache, dass eine Erhöhung der Freiheitsgrade und die damit verbundene Vergrößerung des Suchraumses schwerer macht ähnlich gute Lösungen bei gleicher Laufzeit zu finden.
+Dies deckt sich mit der Tatsache, dass eine Erhöhung der Freiheitsgrade und die damit verbundene Vergrößerung des Suchraumes schwerer macht ähnlich gute Lösungen bei gleicher Laufzeit zu finden.
 Dass der Effekt in der Variante ohne Constraint aber stärker ist bestätigt, dass die Schwierigkeit des zufälligen Erfüllen des Constraints ohne spezielle Behandlung stärker wächst, als die Schwierigkeit der Erfüllung unter Beachtung des Constraints.
 
 \begin{figure}[h]
@@ -233,7 +237,7 @@ Außerdem besteht die Vermutung, dass weite Teile des Problemraums den Constrain
 
 %\missingfigure{boxplots akquiseindividuen}
 
-Zur definitiven Auswertung sollte allerdings sichergestellt sein, dass Akquise- und Ergebnis-MAP-Elites ausreichend auskonvergiert sind.
+Zur definitiven Auswertung sollte allerdings sichergestellt sein, dass Akquise- und Ergebnis-MAP-Elites ausreichend konvergiert sind.
 Dass kann aus in diesem Experiment noch nicht definitiv festgestellt werden.
 Um eine definitive Aussage über Konvergenz treffen zu können sollte das Experiment unter ausführlicheren Bedingungen wiederholt werden.
 
@@ -265,8 +269,8 @@ Um eine definitive Aussage über Konvergenz treffen zu können sollte das Experi
 
 Das zweite Einschränkung der beiden vorigen Experimente war die Beschränkung auf eine kleinere Anzahl an ausgewerteten Samples und Generationen in Akquise- und Ergebnis-MAP-Elites.
 Durch die Beschränkung auf eine kleinere Anzahl an Samples besteht die Möglichkeit, dass der Suchraum nicht präzise genug und/oder nicht weitläufig genug abgebildet wurde.
-Die Beschränkung in Generationen des Akquise- und Ergebnis-MAP-Elites kann dazu führen, dass diese noch nicht vollständig auskonvergiert sind.
-Da die Überlegung nahe liegt, dass die Variante mit Constraint länger benötigen könnte um auszukonvergieren, sollte untersucht werden ob die Erhöhung dieser Parameter zu signifikanten Änderung im Vergleich zur kürzeren Version führt, indem die Gewinne nach 500 Samples und 1024 bzw. 2048 Generationen quantifiziert werden.
+Die Beschränkung in Generationen des Akquise- und Ergebnis-MAP-Elites kann dazu führen, dass diese noch nicht vollständig konvergiert sind.
+Da die Überlegung nahe liegt, dass die Variante mit Constraint länger benötigen könnte um ausreichend zu konvergieren, sollte untersucht werden ob die Erhöhung dieser Parameter zu signifikanten Änderung im Vergleich zur kürzeren Version führt, indem die Gewinne nach 500 Samples und 1024 bzw. 2048 Generationen quantifiziert werden.
 
 Auf ersten Blick sehen die Ergebnisse des dritten Experiments denen des zweiten Experiments sehr ähnlich.
 Die Karten werden etwas besser gefüllt, was durch Erhöhung der Zahl der ausgewerteten Samples und der Akquise- und Ergebnisgenerationen grundsätzlich zu erwarten war.
@@ -290,10 +294,10 @@ Die Karten werden etwas besser gefüllt, was durch Erhöhung der Zahl der ausgew
 Die Luftwiderstandskoeffizienten der Variante ohne Constraint haben sich nicht verändert, während bei der Variante mit Constraint ist eine leichte Verbesserung zu verzeichnen.
 Dies deckt sich mit der Vermutung, dass die Variante mit Constraint mehr Zeit benötigt um ausreichend auszukonvergieren.
 Interessant ist auch die Veränderung der Constraintwerte.
-Hier ist bei der Variante mit Constraint keine redenswerte Änderung zu verzeichnen, die Constraintwerte der Variante ohne Constraint verschlechtern sich allerdings.
+Hier ist bei der Variante mit Constraint keine nennenswerte Änderung zu verzeichnen, die Constraintwerte der Variante ohne Constraint verschlechtern sich allerdings.
 Das ist durchaus interessant, da es bedeuten kann dass die weitere feine Optimierung bezüglich des Luftwiderstands im Laufe des Algorithmus eine Abkehr von solchen Lösungen darstellt, die den Constraint besser erfüllen.
 Das dieser Trend in der Variante ohne Constraint nicht zu beobachten ist ein großer Vorteil.
-Auch ist das interessant, da kein nenneswerter Gewinn bezüglich des Luftwiderstands zwischen ersten und zweitem Experiment zu beobachten ist.
+Auch ist das interessant, da kein nennenswerter Gewinn bezüglich des Luftwiderstands zwischen ersten und zweitem Experiment zu beobachten ist.
 
 \begin{figure}[h]
 	\includegraphics[width=1\linewidth]{bilder/6pt1000Samples/dragMapComparison}
@@ -392,7 +396,7 @@ Das zweite interessante Triplett sind die Gene 13-15.
 Diese werden Deformationen der unteren Reihe an Deformationspunkten in z-Richtung abgebildet.
 In der Variante ohne Constraint ist der Unterschied zwischen dem den Genen 13,15 und 14 durchaus interessant.
 Offensichtlich scheint das Sampling von Individuen in denen die beiden äußeren Punkte nach oben deformiert werden bevorzugt werden.
-Gleichzeitig gilt für den mittleren Punkt das Gegenteil, dieser scheint eher nach unten deformiert\footnote{z-Deformationen sind symmetrisch um $0.5$, alles größer $0,5$ ist deformation nach oben, alles kleiner $0,5$ Deformation nach unten} zu werden.
+Gleichzeitig gilt für den mittleren Punkt das Gegenteil, dieser scheint eher nach unten deformiert\footnote{z-Deformationen sind symmetrisch um $0.5$, alles größer $0,5$ ist Deformation nach oben, alles kleiner $0,5$ Deformation nach unten} zu werden.
 
 Diese Werte dieser Gene sind aber besonders in der Variante mit Constraint interessant.
 Hier ist ein sehr starker Trend zu negativen Deformationen erkennbar.
@@ -452,46 +456,48 @@ Im Gegensatz dazu ist eine große Häufung an Akquiseindividuen im mittigen Bere
 und eine sehr geringe Konzentration an Akquiseindiviuen im linken Bereich bei $0,2 \leq x \leq 0,4$.
 Dies ist besonders interessant dadurch, dass gerade der Bereich $0,2 \leq x \leq 0,4$ der ist, in dem die aerodynamisch besten Individuen liegen.
 Durch die Einführung des Constraints, der effektiv eine Manipulation des Mittelwerts von UCB darstellt, wird der Bereich in dem Exploitation stattfindet dorthin verschoben, wo dieser Constraint besser erfüllt ist.
-Dies ist grundsätzlich so gewollt, die Anhäufung von Punkten im Mittleren Bereich kann allerding ein Zeichen dafür sein, dass der Constraint im Vergleich zum Luftwiderstand zu stark gewichtet ist.
+Dies ist grundsätzlich so gewollt, die Anhäufung von Punkten im Mittleren Bereich kann allerdings ein Zeichen dafür sein, dass der Constraint im Vergleich zum Luftwiderstand zu stark gewichtet ist.
 Gegebenenfalls wäre es sinnvoll den Constraint schwächer zu gewichten, oder in der Akquisefunktion vollkommen wegzulassen und nur in der finalen Auswertung mit MAP-Elites zu betrachten.
 
 \newcommand{\wheelcasepheno}[1]{
 	\begin{figure}[h]
 		\centering
-		\begin{minipage}{0.5\textwidth}
+		\begin{subfigure}[t]{0.5\textwidth}
 			\centering
 			\includegraphics[width=1\linewidth]{bilder/6pt1000Samples/#1-uncon-top.png}
-			\caption{Phänotyp des Individuums (#1), oben (ohne Constraint)}
-			\label{fig:wheelcasepheno#1-uncon-front}
-		\end{minipage}\hfill
-		\begin{minipage}{0.5\textwidth}
+			\subcaption{oben, ohne Constraint}
+%			\label{fig:wheelcasepheno#1-uncon-front}
+		\end{subfigure}\hfill
+		\begin{subfigure}[t]{0.5\textwidth}
 			\centering
 			\includegraphics[width=1\linewidth]{bilder/6pt1000Samples/#1-uncon-angled.png}
-			\caption{Phänotyp des Individuums (#1), perspektivisch (ohne Constraint)}
-			\label{fig:wheelcasepheno#1-uncon-angled}
-		\end{minipage}
-		\begin{minipage}{0.5\textwidth}
+			\subcaption{perspektivisch, ohne Constraint}
+%			\label{fig:wheelcasepheno#1-uncon-angled}
+		\end{subfigure}
+		\begin{subfigure}[b]{0.5\textwidth}
 			\centering
 			\includegraphics[width=1\linewidth]{bilder/6pt1000Samples/#1-con-top.png}
-			\caption{Phänotyp des Individuums (#1), oben (mit Constraint)}
-			\label{fig:wheelcasepheno#1-con-front}
-		\end{minipage}\hfill
-		\begin{minipage}{0.5\textwidth}
+			\subcaption{oben, mit Constraint}
+%			\label{fig:wheelcasepheno#1-con-front}
+		\end{subfigure}\hfill
+		\begin{subfigure}[b]{0.5\textwidth}
 			\centering
 			\includegraphics[width=1\linewidth]{bilder/6pt1000Samples/#1-con-angled.png}
-			\caption{Phänotyp des Individuums (#1), perspektivisch (mit Constraint)}
-			\label{fig:wheelcasepheno#1-con-angled}
-		\end{minipage}
+			\subcaption{perspektivisch, mit Constraint}
+%			\label{fig:wheelcasepheno#1-con-angled}
+		\end{subfigure}
+		\caption{Die Phänotypen des Individuums (#1) mit und ohne Constraint}
+		\label{wheelcasepheno#1}
 	\end{figure}
 }
 
-\newcommand{\wref}[2]{
-	fig:wheelcasepheno#1-#2
+\newcommand{\wref}[1]{
+	\cref{fig:wheelcasepheno#1}
 }
 
-\newcommand{\allrefWheelcase}[1]{
-	\cref{\wref{#1}{uncon-top},\wref{#1}{uncon-angled},\wref{#1}{con-top},\wref{#1}{con-angled}}
-}
+%\newcommand{\allrefWheelcase}[1]{
+%	\cref{\wref{#1}{uncon-top},\wref{#1}{uncon-angled},\wref{#1}{con-top},\wref{#1}{con-angled}}
+%}
 
 Im folgenden werden die Phänotypen einiger Individuen betrachtet und jeweils die Lösung der Zelle der beiden Versionen verglichen.
 In den folgenden Abbildungen sind jeweils die Draufsicht sowie eine perspektivische Sicht auf den rechten Radkasten abgebildet.
@@ -499,7 +505,7 @@ Neben dem Velomobil ist auch das modellierte Constraintvolumen dargestellt und z
 
 \wheelcasepheno{4-2}
 
-In \allrefWheelcase{4-2} sind die von MAP-Elites gefundenen Lösungen der Zelle (4-2) beider Versionen abgebildet.
+In \wref{4-2} sind die von MAP-Elites gefundenen Lösungen der Zelle (4-2) beider Versionen abgebildet.
 Lösungen in dieser Zelle sind schmal, haben allerdings einen weit vorne liegenden breitesten Punkt.
 Es ist ersichtlich, dass dies der Fall ist.
 Es ist allerdings auch erkennbar, dass der Constraint in beiden Versionen nicht nur nicht erfüllt wird, sondern sogar sehr stark verletzt wird.
@@ -517,20 +523,38 @@ Wenn man einen Kompromiss finden will muss man sich die Frage stellen wo dieser 
 
 \wheelcasepheno{4-25}
 
+In \wref{4-25} sind schmale Velomobile, deren breitester Punkt im Gegensatz zum vorherigen Beispiel weit hinten liegt, dargestellt.
+Trotzdem sind viele der in \wref{4-2} bereits beobachteten Tendenzen auch hier zu finden.
+In beiden Varianten wird der Constraint auch hier nicht erfüllt.
+Es ist zwar auch hier eine leichte Verbesserung zu erkennen, diese ist aber eher gering.
+Besonders dadurch, dass die schmalen Velomobile den Constraint in der Variante ohne Constraint so stark verletzen lässt eigentlich viel Raum für Verbesserung, der offensichtlich nicht genutzt wird.
+Dies ist hängt genau wie im vorigen Beispiel mit der Gewichtung zwischen Luftwiderstand und Constraint zusammen, durch die nur geringfügige Verbesserungen ermöglicht werden.
+Auch ist interessant, dass dieser Phänotyp genau wie der im ersten Beispiel oben breiter und unten schmaler ist.
 
 
-\wheelcasepheno{25-1}
+%\wheelcasepheno{25-1}
 
 \wheelcasepheno{25-22}
+
+In \wref{25-22} ist ein Individuum des anderen Extremes dargestellt.
+Der dargestellte Phänotyp ist sehr breit und dessen breitester Punkt liegt weit hinten.
+Es ist zu erkennen, dass der Constraint bereits in der Variante ohne Constraint recht gut erfüllt ist.
+Dies deckt sich mit den Beobachtungen aus der Karte.
+Da der Constraint in der Variante ohne Constraint bereits gut erfüllt ist ist hier nicht viel potenzielle Verbesserung möglich.
+Trotzdem findet eine Verbesserung statt und in der Variante mit Constraint ragt nur nach minimal aus dem Radkasten heraus.
+Es ist interessant zu beobachten, dass diese Lösung einer anderen Lösungsklasse angehört als die beiden schmalen betrachteten.
+Diese Lösung ist unten breiter und oben schmaler, es ist also ersichtlich, dass nicht nur dieselben Lösungen mit stärkeren und schwächeren Deformationen erzeugt werden.
+Trotzdem stellen diese breiten Phänotypen aerodynamisch suboptimale Lösungen dar, gerade hier ist die Erzeugung von Lösungen zwar einfach aber eher uninteressant.
+Das Ziel wäre schmalere Lösungen zu generieren die sowohl aerodynamische als auch Constraintoptimalität aufweisen.
 
 \wheelcasepheno{12-12}
 
 Alle vorigen Individuen befanden sich an den Rändern der Karte und stellten damit Extrema dar, zum Verständnis sollten sich daneben allerdings auch zentraler gelegene Individuen angeschaut werden.
-In \allrefWheelcase{12-12} sind zwei solcher weniger extremen Individuen abgebildet.
+In \wref{12-12} sind zwei solcher weniger extremen Individuen abgebildet.
 Die größte Sache, die im Vergleich zu den vorher betrachteten Individuen auffällt ist die signifikante Änderung bezüglich des Constraints.
 Sowohl bei sehr schmalen als auch bei sehr breiten Individuen waren nur relativ kleine Änderungen bezüglich des Constraints zu erkennen.
 Bei schmaleren Velomobilen lag dies daran, dass die geringe Breite eine vollständige Constrainterfüllung nicht zulässt und dass die Gewichtung zwischen Aerodynamik und Constraint so gewählt wurde, dass keine weiteren Verschlechterungen der Aerodynamik für Constraintgewinne in Kauf genommen wurden.
-Bei breiten Velomobilen war der Constraint in der Variante ohne Constraint bereits weitesgehen erfüllt, wodurch keine signifikante Verbesserung durch die Einführung eines Constraints erreicht werden konnte.
+Bei breiten Velomobilen war der Constraint in der Variante ohne Constraint bereits weitestgehend erfüllt, wodurch keine signifikante Verbesserung durch die Einführung eines Constraints erreicht werden konnte.
 
 Beide dieser Dinge gelten nicht für ein ausgeglichenes Individuum.
 In der Variante ohne Constraint ist dieser offensichtlich nicht erfüllt.
@@ -543,7 +567,7 @@ Dies gilt in der Vertikalen, in der sowohl der untere Teil des Radkastens als au
 Was sich aus den betrachteten Phänotypen ablesen lässt ist, dass der Constraint überall beachtet wird und sich verbessert oder zumindest nicht verschlechtert.
 Bei besonders breiten Velomobilen konnten keine signifikanten Verbesserungen erreicht werden, da der Constraint bei solchen breiten Lösungen meist schon fast vollständig erfüllt ist.
 Hauptgewinne bezüglich des Constraints konnten bei zentraler Individuen gesehen werden, besonders bezüglich der Breite.
-Bei schmaleren Individuen wurden die Constraintgewinne schmaler was auf eine Kombination aus Konflikt zwischen Aerodynamik und Constraint und in der Tatsache, dass COnstrainterfüllende Individuen schwerer zu generieren sind, je schmaler diese sein sollen.
+Bei schmaleren Individuen wurden die Constraintgewinne schmaler was auf eine Kombination aus Konflikt zwischen Aerodynamik und Constraint und in der Tatsache, dass Constrainterfüllende Individuen schwerer zu generieren sind, je schmaler diese sein sollen.
 
 
 
@@ -592,7 +616,8 @@ Dass solche signifikante Änderungen existieren ist zur Anwendung von SAIL aller
 Der Gradient der auf den generierten Daten erkennbar ist lässt allerdings auch darauf schließen, dass die Ergebnisse von Openfoam nicht zu stark Rauschen.
 Wäre alle Varianz der Ergebnisse von Openfoam bloß auf Rauschen zurückzuführen, wäre es nicht zu erwarten, dass eine Karte mit einem relativ glatten Gradienten erzeugt wird.
 \begin{table}[h]
-	\begin{tabularx}{.5\textwidth}{ll}\hline
+	\centering
+	\begin{tabularx}{.25\textwidth}{ll}\hline
 		$\ell$ & 2,2791 \\
 		$\sigma_f$ & 0,0473 \\
 		$c$ & -1,4904 \\
@@ -642,33 +667,63 @@ Es werden Verbesserungen zu Lösungen gefunden, und über die Generationen konve
 \newcommand{\escooterpheno}[1]{
 \begin{figure}[h]
 	\centering
-	\begin{minipage}{0.5\textwidth}
+	\begin{subfigure}[t]{0.5\textwidth}
 		\centering
 		\includegraphics[width=1\linewidth]{bilder/escooter/#1-front.png}
-		\caption{Phänotyp des Individuums (#1), vorne}
-		\label{fig:escooterpheno#1-front}
-	\end{minipage}\hfill
-	\begin{minipage}{0.5\textwidth}
+		\subcaption{vorne}
+%		\label{fig:escooterpheno#1-front}
+	\end{subfigure}\hfill
+	\begin{subfigure}[t]{0.5\textwidth}
 		\centering
 		\includegraphics[width=1\linewidth]{bilder/escooter/#1-side.png}
-		\caption{Phänotyp des Individuums (#1), Seite}
-		\label{fig:escooterpheno#1-side}
-	\end{minipage}
+		\subcaption{Seite}
+%		\label{fig:escooterpheno#1-side}
+	\end{subfigure}
+\caption{Die Phänotypen des Individuums (#1)}
+\label{fig:escooterpheno#1}
 \end{figure}
 }
 
-\newcommand{\escref}[2]{
-	fig:escooterpheno#1-#2
+\newcommand{\escooterpheno}[1]{
+	\begin{figure}[h]
+		\centering
+		\begin{subfigure}[t]{0.5\textwidth}
+			\centering
+			\includegraphics[width=1\linewidth]{bilder/6pt1000Samples/#1-uncon-top.png}
+			\subcaption{oben, ohne Constraint}
+			%			\label{fig:wheelcasepheno#1-uncon-front}
+		\end{subfigure}\hfill
+		\begin{subfigure}[t]{0.5\textwidth}
+			\centering
+			\includegraphics[width=1\linewidth]{bilder/6pt1000Samples/#1-uncon-angled.png}
+			\subcaption{perspektivisch, ohne Constraint}
+			%			\label{fig:wheelcasepheno#1-uncon-angled}
+		\end{subfigure}
+		\begin{subfigure}[b]{0.5\textwidth}
+			\centering
+			\includegraphics[width=1\linewidth]{bilder/6pt1000Samples/#1-con-top.png}
+			\subcaption{oben, mit Constraint}
+			%			\label{fig:wheelcasepheno#1-con-front}
+		\end{subfigure}\hfill
+		\begin{subfigure}[b]{0.5\textwidth}
+			\centering
+			\includegraphics[width=1\linewidth]{bilder/6pt1000Samples/#1-con-angled.png}
+			\subcaption{perspektivisch, mit Constraint}
+			%			\label{fig:wheelcasepheno#1-con-angled}
+		\end{subfigure}
+		\caption{Die Phänotypen des Individuums (#1) mit und ohne Constraint}
+		\label{wheelcasepheno#1}
+	\end{figure}
 }
 
-\newcommand{\allrefEscooter}[1]{
-	\cref{\escref{#1}{front},\escref{#1}{side}}
+\newcommand{\escref}[1]{
+	\cref{fig:escooterpheno#1}
 }
 
 \escooterpheno{1-1}
 
-In \cref{\escref{1-1}{front}} ist der Phänotyp des ersten Individuums in der ersten Spalte von vorne dargestellt.
-In \cref{\escref{1-1}{side}} ist der selbe Phänotyp von der Seite dargestellt.
+In \cref{\escref{1-1}} (a) ist der Phänotyp des ersten Individuums in der ersten Spalte von vorne dargestellt.
+In \cref{\escref{1-1}} (b) ist der selbe Phänotyp von der Seite dargestellt.
 Individuen der ersten Spalte zeichnet aus, dass deren tiefster Punkt besonders tief ist.
 Individuen der ersten Zeile zeichnet aus, dass deren tiefster Punkt weiter hinten liegt.
 Es ist sehr klar erkennbar, dass der dargestellte Phänotyp diese Kategorien erfüllt.
@@ -676,14 +731,14 @@ Es ist sehr klar erkennbar, dass der dargestellte Phänotyp diese Kategorien erf
 
 \escooterpheno{23-22}
 
-Der Phänotyp in Zelle (23,22)(3. Spalte von links, 4. Zeile von unten) dargestellt in \allrefEscooter{23-22} stellt das Gegenteil des vorigen Phänotyps dar.
+Der Phänotyp in Zelle (23,22)(3. Spalte von links, 4. Zeile von unten) dargestellt in \escref{23-22} stellt das Gegenteil des vorigen Phänotyps dar.
 Dessen tiefster Punkt sollte besonders weit oben, und eher vorne liegen.
 Insgesamt ergibst sich dadurch eine sehr flache Form, deren tiefster Punkt weit vorne liegt und die sogar leicht das Gestänge der Radhalterung schneidet.
 
 \escooterpheno{9-16}
 
-Das dritte Beispiel ist im Gegensatz zu den vorigen beiden keines der Extrema, sondern ein Indivduum aus dem mittigen Bereich der Karte.
-Das Individuum (9,16) dargestellt in \allrefEscooter{23-22} befindet sich am Dreiecksrand der Karte.
+Das dritte Beispiel ist im Gegensatz zu den vorigen beiden keines der Extrema, sondern ein Individuum aus dem mittigen Bereich der Karte.
+Das Individuum (9,16) dargestellt in \escref{23-22} befindet sich am Dreiecksrand der Karte.
 Dieses Individuum ist nicht so schlecht wie das erste ausgewählte Individuum, bietet aber trotzdem eine interessantere deformierte Form als das untere rechte Individuum.
 Es ist klar erkenntlich, dass eine Deformation nach unten stattfindet, diese aber wesentlich schwächer ausfällt als im ersten Beispielindividuum.
 Sehr interessant ist auch, dass das Individuum (9-16) nach hinten wieder abflacht beziehungsweise geschlossen ist.
@@ -693,7 +748,7 @@ Das bedeutet, dass das Ziel von SAIL nicht nur morphologisch unterschiedliche L�
 \escooterpheno{20-5}
 
 Das letzte Beispiel, dessen Phänotyp genauer angeschaut wird liegt im letzten Bereich der Karte auf den bisher noch kein Blick geworfen wurde, der oberen rechten Ecke.
-In \allrefEscooter{20-5} ist das Individuum (20,5) abgebildet, welches nicht das extremste Individuum der rechten Ecke ist, sondern, das welches den optimalen Fitnesswert aufweist.
+In \escref{20-5} ist das Individuum (20,5) abgebildet, welches nicht das extremste Individuum der rechten Ecke ist, sondern, das welches den optimalen Fitnesswert aufweist.
 Es ist herauszustellen wie ähnlich dieses Individuum dem Individuum (23,22) ist.
 Zwar liegt der tiefste Punkt weiter hinten, da beide Individuen allerdings sehr flach sind, ändert die Position des tiefsten Punkts, der nur leicht unter dem restlichen Bauteil liegt, die Form nicht signifikant.
 Dadurch fallen beide in die gleiche Lösungsklasse.
@@ -730,7 +785,7 @@ Ein großer Teil der Laufzeit ist auf die 1000 simulierten Sekunden zurückzufü
 Eine Analyse der Darstellung durch Openfoam sollte aber neben einer qualitativen Untersuchung der Korrektheit der Simulation auch eine Untersuchung der Laufzeit umfangen.
 Die Verbesserung der Laufzeit ist durch unterschiedliche Methoden möglich.
 Kann eine Openfoamparametrisierung gefunden werden in der die cD-Werte schneller konvergieren, könnte die simulierte Dauer vermindert werden.
-Es könnte unnötiger File-I/O in Openfoam minimiert werden, und die Dekompositions zur parallelen Bearbeitung der Cases analysiert werden.
+Es könnte unnötiger File-I/O in Openfoam minimiert werden, und die Dekomposition zur parallelen Bearbeitung der Cases analysiert werden.
 Zuletzt wäre eine Analyse welche Teile des E-Rollers einen signifikanten Einfluss auf die Strömung um das Bauteil habe, und welche das nicht haben und folglich ohne Präzisionsverlust wegrationalisiert werden können angebracht.
 
 
