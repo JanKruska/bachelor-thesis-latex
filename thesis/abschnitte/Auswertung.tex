@@ -567,13 +567,13 @@ Dies gilt in der Vertikalen, in der sowohl der untere Teil des Radkastens als au
 Was sich aus den betrachteten Phänotypen ablesen lässt ist, dass der Constraint überall beachtet wird und sich verbessert oder zumindest nicht verschlechtert.
 Bei besonders breiten Velomobilen konnten keine signifikanten Verbesserungen erreicht werden, da der Constraint bei solchen breiten Lösungen meist schon fast vollständig erfüllt ist.
 Hauptgewinne bezüglich des Constraints konnten bei zentraler Individuen gesehen werden, besonders bezüglich der Breite.
-Bei schmaleren Individuen wurden die Constraintgewinne schmaler was auf eine Kombination aus Konflikt zwischen Aerodynamik und Constraint und in der Tatsache, dass Constrainterfüllende Individuen schwerer zu generieren sind, je schmaler diese sein sollen.
+Bei schmaleren Individuen wurden die Constraintgewinne schmaler was auf eine Kombination aus Konflikt zwischen Aerodynamik und Constraint und in der Tatsache, dass constrainterfüllende Individuen schwerer zu generieren sind, je schmaler diese sein sollen.
 
 
 
-\subsubsection{Zusammenfassung}
-
-\todo[inline]{Alle drei Experimente, Trends unterschiede etc.}
+%\subsubsection{Zusammenfassung}
+%
+%\todo[inline]{Alle drei Experimente, Trends unterschiede etc.}
 
 \subsection{E-Roller}
 
@@ -635,7 +635,7 @@ Dies sagt selbstverständlich nichts über die Korrektheit der Openfoam-Simulati
 Auch die sonstigen Hyperparameter des Gaußprozesses liegen in plausiblen Größenordnungen.
 Der Mittelwert von -1,49 liegt sehr exakt bei den in der Karte dargestellten Werten.
 Ein Längenmaß von $\ell=2,28$ ist zwar eher groß, problematischer wäre es allerdings, wenn dieses zu klein wäre.
-Ei typisches Zeichen von einem zu groß gewählten Längenmaß ist, dass starkes Rauschen benötigt wird um die Daten zu erklären.
+Ein typisches Zeichen von einem zu groß gewählten Längenmaß ist, dass starkes Rauschen benötigt wird um die Daten zu erklären.
 Da das Rauschen, durch $\sigma_n$ bestimmt, allerdings relativ klein ist ist ein solches Längenmaß nicht außergewöhnlich.
 
 Unter der Annahme, das die Werte aus den Openfoam-Simulationen ausreichen präzise sind, lassen sich einige Dinge aus der Karte ablesen.
@@ -684,46 +684,14 @@ Es werden Verbesserungen zu Lösungen gefunden, und über die Generationen konve
 \end{figure}
 }
 
-\newcommand{\escooterpheno}[1]{
-	\begin{figure}[h]
-		\centering
-		\begin{subfigure}[t]{0.5\textwidth}
-			\centering
-			\includegraphics[width=1\linewidth]{bilder/6pt1000Samples/#1-uncon-top.png}
-			\subcaption{oben, ohne Constraint}
-			%			\label{fig:wheelcasepheno#1-uncon-front}
-		\end{subfigure}\hfill
-		\begin{subfigure}[t]{0.5\textwidth}
-			\centering
-			\includegraphics[width=1\linewidth]{bilder/6pt1000Samples/#1-uncon-angled.png}
-			\subcaption{perspektivisch, ohne Constraint}
-			%			\label{fig:wheelcasepheno#1-uncon-angled}
-		\end{subfigure}
-		\begin{subfigure}[b]{0.5\textwidth}
-			\centering
-			\includegraphics[width=1\linewidth]{bilder/6pt1000Samples/#1-con-top.png}
-			\subcaption{oben, mit Constraint}
-			%			\label{fig:wheelcasepheno#1-con-front}
-		\end{subfigure}\hfill
-		\begin{subfigure}[b]{0.5\textwidth}
-			\centering
-			\includegraphics[width=1\linewidth]{bilder/6pt1000Samples/#1-con-angled.png}
-			\subcaption{perspektivisch, mit Constraint}
-			%			\label{fig:wheelcasepheno#1-con-angled}
-		\end{subfigure}
-		\caption{Die Phänotypen des Individuums (#1) mit und ohne Constraint}
-		\label{wheelcasepheno#1}
-	\end{figure}
-}
-
 \newcommand{\escref}[1]{
 	\cref{fig:escooterpheno#1}
 }
 
 \escooterpheno{1-1}
 
-In \cref{\escref{1-1}} (a) ist der Phänotyp des ersten Individuums in der ersten Spalte von vorne dargestellt.
-In \cref{\escref{1-1}} (b) ist der selbe Phänotyp von der Seite dargestellt.
+In \escref{1-1} (a) ist der Phänotyp des ersten Individuums in der ersten Spalte von vorne dargestellt.
+In \escref{1-1} (b) ist der selbe Phänotyp von der Seite dargestellt.
 Individuen der ersten Spalte zeichnet aus, dass deren tiefster Punkt besonders tief ist.
 Individuen der ersten Zeile zeichnet aus, dass deren tiefster Punkt weiter hinten liegt.
 Es ist sehr klar erkennbar, dass der dargestellte Phänotyp diese Kategorien erfüllt.

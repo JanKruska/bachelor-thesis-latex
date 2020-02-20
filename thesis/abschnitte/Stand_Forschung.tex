@@ -2,7 +2,7 @@
 \label{sub:grundlagen}
 \subsection{Genetische Algorithmen}
 
-Genetische Algorithmen sind eine Klasse von Optimierungsalgorithmen, die sich an den Mechanismen der natürlichen Evolution orientieren\cite{Simon.2013}.
+Genetische Algorithmen sind eine Klasse von Optimierungsalgorithmen, die sich an den Mechanismen der natürlichen Evolution orientieren (\cite{Simon.2013}).
 Namentlich Mutation, Crossover und Selektion.
 Die Begrifflichkeiten orientieren sich entsprechen an der natürlichen Evolution.
 Genetische Algorithmen arbeiten typischerweise mit Populationen aus Individuen, welche sich über Generationen entwickeln.
@@ -48,7 +48,7 @@ Mit diesen Funktionen kann für jedes Individuum eine Qualität berechnet werden
 Durch Selektion werden in jeder Iteration dann schlechte Lösungen eliminiert, wodurch die Population sich zu Optima hinbewegt.
 %Die Fitness, bzw. der Kosten jedes Individuums kann dann ermittelt werden und die Selektion eliminiert dann schlechte Lösungen, sprich solche mit niedriger Fitness, bzw. hohen Kosten.
 Selektion ist häufig nicht so simpel, dass einfach die besten Individuen ausgewählt werden.
-Die in \cref{sub:divergetnGeneticAlgorithms} besprochenen Ansätze zum Diversitätsmanagement, berücksichtigen Diversität von Populationen und können diverse Lösungen bevorzugt auswählen.
+Die in \cref{sub:divergentGeneticAlgorithms} besprochenen Ansätze zum Diversitätsmanagement, berücksichtigen Diversität von Populationen und können diverse Lösungen bevorzugt auswählen.
 
 In der Gesamtschleife werden also in jeder Generation per Crossover Kinder erzeugt, die daraufhin mutiert werden.
 Für diese Kinder wird dann eine Fitness berechnet.
@@ -68,13 +68,13 @@ Auch ist es nicht unbedingt wünschenswert eine sehr homogene Population als Erg
 Wenn man eine diverse Population aus Individuen erhält können Aussagen über unterschiedliche Lösungsklassen getroffen werden, Lösungsklassen und ihre Qualität können miteinander verglichen werden, und je nachdem kann größere Erkenntnis erlangt werden, was eine qualitativ hochwertige Lösung ausmacht wodurch wiederum das gestellte Problem besser verstanden werden kann.
 
 Es existieren verschiedenste Ansätze um Diversität zu gewährleisten, welche sind grundsätzlich in genotypische und phänotypische Ansätze aufteilen lassen, abhängig davon wo Diversitätsmanagement stattfindet.
-Ansätze wie Niching\cite{Shir.2012}, gewährleisten genotypische Diversität durch die Ermittlung der genetischen Ähnlichkeit zweier Individuen.
+Ansätze wie Niching (\cite{Mahfoud.1996},\cite{Shir.2012}), gewährleisten genotypische Diversität durch die Ermittlung der genetischen Ähnlichkeit zweier Individuen.
 Das hat den Vorteil, dass der Genotyp eines Individuums typischerweise ein Vektor ist, und eine Vielzahl von Ähnlichkeitsmetriken für Vektoren existiert.
 Dadurch fällt die Definition, was Diversität ausmacht sehr leicht.
 Auch ist die Berechnung einer Distanz zwischen Vektoren sehr effizient, was vorteilhaft ist, da die Berechnung von Diversität typischerweise sehr häufig stattfinden muss.
-Allerdings hat es den Nachteil, dass, besonders wenn die Genotyp-zu-Phänotyps-Mapping Funktion komplex ist, genetische Distanz nicht funktionaler Distanz zwischen Lösungen enspricht.
+Allerdings hat es den Nachteil, dass, besonders wenn die Genotyp-zu-Phänotyps-Mapping Funktion komplex ist, genetische Distanz nicht funktionaler Distanz zwischen Lösungen entspricht.
 D. h. es besteht die Möglichkeit, dass genetisch unähnliche Individuen trotzdem in die gleiche Lösungsklasse fallen.
-Deshalb wurden Ansätze wie Novelty-Search\cite{Lehman.2011} oder MAP-Elites\cite{Mouret.4202015} zum Diversitätsmanagement vorgeschlagen, die Diversität auf der Ebene, des Phänotyps bestimmen und somit funktionale Distanz messen.
+Deshalb wurden Ansätze wie Novelty-Search (\cite{Lehman.2011}) oder MAP-Elites (\cite{Mouret.4202015}) zum Diversitätsmanagement vorgeschlagen, die Diversität auf der Ebene, des Phänotyps bestimmen und somit funktionale Distanz messen.
 Da der Phänotyp domänenspezifisch,  muss die Diversitätsmetrik für jede Domäne maßgeschneidert definiert werden, und es kann nicht auf Allgemeinlösungen zurückgegriffen werden.
 Auch besteht eine erhebliche Limitierung bezüglich der Komplexität einer solche Diversitätsmetrik, da die Diversität typischerweise sehr häufig berechnet werden muss.
 
@@ -113,7 +113,7 @@ Auch besteht eine erhebliche Limitierung bezüglich der Komplexität einer solch
 		\EndProcedure
 	\end{algorithmic}
 \end{algorithm}
-MAP-Elites (Multi-dimensional Archive of Phenotypic Elites)\cite{Mouret.4202015} ist ein genetischer Algorithmus mit phänotypischem Diversitätsmanagement.
+MAP-Elites (Multi-dimensional Archive of Phenotypic Elites)(\cite{Mouret.4202015}) ist ein genetischer Algorithmus mit phänotypischem Diversitätsmanagement.
 Das bedeutet, dass die Morphologie bzw. Funktionalität einer konkreten ausgedrückten Lösung, wie beispielsweise Volumen oder Krümmung eines Bauteils, betrachtet wird.
 Dazu wird der Lösungsraum entlang anhand beliebig vieler Features, deren Untersuchung als zielführend zum Verständnis des Problems befunden wird, aufgeteilt.
 Diese Feature Dimensionen sind direkte Merkmale der Phänotypen von Lösungen, wie beispielsweise das Volumen eines Phänotypos in einer dreidimensionalen Domäne.
@@ -149,7 +149,7 @@ Dies stellt bei relativ einfachen Fitnessfunktionen keine große Einschränkung 
 
 Aerodynamische Probleme, für die zeitaufwändige Simulationen nötig sind, gehören ohne Zweifel zu der Klasse von Problemen, für die die Anzahl der benötigten Funktionsauswertungen zu groß sind, als das der Algorithmus in vertretbarer Laufzeit abschließen kann.
 Um genetische Taktiken auf eine solche Problemdomäne anzuwenden, wird eine Möglichkeit benötigt die benötigten Funktionsauswertungen erheblich zu reduzieren.
-Eine solche Möglichkeit ist ein Surrogatmodell \cite{Jin.2011}\cite{Preen.2016}, eine Machine-Learning Modell, welches aufgrund echter Simulationsauswertungen trainiert wird, um deren Ergebnis annähernd vorherzusagen.
+Eine solche Möglichkeit ist ein Surrogatmodell ()\cite{Jin.2011},\cite{Preen.2016}), eine Machine-Learning Modell, welches aufgrund echter Simulationsauswertungen trainiert wird, um deren Ergebnis annähernd vorherzusagen.
 Eine Auswertung des Modells erfordert dabei nur einen winzigen Bruchteil des Aufwands, der für eine Simulation nötig wäre.
 
 Die Einführung eines Surrogatmodells bringt allerdings einige Probleme mit sich.
@@ -168,7 +168,6 @@ Da das Surrogatmodell aber genau für den Zweck genutzt wird die Anzahl an benö
 	\label{fig:gp}
 \end{figure}
 
-\todo{Mehr Gaußprozess ausführen}
 Gaußprozesse sind ein in \cite{Rasmussen.2008} entwickeltes Machine-Learning Verfahren, mit welchem beliebige mathematische Funktionenen approximiert werden können.
 Ein großer Vorteil von Gaußprozessen ist, dass sie durch ihre Herkunft aus der Statistik die zu approximierende Funktion als Wahrscheinlichkeitsverteilung modellieren.
 Wie jedes überwachte Machine-Learning Verfahren zur Regression erhalten Gaußprozesse dabei eine Reihe an Beobachtungen auf deren Basis das Modell konstruiert wird.
@@ -232,19 +231,8 @@ Dass führt dazu, dass fehlerhafte Aussagen durch fehlende Trainingsdaten wesent
 Dies ist allerdings nicht der Grund weshalb Gaußprozesse für SAIL genutzt werden.
 Stattdessen tritt auch in SAIL ein typisches Problem von Reinforcement Learning, die Spannung zwischen Exploration und Exploitation, auf.
 Gaußprozesse bieten mit ihrer Vorhersage von Mittelwert und Varianz eine perfekte Grundlage zur Anwendung von Upper-Confidence Bound, einer Methode zum Umgang mit diesem Dilemma.
-Auf das Dilemma und Upper-Confidence-Bound als Lösungsmöglichkeit wird im Folgenden in \ref{sub:exploration_exploitation} weiter eingegangen.
+Auf das Dilemma und Upper-Confidence-Bound als Lösungsmöglichkeit wird im Folgenden in \cref{sub:exploration_exploitation} weiter eingegangen.
 Diese Eigenschaft ist allerdings der Grund warum Gaußprozesse als Surrogatmodell in SAIL genutzt werden.
-
-%Dadurch können die unendlich vielen möglichen Funktionen, die die Punkte beschreiben vollständig dargestellt werden.
-%Dadurch können Gaußprozesse neben einer Vorhersage, genauer gesagt dem Mittelwert der Vorhersage an jedem Punkt, auch die Varianz der Vorhersage an jedem Punkt liefern.
-%Durch diese Eigenschaft bieten sie gute Vorraussetzungen zur Anwendung von Upper-Confidence-Bound, und können dadurch Vorhersagen welche Funktionsauswertungen den statistisch höchsten Nutzen unter Abwägung zwischen Exploration und Exploitation haben.
-%Damit können die benötigten Funktionsauswertungen weiter reduziert werden, beziehungsweise die Präzision des Modells bei begrenzter Zahl von Funktionsauswertungen maximiert werden.
-%
-
-
-
-
-
 Durch die Eigenschaft sowohl den Mittelwert als auch die Varianz an jedem Punkt, eignen sich Gaußprozesse besonders für das im nächsten Kapitel besprochene Upper-Confidence-Bound-Verfahren.
 
 \subsubsection{Exploration Exploitation Problem}
@@ -276,7 +264,7 @@ D. h. dass die Auswertungen, die durchgeführt werden maximalen Nutzen für das 
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=1\linewidth]{bilder/ucb}
-	\caption{Gaußprozess im Ausgangszustand (a) und nach dem Lernen von fünf Datenpunkten (b).}{Gaußprozess im Ausgangszustand (a) und nach dem Lernen von fünf Datenpunkten (b). Die drei nächsten Punkte die per UCB ausgewählt werden sind mit "x" markiert (aus \cite{Rasmussen.2008})}
+	\caption[Gaußprozess im Ausgangszustand (a) und nach dem Lernen von fünf Datenpunkten (b).]{Gaußprozess im Ausgangszustand (a) und nach dem Lernen von fünf Datenpunkten (b). Die drei nächsten Punkte die per UCB ausgewählt werden sind mit "x" markiert (aus \cite{Rasmussen.2008})}
 	\label{fig:ucb}
 \end{figure}
 Eine Möglichkeit mit dem Dilemma zwischen Exploration und Exploitation umzugehen ist das in \cite{Auer.2002} beschriebene Upper-Confidence-Bound. Dabei werden Exploration-Exploitation Probleme als statistischen Prozesse bestehend aus Mittelwert und Varianz aufgefasst.
@@ -290,14 +278,6 @@ Die beiden Punkte nahe null stellen dabei Beispiele von Exploitation dar.
 Beide Punkte liegen nahe an einer tatsächlichen Auswertung, durch den hohen Mittelwert in diesem Bereich sollte dieser aber genauer untersucht werden.
 Der Punk am rechten Rand bei $x=5$ stellt ein Beispiel von Exploration dar.
 Der Gaußprozess weiß über diesen Bereich noch nichts, folglich besteht dort eine hohe Varianz.
-
-%Durch die Auswertung von Punkten mit hoher Varianz kann die Anzahl an benötigten realen Funktionsauswertungen gering gehalten werden.
-%Die Auswertung von Punkten mit hoher Varianz, sprich die Auswertung von bisher nicht erkundeten Gebieten wird Exploration genannt.
-%Wenn allderdings nur die Exploration des Suchraums durchgeführt wird, wird dies dazu führen, dass viele nicht-optimale Bereiche erkundet werden.
-%Da der Gaußprozess im Kontext einer Optimierung genutzt wird hat die Präzision des Gaußprozesses in Bereichen um Optima besondere Bedeutung.
-%Die Verbesserung der Präzision des Gaußprozesses in optimalen Regionen wird Exploitation genannt.
-%Insgesamt muss eine Abwägung zwischen der Exploration unbekannter Bereiche der Funktion und der Exploitation bekannter optimaler Bereiche der Funktion stattfinden. 
-%Eine Möglichkeit einer solchen Abwägung ist Upper-Confidence-Bound \todo{cite}, einer Kombination aus Mittelwert, der Exploitation bevorzugt, und Varianz, die Exploration bevorzugt.
 
 \subsubsection{SAIL}
 
@@ -322,7 +302,7 @@ Der Gaußprozess weiß über diesen Bereich noch nichts, folglich besteht dort e
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=.7\linewidth]{bilder/sail}
-	\caption{Teilschritte von SAIL}{Teilschritte von SAIL, 
+	\caption[Teilschritte von SAIL]{Teilschritte von SAIL, 
 		1) zufälliges Sampling des Problemraums, 
 		2) Trainieren eines Surrogatmodells, 
 		3) Erstellung der Akquisekarte mit MAP-Elites mit Upper-Confidence-Bound als Fitness, 
@@ -335,7 +315,7 @@ Der Gaußprozess weiß über diesen Bereich noch nichts, folglich besteht dort e
 SAIL (Surrogate-Assisted Illumination) ist ein in \cite{Gaier.6152018} beschriebenes Verfahren, welches die in \cref{sub:mapElites} und \cref{sub:surrogate} beschriebenen Ansätze vereint, mit dem Ziel MAP-Elites in rechenintensiven Domänen anwendbar zu machen.
 
 Zur Initialisierung SAILs werden zuerst zufällig Samples ausgewählt und evaluiert.
-Um eine gleichmäßige Verteilung der Samples über den Problemraum zu garantieren werden diese Samples nicht aus einer Gleichverteilung, sondern aus einer Sobol Sequenz ausgewählt.\todo{Ausführen sobol sequenz}
+Um eine gleichmäßige Verteilung der Samples über den Problemraum zu garantieren werden diese Samples nicht aus einer Gleichverteilung, sondern aus einer Sobol Sequenz (\cite{Sobol.1967}) ausgewählt.
 Der eigentliche Kern von SAIL ist die graduelle Verfeinerung des Surrogatmodells.
 In jeder Iteration der Verfeinerungsschleife wird ein Gaußprozess auf Basis aller bisher ausgewerteten Samples trainiert.
 Mit diesem Gaußprozess wird MAP-Elites durchgeführt, wobei als Fitnessfunktion für die Durchführung von MAP-Elites die Akquisefunktion genutzt wird.
@@ -349,7 +329,7 @@ Am Ende poduziert diese Schleife eine Menge an echten Ausgewerteten Samples auf 
 Um am Ende Ergebnisse zu erzeugen kann MAP-Elites mit dem finalen Gaußprozess und dessen Mittelwert als Fitnessfunktion ausgeführt werden.
 Der Mittelwert des Gaußprozesses an einem Punkt entspricht gerade der mittleren Vorhersage zur Fitness einer realen Auswertung an diesem Punkt.
 Damit wird dann eine diverse Vorhersagekarte erzeugt, die die Optima des Gaußprozesses zeigt.
-Bei korrekter Parametrisierung von SAIL, dem Gaußprozess, und einer ausreichen großen Anzahl an realen Auswertungen korrespondieren OPtima im Gaußprozess mit Optima in der realen Fitnessfunktion.
+Bei korrekter Parametrisierung von SAIL, dem Gaußprozess, und einer ausreichen großen Anzahl an realen Auswertungen korrespondieren Optima im Gaußprozess mit Optima in der realen Fitnessfunktion.
 
 In \cite{Gaier.6152018} wurde gezeigt, dass dieser Ansatz erfolgreich auf 2D und 3D aerodynamische Domänen angewandt werden kann.
 Dort wurden per Freiform-Deformation dreidimensionale Objekte deformiert.
@@ -407,8 +387,13 @@ Auch eignen sie sich für solche Probleme, in denen qualitative Unterschiede bez
 So kann argumentiert werden, dass im Falle, dass ein Constraint die Einhaltung eines Schwellenwerts ist, eine Lösung, die diesen um 1 überschreitet, qualitativ besser ist als eine, die diesen um 10 überschreitet.
 
 Eine der größten Gefahren bei Soft Constraints ist, dass diese typischerweise als Kostenfunktionen formuliert werden, deren Wert mit der eigentlichen Zielfunktion der Optimierung kombiniert wird.
-Eine solche Kombination enthält immer eine Gewichtung für alle Teilfunktionen die sie ausmacht.
-Ist diese Gewichtung fehlerhaft parametrisiert, kann dies dazu führen, dass Teilfunktionen über- oder unterpriorisiert werden, und Constraints vom Algorithmus ignoriert werden, oder, dass nicht mehr nach dem primären Optimierungsziel optimiert wird.
+Eine solche Kombination enthält immer eine Gewichtung für alle Teilfunktionen aus denen sie besteht.
+Diese Gewichtung kontrolliert wie stark die einzelnen Funktionen in die Berechnung der Fitness einfließen.
+Oft entsteht die Einführung eines Soft Constraints eine weiteres Problem:
+Welche Gewichtung führt zu den besten beziehungsweise gewollten Ergebnissen?
+Unter welcher Gewichtung der Algorithmus die qualitativ besten Ergebnisse liefert ist typischerweise nicht klar, bevor dieser mit dieser Gewichtung ausgeführt wird.
+Wird eine suboptimale Gewichtung gewählt kann dies dazu führen, dass Constraints über- oder unterpriorisiert werden, was wiederum zur Folge haben kann, dass entweder Constraints oder das Primärziel ignoriert werden.
+
 
 \subsubsection{Vergleich}
 
@@ -524,7 +509,7 @@ Neben den Funktionen um die korrekte Aufteilung eines Cases auf mehrere Prozesso
 Diese beiden wichtigsten genutzten OpenFoam-Funktionen sind snappyHexMesh und simpleFoam.
 Mit snappyHexMesh, dessen Parametrisierung in \path{snappyHexMeshDict} zu finden ist, wird aus dem STL das für die Fluiddynamiksimulation benötigte Mesh generiert. Über snappyHexMesh kann die Auflösung des in der Fluiddynamiksimulation genutzten Meshes kontrolliert werden.
 Die Parametrisierung von snappyHexMesh ist deshalb besonders wichtig, da die Auflösung des Meshes die Simulation maßgeblich beeinflusst.
-snappyHexMesh ist ein auf Octrees \cite{Meagher.1982} basierender Verfeinerungsalgorithmus.
+snappyHexMesh ist ein auf Octrees (\cite{Meagher.1982}) basierender Verfeinerungsalgorithmus.
 Die Parametrisiereung von snappyHexMesh kontrolliert welche Bereiche stärker verfeinert werden.
 In diesen Bereichen wird der Baum tiefer und es werden mehr Zellen generiert.
 In der darauffolgenden Simulation bilden Zellen die atomare Einheit, wenn in bestimmten Bereichen nicht weit genug verfeinert wurde, besteht in der Simulation überhaupt nicht die Möglichkeit der Realität entsprechende Messwerte in dieser Zelle zu berechnen.
@@ -533,7 +518,7 @@ Die korrekte Auswahl in welchen Bereichen es nötig ist für eine korrekte Simul
 
 Die zweite dieser Funktionen ist die eigentliche Fluiddynamiksimulation.
 Abhängig von den benötigten Simulationsparametern stellt OpenFoam einige unterschiedliche Solver bereit.
-Da die Strömungsgeschwindigkeiten der Simulation weit unter $0.3Ma$ bleiben kann die Strömung als inkompressibel behandelt werden\cite{Anderson.2017}.
+Da die Strömungsgeschwindigkeiten der Simulation weit unter $0.3Ma$ bleiben kann die Strömung als inkompressibel behandelt werden (\cite{Anderson.2017}).
 Es existieren mehrere OpenFoam Solver für inkompressible Strömungen aus denen simpleFoam ausgewählt wurde.
 simpleFoam implementiert den SIMPLE (Semi-Implicit Method for Pressure Linked Equations) Algorithmus der in \cite{Caretto.1973} beschrieben wurde.
 Für die hier benötigten Werte reicht simpleFoam vollkommen aus.
@@ -550,7 +535,7 @@ Da das setzen der richtigen Hyperparameter schwer ist, können diese daraufhin n
 Die erste Funktion die ausgewählt wurde ist die Kovarianzfunktion.
 Es wurde die isotropische Squared exponential Konvarianz Funktion 
 \[
-	k(x,x') = \sigma_f * exp(-\frac{(x-x')^2}{2\ell^2})
+	k(x,x') = \sigma_f * \exp\left(-\frac{(x-x')^2}{2\ell^2}\right)
 \]
 gewählt.
 Diese besitzt die Hyperparameter $\sigma_f$, welcher die Standardabweichung des Signals bestimmt, und $\ell$, wodurch das Längemaß bestimmt wird.
@@ -571,7 +556,7 @@ Als letztes muss noch eine Entscheidung bezüglich der Wahrscheinlichkeitsfunkti
 Diese steuert die Varianz des Gaußprozesses.
 Da es keinen Grund gibt davon auszugehen, dass diese nicht Normalverteilt ist, wurde hier die Normalverteilung mit
 \[
-	\mathcal{N}(y_i \mid f_i, \sigma_n^2) = \frac{1}{\sqrt{2\pi*\sigma_n^2}}*exp(-\frac{(y_i - f_i)^2}{2\sigma_n^2})
+	\mathcal{N}(y_i \mid f_i, \sigma_n^2) = \frac{1}{\sqrt{2\pi*\sigma_n^2}}*\exp\left(-\frac{(y_i - f_i)^2}{2\sigma_n^2}\right)
 \]
 gewählt.
 Auch diese Funktion hat nur einen Hyperparameter $\sigma_n$, der steuert wie breit das Varianzband ist.
@@ -621,10 +606,8 @@ Dies ist zwar eine leichte Abweichung von der Aufgabenstellung, allerdings sind 
 
 \subsubsection{OpenFOAM}
 
-\todo{durchschnitt snappyhexmesh bild}
-
 Es wird wie bereits in \cref{sub:openfoam} beschrieben snappyHexMesh zur Konstruktion der Volumenmeshes genutzt.
-Zur Verfeinerung wurde der "distance"-Modus genutzt, bei dem Zellen abhängig von ihrer Distanz zu einer Oberfläche stärker Verfeinert werden.
+Zur Verfeinerung wurde der "distance" Modus genutzt, bei dem Zellen abhängig von ihrer Distanz zu einer Oberfläche stärker Verfeinert werden.
 Die Oberfläche zur Messung dieser Distanz ist in diesem Fall das Velomobil.
 Somit kann erreicht werden, dass Zellen nahe des Velomobils stark verfeinert werden, und weiter entfernte Zellen nicht zu stark verfeinert werden.
 Da aerodynamische Effekte primär am Velomobil stattfinden bot diese Einstellung eine Möglichkeit dafür angemessene Verfeinerungen herzustellen.
@@ -709,8 +692,8 @@ Es ist klar zu Erkennen, dass dieses Volumen die unverformten Radkästen schneid
 	\centering
 	\begin{minipage}{0.45\textwidth}
 		\centering
-		\includegraphics[width=.5\linewidth]{bilder/difference.png}
-		\caption{Das Mesh des Radkastens $FV_{radkasten}$}
+		\includegraphics[width=.5\linewidth]{bilder/simplified_wheelcase}
+		\caption{Das vereinfachte, geschlossene Mesh des Radkastens $FV_{radkasten}$}
 		\label{fig:wheelcase_volume}
 	\end{minipage}\hfill
 	\begin{minipage}{0.45\textwidth}

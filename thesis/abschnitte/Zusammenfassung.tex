@@ -18,6 +18,40 @@ Besonders da im zweiten Experiment mehr breitere Lösungen in der finalen Karte 
 Zwar brachte die stärker gefüllte Karte auch mehr stark deformierte Individuen mit sich, wodurch die Spannweite der erreichten Luftwiderstandswerte größer wurde, dies geschah allerdings für beide Versionen.
 
 Um sicherzustellen, dass MAP-Elites vollständig konvergiert ist wurde dieses Experiment noch einmal mit erhöhten Laufzeiten durchgeführt.
+Im dritten Experiment konnte zuerst einmal festgestellt werden, dass sich die Constrainterfüllung bei erhöhter Laufzeit in der Version ohne Constraint sogar etwas verschlechtert.
+Insgesamt war der Unterschied zwischen dem zweiten und dritten Experiment allerdings so klein, dass gesagt werden kann, dass das zweite ausreichen konvergiert ist.
+Die Analyse der genetischen Diversität der Akquiseindividuen zeigt, dass Deformationen in y und z-Richtung für gute Lösungen wichtiger sind, da in diesen Dimensionen Exploitation in engen Bereichen stattfindet, während Deformationen in x-Richtung eher unwichtig scheinen.
+Die genetische Diversität ist in beiden Varianten ähnlich groß und der genetische Suchraum wird ausreichend abgedeckt.
+Allerdings findet eine Verschiebung des Fokus von der Variante ohne Constraint zu der mit Constraint statt.
+Es werden beispielsweise mehr Individuen mit stärkeren y-Deformationen evaluiert.
+
+In der phänotypischen Diversität fallen zwei Dinge auf.
+Erstens werden die Karten in der Variante mit Constraint nicht so weitreichend gefüllt wie die ohne.
+Das hängt damit zusammen, dass die Einführung des Constraints eine zusätzliches Ziel zur Exploitation
+\footnote{Da der Constraint an jedem Punkt berechnet wird und rauschfrei ist besitzt der Constraint eine Varianz von 0}, wodurch sich die Balance zwischen Exploitation un Exploration verschiebt.
+Dies ist auch erkennbar, wenn man überprüft wo die Akquiseindividuen in der gewählten phänotypischen Karte liegen.
+In der Variante mit Constraint ist eine Häufung von Akquiseindividuen im mittigen Bereich der Karte zu erkennen.
+Der mittige Bereich der Karte ist gerade der Bereich in dem die größten Verbesserungen bezüglich der Constrainterfüllung zu finden waren.
+Für schmalere Individuen ist es schwerer den Constraint zu erfüllen, während breitere Lösungen aerodynamisch schlechtere Eigenschaften aufweisen.
+Deshalb findet Exploitation hauptsächlich in diesem Bereich statt.
+
+Bei der Betrachtung der produizierten Lösungen ist eine Verbesserung des Constraints erkennbar, allerdings ist diese nicht für die ganze Karte gleich stark.
+Da breitere Individuen in der Variante ohne Constraint schon dazu tendieren den Constraint zu erfüllen ist dort nicht viel Raum für Verbesserung.
+Trotzdem werden auch breite Individuen leicht verbessert.
+Schmalere Individuen hingegen verzeichnen auch keine starken Verbesserungen, obwohl diese hier möglich sein sollten.
+Dies hängt mit der Problematik der Gewichtung bei der Nutzung eines Soft Constraints zusammen.
+Die Gewichtung ist dafür verantwortlich den gewollten Kompromiss zwischen Constraint und Aerodynamik zu bestimmen.
+Bei schmaleren Individuen führte die Gewichtung dazu, dass zwar kleine Verbesserungen stattfanden, größere Constraintverbesserungen allerdings durch die damit verbundenen Kosten in der Aerodynamik vermieden wurden.
+Dadurch ähneln sich die Phänotypen der schmaleren Individuen zwischen beiden Varianten sehr stark und es sind dort auch keine großen Constraintverbesserungen zu verzeichnen.
+Wo tatsächliche gute Constraintverbesserungen erreicht wurden ist der mittlere Bereich der Karte.
+
+Interessant ist auch, dass viele Individuen existieren, die den Constraint fast erfüllen.
+Kleine Reste des Constraintvolumens stoßen noch aus dem Velomobil hervor.
+Höchstwahrscheinlich hängen diese kleinen Restvolumen mit der Vereinfachung des Radkastens zusammen.
+Um die Constraintberechnung ausreichend schnell durchführen zu können wurde der Radkasten vereinfacht.
+Der vereinfachte Radkaste und der originale Radkaste decken sich dadurch nicht, wodurch,b esonder wenn diese deformiert werden, kleinere Ungenauigkeiten entstehen können.
+Dadurch werden diese Teilvolumen in der Constraintberechnung nicht mehr beachtet, da sie außerhalb des deformierten vereinfachten Radkastens liegen.
+
 
 
 \subsection{E-Roller}
@@ -39,8 +73,8 @@ Es konnte festgestellt werden, dass praktisch nur symmetrische Bauteile generier
 Damit konnte die Hypothese \todo{nummer}, dass symmetrische Bauteile für den symmetrischen E-Roller optimal sind bestätigt werden.
 
 Es wurde grundsätzlich die Tendenz beobachtet, dass flachere Bauteile bessere Luftwiderstandswerte aufweisen.
-Dieses Ergebnis ist zwar etwas ernüchternd, da die Hoffnung bestand außergewöhnliche Bauteile zu generieren, die bessere aerodynamischen Eigenschaften aufweisen, als ein sehr triviales.
-Allerdings gilt wie bereits erwähnt, dass die Ungenauigkeit der Openfoam-Simulation kleine Effekte, die durch anders förmige Bauteile entstehen würden schlicht ignoriert.
+Dieses Ergebnis ist zwar etwas ernüchternd, da die Hoffnung bestand außergewöhnliche Bauteile zu generieren, die bessere aerodynamischen Eigenschaften aufweisen, als ein sehr banales.
+Allerdings gilt wie bereits erwähnt, dass die Ungenauigkeit der Openfoam-Simulation kleine Effekte, die durch anders förmige Bauteile entstehen würden schlicht ignorieren kann.
 
 \section{Ausblick}
 
@@ -57,15 +91,25 @@ So wurde in der Arbeit festgestellt, dass Deformationen in y, wie erwartet sehr 
 Deformationen in x-Richtung waren weitergehend unwichtig und stellten damit Dimensionen dar, die keine interessanten zusätzlichen Deformationen erlaubten.
 Es sollt also auch vermieden werden alle Punkte in allen Dimensionen zu deformieren und es sollte sich stattdessen auf y-Deformationen in allen und z-Deformationen in den oberen und unteren Rändern fokussiert werden.
 
-Es könnte in Erwägung gezogen werden den Constraint statt Strafwert als Feature-Dimension aufzunehmen.
+Ein Problem, welches sich in dieser Arbeit gezeigt hat, ist das Problem der korrekten Gewichtung von Luftwiderstand und Constraint.
+Das Problem der Gewichtung bei de Nutzung von Soft Constraints ist ein häufig auftretendes und schwer zu lösendes Problem.
+Stattdessen könnte in Erwägung gezogen werden den Constraint statt Strafwert als zusätzliche Feature-Dimension aufzunehmen.
 Dadurch würde die problematische Gewichtung zwischen Luftwiderstand und Strafwert wegfallen und es würde eine Diversität an Lösungen entlang der Constrainterfüllung generiert.
-Dadurch würde garantiert, dass Lösungen verschiedener Constrainterfüllung generiert werden und es könnte eine Untersuchung stattfinden wo überhaupt Lösungen generiert werden, die den Constraint erfüllen, da diese nicht wie in der momentanen Version von aerodynamisch besseren Lösungen die den Constraint schlechter erfüllen verdrängt werden können.
+Damit könnte man garantieren, dass Lösungen verschiedener Constrainterfüllung generiert werden und es könnte eine Untersuchung stattfinden wo überhaupt Lösungen generiert werden, die den Constraint erfüllen, da diese nicht wie in der momentanen Version von aerodynamisch besseren Lösungen die den Constraint schlechter erfüllen verdrängt werden können.
+
+Es sollte außerdem eine Validierung gegen den realen Constraint stattfinden.
+Der tatsächliche Constraint bestand darin einen größeren Radausschlag zu ermöglichen.
+In der Arbeit wurde immer nur mit dem Volumen des Radausschlags gearbeitet.
+Dies war eine Vereinfachung um den Constraint schnell und effizient berechnen zu können.
+Zwar ist anzunehmen das ein kleineres Außenvolumen mit einem größeren Radausschlag korreliert ist, können zahlreiche Beispiel konstruiert werden in denen das Außenvolumen minimiert wird und dabei kein größerer Radausschlag erreicht wird.
+Den Constraint so zu formulieren wie es in dieser Arbeit geschehen ist ist ein vertretbarer Ansatz, die produzierten Ergebnisse sollten aber auf die Erfüllung des tatsächlichen Constraints geprüft werden.
 
 Auch sollte über die Parametrisierung des Gaußprozesses nachgedacht werden.
 Besonders die isotropische Kovarianzfunktion sollte gegen eine mit Automatic relevance determination ausgetauscht werden, da es denkbar ist, dass Dimensionen, die auf y-Deformationen abgebildet werden andere Längenmaße benötigen, als solche, die auf z-Deformationen abgebildet werden.
 
 Die hier durchgeführten Experimente wurden mit einem vereinfachten Modell des Velomobils, welches die Räder nicht enthält, berechnet.
 Da die Radkästen mit hoher Wahrscheinlichkeit Einfluss auf die Turbulenzen um die Räder des Velomobils haben werden, wären Experimente, die die Räder des Velomobils einschließen wünschenswert.
+Dies könnte zwar die benötigte Auswertungszeit der Simulationen erhöhen, aber vermutlich realistischere Ergebnisse generieren.
 
 \subsection{E-Roller}
 
