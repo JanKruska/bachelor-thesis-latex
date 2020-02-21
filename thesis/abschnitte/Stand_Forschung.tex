@@ -5,10 +5,13 @@
 Genetische Algorithmen sind eine Klasse von Optimierungsalgorithmen, die sich an den Mechanismen der natürlichen Evolution orientieren (\cite{Simon.2013}).
 Namentlich Mutation, Crossover und Selektion.
 Die Begrifflichkeiten orientieren sich entsprechen an der natürlichen Evolution.
-Genetische Algorithmen arbeiten typischerweise mit Populationen aus Individuen, welche sich über Generationen entwickeln.
+Genetische Algorithmen arbeiten typischerweise auf Gruppen von Individuen, auch Population genannt.
+Diese Populationen entwickeln sich über die Iterationen des Algorithmus, typischerweise Generationen genannt.
 Jedes Individuum besitzt einen Genotypen sowie einen Phänotypen.
-\missingfigure{Vllt. Bild geno phäno}
-Der Genotyp eines Individuums ist typischerweise ein Vektor, das Genom des Individuums genannt, der aus einzelnen Zahlen, den Genen des Individuums, besteht. Dieser stellt die genetischen Informationen eines Individuums dar. Daneben existiert in genetischen Algorithmen eine Mapping-Funktion mit der eine Genotyp in einen Phänotyp, der nichts anderes als eine konkrete Lösung des Optimierungsproblems ist, übersetzt werden kann.
+%\missingfigure{Vllt. Bild geno phäno}
+Der Genotyp eines Individuums ist meist ein Vektor, das Genom des Individuums genannt, der aus einzelnen Zahlen, den Genen des Individuums, besteht.
+Dieser stellt die genetischen Informationen eines Individuums dar. 
+Daneben existiert in genetischen Algorithmen eine Mapping-Funktion mit der ein Genotyp in einen Phänotyp, sprich eine konkrete Lösung des Optimierungsproblems, übersetzt werden kann.
 
 \begin{algorithm}
 \caption{Genetischer Algorithmus} \label{alg:geneticAlgorihtm}
@@ -28,32 +31,36 @@ Der Genotyp eines Individuums ist typischerweise ein Vektor, das Genom des Indiv
 \end{algorithm}
 
 Die Mechanismen der Mutation und des Crossovers agieren auf der Ebene des Genotyps.
-Mutation beschreibt die Situation, dass sich jedes Gen mit einer bestimmten Wahrscheinlichkeit ändern kann. 
-Abhängig vom Typen des Gens, ist eine Änderung unterschiedlich formuliert, eine reelle Zahl mag sich anhand einer Normalverteilten Zufallsvariable ändern, eine natürliche Zahl mit $\pm1$ und ein Index mag einen zufälligen möglichen Index annehmen. 
+Mutation beschreibt die Situation, dass sich jedes Gen zufällig mutieren kann.
+Das bedeutet, dass eine Mutationswahrscheinlichkeit existiert, mit der sich jedes Gen ändern kann.
+Abhängig vom Typen des Gens, ist eine Änderung unterschiedlich formuliert, eine reelle Zahl mag sich anhand einer Normalverteilten Zufallsvariable ändern, eine natürliche Zahl mit $\pm1$ und ein Index mag einen zufälligen anderen möglichen Index annehmen.
 Mutatation ist für einen genetischen Algorithmus wichtig, da sich durch diese neue Eigenschaften entwickeln können.
 
-Crossover beschreibt die Situation, dass zwei oder mehr Elternindividuuen zu einem Kindindividuum kombiniert werden. 
-Auch hier ist keine konkrete Implementierung nicht vorgeschrieben, wichtig ist nur, dass ein Kind als Kreuzung der Eltern erzeugt werden kann.
+Crossover beschreibt die Situation, dass zwei oder mehr Elternindividuen zu einem Kindindividuum kombiniert werden. 
+Auch hier ist eine konkrete Implementierung nicht vorgeschrieben, wichtig ist nur, dass ein Kind als Kreuzung der Eltern erzeugt werden kann.
 Das Ziel des Crossovers ist es, dass sich positive Eigenschaften in Populationen verteilen und mehrere unabhängig entstandenen positiven Mutationen in einem Individuum vereint werden.
 Es ist allerdings anzumerken, dass Crossover einen optionalen Teil von genetischen Algorithmen darstellt, einige Algorithmen%, wie beispielsweise ($1 + \lambda$)-ES 
 verzichten aus verschiedenen Gründen auf Crossover und mutieren ihre Populationen nur.
-Diese beiden Methoden stellen sicher, dass neue Genotypen, und damit neue Lösungen generiert werden können, stellen aber keine Mechanismus zur Verfügung durch den dem Algorithmus eine Optimierungsrichtung gegeben wird.
+Diese beiden Methoden stellen sicher, dass erstens neues genetisches Material Einzug in den Algorithmus finden kann, und das sich genetische Informationen über Generationen in Populationen verteilen können.
+Dadurch können systematisch neue Genotypen und damit neue Lösungen generiert werden, sie stelle allerdings keinen Mechanismus zur Verfügung, der Lösungen optimieren kann.
 
-Der Mechanismus, der der Optimierung eine Richtung gibt ist die Selektion.
+Dieser Mechanismus, der der Optimierung eine Richtung gibt ist die Selektion.
 Anders als die ersten beiden agiert diese auf Phänotypen, sprich ausgedrückten Lösungen.
 Jeder genetische Algorithmus benötigt eine Funktion mit der Lösungen bewertet werden können.
 Dies kann entweder in Form einer Fitnessfunktion, die die Güte eines Individuums berechnet, bei der höhere Werte besser sind, oder in der Form einer Kostenfunktion, die die Kosten eines Individuums berechnet und bei der entsprechend niedrigere Werte besser sind, geschehen.
 Ob eine Fitness- oder Kostenfunktion genutzt wird hängt von der Problemformulierung ab, und ist letztendlich nur eine Frage der Algorithmus minimiert oder maximiert.
 Mit diesen Funktionen kann für jedes Individuum eine Qualität berechnet werden, und Individuen können bezüglich dieser verglichen werden.
-Durch Selektion werden in jeder Iteration dann schlechte Lösungen eliminiert, wodurch die Population sich zu Optima hinbewegt.
-%Die Fitness, bzw. der Kosten jedes Individuums kann dann ermittelt werden und die Selektion eliminiert dann schlechte Lösungen, sprich solche mit niedriger Fitness, bzw. hohen Kosten.
-Selektion ist häufig nicht so simpel, dass einfach die besten Individuen ausgewählt werden.
-Die in \cref{sub:divergentGeneticAlgorithms} besprochenen Ansätze zum Diversitätsmanagement, berücksichtigen Diversität von Populationen und können diverse Lösungen bevorzugt auswählen.
+Durch Selektion werden in jeder Iteration dann schlechte Lösungen eliminiert, wodurch sich die Population zu Optima hin entwickelt.
+Häufig ist die Selektion aus verschiedenen Gründen komplexer, als die einfache Auswahl der besten Individuen.
+Besonders die Diversität ist eine erwünschte Eigenschaft, die eine andere Formulierung des Selektion benötigt.
+Die in \cref{sub:divergentGeneticAlgorithms} besprochenen Ansätze zum Diversitätsmanagement, berücksichtigen Diversität von Populationen , bevorzugen dabei solche Lösungen, die die Diversität aufrechterhalten und produzieren damit am Ende diversere Ergebnisse, als ein evolutionärer Algorithmus ohne solche Ansätze.
 
-In der Gesamtschleife werden also in jeder Generation per Crossover Kinder erzeugt, die daraufhin mutiert werden.
-Für diese Kinder wird dann eine Fitness berechnet.
-Daraufhin werden durch die Selektion die besten Individuen ermittelt, welche zur nächste Elterngeneration werden.
-Diese Schleife wird solange wiederholt bis das Maximum an Generationen erreicht ist.
+Insgesamt lässt sich ein evolutionärer Algorithmus also wie folgt zusammenfassen.
+Zuerst wird eine zufällige Startpopulation erzeugt.
+Daraufhin werden aus den Individuen dieser Population Kinder per Crossover erzeugt und mutiert.
+Für diese Kinder wird die Fitness berechnet und Selektion durchgeführt wodurch eine neue Population entsteht, die daraufhin zur neuer Elterngeneration wird.
+Die Crossover$\rightarrow$Mutation$\rightarrow$Selektion Schleife wird so oft wiederholt werden bis entweder eine Abbruchkriterium, wie eine zu niedrige Verbesserungsrate, oder die maximale Anzahl an Generationen erreicht ist.
+Die letzte erzeugte Population stellt dann die Lösungspopulation des Algorithmus dar.
 
 \subsubsection{Divergente genetische Algorithmen}
 
@@ -63,26 +70,28 @@ Eine sehr häufige Anforderung an genetische Algorithmen ist die Einbindung von 
 Dies hat verschiedene Gründe.
 Einerseits führt eine niedrige Diversität der Individuen dazu, dass nur ein kleiner Bereich des Suchraums, nämlich der in dem die Individuen liegen abgesucht wird.
 Sehr homogene Populationen können dadurch einfach in lokalen Optima stagnieren, da andere Optima zu weit im Suchraum entfernt sind.
-In einer diversen Population ist das Springen aus lokalen Optima hingegen einfacher, und selbst wenn Populationen stagnieren, dann geschieht dies in mehreren Optima gleichzeitig, wodurch die Wahrscheinlichkeit in einem im globalen Vergleich gutes lokalen Optimum zu finden steigt.
-Auch ist es nicht unbedingt wünschenswert eine sehr homogene Population als Ergebnis zu erhalten, da die Individuen mit hoher Wahrscheinlichkeit aller der gleichen Lösungsklasse angehören.
+In einer diversen Population ist das Springen aus lokalen Optima hingegen einfacher, und selbst wenn Populationen stagnieren, dann geschieht dies in mehreren Optima gleichzeitig, wodurch die Wahrscheinlichkeit ein im globalen Vergleich gutes lokales Optimum zu finden steigt.
+Auch ist es nicht unbedingt wünschenswert eine sehr homogene Population als Ergebnis zu erhalten, da die Individuen mit hoher Wahrscheinlichkeit alle der gleichen Lösungsklasse angehören.
 Wenn man eine diverse Population aus Individuen erhält können Aussagen über unterschiedliche Lösungsklassen getroffen werden, Lösungsklassen und ihre Qualität können miteinander verglichen werden, und je nachdem kann größere Erkenntnis erlangt werden, was eine qualitativ hochwertige Lösung ausmacht wodurch wiederum das gestellte Problem besser verstanden werden kann.
 
-Es existieren verschiedenste Ansätze um Diversität zu gewährleisten, welche sind grundsätzlich in genotypische und phänotypische Ansätze aufteilen lassen, abhängig davon wo Diversitätsmanagement stattfindet.
+Es existieren verschiedenste Ansätze um Diversität zu gewährleisten, welche sind grundsätzlich in genotypische und phänotypische Ansätze aufteilen lassen, abhängig davon auf welcher Ebene Diversitätsmanagement stattfindet.
 Ansätze wie Niching (\cite{Mahfoud.1996},\cite{Shir.2012}), gewährleisten genotypische Diversität durch die Ermittlung der genetischen Ähnlichkeit zweier Individuen.
-Das hat den Vorteil, dass der Genotyp eines Individuums typischerweise ein Vektor ist, und eine Vielzahl von Ähnlichkeitsmetriken für Vektoren existiert.
-Dadurch fällt die Definition, was Diversität ausmacht sehr leicht.
-Auch ist die Berechnung einer Distanz zwischen Vektoren sehr effizient, was vorteilhaft ist, da die Berechnung von Diversität typischerweise sehr häufig stattfinden muss.
-Allerdings hat es den Nachteil, dass, besonders wenn die Genotyp-zu-Phänotyps-Mapping Funktion komplex ist, genetische Distanz nicht funktionaler Distanz zwischen Lösungen entspricht.
-D. h. es besteht die Möglichkeit, dass genetisch unähnliche Individuen trotzdem in die gleiche Lösungsklasse fallen.
+Das hat den Vorteil, dass der Genotyp eines Individuums typischerweise ein Vektor ist, und eine Vielzahl von Ähnlichkeits- und Distanzmetriken für Vektoren existiert.
+Dadurch fällt die Definition, was Diversität bedeutet sehr leicht.
+Auch ist die Berechnung einer Distanz zwischen Vektoren sehr effizient, was vorteilhaft ist, da die Berechnung der Ähnlichkeit zweier Individuen sehr häufig stattfinden muss.
+Allerdings hat es den Nachteil, dass, besonders wenn die Genotyp-zu-Phänotyp-Mapping Funktion komplex ist, genetische Distanz nicht funktionaler Distanz zwischen Lösungen entspricht.
+Ist das der Fall besteht die Möglichkeit, dass genetische unähnliche Individuen trotzdem zur die gleiche Lösungsklasse gehören können.
+Oft ist mit Diversität funktionale Diversität, sprich Distanz der Phänotypen, gemeint, nicht Diversität der Enkodierung.
 Deshalb wurden Ansätze wie Novelty-Search (\cite{Lehman.2011}) oder MAP-Elites (\cite{Mouret.4202015}) zum Diversitätsmanagement vorgeschlagen, die Diversität auf der Ebene, des Phänotyps bestimmen und somit funktionale Distanz messen.
 Da der Phänotyp domänenspezifisch,  muss die Diversitätsmetrik für jede Domäne maßgeschneidert definiert werden, und es kann nicht auf Allgemeinlösungen zurückgegriffen werden.
-Auch besteht eine erhebliche Limitierung bezüglich der Komplexität einer solche Diversitätsmetrik, da die Diversität typischerweise sehr häufig berechnet werden muss.
+Auch besteht eine erhebliche Limitierung bezüglich der Komplexität einer solche Diversitätsmetrik, da die Ähnlichkeit zweier Phänotypen sehr häufig berechnet werden muss.
 
 \subsubsection{MAP-Elites}
 
 \label{sub:mapElites}
 \begin{algorithm}
-	\caption{MAP-Elites} \label{alg:mapElites}
+	\caption{MAP-Elites} 
+	\label{alg:mapElites}
 	\begin{algorithmic}[1]
 		\Procedure{MapElites}{$fitnessFunction,categorizationFunction,hyperparameters$}
 		\State $map \gets $ \Comment{Initialize empty n-dimensional map}
@@ -115,28 +124,27 @@ Auch besteht eine erhebliche Limitierung bezüglich der Komplexität einer solch
 \end{algorithm}
 MAP-Elites (Multi-dimensional Archive of Phenotypic Elites)(\cite{Mouret.4202015}) ist ein genetischer Algorithmus mit phänotypischem Diversitätsmanagement.
 Das bedeutet, dass die Morphologie bzw. Funktionalität einer konkreten ausgedrückten Lösung, wie beispielsweise Volumen oder Krümmung eines Bauteils, betrachtet wird.
-Dazu wird der Lösungsraum entlang anhand beliebig vieler Features, deren Untersuchung als zielführend zum Verständnis des Problems befunden wird, aufgeteilt.
+Dazu wird der Lösungsraum entlang anhand beliebig vieler Features aufgeteilt, deren Untersuchung als zielführend zum Verständnis des Problems befunden wird.
 Diese Feature Dimensionen sind direkte Merkmale der Phänotypen von Lösungen, wie beispielsweise das Volumen eines Phänotypos in einer dreidimensionalen Domäne.
 Als Features sollten solche Merkmale gewählt werden die unabhängig von der Zielfunktion sind, d. h. deren Einfluss auf die Fitness von Lösungen unklar ist.
-Gerade die Untersuchung wie Merkmale mit der Fitness interagieren ist ein typisches Untersuchungsziel für MAP-Elites.
+Gerade die Untersuchung wie Merkmale mit der Fitness interagieren ist ein typisches Untersuchungsziel bei der Nutzung von MAP-Elites.
 Diesen Feature-Dimensionen wird ein Minimum, Maximums sowie eine Schrittweite zugewiesen um den Lösungsraum in Zellen zu diskretisieren.
 Diese Diskretisierung zu Zellen wird typischerweise Karte oder Archiv genannt.
 Wichtig für MAP-Elites ist das jede Zelle nur maximal eine Lösung enthalten kann.
-%Jede dieser Zellen stellt dabei eine Kombination der Eigenschaften dar.
+
 Zu Beginn des Algorithmus werden alle Zellen leer initialisiert, im Laufe des Algorithmus werden diese nach und nach gefüllt.
 Zuerst werden zufällige Individuen generiert um die Karte mit einer Initialpopulation zu befüllen.
-Daraufhin werden in jeder Generation aus den momentan in der Karte enthaltenen Lösung zufällig Individuen ausgewählt um die Kindpopulation zu erzeugen.
+Daraufhin werden in jeder Generation aus den momentan in der Karte enthaltenen Lösung zufällig Individuen ausgewählt.
 Aus dieses ausgewählten Individuen wird eine Kindpopulation per Mutation und/oder Crossover erzeugt.
-Jedes dieser Kinder wird bezüglich dessen Fitness evaluiert und dessen zugehöriger Phänotyp wird nach den gewählten Features kategorisiert.
-Diese Kategoriesierung weist jedem Kind eine Zelle zu die es befüllen könnte.
+Jedes dieser Kinder wird bezüglich der Fitness evaluiert und dessen zugehöriger Phänotyp wird nach den gewählten Features kategorisiert.
+Diese Kategorisierung weist jedem Kind eine Zelle zu die es befüllen könnte.
 Ist diese Zelle noch leer befüllt das Kind diese, befindet sich bereits ein Individuum in der Zelle, findet zwischen diesem und dem Kind lokal Konkurrenz statt.
-Die lokale Konkurrenz innerhalb der Zellen ist was MAP-Elites zu einem divergenten Algorithmus macht.
-Da Lösungen nur durch Lösungen verdrängt werden können, denen die gleiche Zelle zugewiesen ist, können Lösungen nur durch ihnen phänotypisch ähnliche Lösungen verdrängt werden.
-Dadurch wird die phänotypische Diversität des Algorithmus gewährleistet.
-Außerdem kann die Größe des Archivs während des Algorithmus nur zunehmen, da Individuen nur verdrängt werden können wenn sie durch ein anderes ersetzt werden, aber im Laufe des Algoithmus immer mehr leere Zellen befüllt werden können.
-Dass bedeutet, dass die Anzahl an lokalen Optima, die der Algorithmus ermittelt hat über dessen Laufzeit wächst.
 
-%Dadurch ist der Algorithmus divergent, denn dadurch, dass nur lokale Konkurrenz stattfindet kann ein Individuum nur durch ein phänotypisch ähnliches verdrängt werden, wodurch die phänotypische Diversität nicht sinkt.
+Die lokale Konkurrenz innerhalb der Zellen ist was MAP-Elites zu einem divergenten Algorithmus macht.
+Da Lösungen nur durch Lösungen verdrängt werden können denen die gleiche Zelle zugewiesen ist, können Lösungen nur durch phänotypisch ähnliche Lösungen ersetzt werden.
+Dadurch wird die phänotypische Diversität des Algorithmus gewährleistet.
+Außerdem kann die Größe des Archivs während des Algorithmus nur zunehmen, da Individuen nur verdrängt werden können wenn sie durch ein anderes ersetzt werden, aber im Laufe des Algorithmus immer mehr leere Zellen befüllt werden können.
+Dass bedeutet, dass die Anzahl an lokalen Optima, die der Algorithmus ermittelt hat über dessen Laufzeit wächst.
 Nicht nur wird eine Vielzahl von Lösungen generiert, die unterschiedliche Lösungsklassen abdecken, sondern die regelmäßig aufgeteilte Karte kann auch dabei helfen die Effekte, die die Features auf die Lösungsqualität haben zu verstehen.
 
 
@@ -147,9 +155,9 @@ Für die Selektion von Individuen innerhalb eines genetischen Algorithmus wird d
 Durch die große Anzahl an Individuen die für den evolutionären Algorithmus benötigt werden, findet die Auswertung der Fitnessfunktion sehr häufig statt.
 Dies stellt bei relativ einfachen Fitnessfunktionen keine große Einschränkung dar, auf Problemdomänen in denen die Auswertung der Fitness eines Individuums allerdings komplexer und dadurch zeitaufwändiger wird, kann dies die Anwendbarkeit einfacher genetischer Algorithmen einschränken.
 
-Aerodynamische Probleme, für die zeitaufwändige Simulationen nötig sind, gehören ohne Zweifel zu der Klasse von Problemen, für die die Anzahl der benötigten Funktionsauswertungen zu groß sind, als das der Algorithmus in vertretbarer Laufzeit abschließen kann.
-Um genetische Taktiken auf eine solche Problemdomäne anzuwenden, wird eine Möglichkeit benötigt die benötigten Funktionsauswertungen erheblich zu reduzieren.
-Eine solche Möglichkeit ist ein Surrogatmodell ()\cite{Jin.2011},\cite{Preen.2016}), eine Machine-Learning Modell, welches aufgrund echter Simulationsauswertungen trainiert wird, um deren Ergebnis annähernd vorherzusagen.
+Aerodynamische Probleme, für die zeitaufwändige Simulationen nötig sind, gehören ohne Zweifel zu der Klasse von Problemen, für die die Anzahl der benötigten Funktionsauswertungen zu groß sind, als dass der Algorithmus in vertretbarer Laufzeit abschließen kann.
+Um evolutionäre Algorithmen auf eine solche Problemdomäne anzuwenden, wird eine Möglichkeit benötigt um die Anzahl der benötigten Funktionsauswertungen erheblich zu reduzieren.
+Eine solche Möglichkeit ist die Nutzung eines Surrogatmodells (\cite{Jin.2011},\cite{Preen.2016}), eine Machine-Learning Modell, welches aufgrund echter Simulationsauswertungen trainiert wird, um deren Ergebnis annähernd vorherzusagen.
 Eine Auswertung des Modells erfordert dabei nur einen winzigen Bruchteil des Aufwands, der für eine Simulation nötig wäre.
 
 Die Einführung eines Surrogatmodells bringt allerdings einige Probleme mit sich.
@@ -180,10 +188,11 @@ Außerdem sind 3, der unendlich vielen möglichen Funktionen, die die Daten besc
 Diese Basisannahme wird daraufhin mit einer Reihe von Beobachtungen trainiert, wodurch sich das in \cref{fig:gp} (b) dargestellte Ergebnis ergibt.
 Vom Zustand \cref{fig:gp} (a) zu \cref{fig:gp} (b) wurde der Gaußprozess auf Basis von fünf Datenpunkten trainiert (als $+$-Symbole dargestellt).
 An jeder Beobachtung wird der Mittelwert auf den beobachteten Wert gesetzt und die Varianz an dieser Stelle kollabiert zu null, da dort absolute Sicherheit bezüglich des Wertes besteht.
-Auch kollabieren die Varianzen um die Datenpunkte, allerdings nicht zu null und je weiter man sich von einer Beobachtung entfernt, desto größer sind die Varianzen.
-Dies ist durch die Grundannahme zu begründen, dass die zu approximierende Funktion als stetig behandelt werden kann, d.h. kleine Änderungen der Eingabewerte in kleinen Änderungen der Funktionswerte resultieren.
+Auch die Varianzen um die Datenpunkte nehmen stark ab, werden allerdings nicht null.
+Je näher ein Punkt an tatsächlichen Beobachtungen liegt, desto kleiner ist die Varianz.
+Dies ist durch die Grundannahme zu begründen, dass die zu approximierende Funktion als stetig behandelt werden kann, d.h. es wird angenommen, dass kleine Änderungen der Eingabewerte in kleinen Änderungen der Funktionswerte resultieren.
 
-Gaußprozesse werden primär durch die Wahl der drei innerhalb des Garprozesses benötigten Funktionen und deren Hyperparameter gesteuert.
+Gaußprozesse werden primär durch die Wahl der drei innerhalb des Gaußprozesses benötigten Funktionen und deren Hyperparameter gesteuert.
 Die Mittelwertsfunktion ist die anfängliche Annahme des Mittelwerts des Gaußprozesses.
 Durch diese wird die Grundannahme des Gaußprozesses in Bereichen in denen keine Datenpunkte bekannt sind definiert.
 Wie diese Funktion aussehen kann ist nicht weiter beschränkt, die Daten sollten allerdings durch diese Funktion beschreibbar sein.
@@ -200,7 +209,7 @@ In Szenarien in denen ein Normalverteilung zur Beschreibung des Rauschen nicht k
 Hyperparameter der Wahrscheinlichkeits-Funktion sind die Hyperparameter der gewählten Verteilung.
 
 Die letzte und wichtigste der Funktionen ist die Kovarianzfunktion.
-Die Aufgabe der Kovarianzfunktion ist es die Kovarianz zwischen Punkte zu Berechnen.
+Die Aufgabe der Kovarianzfunktion ist es die Kovarianz zwischen Punkte zu berechnen.
 Damit wird durch die Kovarianzfunktion gesteuert welche Punkte für wie ähnlich befunden werden und damit wie Beobachtungen sich auf ihre Umgebung auswirken.
 Der wichtigste Hyperparameter der Kovarianzfunktion ist das Längenmaß $\ell$.
 \begin{figure}[h]
@@ -222,23 +231,24 @@ Die Frage wie die "beste" Parametrisierung eines Gaußprozesses systematischer g
 
 \todo{Chapter 5 gp}
 
-Der Hauptnachteil von Gaußprozessen ist die relativ hohe Speicher- und Rechenkomplexität, da die Anzahl an Simulationen die durchgeführt werden können aber ohnehin durch den Rechenaufwand, der mit diesen verbunden, ist, stark limitiert ist, wird die Anzahl an Trainingsdaten so gering bleiben, dass Komplexitätsüberlegungen hinfällig sind.
+Der Hauptnachteil von Gaußprozessen ist die relativ hohe Speicher- und Rechenkomplexität. 
+Da die Anzahl an Simulationen, die durchgeführt werden können aber ohnehin durch den Rechenaufwand, der mit diesen verbunden ist, stark limitiert ist, wird die Anzahl an Trainingsdaten so gering bleiben, dass Komplexitätsüberlegungen hinfällig sind.
 
-Der Vorteil von Gaußprozessen liegt in der besonderen Eigenschaft der Ergebnisse.
+Der Vorteil von Gaußprozessen liegt in der Art, wie diese die zu approximierende Funktion beschreiben.
 Ein Gaußprozess liefert im Gegensatz zu anderen Machine-Learning Verfahren nicht nur eine Vorhersage, sondern den Mittelwert und die Varianz der Vorhersage.
-Hauptvorteil dieser Tatsache ist, dass der Gaußprozess zwar Aussagen in Bereichen zu denen er keine Trainingsdaten erhalten hat trifft, aber die eigene Unsicherheit bezüglich dieser Ergebnisse Teil ebenjener ist.
-Dass führt dazu, dass fehlerhafte Aussagen durch fehlende Trainingsdaten wesentlich seltener auftreten als bei Machine-Learning Verfahren, die nur eine Vorhersage entwickeln.
+Hauptvorteil dieser Tatsache ist, dass der Gaußprozess zwar Aussagen in Bereichen zu denen er keine Trainingsdaten erhalten hat trifft, aber die eigene Unsicherheit bezüglich dieser Ergebnisse Teil dieser ist.
+Dadurch wird automatisch eine Aussage über die eigene Sicherheit bezüglich der Vorhersage getroffen, wodurch fehlerhafte Aussagen, die andere Machine Learning Verfahren weit entfern von Trainingsdaten treffen vermieden werden können.
+
 Dies ist allerdings nicht der Grund weshalb Gaußprozesse für SAIL genutzt werden.
 Stattdessen tritt auch in SAIL ein typisches Problem von Reinforcement Learning, die Spannung zwischen Exploration und Exploitation, auf.
-Gaußprozesse bieten mit ihrer Vorhersage von Mittelwert und Varianz eine perfekte Grundlage zur Anwendung von Upper-Confidence Bound, einer Methode zum Umgang mit diesem Dilemma.
+Gaußprozesse bieten mit ihrer Vorhersage von Mittelwert und Varianz eine perfekte Grundlage zur Anwendung des Upper-Confidence Bound Verfahrens, einer Methode zum Umgang mit diesem Dilemma.
 Auf das Dilemma und Upper-Confidence-Bound als Lösungsmöglichkeit wird im Folgenden in \cref{sub:exploration_exploitation} weiter eingegangen.
 Diese Eigenschaft ist allerdings der Grund warum Gaußprozesse als Surrogatmodell in SAIL genutzt werden.
-Durch die Eigenschaft sowohl den Mittelwert als auch die Varianz an jedem Punkt, eignen sich Gaußprozesse besonders für das im nächsten Kapitel besprochene Upper-Confidence-Bound-Verfahren.
 
 \subsubsection{Exploration Exploitation Problem}
 \label{sub:exploration_exploitation}
 Ein häufig auftretendes Dilemma, wenn der Gewinn eines unbekannten Problems maximiert werden soll, ist die Spannung zwischen Exploration und Exploitation.
-Das einfachste Beispiel in dem eine solche Spannung existiert ist das Problem des mehrarmigen Banditen.
+Das einfachste Beispiel in dem eine solche Spannung existiert ist das Problem des mehrarmigen Banditen \todo{zitat}.
 In diesem Problem existiert eine Reihe von Glücksspielautomaten, deren Gewinn durch statistische Verteilungen beschrieben wird.
 Der Gewinn jedes einzelnen Automaten wird durch eine andere Verteilung definiert.
 Diese Verteilungen sind einem Spieler, der das Ziel hat seinen Gewinn zu maximieren, allerdings nicht bekannt.
@@ -252,14 +262,14 @@ An dem besten bekannten Automaten zu spielen ist ein Beispiel der Exploitation, 
 
 Allgemeiner formuliert beschreibt Exploration dabei die Untersuchung von unbekannten, bisher unerforschten Gebieten, um das zugrundeliegende Problem besser zu verstehen und damit Strategien besser optimieren zu können, während Exploitation die Ausnutzung des gesammelten Wissens beschreibt um den Nutzen zu maximieren.
 Die beiden Herangehensweisen stellen gegensätzliche Konzepte dar.
-Je mehr Exploration durchgeführt wird, desto weniger Exploitation kann durchgeführt werden und vice-versa.
+Je mehr Exploration durchgeführt wird, desto weniger Exploitation kann durchgeführt werden und vice versa.
 
 Ein solches Problem stellt sich auch bei der Surrogatmodellierung.
-So ist einerseits die Exploration unerkundeter Gebiete wichtig um die globale Präzision des Modells zu maximieren und Optima in unerforschten Bereichen zu finden.
-Andererseits ist die Exploitation wichtig um Regionen um lokale Optima möglichst präzise abzubilden, da in diesen Regionen der Hauptteil der Optimierung stattfindet.
+So ist einerseits die Exploration unerforschter Gebiete wichtig um die globale Präzision des Modells zu maximieren und Optima in unerforschten Bereichen zu finden.
+Andererseits ist die Exploitation wichtig um Optimalregionen möglichst präzise abzubilden, da in diesen Regionen der Hauptteil der Optimierung stattfindet.
 Ist das Surrogatmodell in Regionen hoher Fitness nicht präzise, beschränkt das die maximale Qualität der Lösungen, die der Optimierungsalgorithmus, der auf das Surrogatmodell zurückgreift, erzeugen kann.
-Außerdem ist die Anzahl an erlaubten realen Auswertungen stark begrenzt, die Reduzierung dieser ist der Grund für die Nutzung eines Surrogatmodells.
-D. h. dass die Auswertungen, die durchgeführt werden maximalen Nutzen für das Surrogatmodell haben sollten.
+Außerdem ist die Anzahl der erlaubten realen Auswertungen stark begrenzt, die Reduzierung dieser ist gerade der Grund für die Nutzung eines Surrogatmodells.
+D. h. dass die Auswertungen, die durchgeführt werden sollten maximalen Nutzen für das Surrogatmodell haben.
 
 \begin{figure}[h]
 	\centering
@@ -267,9 +277,9 @@ D. h. dass die Auswertungen, die durchgeführt werden maximalen Nutzen für das 
 	\caption[Gaußprozess im Ausgangszustand (a) und nach dem Lernen von fünf Datenpunkten (b).]{Gaußprozess im Ausgangszustand (a) und nach dem Lernen von fünf Datenpunkten (b). Die drei nächsten Punkte die per UCB ausgewählt werden sind mit "x" markiert (aus \cite{Rasmussen.2008})}
 	\label{fig:ucb}
 \end{figure}
-Eine Möglichkeit mit dem Dilemma zwischen Exploration und Exploitation umzugehen ist das in \cite{Auer.2002} beschriebene Upper-Confidence-Bound. Dabei werden Exploration-Exploitation Probleme als statistischen Prozesse bestehend aus Mittelwert und Varianz aufgefasst.
+Eine Möglichkeit mit dem Dilemma zwischen Exploration und Exploitation umzugehen ist das in \cite{Auer.2002} beschriebene Upper-Confidence-Bound Verfahren. Dabei werden Exploration-Exploitation Probleme als statistischen Prozesse bestehend aus Mittelwert und Varianz aufgefasst.
 Der Mittelwert an einem Punkt spiegelt dabei den erwarteten Nutzen wieder, eine dem Mittelwert folgende Auswahl bevorzugt also Exploitation von Bereichen in denen der erwartete Nutzen hoch ist.
-Die Varianz spiegelt die Unsicherheit an einem Punkt wieder, eine Auswahl nach Varianz bevorzugt die Exploration von Bereichen in denen eine hohe Varianz auftritt, oder anders gesagt von bisher unerforschten Bereichen.
+Die Varianz spiegelt die Unsicherheit an einem Punkt wieder, eine Auswahl nach Varianz bevorzugt die Exploration von Bereichen in denen eine hohe Varianz auftritt, also eben solche Bereich in denen noch keine Datenpunkte existieren.
 Upper-Confidence-Bound kombiniert Mittelwert und Varianz zur Bestimmung der besten Punkte, und erreicht damit eine Balance in der sowohl Exploration als auch Exploitation stattfindet.
 
 Gaußprozesse eignen sich durch ihre Eigenschaft an jedem Punkt Mittelwert und Varianz des Gaußprozesses zu berechnen hervorragend zur Anwendung von Upper Confidence Bound.
@@ -278,11 +288,12 @@ Die beiden Punkte nahe null stellen dabei Beispiele von Exploitation dar.
 Beide Punkte liegen nahe an einer tatsächlichen Auswertung, durch den hohen Mittelwert in diesem Bereich sollte dieser aber genauer untersucht werden.
 Der Punk am rechten Rand bei $x=5$ stellt ein Beispiel von Exploration dar.
 Der Gaußprozess weiß über diesen Bereich noch nichts, folglich besteht dort eine hohe Varianz.
+Durch die große Varianz wird dieser Punkt trotz des niedrigen Mittelwerts ausgewählt.
 
 \subsubsection{SAIL}
 
 \begin{algorithm}
-	\caption{MAP-Elites} \label{alg:mapElites}
+	\caption{MAP-Elites} \label{alg:sail}
 	\begin{algorithmic}[1]
 		\Procedure{MapElites}{$evaluate,categorizationFunction,hyperparameters$}
 			\While{$numberEvaluatedSamples < totalSamples$}
@@ -319,32 +330,37 @@ Um eine gleichmäßige Verteilung der Samples über den Problemraum zu garantier
 Der eigentliche Kern von SAIL ist die graduelle Verfeinerung des Surrogatmodells.
 In jeder Iteration der Verfeinerungsschleife wird ein Gaußprozess auf Basis aller bisher ausgewerteten Samples trainiert.
 Mit diesem Gaußprozess wird MAP-Elites durchgeführt, wobei als Fitnessfunktion für die Durchführung von MAP-Elites die Akquisefunktion genutzt wird.
+Die Akquisefunktion ist dabei Upper Confidence Bound.
 Dadurch wird die sogenannte Akquisekarte erzeugt, welche diverse Lösungen enthält, die die Akquisefunktion maximieren.
 Aus dieser Akquisekarte werden dann mehrere Lösungen für reale Fitnessevaluationen ausgewählt.
 Durch die Nutzung von Upper-Confidence-Bound als Akquisefunktion stellen diese Lösungen Optima bezüglich Exploration und Exploitation dar.
 Die ausgewählten Samples werden daraufhin ausgewertet  und den bereits ausgewerteten hinzugefügt um den Gaußprozess in der nächten Iteration besser zu trainieren.
 Dies kann abhängig von den verfügbaren Rechenkapazitäten beliebig oft wiederholt werden.
-Am Ende poduziert diese Schleife eine Menge an echten Ausgewerteten Samples auf deren Basis der Gaußprozess trainiert werden kann.
+Am Ende produziert diese Schleife eine Menge an echten ausgewerteten Samples auf deren Basis der Gaußprozess trainiert werden kann.
 
-Um am Ende Ergebnisse zu erzeugen kann MAP-Elites mit dem finalen Gaußprozess und dessen Mittelwert als Fitnessfunktion ausgeführt werden.
+In der finalen Auswertung wird dann ein Gaußprozess auf Basis aller ausgewerteten Samples trainiert.
+Mit diese Gaußprozess wird dann ein letztes mal MAP-Elites durchgeführt, statt der Akquisefunktion wird allerdings die Fitnessfunktion optimiert, die durch den Mittelwert des Gaußprozesses beschrieben wird.
 Der Mittelwert des Gaußprozesses an einem Punkt entspricht gerade der mittleren Vorhersage zur Fitness einer realen Auswertung an diesem Punkt.
 Damit wird dann eine diverse Vorhersagekarte erzeugt, die die Optima des Gaußprozesses zeigt.
 Bei korrekter Parametrisierung von SAIL, dem Gaußprozess, und einer ausreichen großen Anzahl an realen Auswertungen korrespondieren Optima im Gaußprozess mit Optima in der realen Fitnessfunktion.
 
-In \cite{Gaier.6152018} wurde gezeigt, dass dieser Ansatz erfolgreich auf 2D und 3D aerodynamische Domänen angewandt werden kann.
+In \cite{Gaier.6152018} wurde gezeigt, dass dieser Ansatz erfolgreich auf zweidimensionale und dreidimensionale aerodynamische Domänen angewandt werden kann.
 Dort wurden per Freiform-Deformation dreidimensionale Objekte deformiert.
-Da die Auswertung der Fitnessfunktion in der Auswertung einer aerodynamische Simulation bestand wurde ein Surrogatnetzwerk genutzt.
 
 
 \subsection{Constraints in Optimierungsprozessen}
-Constraints sind eine Möglichkeit sekundäre Optimierungsparemter, welche neben dem primären Optimierungsziel ebenfalls eingehalten werden sollen, in einen Optimierungsprozess einzuarbeiten, ohne auf multivariate Optimierung zurückgreifen zu müssen.
-Constraints lassen sich grundsätzlich in Soft Constraints, bei denen die Nichteinhaltung des Constraints zur Addition von Strafwerten auf die Optimierungsfunktion führt, und Hard Constraints, die eine binäre erfüllt/nicht erfüllt Auswahl treffen.
-Welche dieser beiden Arten von Constraints genutzt wird, hängt stark von der Problemstellung ab.
+Constraints sind eine Möglichkeit anderweitige Beschränkungen, welche eingehalten werden sollen oder müssen, in einen Optimierungsprozess einzuarbeiten, ohne auf multivariate Optimierung zurückgreifen zu müssen.
+Dass Beschränkungen, wie Lösungen aussehen dürfen, existieren ist sehr häufig der Fall.
+Die einfachste Möglichkeit ist es die Genotypenkodierung und die Mapping-Funktion so zu wählen, dass nur Lösungen generiert werden können, die die Beschränkung erfüllen.
+Ist dies nicht möglich muss eine explizite Behandlung des Constraints stattfinden.
+Constraints lassen sich grundsätzlich in Soft Constraints, bei denen die Nichteinhaltung des Constraints zur Addition von Strafwerten auf die Fitnessfunktion führt, und Hard Constraints, die eine binäre erfüllt/nicht erfüllt Auswahl treffen, unterscheiden.
+Welche der drei Arten genutzt wird hängt stark von der Problemstellung ab.
 
 Auch stellt die Formulierung von Constraints häufig eine Herausforderung dar.
 So müssen diese offensichtlich berechenbar sein, Constraints sind allerdings häufig nicht in mathematischer Form formuliert sondern eher in einer Art die an Requirements erinnert.
-Es muss folglich zuerst eine mathematische Formulierung für den Constraint entwickelt werden, die den Constraint soweit wie möglich entspricht.
-Zweitens werden Constraints in einem typischen evolutionären Optimierungsalgorithmus sehr häufig evaluiert werden. Das bedeutet, dass die Berechnung des Constraints entweder nicht besonders rechenintensiv sein darf, oder Hilfsmechanismen integriert werden wie beispielsweise die Modellierung des Constraint durch ein Surrogatnetzwerk, wie es in SAIL für die Fitness bereits genutzt wird.
+Es muss folglich zuerst eine mathematische Formulierung für den Constraint entwickelt werden, die dem Constraint soweit wie möglich entspricht.
+Zweitens werden Constraints in einem typischen evolutionären Optimierungsalgorithmus sehr häufig evaluiert werden. 
+Das bedeutet, dass die Berechnung des Constraints entweder nicht besonders rechenintensiv sein darf, oder Hilfsmechanismen integriert werden wie beispielsweise die Modellierung des Constraint durch ein Surrogatnetzwerk, wie es in SAIL für die Fitness bereits geschieht.
 
 \subsubsection{Ausschluss durch Definition der Repräsentation}
 
@@ -541,6 +557,8 @@ gewählt.
 Diese besitzt die Hyperparameter $\sigma_f$, welcher die Standardabweichung des Signals bestimmt, und $\ell$, wodurch das Längemaß bestimmt wird.
 Die Squared exponential Funktion wird manchmal auch als Radial basis function (RBF) bezeichnet und stellt einen der meist genutzten Kernelfunktionen dar.
 Da sie unendlich differenzierbar ist werden sehr glatte Funktionen generiert.
+\todo{universal kernels}
+Das ist von Vorteil
 Isotropisch bedeutet in diesem Fall, dass das Längenmaß $\ell$ in allen Dimensionen gleich ist.
 Da alle Dimensionen auf den Intervall $[0;1]$ normiert sind kann das gleiche Längenmaß für alle Dimensionen genutzt werden.
 Die Nutzung eines Längenmaßes vereinfacht die Parametrisierung, häufig kann es trotzdem der Fall sein, dass bestimmte Dimensionen wichtiger für die Korrelation zwischen zwei Punkten sind, eine Möglichkeit damit umzugehen ist das sogenannte Automatic relevance determination (ARD), wodurch jede Dimension eine unabhängiges Längenmaß erhält.

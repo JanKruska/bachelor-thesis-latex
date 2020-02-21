@@ -104,6 +104,23 @@ Dies war eine Vereinfachung um den Constraint schnell und effizient berechnen zu
 Zwar ist anzunehmen das ein kleineres Außenvolumen mit einem größeren Radausschlag korreliert ist, können zahlreiche Beispiel konstruiert werden in denen das Außenvolumen minimiert wird und dabei kein größerer Radausschlag erreicht wird.
 Den Constraint so zu formulieren wie es in dieser Arbeit geschehen ist ist ein vertretbarer Ansatz, die produzierten Ergebnisse sollten aber auf die Erfüllung des tatsächlichen Constraints geprüft werden.
 
+Zur Formulierung des Constraint wurde hier einige Vereinfachungen vorgenommen.
+Es traten immer wieder kleine Restvolumen auf, die aus dem Velomobil herausstachen.
+Diese auftretenden Restvolumen entstanden durch die Vereinfachung des Radkastens, bei der nicht garantiert war, dass sich das Volumen nur vergrößern kann.
+Es wäre sinnvoll eine bessere Vereinfachung zu wählen, sodass diese niemals kleiner als der reale Radkasten ist, um solche Restvolumen zu vermeiden.
+
+Gegebenenfalls ist die Untersuchung ob und wie gut ein Surrogatmodell auch für die Berechnung des Constraints genutzt werden kann.
+Selbst mit den getroffenen Vereinfachungen nahm die Berechnung des Constraints einen großen Teil der Laufzeit in Anspruch, der vergleichbar mit der Laufzeit der präzisen Evaluationen war.
+Es war in dieser Arbeit möglich den Constraint direkt zu berechnen, sollte dieser aber komplexer werden, dann wird die direkte Berechnung sehr bald nicht in annehmbarer Zeit durchzuführen sein.
+Da sowieso schon ein Surrogatmodell für den Luftwiderstand genutzt wird, liegt die Erweiterung und die Nutzung eines zweiten Surrogatmodells für den Constraint nahe.
+Sollte dies möglich sein würde das die restriktive obere Komplexitätsgrenze der Constraintberechnung aufheben, wodurch realitätsgetreuere Constraints ermöglicht werden könnten. 
+
+Auch wäre eine saubere Definition des Constraintvolumens nötig.
+In der genutzten Definition ist der Bereich des Radausschlags unterhalb des Velomobils Teil des Constraintvolumens.
+Dadurch entspricht der vollständige ermöglichte Radausschlag nicht dem Constraintvolumen von null.
+Auch schränkt dieser Teil die Bewegungsfreiheit der Räder nicht ein.
+In weiterführenden Arbeiten sollte der Constraint soweit besser formuliert werden, dass dieser Teil kein Teil des Constraintvolumens ist um einen sauberen Nullpunkt zu erhalten.
+
 Auch sollte über die Parametrisierung des Gaußprozesses nachgedacht werden.
 Besonders die isotropische Kovarianzfunktion sollte gegen eine mit Automatic relevance determination ausgetauscht werden, da es denkbar ist, dass Dimensionen, die auf y-Deformationen abgebildet werden andere Längenmaße benötigen, als solche, die auf z-Deformationen abgebildet werden.
 
