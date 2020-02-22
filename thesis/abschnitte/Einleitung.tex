@@ -21,9 +21,9 @@ Häufig tritt bei der praktischen Anwendung von evolutionären Algorithmen das P
 Bei der Modellierung von Constraints stellen sich einige Fragen:
 Wie sollen diese mathematisch formuliert werden? 
 Wie sollen diese in den evolutionären Algorithmus integriert werden?
-Und wie kann dies erreicht werden ohne die Kernfunktionalität des evolutionären Algorithmus signifikant zu beeinträchtigen?
+Und kann trotz des Constraints eine diverse Population generiert werden
 In dieser Arbeit soll untersucht werden, ob und wie ein Constraint in einen divergenten evolutionären Algorithmus integriert werden kann und welchen Effekt der Constraint auf die Eigenschaften des evolutionären Algorithmus hat.
-Dies soll am Beispiel der Surrogat-assisitierten Illumination (SAIL), einem auf MAP-Elites basierten divergenten evolutionären Algorithmus mit Surrogatassistenz, geschehen.
+Dies soll am Beispiel der Surrogat-assistierten Illumination (SAIL), einem auf MAP-Elites basierten divergenten evolutionären Algorithmus mit Surrogatassistenz, geschehen.
 
 \section{Einleitung}
 
@@ -32,18 +32,18 @@ Evolutionäre Algorithmen sind dabei in der Lage kreative Lösungen, in komplexe
 Genetische Algorithmen sind eine solche Taktik, die an der biologischen Evolution angelehnt entwickelt wurde.
 Genetische Algorithmen entwickeln erst eine Möglichkeit eine funktionale Lösung, auch Phänotyp genannt, durch einen Genotypen, typischerweise ein Vektor, ausdrücken zu können.
 Mit einer Mapping-Funktion kann aus jedem Genotypen eine konkrete Lösung, ein Phänotyp, erstellt werden.
-Außerdem wird eine Zielfunktion, oder Fitnessfunktion benötigt, mit der die Lösungsqualität eines Individuums, d.h. dessen Phänotyps, ermittelt werden kann.
+Außerdem wird eine Zielfunktion oder Fitnessfunktion benötigt, mit der die Lösungsqualität eines Individuums, d.~h. dessen Phänotyps, ermittelt werden kann.
 Sind diese Dinge definiert, können die drei Mechanismen der Evolution, Mutation, Crossover und Selektion angewandt werden.
 Bei der Anwendung evolutionärer Algorithmen stellen sich allerdings einige Probleme.
 
 Eines dieser Probleme stellt sich recht häufig, da genetische Algorithmen ohne Diversitätsmanagement typischerweise sehr stark konvergieren und dadurch oft in lokalen Optima hängen bleiben.
-Um dieser Tendenz entgegenzuwirken und diverse Populationen aufrecht zu erhalten wurden verschiedene Taktiken vorgeschlagen, die sich grob in genotypische und phänotypische Diversitätsmanagementverfahren unterscheiden lassen.
+Um dieser Tendenz entgegenzuwirken und diverse Populationen aufrechtzuerhalten wurden verschiedene Taktiken vorgeschlagen, die sich grob in genotypische und phänotypische Diversitätsmanagementverfahren unterscheiden lassen.
 Verfahren zur Erhaltung genotypischer Diversität messen Diversität, die nichts anderes als das Inverse der Ähnlichkeit einer Population untereinander ist, durch die Ähnlichkeit zweier Genotypen zueinander.
-Da Genotypen Vektoren sind kann hier auf eines der vielen Ähnlichkeitsmaße, die für Vektoren existieren, zurückgegriffen werden.
+Da Genotypen Vektoren sind, kann hier auf eines der vielen Ähnlichkeitsmaße, die für Vektoren existieren, zurückgegriffen werden.
 Daneben existieren auch solche Verfahren, die Diversität anhand der Ähnlichkeit der Phänotypen messen.
 Das hat den Vorteil, das der Phänotyp die Funktion, eines Individuums beschreibt, es wird also funktionale , statt genetischer Diversität hergestellt.
 Allerdings bringt dies das weitere Problem mit sich wie man die phänotypische Ähnlichkeit zweier Individuen definiert.
-Da der Phänotyp stark von der Problemdomäne abhängt muss diese Ähnlichkeitsdefinition für jede Domäne unterschiedlich erfolgen.
+Da der Phänotyp stark von der Problemdomäne abhängt, muss diese Ähnlichkeitsdefinition für jede Domäne unterschiedlich erfolgen.
 Im Folgenden soll sich mit einer Möglichkeit zum phänotypischen Diversitätsmanagement auseinandergesetzt werden.
 
 Daneben ergeben sich häufig domänenspezifische Probleme.
@@ -51,21 +51,21 @@ Eines dieser Probleme ist, dass genetische Algorithmen eine große Zahl von Ausw
 Das kann dazu führen, dass genetische Algorithmen in Problemdomänen, in denen die Auswertung der Fitnessfunktion rechenaufwändig ist, in einer unveränderten Form,
 aufgrund der astronomisch hohen Rechenzeiten, die benötigt würden, schlicht nicht anwendbar sind.
 Um genetische Algorithmen für solche Probleme nutzen zu können werden somit Möglichkeiten benötigt, die Anzahl an rechenaufwändigen Evaluationen stark zu reduzieren.
-Eine solche Möglichkeit die Erfolg gezeigt hat sind Surrogat-Modelle.
+Eine solche Möglichkeit, die Erfolg gezeigt hat, sind Surrogat-Modelle.
 Diese werden mit tatsächlichen Evaluationen trainiert, deren Ergebnisse hervorzusagen.
 Das führt dazu, dass sie statt der tatsächlichen Evaluation im genetischen Algorithmus genutzt werden können.
 Die Auswertung eines Surrogat-Modells benötigt dabei nur einen Bruchteil der Zeit, die eine tatsächliche Evaluation benötigen würde.
 
-Das letzte große Problem, was sich stellt ist die Einbindung von Constraints.
+Das letzte große Problem, was sich stellt, ist die Einbindung von Constraints.
 Häufig existieren neben der primären Zielfunktion die optimiert wird, weitere sekundäre Ziele.
 Wenn die Ressourcen für eine multivariate Optimierung fehlen, können solche sekundären Optimierungsparameter nicht einfach zu Zielfunktionen erklärt werden.
 Stattdessen müssen diese Constraints anderweitig in die Algorithmik eingebunden werden.
-Es gibt verschiedene Ansätze zu Integration von Constraints in Optimierungsprobleme, welcher dieser Ansätze aber am Besten funktioniert hängt stark von der Problemdomäne und den Constraints ab.
+Es gibt verschiedene Ansätze zu Integration von Constraints in Optimierungsprobleme, welcher dieser Ansätze aber am besten funktioniert hängt stark von der Problemdomäne und den Constraints ab.
 
 In dieser Arbeit soll untersucht werden wie sich verschiedene Arten Constraints in die Algorithmik eines divergenten genetischen Verfahren auf die, von diesem Verfahren erzeugten Lösungen, auswirkt.
 Dies soll anhand der Lösung eines Problems der Aerodynamik-Domäne durch Anwendung der Surrogat-assistierten Illumination geschehen, einem Verfahren welches den divergenten genetischen Algorithmus MAP-Elites um eine Surrogat-Assistenz erweitert.
-Insbesondere die Frage ob eine Einbindung von Constraints in einen solchen divergenten evolutionären Algorithmus so möglich ist, dass sowohl die eigentliche Zielfunktion, in diesem Falle die aerodynamischen Eigenschaften, als auch der Constraint optimiert werden.
+Insbesondere die Frage, ob eine Einbindung von Constraints in einen solchen divergenten evolutionären Algorithmus so möglich ist, dass sowohl die eigentliche Zielfunktion, in diesem Falle die aerodynamischen Eigenschaften, als auch der Constraint optimiert werden.
 Es ist zu erwarten, dass durch die Einbindung eines Constraints die Optimierung der Zielfunktion schlechter ausfallen wird.
 Es gilt diesen Qualitätsverlust zu quantifizieren und in Relation zum Gewinn bezüglich der Erfüllung des Constraints zu setzen.
-Auch die Frage ob, und wenn ja wie stark, ein solcher Constraint sich auf die Diversität der Lösungen auswirkt gilt es zu untersuchen.
+Auch die Frage ob und wenn ja wie stark, ein solcher Constraint sich auf die Diversität der Lösungen auswirkt, gilt es zu untersuchen.
 
