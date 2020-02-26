@@ -4,7 +4,7 @@
 
 Genetische Algorithmen sind eine Klasse von Optimierungsalgorithmen, die sich an den Mechanismen der natürlichen Evolution orientieren (\cite{Simon.2013}).
 Namentlich Mutation, Crossover und Selektion.
-Die Begrifflichkeiten orientieren sich entsprechen an der natürlichen Evolution.
+Die Begrifflichkeiten orientieren sich entsprechend an der natürlichen Evolution.
 Genetische Algorithmen arbeiten typischerweise auf Gruppen von Individuen, auch Population genannt.
 Diese Populationen entwickeln sich über die Iterationen des Algorithmus, typischerweise Generationen genannt.
 Jedes Individuum besitzt einen Genotypen sowie einen Phänotypen.
@@ -31,34 +31,34 @@ Daneben existiert in genetischen Algorithmen eine Mapping-Funktion mit der ein G
 \end{algorithm}
 
 Die Mechanismen der Mutation und des Crossovers agieren auf der Ebene des Genotyps.
-Mutation beschreibt die Situation, dass sich jedes Gen zufällig mutieren kann.
-Das bedeutet, dass eine Mutationswahrscheinlichkeit existiert, mit der sich jedes Gen ändern kann.
+Mutation beschreibt die Situation, dass jedes Gen zufällig mutieren kann.
+Mutieren bedeutet, dass eine Mutationswahrscheinlichkeit existiert, mit der sich der Wert eines Gens ändern kann.
 Abhängig vom Typen des Gens, ist eine Änderung unterschiedlich formuliert, eine reelle Zahl mag sich anhand einer Normalverteilten Zufallsvariable ändern, eine natürliche Zahl mit $\pm1$ und ein Index mag einen zufälligen anderen möglichen Index annehmen.
-Mutation ist für einen genetischen Algorithmus wichtig, da sich durch diese neue Eigenschaften entwickeln können.
+Mutation ist für einen genetischen Algorithmus wichtig, da sich durch diese neue Eigenschaften entwickeln können und neues genetisches Material in den Algorithmus Einzug finden kann.
 
 Crossover beschreibt die Situation, dass zwei oder mehr Elternindividuen zu einem Kindindividuum kombiniert werden. 
 Auch hier ist eine konkrete Implementierung nicht vorgeschrieben, wichtig ist nur, dass ein Kind als Kreuzung der Eltern erzeugt werden kann.
-Das Ziel des Crossovers ist es, dass sich positive Eigenschaften in Populationen verteilen und mehrere unabhängig entstandenen positiven Mutationen in einem Individuum vereint werden.
+Das Ziel des Crossovers ist es, dass sich positive Eigenschaften in Populationen verteilen und mehrere unabhängig entstandenen positiven Mutationen in einem Individuum vereint werden können.
 Es ist allerdings anzumerken, dass Crossover einen optionalen Teil von genetischen Algorithmen darstellt, einige Algorithmen%, wie beispielsweise ($1 + \lambda$)-ES 
 verzichten aus verschiedenen Gründen auf Crossover und mutieren ihre Populationen nur.
-Diese beiden Methoden stellen sicher, dass erstens neues genetisches Material Einzug in den Algorithmus finden kann, und das sich genetische Informationen über Generationen in Populationen verteilen können.
-Dadurch können systematisch neue Genotypen und damit neue Lösungen generiert werden, sie stelle allerdings keinen Mechanismus zur Verfügung, der Lösungen optimieren kann.
+Diese beiden Methoden stellen sicher, dass erstens neues genetisches Material Einzug in den Algorithmus finden kann, und dass sich genetische Informationen über Generationen in Populationen verteilen können.
+Dadurch können systematisch neue Genotypen und damit neue Lösungen generiert werden, sie stellen allerdings keinen Mechanismus zur Verfügung, der Lösungen optimieren kann.
 
 Dieser Mechanismus, der der Optimierung eine Richtung gibt, ist die Selektion.
 Anders als die ersten beiden agiert diese auf Phänotypen, sprich ausgedrückten Lösungen.
 Jeder genetische Algorithmus benötigt eine Funktion mit der Lösungen bewertet werden können.
-Dies kann entweder in Form einer Fitnessfunktion, die die Güte eines Individuums berechnet, bei der höhere Werte besser sind, oder in der Form einer Kostenfunktion, die die Kosten eines Individuums berechnet und bei der entsprechend niedrigere Werte besser sind, geschehen.
-Ob eine Fitness- oder Kostenfunktion genutzt wird hängt von der Problemformulierung ab und ist letztendlich nur eine Frage der Algorithmus minimiert oder maximiert.
+Dies kann entweder in Form einer Fitnessfunktion, die die Güte eines Individuums berechnet und bei der höhere Werte besser sind, oder in der Form einer Kostenfunktion, die die Kosten eines Individuums berechnet und bei der entsprechend niedrigere Werte besser sind, geschehen.
+Ob eine Fitness- oder Kostenfunktion genutzt wird hängt von der Problemformulierung ab und ist letztendlich nur die Frage, ob der Algorithmus minimiert oder maximiert.
 Mit diesen Funktionen kann für jedes Individuum eine Qualität berechnet werden und Individuen können bezüglich dieser verglichen werden.
 Durch Selektion werden in jeder Iteration dann schlechte Lösungen eliminiert, wodurch sich die Population zu Optima hin entwickelt.
 Häufig ist die Selektion aus verschiedenen Gründen komplexer, als die einfache Auswahl der besten Individuen.
-Besonders die Diversität ist eine erwünschte Eigenschaft, die eine andere Formulierung der Selektion benötigt.
-Die in \cref{sub:divergentGeneticAlgorithms} besprochenen Ansätze zum Diversitätsmanagement, berücksichtigen Diversität von Populationen , bevorzugen dabei solche Lösungen, die die Diversität aufrechterhalten und produzieren damit am Ende diversere Ergebnisse, als ein evolutionärer Algorithmus ohne solche Ansätze.
+Besonders die Diversität ist eine erwünschte Eigenschaft, die eine komplexere Formulierung der Selektion benötigt.
+Die in \cref{sub:divergentGeneticAlgorithms} besprochenen Ansätze zum Diversitätsmanagement, berücksichtigen Diversität von Populationen, bevorzugen dabei solche Lösungen, die die Diversität aufrechterhalten und produzieren damit am Ende eine diversere Ergebnispopulation.
 
 Insgesamt lässt sich ein evolutionärer Algorithmus also wie folgt zusammenfassen.
 Zuerst wird eine zufällige Startpopulation erzeugt.
 Daraufhin werden aus den Individuen dieser Population Kinder per Crossover erzeugt und mutiert.
-Für diese Kinder wird die Fitness berechnet und Selektion durchgeführt, wodurch eine neue Population entsteht, die daraufhin zur neuer Elterngeneration wird.
+Für diese Kinder wird die Fitness berechnet und Selektion durchgeführt, wodurch eine neue Population entsteht, die daraufhin zur neuen Elterngeneration wird.
 Die Crossover$\rightarrow$Mutation$\rightarrow$Selektion Schleife wird so oft wiederholt werden bis entweder ein Abbruchkriterium, wie eine zu niedrige Verbesserungsrate, oder die maximale Anzahl an Generationen erreicht ist.
 Die letzte erzeugte Population stellt dann die Lösungspopulation des Algorithmus dar.
 
@@ -72,18 +72,18 @@ Einerseits führt eine niedrige Diversität der Individuen dazu, dass nur ein kl
 Sehr homogene Populationen können dadurch einfach in lokalen Optima stagnieren, da andere Optima zu weit im Suchraum entfernt sind.
 In einer diversen Population ist das Springen aus lokalen Optima hingegen einfacher und selbst wenn Populationen stagnieren, dann geschieht dies in mehreren Optima gleichzeitig, wodurch die Wahrscheinlichkeit ein im globalen Vergleich gutes lokales Optimum zu finden steigt.
 Auch ist es nicht unbedingt wünschenswert eine sehr homogene Population als Ergebnis zu erhalten, da die Individuen mit hoher Wahrscheinlichkeit alle der gleichen Lösungsklasse angehören.
-Wenn man eine diverse Population aus Individuen erhält, können Aussagen über unterschiedliche Lösungsklassen getroffen werden, Lösungsklassen und ihre Qualität können miteinander verglichen werden, und je nachdem kann größere Erkenntnis erlangt werden, was eine qualitativ hochwertige Lösung ausmacht , wodurch wiederum das gestellte Problem besser verstanden werden kann.
+Wenn man eine diverse Population aus Individuen erhält, können Aussagen über unterschiedliche Lösungsklassen getroffen werden, Lösungsklassen und ihre Qualität können miteinander verglichen werden, und je nachdem kann größere Erkenntnis erlangt werden, was eine qualitativ hochwertige Lösung ausmacht, wodurch wiederum das gestellte Problem besser verstanden werden kann.
 
-Es existieren verschiedenste Ansätze, um Diversität zu gewährleisten, welche sind grundsätzlich in genotypische und phänotypische Ansätze aufteilen lassen, abhängig davon auf welcher Ebene Diversitätsmanagement stattfindet.
+Es existieren verschiedenste Ansätze, um Diversität zu gewährleisten, welche sind grundsätzlich in genotypische und phänotypische Ansätze aufteilen lassen, abhängig davon auf welcher Abstraktionsebene Diversitätsmanagement stattfindet.
 Ansätze wie Niching (\cite{Mahfoud.1996},\cite{Shir.2012}), gewährleisten genotypische Diversität durch die Ermittlung der genetischen Ähnlichkeit zweier Individuen.
 Das hat den Vorteil, dass der Genotyp eines Individuums typischerweise ein Vektor ist, und eine Vielzahl von Ähnlichkeits- und Distanzmetriken für Vektoren existiert.
 Dadurch fällt die Definition, was Diversität bedeutet sehr leicht.
 Auch ist die Berechnung einer Distanz zwischen Vektoren sehr effizient, was vorteilhaft ist, da die Berechnung der Ähnlichkeit zweier Individuen sehr häufig stattfinden muss.
-Allerdings hat es den Nachteil, dass, besonders wenn die Genotyp-zu-Phänotyp-Mapping Funktion komplex ist, genetische Distanz nicht funktionaler Distanz zwischen Lösungen entspricht.
-Ist das der Fall besteht die Möglichkeit, dass genetische unähnliche Individuen trotzdem zur die gleiche Lösungsklasse gehören können.
-Oft ist mit Diversität funktionale Diversität, sprich Distanz der Phänotypen, gemeint, nicht Diversität der Enkodierung.
-Deshalb wurden Ansätze wie Novelty-Search (\cite{Lehman.2011}) oder MAP-Elites (\cite{Mouret.4202015}) zum Diversitätsmanagement vorgeschlagen, die Diversität auf der Ebene, des Phänotyps bestimmen und somit funktionale Distanz messen.
-Da der Phänotyp domänenspezifisch,  muss die Diversitätsmetrik für jede Domäne maßgeschneidert definiert werden, und es kann nicht auf Allgemeinlösungen zurückgegriffen werden.
+Allerdings hat es den Nachteil, dass, besonders wenn die Genotyp-zu-Phänotyp-Mapping Funktion komplex ist, genetische Distanz nicht der funktionalen Distanz zwischen Lösungen entspricht.
+D.~h. zwei genetisch unähnliche Lösungen, können trotzdem der gleichen Lösungsklasse angehören, sind also funktional ähnlich.
+Oft ist eher funktionale Diversität, sprich Distanz der Phänotypen, gewünscht, nicht Diversität der Enkodierung.
+Deshalb wurden Ansätze wie Novelty-Search (\cite{Lehman.2011}) oder MAP-Elites (\cite{Mouret.4202015}) zum Diversitätsmanagement vorgeschlagen, die Diversität auf der Ebene, des Phänotyps bestimmen und somit die funktionale Distanz messen.
+Da der Phänotyp domänenspezifisch ist, muss die Diversitätsmetrik für jede Domäne maßgeschneidert definiert werden, und es kann nicht auf Allgemeinlösungen zurückgegriffen werden.
 Auch besteht eine erhebliche Limitierung bezüglich der Komplexität einer solche Diversitätsmetrik, da die Ähnlichkeit zweier Phänotypen sehr häufig berechnet werden muss.
 
 \subsubsection{MAP-Elites}
@@ -130,22 +130,23 @@ Als Features sollten solche Merkmale gewählt werden, die unabhängig von der Zi
 Gerade die Untersuchung wie Merkmale mit der Fitness interagieren ist ein typisches Untersuchungsziel bei der Nutzung von MAP-Elites.
 Diesen Feature-Dimensionen wird ein Minimum, Maximums sowie eine Schrittweite zugewiesen um den Lösungsraum in Zellen zu diskretisieren.
 Diese Diskretisierung zu Zellen wird typischerweise Karte oder Archiv genannt.
-Wichtig für MAP-Elites ist, dass jede Zelle nur maximal eine Lösung enthalten kann.
+Essentiell für MAP-Elites ist, dass jede Zelle dieser Karte nur maximal eine Lösung enthalten kann.
 
-Zu Beginn des Algorithmus werden alle Zellen leer initialisiert, im Laufe des Algorithmus werden diese nach und nach gefüllt.
-Zuerst werden zufällige Individuen generiert um die Karte mit einer Initialpopulation zu befüllen.
-Daraufhin werden in jeder Generation aus den momentan in der Karte enthaltenen Lösung zufällig Individuen ausgewählt.
+Zu Beginn des Algorithmus werden alle Zellen zuerst einmal leer initialisiert. 
+Im Laufe des Algorithmus werden diese nach und nach gefüllt.
+Dazu werden zuerst zufällige Individuen generiert um die Karte mit einer Initialpopulation zu befüllen.
+Ist dies erfolgt werden daraufhin in jeder Generation aus den momentan in der Karte enthaltenen Lösung zufällig Individuen ausgewählt.
 Aus dieses ausgewählten Individuen wird eine Kindpopulation per Mutation und/oder Crossover erzeugt.
 Jedes dieser Kinder wird bezüglich der Fitness evaluiert und dessen zugehöriger Phänotyp wird nach den gewählten Features kategorisiert.
-Diese Kategorisierung weist jedem Kind eine Zelle zu die es befüllen könnte.
+Diese Kategorisierung weist jedem Kind eine Zelle zu, die es befüllen könnte.
 Ist diese Zelle noch leer befüllt das Kind diese, befindet sich bereits ein Individuum in der Zelle, findet zwischen diesem und dem Kind lokal Konkurrenz statt.
 
-Die lokale Konkurrenz innerhalb der Zellen ist was MAP-Elites zu einem divergenten Algorithmus macht.
+Die lokale Konkurrenz innerhalb der Zellen ist es, was MAP-Elites zu einem divergenten Algorithmus macht.
 Da Lösungen nur durch Lösungen verdrängt werden können, denen die gleiche Zelle zugewiesen ist, können Lösungen nur durch phänotypisch ähnliche Lösungen ersetzt werden.
 Dadurch wird die phänotypische Diversität des Algorithmus gewährleistet.
 Außerdem kann die Größe des Archivs während des Algorithmus nur zunehmen, da Individuen nur verdrängt werden können, wenn sie durch ein anderes ersetzt werden, aber im Laufe des Algorithmus immer mehr leere Zellen befüllt werden können.
 Dass bedeutet, dass die Anzahl an lokalen Optima, die der Algorithmus ermittelt hat, über dessen Laufzeit wächst.
-Nicht nur wird eine Vielzahl von Lösungen generiert, die unterschiedliche Lösungsklassen abdecken, sondern die regelmäßig aufgeteilte Karte kann auch dabei helfen die Effekte, die die Features auf die Lösungsqualität haben zu verstehen.
+Ein Vorteil von MAP-Elites ist es, dass nicht nur wird eine Vielzahl von Lösungen generiert wird, die unterschiedliche Lösungsklassen abdecken, sondern die regelmäßig aufgeteilte Karte kann auch dabei helfen die Effekte, die die Features auf die Lösungsqualität haben, zu verstehen.
 
 
 \subsection{Surrogat-Modellierung}
@@ -153,18 +154,18 @@ Nicht nur wird eine Vielzahl von Lösungen generiert, die unterschiedliche Lösu
 \label{sub:surrogate}
 Für die Selektion von Individuen innerhalb eines genetischen Algorithmus wird die Lösungsqualität dieser Individuen, typischerweise Fitness genannt, benötigt.
 Durch die große Anzahl an Individuen, die für den evolutionären Algorithmus benötigt werden, findet die Auswertung der Fitnessfunktion sehr häufig statt.
-Dies stellt bei relativ einfachen Fitnessfunktionen keine große Einschränkung dar, auf Problemdomänen in denen die Auswertung der Fitness eines Individuums allerdings komplexer und dadurch zeitaufwändiger wird, kann dies die Anwendbarkeit einfacher genetischer Algorithmen einschränken.
+Dies stellt bei relativ einfachen Fitnessfunktionen keine große Einschränkung dar, auf Problemdomänen in denen die Auswertung der Fitness eines Individuums allerdings komplexer und dadurch zeitaufwändiger ist, kann dies die Anwendbarkeit einfacher genetischer Algorithmen einschränken.
 
-Aerodynamische Probleme, für die zeitaufwändige Simulationen nötig sind, gehören ohne Zweifel zu der Klasse von Problemen, für die die Anzahl der benötigten Funktionsauswertungen zu groß sind, als dass der Algorithmus in vertretbarer Laufzeit abschließen kann.
+Aerodynamische Probleme, für deren Fitnessauswertung zeitaufwändige Simulationen nötig sind, gehören ohne Zweifel zu der Klasse von Problemen, für die die Anzahl der benötigten Funktionsauswertungen zu groß sind, als dass der Algorithmus in vertretbarer Laufzeit abschließen kann.
 Um evolutionäre Algorithmen auf eine solche Problemdomäne anzuwenden, wird eine Möglichkeit benötigt, um die Anzahl der benötigten Funktionsauswertungen erheblich zu reduzieren.
-Eine solche Möglichkeit ist die Nutzung eines Surrogatmodells (\cite{Jin.2011},\cite{Preen.2016}), eine Machine-Learning Modell, welches aufgrund echter Simulationsauswertungen trainiert wird, um deren Ergebnis annähernd vorherzusagen.
+Eine solche Möglichkeit ist die Nutzung eines Surrogatmodells (\cite{Jin.2011}, \cite{Preen.2016}), eine Machine-Learning Modell, welches aufgrund echter Simulationsauswertungen trainiert wird, um deren Ergebnis annähernd vorherzusagen.
 Eine Auswertung des Modells erfordert dabei nur einen winzigen Bruchteil des Aufwands, der für eine Simulation nötig wäre.
 
 Die Einführung eines Surrogatmodells bringt allerdings einige Probleme mit sich.
 Das wichtigste zu lösende Problem ist, wie bestimmt wird anhand welcher realen Funktionsauswertungen das Surrogatmodell trainiert wird.
 Dabei müssen einige Ziele beachtet werden.
 Ersten sollte das Surrogatmodell möglichst präzise sein, da es seinen Zweck für reale Funktionsauswertungen einzustehen nur erfüllen kann, wenn die Vorhersagen des Surrogatmodells ausreichend gut reale Funktionsauswertungen abbilden.
-Da das Surrogatmodell aber genau für den Zweck genutzt wird die Anzahl an benötigten teuren Funktionsauswertungen zu reduzieren, wäre es sinnvoll, wenn Funktionsauswertungen so gewählt werde, dass sie maximalen Nutzen bringen.
+Da das Surrogatmodell aber genau für den Zweck genutzt wird die Anzahl an benötigten teuren Funktionsauswertungen zu reduzieren, wäre es sinnvoll, wenn Funktionsauswertungen so gewählt werden, dass sie maximalen Nutzen bringen.
 
 
 \subsubsection{Gaußprozesse}
@@ -194,7 +195,7 @@ Dies ist durch die Grundannahme zu begründen, dass die zu approximierende Funkt
 
 Gaußprozesse werden primär durch die Wahl der drei innerhalb des Gaußprozesses benötigten Funktionen und deren Hyperparameter gesteuert.
 Die Mittelwertsfunktion ist die anfängliche Annahme des Mittelwerts des Gaußprozesses.
-Durch diese wird die Grundannahme des Gaußprozesses in Bereichen in denen keine Datenpunkte bekannt sind definiert.
+Durch diese wird die Grundannahme des Gaußprozesses in Bereichen, in denen keine Datenpunkte bekannt sind, definiert.
 Wie diese Funktion aussehen kann, ist nicht weiter beschränkt, die Daten sollten allerdings durch diese Funktion beschreibbar sein.
 Ein linearer Mittelwert kann beispielsweise niemals korrekt durch eine konstante Mittelwertfunktion beschrieben werden.
 In \cref{fig:gp} ist ein Beispiel einer konstanten Mittelwertfunktion abgebildet.
@@ -209,8 +210,8 @@ In Szenarien in denen eine Normalverteilung zur Beschreibung des Rauschens nicht
 Hyperparameter der Wahrscheinlichkeits-Funktion sind die Hyperparameter der gewählten Verteilung.
 
 Die letzte und wichtigste der Funktionen ist die Kovarianzfunktion.
-Die Aufgabe der Kovarianzfunktion ist es die Kovarianz zwischen Punkte zu berechnen.
-Damit wird durch die Kovarianzfunktion gesteuert welche Punkte für wie ähnlich befunden werden und damit wie Beobachtungen sich auf ihre Umgebung auswirken.
+Die Aufgabe der Kovarianzfunktion ist es die Kovarianz zwischen Punkten zu berechnen.
+Damit wird durch die Kovarianzfunktion gesteuert welche Punkte für wie ähnlich befunden werden und damit, wie Beobachtungen sich auf ihre Umgebung auswirken.
 Der wichtigste Hyperparameter der Kovarianzfunktion ist das Längenmaß $\ell$.
 \begin{figure}[h]
 	\centering
@@ -228,9 +229,10 @@ Dessen Mittelwert ist wesentlich glatter, beschreibt die Punkte aber nicht gut.
 Stattdessen wird für diese höheren Längenmaße ein größeres $\sigma_n$ der Wahrscheinlichkeits-Funktion benötigt. 
 Kurz gesagt beschreibt der Gaußprozess mit $\ell=3$ eine glatte Funktion mit starkem Rauschen.
 Es sollte klar erkennbar sein, dass Gaußprozess (a) die Daten am besten beschreiben kann, (b) führt sehr viele Bereiche mit hoher Varianz ein, die für diese Daten nicht angemessen sind, und (c) kann die Punkte nicht ordentlich approximieren und benötigt zur Beschreibung der Daten stattdessen ein starkes Rauschen.
-Die Frage wie die "beste" Parametrisierung eines Gaußprozesses systematischer gefunden werden kann ist enorm wichtig.
+Die Frage wie die "´beste"' Parametrisierung eines Gaußprozesses systematischer gefunden werden kann ist enorm wichtig.
 
-\todo{Chapter 5 gp}
+Aufgrund der erheblichen Schwierigkeit, die mit der Wahl der korrekten Hyperparameter verbunden ist, wird in \cite{Rasmussen.2008} ein Verfahren zur automatischen Bestimmung von passenden Hyperparametern beschrieben.
+Auf die Eigenheiten der Modellbestimmung durch Log-Marginal-Likelihood-Verfahren wird hier nicht weiter eingegangen werden, es soll nur erwähnt werden, dass ein solches Verfahren existiert, mit dem die Hyperparameter an die Daten angepasst werden können.
 
 Der Hauptnachteil von Gaußprozessen ist die relativ hohe Speicher- und Rechenkomplexität. 
 Da die Anzahl an Simulationen, die durchgeführt werden können aber ohnehin durch den Rechenaufwand, der mit diesen verbunden ist, stark limitiert ist, wird die Anzahl an Trainingsdaten so gering bleiben, dass Komplexitätsüberlegungen hinfällig sind.
@@ -252,18 +254,19 @@ Ein häufig auftretendes Dilemma, wenn der Gewinn eines unbekannten Problems max
 Das einfachste Beispiel, in dem eine solche Spannung existiert, ist das Problem des mehrarmigen Banditen (\cite{Robbins.1952}).
 In diesem Problem existiert eine Reihe von Glücksspielautomaten, deren Gewinn durch statistische Verteilungen beschrieben wird.
 Der Gewinn jedes einzelnen Automaten wird durch eine andere Verteilung definiert.
-Diese Verteilungen sind einem Spieler, der das Ziel hat seinen Gewinn zu maximieren, allerdings nicht bekannt.
+Diese Verteilungen sind einem Spieler, mit dem Ziel den eigenen Gewinn zu maximieren, allerdings nicht bekannt.
 Mit jedem Spiel an einem Automaten erhält der Spieler sowohl den Gewinn des Spiels, als auch Wissen über die Gewinnverteilung des Automaten und damit über das gesamte Problem.
 Das Problem ist die Frage, mit welcher Strategie der Spieler seinen Gewinn maximieren kann.
-Der Spieler kann nur den Automaten Spielen der den besten bekannten erwarteten Gewinn hat, allerdings besteht die Möglichkeit, dass ein anderer unbekannter Automat einen höheren erwarteten Gewinn besitzt, von dem der Spieler allerdings nicht weiß.
+Einerseits könnte der Spieler nur den Automaten spielen, der den besten bekannten erwarteten Gewinn hat, allerdings besteht die Möglichkeit, dass ein anderer unbekannter Automat einen höheren erwarteten Gewinn besitzt, von dem der Spieler allerdings nicht weiß.
+Die kurzfristig beste Strategie kann also langfristig nicht optimal sein.
 Stattdessen kann der Spieler versuchen Wissen über das Problem zu sammeln, indem er an Automaten spielt über deren Verteilung er wenig weiß. 
 Dies führt aber dazu, dass der Spieler an vielen schlechten Automaten spielen wird, um mehr Wissen über diese zu erlangen.
-Das Dilemma zwischen diesen Entscheidungen ist ein Beispiel Exploration Exploitation Problem.
-An dem besten bekannten Automaten zu spielen ist ein Beispiel der Exploitation, der Ausnutzung des Wissens, an unbekannten Automaten zu spielen ein Beispiel der Exploration, der Sammlung von Wissen.
+Das Dilemma zwischen diesen Entscheidungen ist ein Beispiel für das Dilemma zwischen Exploration und Exploitation.
+An dem besten bekannten Automaten zu spielen ist ein Beispiel der Exploitation, der Ausnutzung des Wissens, an unbekannten Automaten zu spielen ein Beispiel der Exploration, der Sammlung von neuem Wissen.
 
 Allgemeiner formuliert beschreibt Exploration dabei die Untersuchung von unbekannten, bisher unerforschten Gebieten, um das zugrundeliegende Problem besser zu verstehen und damit Strategien besser optimieren zu können, während Exploitation die Ausnutzung des gesammelten Wissens beschreibt, um den Nutzen zu maximieren.
 Die beiden Herangehensweisen stellen gegensätzliche Konzepte dar.
-Je mehr Exploration durchgeführt wird, desto weniger Exploitation kann durchgeführt werden und vice versa.
+Je mehr Exploration durchgeführt wird, desto weniger Exploitation kann durchgeführt werden und umgekehrt.
 
 Ein solches Problem stellt sich auch bei der Surrogatmodellierung.
 So ist einerseits die Exploration unerforschter Gebiete wichtig um die globale Präzision des Modells zu maximieren und Optima in unerforschten Bereichen zu finden.
@@ -282,14 +285,14 @@ D.~h. dass die Auswertungen, die durchgeführt werden sollten maximalen Nutzen f
 Eine Möglichkeit mit dem Dilemma zwischen Exploration und Exploitation umzugehen ist das in \cite{Auer.2002} beschriebene Upper-Confidence-Bound Verfahren. Dabei werden Exploration-Exploitation Probleme als statistischen Prozesse bestehend aus Mittelwert und Varianz aufgefasst.
 Der Mittelwert an einem Punkt spiegelt dabei den erwarteten Nutzen wider, eine dem Mittelwert folgende Auswahl bevorzugt also Exploitation von Bereichen, in denen der erwartete Nutzen hoch ist.
 Die Varianz spiegelt die Unsicherheit an einem Punkt wider, eine Auswahl nach Varianz bevorzugt die Exploration von Bereichen in denen eine hohe Varianz auftritt, also eben solche Bereiche in denen noch keine Datenpunkte existieren.
-Upper-Confidence-Bound kombiniert Mittelwert und Varianz zur Bestimmung der besten Punkte und erreicht damit eine Balance in der sowohl Exploration als auch Exploitation stattfindet.
+Upper-Confidence-Bound summiert Mittelwert und Varianz zur Bestimmung der Auswahl der nächsten Auswertung und erreicht damit eine Balance in der sowohl Exploration als auch Exploitation stattfindet.
 
 Gaußprozesse eignen sich durch ihre Eigenschaft an jedem Punkt Mittelwert und Varianz des Gaußprozesses zu berechnen hervorragend zur Anwendung von Upper Confidence Bound.
-In \cref{fig:ucb} sind in die in \cref{sub:gp} vorgestellte Abbildung, die drei nächsten Punkte die durch Upper Confidence Bound zu Auswertung bestimmt würden dargestellt.
+In \cref{fig:ucb} sind die drei nächsten Punkte, die durch Upper Confidence Bound zur Auswertung bestimmt würden dargestellt.
 Die beiden Punkte nahe null stellen dabei Beispiele von Exploitation dar. 
 Beide Punkte liegen nahe an einer tatsächlichen Auswertung, durch den hohen Mittelwert in diesem Bereich sollte dieser aber genauer untersucht werden.
 Der Punkt am rechten Rand bei $x=5$ stellt ein Beispiel von Exploration dar.
-Der Gaußprozess weiß über diesen Bereich noch nichts, folglich besteht dort eine hohe Varianz.
+Der Gaußprozess weiß über diesen Bereich wenig, folglich besteht dort eine hohe Varianz.
 Durch die große Varianz wird dieser Punkt trotz des niedrigen Mittelwerts ausgewählt.
 
 \subsubsection{SAIL}
@@ -344,15 +347,15 @@ In der finalen Auswertung wird dann ein Gaußprozess auf Basis aller ausgewertet
 Mit diesem Gaußprozess wird dann ein letztes Mal MAP-Elites durchgeführt, statt der Akquisefunktion wird allerdings die Fitnessfunktion optimiert, die durch den Mittelwert des Gaußprozesses beschrieben wird.
 Der Mittelwert des Gaußprozesses an einem Punkt entspricht gerade der mittleren Vorhersage zur Fitness einer realen Auswertung an diesem Punkt.
 Damit wird dann eine diverse Vorhersagekarte erzeugt, die die Optima des Gaußprozesses zeigt.
-Bei korrekter Parametrisierung von SAIL, dem Gaußprozess, und einer ausreichen großen Anzahl an realen Auswertungen korrespondieren Optima im Gaußprozess mit Optima in der realen Fitnessfunktion.
+Bei korrekter Parametrisierung von SAIL, des Gaußprozesses, und einer ausreichend großen Anzahl an realen Auswertungen korrespondieren Optima im Gaußprozess mit Optima in der realen Fitnessfunktion.
 
 In \cite{Gaier.6152018} wurde gezeigt, dass dieser Ansatz erfolgreich auf zweidimensionale und dreidimensionale aerodynamische Domänen angewandt werden kann.
-Dort wurden per Freiform-Deformation dreidimensionale Objekte deformiert.
+Auch dort wurden per Freiform-Deformation dreidimensionale Objekte deformiert.
 
 
 \subsection{Constraints in Optimierungsprozessen}
 Constraints sind eine Möglichkeit anderweitige Beschränkungen, welche eingehalten werden sollen oder müssen, in einen Optimierungsprozess einzuarbeiten, ohne auf multivariate Optimierung zurückgreifen zu müssen.
-Dass Beschränkungen, wie Lösungen aussehen dürfen, existieren ist sehr häufig der Fall.
+Dass Beschränkungen existieren, wie Lösungen aussehen dürfen, ist sehr häufig der Fall.
 Die einfachste Möglichkeit ist es die Genotypenkodierung und die Mapping-Funktion so zu wählen, dass nur Lösungen generiert werden können, die die Beschränkung erfüllen.
 Ist dies nicht möglich, muss eine explizite Behandlung des Constraints stattfinden.
 Constraints lassen sich grundsätzlich in Soft Constraints, bei denen die Nichteinhaltung des Constraints zur Addition von Strafwerten auf die Fitnessfunktion führt, und Hard Constraints, die eine binäre erfüllt/nicht erfüllt Auswahl treffen, unterscheiden.
@@ -368,7 +371,7 @@ Das bedeutet, dass die Berechnung des Constraints entweder nicht besonders reche
 
 Die einfachste Art mit äußeren Einschränkungen umzugehen, ist es die Repräsentation des Problems so zu formulieren, dass es nicht möglich ist Phänotypen zu generieren, die den Constraint verletzen.
 Im Gegensatz zum Phänotyp, dessen Definition von der Problemdomäne abhängt, kann der Genotyp frei definiert werden.
-Die einzigen Kriterien, die der Genotyp erfüllen muss, sind, dass eine Abbildung existiert mit der aus einem Genotyp ein zugehöriger Phänotyp generiert werden kann, dass die Methoden der evolutionären Optimierung, sprich Mutation und Crossover, mit ihm durchgeführt werden, und dass neue zufällige Genotypen generiert werden können.
+Die einzigen Kriterien, die der Genotyp erfüllen muss, sind, dass eine Abbildung existiert mit der aus einem Genotyp ein zugehöriger Phänotyp generiert werden kann, dass die Methoden der evolutionären Optimierung, sprich Mutation und Crossover, mit ihm durchgeführt werden und dass neue zufällige Genotypen generiert werden können.
 Die Wahl einer guten Repräsentation des Problems ist einer der wichtigsten Teile der evolutionären Optimierung.
 So existieren Beispiele, in denen das gleiche Problem mit einer Repräsentation nicht gelöst werden kann, während dies mit einer anderen Repräsentation möglich ist.
 Constraints können in der Wahl der Problemrepräsentation bereits behandelt werden.
@@ -377,7 +380,7 @@ Ist es möglich, durch eine kluge Wahl der Repräsentation zu garantieren, dass 
 Dies hat den Vorteil, dass ungültige Lösungen niemals in den Algorithmus einfließen, und damit weder Rechenkapazitäten für nicht nutzbare Lösungen genutzt werden, noch solche Eigenschaften, durch die eine Lösung die Constraints verletzt, vom Algorithmus überhaupt in Erwägung gezogen werden.
 Dies kann eine sehr einfache und effektive Art sein um mit Constraints umzugehen und sollte, sofern es möglich ist, die erste Wahl zu Behandlung von Constraints sein.
 Häufig ist es allerdings so, dass die Definition einer Repräsentation, die den Constraint erfüllt, eine große Herausforderung darstellt.
-Besonders in solchen Problemdomänen, in denen die Genotyp-Phänotyp Abbildung komplex ist, ist es häufig sehr schwer die Repräsentation so zu wählen, dass sie einen beliebigen Constraint ausschließt.
+Besonders in solchen Problemdomänen, in denen die Genotyp-Phänotyp Abbildung komplex ist, ist es häufig sehr schwer die Repräsentation so zu wählen, dass sie die Verletzung eines beliebigen Constraint ausschließt.
 
 \subsubsection{Hard Constraints}
 
@@ -388,8 +391,8 @@ Solche Lösungen, die den Constraint nicht erfüllen werden disqualifiziert, wä
 Da Constraints immer Constraints des Phänotyps sind, ist die Behandlung dieser auf Phänotypebene einfacher, als der Ausschluss invalider Phänotypen durch Änderung des Genotyps.
 Typischerweise werden bei der Nutzung von Hard Constraints an allen Stellen im Algorithmus an denen neue Lösungen generiert werden, sprich Zufallsinitialisierung, Mutation und Crossover, ungültige Lösungen herausgefiltert.
 
-Hard Constraints haben denselben Vorteil wie der Ausschluss durch die Wahl der Repräsentation, ungültige Lösungen niemals in den Algorithmus einfließen, und damit weder Rechenkapazitäten für nicht nutzbare Lösungen genutzt werden, noch solche Eigenschaften, durch die eine Lösung die Constraints verletzt, vom Algorithmus überhaupt in Erwägung gezogen werden.
-Im Gegensatz zu dieser Variante muss bei der Nutzung von Hard Constraints, für jedes generierte Individuum getestet werden ob es den Constraint erfüllt.
+Hard Constraints haben denselben Vorteil wie der Ausschluss durch die Wahl der Repräsentation, dass ungültige Lösungen niemals in den Algorithmus einfließen, und damit weder Rechenkapazitäten für nicht nutzbare Lösungen genutzt werden, noch solche Eigenschaften, durch die eine Lösung die Constraints verletzt, vom Algorithmus überhaupt in Erwägung gezogen werden.
+Im Gegensatz zu dieser Variante muss bei der Nutzung von Hard Constraints, für jedes generierte Individuum allerdings getestet werden, ob es den Constraint erfüllt.
 Dies nimmt Rechenzeit in Anspruch und schränkt die Formulierung der Constraint-Funktion durch die hohe Zahl an Individuen insoweit ein, als dass diese angemessen schnell berechenbar sein muss.
 
 
@@ -464,14 +467,14 @@ Die erste dieser Domänen ist die Generierung von verformten Radkästen eines Ve
 Die zweite Domäne ist die explorative Untersuchung verschiedener Bauteilformen an der Unterseite eines E-Rollers.
 In beiden Domänen ist die Verformung dreidimensionaler Bauteile und die darauffolgende Bewertung des Effektes auf die Aerodynamik, den diese Verformung hat, Untersuchungsziel.
 Auf die domänenübergreifende Teile der Repräsentation wird in \cref{sub:representation} eingegangen.
-Darauffolgend wird in \cref{sub:method_wheelcase} \cref{sub:method_escooter} auf die Spezifika, wie Constraints und Featurewahl, der Radkasten- beziehungsweise E-Roller-Domäne eingegangen.
+Darauffolgend wird in \cref{sub:method_wheelcase} und \cref{sub:method_escooter} auf die Spezifika, wie Constraints und Featurewahl, der Radkasten- beziehungsweise E-Roller-Domäne eingegangen.
 
 \subsection{Repräsentation der Domänen}
 \label{sub:representation}
 
 In beiden Domänen geht es um die Deformation von dreidimensionalen Bauteilen und die Bewertung der aerodynamischen Effekte solcher Deformationen.
 D.~h. es wird eine robuste Methode benötigt, um dreidimensionale Bauteile zu deformieren und solche Deformationen auf wenige Parameter reduzieren zu können.
-Eine Methode, die diese Rahmenbedingungen erfüllt ist die Freiformdeformation \cite{Sederberg.1986} auf die in \cref{sub:ffd} genauer eingegangen wird, die Deformationen von komplexen geometrischen Objekten anhand Verschiebungen von Rahmenpunkten ausdrücken kann.
+Eine Methode, die diese Rahmenbedingungen erfüllt ist die Freiformdeformation (\cite{Sederberg.1986}) auf die in \cref{sub:ffd} genauer eingegangen wird, die Deformationen von komplexen geometrischen Objekten anhand Verschiebungen von Rahmenpunkten ausdrücken kann.
 Für aerodynamische Simulationen wird in beiden Domänen OpenFoam verwendet, ein Open-Source-Programm welches unter anderem fähig ist Windkanalsimulationen durchzuführen.
 Auf die genaueren Eigenschaften von OpenFoam und den Aufbau einer passenden Simulationsumgebung wird in \cref{sub:openfoam} eingegangen.
 
@@ -512,8 +515,8 @@ Dadurch das nur die Punkte des Meshes ihre Position ändern, hat das Verfahren, 
 
 \subsubsection{OpenFOAM}
 \label{sub:openfoam}
-OpenFoam \cite{OpenCFD.} ist eine Open-Source-Programm zur Durchführung von Fluiddynamiksimulationen.
-Berechnungen in OpenFOAM sind in sogenannten "Cases" organisiert auf die nacheinander OpenFoam-Funktionen angewandt werden.
+OpenFoam (\cite{OpenCFD.}) ist ein Open-Source-Programm zur Durchführung von Fluiddynamiksimulationen.
+Berechnungen in OpenFOAM sind in sogenannten "´Cases"' organisiert, auf die nacheinander OpenFoam-Funktionen angewandt werden.
 Diese Cases bestehen aus einer Basisstruktur, die Initiale Startparameter, sowie Dateien zur Steuerung von OpenFoam enthalten.
 %Diese basis ist in den Ordnern \textit{domains/wheelcase/pe} und \textit{domains/escooter/pe} zu finden.
 Diese Basis enthält typischerweise Skripts um die gesamte Kette aus verschiedenen OpenFoam Funktionen, die zur Durchführung einer Simulation notwendig sind, auszuführen, sowie ein Skript, welches den Case wieder in den Startzustand versetzt.
@@ -521,7 +524,7 @@ Außerdem enthält diese Basis das Verzeichnis system, das C++-Dictionaries enth
 Für jede der genutzte OpenFoam Funktion existiert dort eine Datei, in der beschrieben wird was die entsprechende Funktion wie tun soll. 
 Zuletzt befindet sich in diesem Ordner auch noch der Initiale Startzustand, mit dem die Simulation beginnt.
 
-OpenFoam bietet native Unterstützung von Parallelität über MPI \cite{OpenMPI.}.
+OpenFoam bietet native Unterstützung von Parallelität über MPI (\cite{OpenMPI.}).
 Neben den Funktionen um die korrekte Aufteilung eines Cases auf mehrere Prozessoren aufzuteilen und am Ende wieder zu rekonstruieren sind zwei Funktionen und deren dazugehörige Dateien hervorzuheben.
 
 Diese beiden wichtigsten genutzten OpenFoam-Funktionen sind snappyHexMesh und simpleFoam.
@@ -532,35 +535,37 @@ Die Parametrisierung von snappyHexMesh kontrolliert welche Bereiche stärker ver
 In diesen Bereichen wird der Baum tiefer und es werden mehr Zellen generiert.
 In der darauffolgenden Simulation bilden Zellen die atomare Einheit, wenn in bestimmten Bereichen nicht weit genug verfeinert wurde, besteht in der Simulation überhaupt nicht die Möglichkeit der Realität entsprechende Messwerte in dieser Zelle zu berechnen.
 Mit wachsender Anzahl der Zellen wächst allerdings auch die Zeit die für Verfeinerung und Simulation benötigt wird.
-Die korrekte Auswahl in welchen Bereichen es nötig ist für eine korrekte Simulation stärker zu verfeinern und in welchen Bereichen eine weitere Verfeinerung nur weitere Berechnungskomplexität ohne Informationsgewinn hinzufügt. 
+Die korrekte Auswahl in welchen Bereichen es nötig ist für eine korrekte Simulation stärker zu verfeinern und in welchen Bereichen eine weitere Verfeinerung nur weitere Berechnungskomplexität ohne Informationsgewinn hinzufügt ist sehr wichtig. 
 
 Die zweite dieser Funktionen ist die eigentliche Fluiddynamiksimulation.
 Abhängig von den benötigten Simulationsparametern stellt OpenFoam einige unterschiedliche Solver bereit.
-Da die Strömungsgeschwindigkeiten der Simulation weit unter $0.3Ma$ bleiben kann die Strömung als inkompressibel behandelt werden (\cite{Anderson.2017}).
+Da die Strömungsgeschwindigkeiten der Simulation weit unter $0,3Ma$ bleiben kann die Strömung als inkompressibel behandelt werden (\cite{Anderson.2017}).
 Es existieren mehrere OpenFoam Solver für inkompressible Strömungen aus denen simpleFoam ausgewählt wurde.
 simpleFoam implementiert den SIMPLE (Semi-Implicit Method for Pressure Linked Equations) Algorithmus, der in \cite{Caretto.1973} beschrieben wurde.
 Für die hier benötigten Werte reicht simpleFoam vollkommen aus.
-\todo{eingehen auf simple foam}
 Zudem werden die Koeffizienten der auf das Objekt wirkenden Kräfte berechnet, welche für die Berechnung der Fitness benötigt werden. 
 
 \subsubsection{Parametrisierung des Gaußprozesses}
 
 Die Parametrisierung des Gaußprozesses besteht aus drei Schritten.
-Zuerst werden die Funktionen für Kovarianz, Mittelwert und Wahrscheinlichkeit ausgewählt werden.
+Zuerst werden die Funktionen für Kovarianz, Mittelwert und Wahrscheinlichkeit ausgewählt.
 Daraufhin müssen die Hyperparameter dieser drei Funktionen gesetzt werden.
 Da das Setzen der richtigen Hyperparameter schwer ist, können diese daraufhin, nachdem Datenpunkte vorhanden sind, so optimiert werden, dass die Daten am besten beschrieben werden.
 
 Die erste Funktion, die ausgewählt wurde, ist die Kovarianzfunktion.
-Es wurde die isotropische Squared exponential Konvarianz Funktion 
+Es sind einige Eigenschaften der zugrundeliegenden Funktion anzunehmen.
+Durch die Nutzung der Freidormdeformation zur Repräsentation der Domäne ist anzunehmen, dass kleine Änderungen des Genotyps mit kleinen Änderungen des Phänotyps korrespondieren.
+Auch ist anzunehmen, dass ähnliche Phänotypen ähnliche aerodynamische Eigenschaften haben.
+Es ist anzunehmen, dass die Kovarianz zwischen einem Punkt und seiner Umgebung in alle Richtungen abnimmt und es ist nicht anzunehmen, dass die Luftwiderstandswerte beispielsweise periodisch sind.
+Die isotropische Squared exponential Konvarianz Funktion  
 \[
 	k(x,x') = \sigma_f * \exp\left(-\frac{(x-x')^2}{2\ell^2}\right)
 \]
-gewählt.
+ist eine solche Funktion, die gaußsche Abnahme der Kovarianz in alle Richtungen annimmt.
 Diese besitzt die Hyperparameter $\sigma_f$, welcher die Standardabweichung des Signals bestimmt, und $\ell$, wodurch das Längenmaß bestimmt wird.
-Die Squared exponential Funktion wird manchmal auch als Radial basis function (RBF) bezeichnet und stellt einen der meist genutzten Kernelfunktionen dar.
-Da sie unendlich differenzierbar ist, werden sehr glatte Funktionen generiert.
-\todo{universal kernels}
-Das ist von Vorteil
+Die Squared exponential Funktion wird manchmal auch als Radial basis function (RBF) bezeichnet und stellt eine der meist genutzten Kernelfunktionen dar.
+Da sie unendlich differenzierbar ist, werden sehr glatte Funktionen generiert (\cite{Duvenaud.2014}).
+
 Isotropisch bedeutet in diesem Fall, dass das Längenmaß $\ell$ in allen Dimensionen gleich ist.
 Da alle Dimensionen auf das Intervall $[0;1]$ normiert sind, kann das gleiche Längenmaß für alle Dimensionen genutzt werden.
 Die Nutzung eines Längenmaßes vereinfacht die Parametrisierung, häufig kann es trotzdem der Fall sein, dass bestimmte Dimensionen wichtiger für die Korrelation zwischen zwei Punkten sind, eine Möglichkeit damit umzugehen ist das sogenannte Automatic relevance determination (ARD), wodurch jede Dimension ein unabhängiges Längenmaß erhält.
@@ -574,27 +579,33 @@ besitzt nur einen Hyperparameter $c$, der festlegt auf welcher Konstanten der Mi
 
 Als letztes muss noch eine Entscheidung bezüglich der Wahrscheinlichkeitsfunktion getroffen werden.
 Diese steuert die Varianz des Gaußprozesses.
-Da es keinen Grund gibt davon auszugehen, dass diese nicht Normalverteilt ist, wurde hier die Normalverteilung mit
+Da es keinen Grund gibt davon auszugehen, dass diese nicht normalverteilt ist, wurde hier die Normalverteilung mit
 \[
 	\mathcal{N}(y_i \mid f_i, \sigma_n^2) = \frac{1}{\sqrt{2\pi*\sigma_n^2}}*\exp\left(-\frac{(y_i - f_i)^2}{2\sigma_n^2}\right)
 \]
 gewählt.
-Auch diese Funktion hat nur einen Hyperparameter $\sigma_n$, der steuert wie breit das Varianzband ist.
+Auch diese Funktion hat nur einen Hyperparameter $\sigma_n$, der steuert wie stark das Rauschen auf den Daten ist.
 Bei einem stärkeren Rauschen der Daten wird ein größeres $\sigma_n$ benötigt um nahe Datenpunkte mit sehr verschiedenen Werten beschreiben zu können.
 
-Die initiale Parametrisierung der Hyperparameter erfolgte gemäß 
+Die initiale Parametrisierung der Hyperparameter erfolgte gemäß \cref{tab:initialParams}.
 
 \begin{table}[h]
 	\centering
 	\begin{tabularx}{.25\textwidth}{ll}\hline
 		$\ell$ & $0.5$ \\
-		$\sigma_f$ & $0$ \\
+		$\sigma_f$ & $1$ \\
 		$c$ & $0$ \\
 		$\sigma_n$ & $1$ \\
 	\end{tabularx}
 	\caption{Initiale Hyperparameter des Gaußprozesses}
 	\label{tab:initialParams}
 \end{table}
+
+Da die Hyperparameter im Laufe des Algorithmus auf Basis realer Funktionsevaluationen optimiert werden, sind die initialen Parameter weniger wichtig.
+Ein Längenmaß von $0,5$ bedeutet hier, dass Punkte eine Auswirkung bis zu einer Entfernung von $0,5$ im Genotypraum haben der in jeder Dimension auf das Intervall $[0;1]$ beschränkt ist.
+Da die Ermittlung des tatsächlichen Mittelwerts durch Openfoam-Simulationen möglich ist, wird ein Mittelwert von $0$ gewählt, der nach der Auswertung der Initialsamples auf den Mittelwert dieser angepasst wird.
+Da die Spanne an Luftwiderstandswerten im vor herein nicht bekannt ist, wird $\sigma_n = 1$ gewählt.
+Wie bereits erwähnt werden diese Parameter durch die log-marginal-Likelihood-Methode während des Algorithmus angepasst.
 
 
 \subsection{Radkästen des Velomobils}
@@ -621,17 +632,17 @@ Dies führt dazu, dass der linke Radkasten symmetrisch zum rechten verformt wird
 Dadurch kann die Anzahl an benötigten Freiheitsgrade halbiert werden. 
 Auch die Berechnungen des Constraints und der Kategorisierung können dadurch nur für den rechten Radkasten durchgeführt werden, was auch dafür den benötigten Aufwand halbiert.
 
-Um möglichst glatte Übergänge zwischen Radkasten und Velomobil herstellen zu können wurden die Radkästen nicht separat verformt un daraufhin mit dem Rest des Velomobils kombiniert, sondern es wurden mit FFD-Boxen um die Radkästen das komplette Modell verformt.
+Um möglichst glatte Übergänge zwischen Radkasten und Velomobil herstellen zu können wurden die Radkästen nicht separat verformt und daraufhin mit dem Rest des Velomobils kombiniert, sondern es wurden mit FFD-Boxen um die Radkästen das komplette Modell verformt.
 Dies ist zwar eine leichte Abweichung von der Aufgabenstellung, allerdings sind scharfe Ränder aerodynamisch suboptimal und daher zu vermeiden, und genau das wird dadurch erreicht.
 
 \subsubsection{OpenFOAM}
 
 Es wird wie bereits in \cref{sub:openfoam} beschrieben snappyHexMesh zur Konstruktion der Volumenmeshes genutzt.
-Zur Verfeinerung wurde der "distance" Modus genutzt, bei dem Zellen abhängig von ihrer Distanz zu einer Oberfläche stärker verfeinert werden.
+Zur Verfeinerung wurde der "´distance"' Modus genutzt, bei dem Zellen abhängig von ihrer Distanz zu einer Oberfläche stärker verfeinert werden.
 Die Oberfläche zur Messung dieser Distanz ist in diesem Fall das Velomobil.
 Somit kann erreicht werden, dass Zellen nahe des Velomobils stark verfeinert werden, und weiter entfernte Zellen nicht zu stark verfeinert werden.
 Da aerodynamische Effekte primär am Velomobil stattfinden bot diese Einstellung eine Möglichkeit dafür angemessene Verfeinerungen herzustellen.
-Als Parametrisierung wurde (0.2 5) (0.5 4) (1.0 2) gewählt, d.h. alles mit einer Entfernung kleiner $0.2m$ zum Velomobil wird zu Level 5 verfeinert, alles mit einem Abstand bis $0.5m$ mit Level 4 und alles mit einem Abstand bis zu $1m$ mit Level 2.
+Als Parametrisierung wurde (0.2 5) (0.5 4) (1.0 2) gewählt, d.~h. alles mit einer Entfernung kleiner $0.2m$ zum Velomobil wird zu Level 5 verfeinert, alles mit einem Abstand bis $0.5m$ mit Level 4 und alles mit einem Abstand bis zu $1m$ mit Level 2.
 
 \begin{figure}[h]
 	\centering
@@ -639,11 +650,11 @@ Als Parametrisierung wurde (0.2 5) (0.5 4) (1.0 2) gewählt, d.h. alles mit eine
 	\caption{Luftwiderstandswerte über Simulationen von vier zufällig verformten Radkästen}
 	\label{fig:wheelcase_convergence}
 \end{figure}
-Es wurden mehrere OpenFoam-Simulationen des Velomobils durchgeführt um zu testen, ob und wann die berechneten cD-Werte ausreichend konvergieren.
-In \cref{fig:wheelcase_convergence} sind die berechneten cD-Werte über den Simulationslauf dargestellt. 
+Es wurden mehrere OpenFoam-Simulationen des Velomobils durchgeführt um zu testen, ob und wann die berechneten $c_D$-Werte ausreichend konvergieren.
+In \cref{fig:wheelcase_convergence} sind die berechneten $c_D$-Werte über den Simulationslauf dargestellt. 
 Es ist erkennbar, dass diese zum Start der Simulation stark schwanken, sich aber relativ schnell auf den finalen Wert einpendeln.
-Ungefähr zwischen 50 und 100 Sekunden sind die cD-Werte ausreichen konvergiert.
-Da die Konvergenz für unterschiedliche Formen unterschiedlich erfolgt wurden die cD-Werte von Sekunden bis Sekunden gemittelt, um die Fitness zu berechnen.
+Ungefähr bei 50 Sekunden sind die $c_D$-Werte ausreichen konvergiert.
+Da die Konvergenz für unterschiedliche Formen unterschiedlich erfolgt wurden die $c_D$-Werte von 100 Sekunden bis 200 Sekunden gemittelt, um die Fitness zu berechnen.
 Offensichtlich reichen 200 simulierte Sekunden aber aus, um aussagekräftige Ergebnisse zu erlangen.
 
 
@@ -673,7 +684,7 @@ Offensichtlich reichen 200 simulierte Sekunden aber aus, um aussagekräftige Erg
 Zur Erfüllung des Constraints wurden alle möglichen Radausschläge als Mesh modelliert.
 Dafür wurden aus einer Kugel entsprechend des maximalen Radausschlags nach rechts und links ein dreieckiges Stück ausgeschnitten.
 Zusätzlich wurde die innere Hälfte der Kugel entfernt, da dort keine Überschneidungen stattfinden, und durch deren Entfernen, Berechnungen effizienter sind.
-Das Mesh $FV_{radausschlag}$ ist in Abb. \cref{fig:steering_volume} alleine, in Abb. \cref{fig:steering_volume_with_velo} zusammen mit dem restlichen Velomobil dargestellt.
+Das Mesh $FV_{radausschlag}$ ist in \cref{fig:steering_volume} alleine, in \cref{fig:steering_volume_with_velo} zusammen mit dem restlichen Velomobil dargestellt.
 Es ist klar zu Erkennen, dass dieses Volumen die unverformten Radkästen schneidet und diese den maximalen Lenkausschlag nicht ermöglichen.
  
 
@@ -731,12 +742,13 @@ Zwar besteht keine direkte Kausalität zwischen diesem Volumen und dem maximalen
 %als Constraint das Differenzvolumen des Radausschlags minus verformten Radkastens gewählt.
 
 Da alle generierten Verformungen der Radkästen symmetrisch sind, wird der Constraint jeweils nur für den rechten Radkasten berechnet.
-Zur Berechnung der Differenz zwischen Radausschlagsvolumen und Radkasten wird die Bibliothek \textit{gptoolbox} \cite{gptoolbox.b} genutzt, zur Generierung von Tetraedermeshes zur Volumenberechnung \textit{TetGen} \cite{Si.2015}.
-%Ein Beispiel des Differenzvolumens zur Constraintberechnung ist in Abb. \cref{fig:diff_volume} zu sehen.
+Zur Berechnung der Differenz zwischen Radausschlagsvolumen und Radkasten wird die Bibliothek \textit{gptoolbox} ()\cite{gptoolbox.b}) genutzt, zur Generierung von Tetraedermeshes zur Volumenberechnung \textit{TetGen} (\cite{Si.2015}).
+%Ein Beispiel des Differenzvolumens zur Constraintberechnung ist in \cref{fig:diff_volume} zu sehen.
 %Dieses Volumen stellt die Differenz des Radausschlagvolumens und des unverformten Radkastens dar.
 Um die Meshdifferenz berechnen zu können wurde der rechte Radkasten zudem geschlossen.
 Da die Constraintberechnung in jeder Generation für jedes Kind erfolgen muss wurde der Radkasten außerdem vereinfacht um die Berechnung  des Constraints ausreichend schnell durchführen zu können.
 Um den Strafwert $p$ für ein Individuum zu berechnen wird $V(FV_{diff})$ des Individuums berechnet und in Relation zum Außenvolumen des unverformten Radkastens gesetzt \footnote{Für den unverformten Radkasten beträgt das Differenzvolumen ca. $1,6L$}.
+Dadurch kann der Constraint normiert werden und es kann eine einfache Einordnung in Bezug zum unverformten Radkasten geschehen.
 Erfüllt ein Individuum den Constraint gleich gut wie der unverformte Radkasten gilt $p=1$.
 Ist ein Individuum besser gilt $0\leq p < 1$, ist es schlechter gilt $p>1$.
 \[
@@ -744,7 +756,7 @@ Ist ein Individuum besser gilt $0\leq p < 1$, ist es schlechter gilt $p>1$.
 \]
 
 Auch wenn die genutzten Bibliotheken zwar recht robust sind ist es trotzdem so, dass sie in ihrer Kombination aber immer noch für ca. 1 aus 10000 Lösungen abstürzen.
-Statt den Grund dieser Abstürze zu ermittel, wurde deren Häufigkeit als gering genug eingestuft, als dass dies nicht nötig ist.
+Die Häufigkeit dieser Abstürze wurde als gering genug eingestuft, als dass eine Untersuchung des Grunds nicht nötig ist.
 Stattdessen werden solche Lösungen im Algorithmus als unendlich schlecht bewertet und damit ausgeschlossen.
 
 Da sich der Constraint durch die Vereinfachung des Radkastens ausreichend schnell berechnen ließ, dass eine direkte Berechnung dessen für jedes Individuum zeitlich möglich war, wurde dies getan.
@@ -761,11 +773,11 @@ Als erste Kategorie wurde die Breite des Velomobils gewählt.
 Diese Kategorie wurde deshalb gewählt, da hier sehr klare Hypothesen aufgestellt werden können, wie die Breite des Velomobils mit der Aerodynamik und dem Constraint interagiert.
 Die erste Hypothese, die aufgestellt werden kann ist, dass breiteren Velomobilen die Erfüllung des Constraints leichter fällt. Es wäre also zu erwarten, dass breitere Velomobile den Constraint tendenziell besser erfüllen, als schmalere.
 \begin{itemize}
-	\item Breitere Velomobile sind positiv mit Erfüllung des Constraints korreliert.
+	\item[H1:] Breitere Velomobile sind positiv mit Erfüllung des Constraints korreliert.
 \end{itemize}
 Auch kann die Hypothese aufgestellt werden, dass die Breite negativ mit dem Luftwiderstandsbeiwert korreliert ist.
 \begin{itemize}
-	\item Breitere Velomobile sind negativ mit Luftwiderstandsbeiwert korreliert.
+	\item[H2:] Breitere Velomobile sind negativ mit Luftwiderstandsbeiwert korreliert.
 \end{itemize}
 Insgesamt wäre also zu vermuten, dass entlang dieser Achse der Luftwiderstandsbeiwert zunimmt, während der Strafwert des Constraints abnimmt.
 %Der Test ob diese Erwartungen erfüllt sind stellt eine einfache Möglichkeit zur semantischen Verfifizierung der Ergebnisse dar.
@@ -791,7 +803,7 @@ Der Geschwindigkeitsgewinn bei der Berechnung hingegen macht es möglich solche 
 \end{figure}
 
 Die zweite Problemdomäne ist die explorative Untersuchung eines Bauteils an der Unterseite eines E-Rollers.
-Hier besteht die Frage ob nicht-triviale Bauteile aerodynamische Vorteile bieten, und welche Eigenschaften solche Bauteile aufweisen.
+Hier besteht die Frage ob nicht-triviale Bauteile aerodynamische Vorteile bieten und welche Eigenschaften solche Bauteile aufweisen.
 In \cref{fig:escooter_component} ist der E-Roller von unten mit dem Bauteil rot markiert dargestellt.
 Es ist ersichtlich, dass ein vereinfachtes Modell des E-Rollers genutzt wird.
 Um den Rechenaufwand in der Fluiddynamiksimulation zu reduzieren wurden Teile des E-Rollers die mit großer Wahrscheinlichkeit keinen Einfluss auf die Strömung um das Bauteil haben, wie beispielsweise der Lenkerbereich entfernt.
@@ -802,19 +814,20 @@ Auch der Detailgrad am sonstigen E-Roller wurde reduziert und mit dem vereinfach
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=.8\linewidth]{bilder/escooterCDConvergence}
-	\caption{Konvergenz}
+	\caption{Berechneter $c_D$-Wert über den Lauf von Simulationen von fünf zufällig deformierten Bauteilen}
 	\label{fig:escooter_convergence}
 \end{figure}
 
 Auch der E-Roller wird zuerst mit snappyHexMesh gemesht, worauf die Fluiddynamiksimulation mit simpleFoam folgt. 
 Es wurde wieder der "distance" Modus von snappyHexMesh genutzt um abhängig von der Distanz zum E-Roller Zellen mehr oder weniger zu verfeinern.
-In den Openfoam Simulationen stellte sich allerdings heraus, dass die cD-Werte, wie in \cref{fig:escooter_convergence} zu sehen ist, nicht ausreichend konvergieren.
-Selbst wenn die nach 1000 simulierten Sekunden ist eine Konvergenz nicht absehbar, im Gegenteil ist vom hundertsten bist zum tausendsten Zeitschritt keine Verbesserung bezüglich der Konvergenz festzustellen.
-Auch entsteht keine regelmäßige Oszillation aus der der Mittelwert einfacher ermittelt werden kann.
-Stattdessen schwingt der cD-Wert eher unregelmäßig, was die Berechnung eines Fitnesswerts erheblich erschwert.
-Das die Simulation nicht konvergiert kann verschiedene Gründe, wie beispielsweise die falsche Parametrisierung der Simulation oder die falsche Auswahl der Simulationsfunktion, haben.
-Die Untersuchung und Anpassung von Openfoam zur Behebung dieses Problems sprengt allerdings den Rahmen dieser Arbeit, zur Fitnessberechnung wurden die Simulationen daher mit 1000 Zeitschritten durchgeführt und der cD-Wert über die letzten 900 Zeitschritte gemittelt.
-Ergebnisse in der E-Rollerdomäne müssen daher unter Vorbehalt getroffen werden, da die Möglichkeit besteht, dass die Ergebnisse der Openfoam-Simulationen inkorrekt oder zumindest ungenau sind.
+In den Openfoam Simulationen stellte sich allerdings heraus, dass die $c_D$-Werte, wie in \cref{fig:escooter_convergence} zu sehen ist, nicht ausreichend konvergieren.
+Selbst nach 1000 simulierten Sekunden ist eine Konvergenz nicht absehbar, im Gegenteil ist vom hundertsten bis zum tausendsten Zeitschritt keine Verbesserung bezüglich der Konvergenz festzustellen.
+Auch entsteht keine regelmäßige Oszillation aus welcher der Mittelwert einfacher ermittelt werden kann.
+Stattdessen schwingt der $c_D$-Wert eher unregelmäßig, was die Berechnung eines Fitnesswerts erheblich erschwert.
+Dass die Simulation nicht konvergiert kann verschiedene Gründe, wie beispielsweise die falsche Parametrisierung der Simulation oder die falsche Auswahl der Simulationsfunktion, haben.
+Die Untersuchung und Anpassung von Openfoam zur Behebung dieses Problems sprengt allerdings den Rahmen dieser Arbeit.
+Zur Fitnessberechnung wurden die Simulationen daher mit 1000 Zeitschritten durchgeführt und der $c_D$-Wert über die letzten 900 Zeitschritte gemittelt.
+Aussagen über die Ergebnisse in der E-Rollerdomäne müssen daher unter Vorbehalt getroffen werden, da die Möglichkeit besteht, dass die Ergebnisse der Openfoam-Simulationen inkorrekt oder zumindest ungenau sind.
 
 \subsubsection{Constraint}
 
@@ -847,7 +860,12 @@ Auch hierzu ist keine klare Hypothese aufzustellen, ob und wenn ja welchen Effek
 Grundsätzlich interessant sind Deformationen des Bauteils nach unten.
 In \cref{fig:escooter_deformation} sind die Deformationspunkte dargestellt mit denen das Bauteil deformiert wird.
 Da die Vertikale die interessante Dimension ist, werden diese Punkte nur in y-Richtung deformiert.
-Dadurch kann eine höherere Anzahl an Deformationspunkten gewählt werden.
+Dadurch kann eine höhere Anzahl an Deformationspunkten gewählt werden.
+Die Deformationspunkte wurden explizit so gewählt, dass asymmetrische Deformationen des Bauteils möglich sind.
+Zwar ist anzunehmen, dass symmetrische Bauteile für den symmetrischen E-Roller optimaler sind, es ist allerdings ein Ziel diese Hypothese zu verifizieren.
+\begin{itemize}
+	\item[H3:] Symmetrische Bauteile werden vor asymmetrischen Bauteilen präferiert.
+\end{itemize}
 
 
 

@@ -37,7 +37,7 @@ Deshalb wurde die Parametrisierung vergleichsweise einfach gewählt, FFD-Deforma
 	\caption{Deformationspunkte des ersten Experiments}
 	\label{fig:ffd1st}
 \end{figure}
-Auch wurde die Laufzeit so weit beschränkt, dass sinnvolle Aussagen darüber getroffen werden können, ob und wie gut der Algorithmus lernt, für finale Ergebnisse hingegen wäre die Anzahl an Samples die ausgewertet werden sowie die Anzahl an Genrationen für Akquise, und finaler Auswertung höher zu wählen.
+Auch wurde die Laufzeit so weit beschränkt, dass sinnvolle Aussagen darüber getroffen werden können, ob und wie gut der Algorithmus optimiert, für finale Ergebnisse hingegen wäre die Anzahl an Samples die ausgewertet werden sowie die Anzahl an Generationen für Akquise, und finaler Auswertung höher zu wählen.
 Um bewerten zu können, ob die Einbindung des Constraints einen Effekt auf den Algorithmus hat, und um diesen Effekt quantifizieren zu können wurde der Algorithmus unter den in Tabelle \cref{tab:param1st} beschriebenen Parametern sowohl mit Constraint als auch ohne Constraint durchgeführt. 
 \begin{figure}[h]
 	\centering
@@ -55,13 +55,15 @@ Um bewerten zu können, ob die Einbindung des Constraints einen Effekt auf den A
 	\end{minipage}
 \end{figure}
 
-Die Ergebnisse des ersten Experiments sehen vielversprechend aus in Abb. \cref{fig:1stdragbox} ist ein Vergleich der Luftwiderstandsergebnisse 
+Die Ergebnisse des ersten Experiments sehen vielversprechend aus in  \cref{fig:1stdragbox} ist ein Vergleich der Luftwiderstandsergebnisse 
 \footnote{Im Experiment wurde statt der direkten Luftwiderstandswerte, der natürliche Logarithmus dieser genutzt.} 
 der erzeugten Lösungen abgebildet.
 Die erste Beobachtung die gemacht werden kann ist, dass die produzierten Werte aus der Variante mit Constraint in der gleichen Größenordnung liegen wie die aus der Variante ohne Constraint.
-Der Algorithmus scheint also auch mit Constraint noch korrekt zu lernen.
-Es ist zu Erkennen, dass die Einbindung des Constraints zu einer Verschlechterung der Luftwiderstandswerte führt, eine Verschlechterung dieser durch eine Fokussierung auf zwei Ziele ist allerdings zu erwarten.
-Trotzdem muss betont werden, dass die Verschlechterung erstaunlich klein ist, so beträgt der relative Unterschied zwischen dem Median der Version mit Constraint und dem Median der Version ohne nur \todo{genaue zahl}.
+Die Lösungen scheinen damit auf ersten Blick plausibel.
+Es ist zu erkennen, dass die Einbindung des Constraints zu einer Verschlechterung der Luftwiderstandswerte führt, eine Verschlechterung dieser durch eine Fokussierung auf zwei Ziele ist allerdings zu erwarten.
+Trotzdem muss betont werden, dass die Verschlechterung erstaunlich klein ist, der Median in der Version ohne Constraint liegt bei $-3,44$, während der Median in der Version mit Constraint bei $-3,42$ liegt.
+Da die Fitness als $ln(c_D)$ definiert ist, entspricht dies $c_D$-Werten von $0,0321$ und $0,0327$.
+Das entspricht einer relativen Verschlechterung des Luftwiderstands von $2\%$, was sehr klein ist.
 
 Um eine solche Verschlechterung zu rechtfertigen, sollte die Qualität des Sekundärziels herangezogen werden.
 Dazu ist in \cref{fig:1stconbox} ein Vergleich bezüglich des Constraintvolumens dargestellt.
@@ -69,7 +71,7 @@ Die erste Beobachtung hier ist, dass die Einbindung des Constraints zu einer st�
 Das ist offensichtlich das Ziel bei der Nutzung eines Constraints. 
 Dass diese Erwartung erfüllt wird, zeigt, dass die Formulierung des Constraints in dieser Weise funktioniert.
 Auch ist hervorzuheben, dass die relative Verbesserung des Constraints wesentlich stärker ist als die relative Verschlechterung des Luftwiderstands.
-Eine Verschlechterung des Medians bezüglich des Luftwiderstands von \todo{genaue zahl} geht hier mit einer Verbesserung des Medians bezüglich des Constraints von \todo{genaue zahl} einher.
+Eine Verschlechterung des Medians bezüglich des Luftwiderstands von $2\%$ geht hier mit einer Verbesserung des Medians bezüglich des Constraints von $41,5\%$ einher.
 
 Interessant sind auch die Grenzen der Verteilungen, beide Verteilungen weisen eine untere Grenze von ca. $0,1$, sprich 10\% des Außenvolumens des nicht verformten Radkastens auf.
 Dies lässt sich dadurch erklären, dass das Radausschlagsvolumen einen Teil unterhalb des Radkastens hat, der durch eine seitliche Deformation des Radkastens nicht eliminiert werden kann.
@@ -89,7 +91,7 @@ Besonders dadurch, dass das Feature der Breite des Velomobils mit der Schwierigk
 	\label{fig:1stmapDrag}
 \end{figure}
 
-In Abb. \cref{fig:1stmapDrag} sind die Karten von Luftwiderstandskoeffizienten der produzierten Ergebnisse in beiden Versionen aufgeführt.
+In \cref{fig:1stmapDrag} sind die Karten von Luftwiderstandskoeffizienten der produzierten Ergebnisse in beiden Versionen aufgeführt.
 Die Karte ohne Constraint bestätigt die Hypothese, dass breitere Velomobile mit schlechterem Luftwiderstandskoeffizienten korreliert sind.
 Auch ist erkennbar, dass es ein mittleres Optimum bezüglich der x-Position dieses Punktes zu geben scheint, da Luftwiderstandswerte sowohl bei Abweichungen nach oben als auch bei Abweichungen nach unten schlechter werden.
 Dass die oben aufgestellte Hypothese bestätigt werden kann und die Karte einen graduellen Verlauf aufweist, sind Zeichen für die korrekte Funktionalität des Algorithmus.
@@ -109,7 +111,7 @@ Um solche Verschlechterungen in Kontext setzten zu können müssen sich die Kart
 	\label{fig:1stmapCon}
 \end{figure}
 
-In Abb. \cref{fig:1stmapDrag} sind die Karten der korrespondierenden Constraint-Werte für beide Varianten zu sehen.
+In  \cref{fig:1stmapDrag} sind die Karten der korrespondierenden Constraint-Werte für beide Varianten zu sehen.
 Ersteinmal lässt sich auch hier die Hypothese bestätigen, dass breitere Velomobile den Constraint besser erfüllen.
 Interessant ist allerdings auch, dass ohne Einbindung des Constraints, Lösungen, deren breitester Punkt weiter vorne ist den Constraint besser erfüllen.
 
@@ -127,7 +129,7 @@ Selbst in der linken, sprich schmalsten Spalte, ist eine Verbesserung der Indivi
 	\label{fig:1stmapConCompare}
 \end{figure}
 
-In Abb. \cref{fig:1stmapConCompare} ist die Verbesserung der Constraintwerte von der Version ohne Constraint zur Version mit Constraint dargestellt.
+In  \cref{fig:1stmapConCompare} ist die Verbesserung der Constraintwerte von der Version ohne Constraint zur Version mit Constraint dargestellt.
 Der bereits oben erwähnte Effekt, dass die größten Verbesserungen besonders in der linken Hälfte der Karte stattfinden ist hier noch klarer ersichtlich.
 Gerade diese Hälfte ist allerdings die, die bessere Luftwiderstandswerte aufweist und in der die Erfüllung des Constraints aufgrund der geringeren Breite, die Velomobile in diesen Zellen auszeichnet, wesentlich schwerer fällt.
 Zusammenfassend kann man sagen, dass die Einbindung des Constraints mit den im ersten Experiment vorliegenden Einschränkungen merkliche Auswirkungen auf das Ergebnis hat.
@@ -151,7 +153,7 @@ Ziel des zweiten Experiments ist es die Anzahl an Freiheitsgraden erheblich zu e
 Die in \cref{fig:ffd2nd} dargestellte Deformationspunkte wurden mit einigen Vorüberlegungen gewählt.
 Die Anzahl an horizontaler Reihen wurde von einer auf zwei erhöht um Deformationen , wie ein Auseinanderziehen oder Zusammendrücken in z-Richtung zu erlauben.
 Es liegt die Vermutung nahe, dass die im vorigen Experiment gewählten Deformationspunkte die möglichen Phänotypen einschränken, besonders in Anbetracht auf die x-Position des breitesten Punkts.
-Da diese eine der Features der MAP-Elites-Karte ist und die Karte im vorigen Experiment entlang dieser Dimension nicht vollständig ausgefüllt wurde, wurde die Anzahl der Deformationspunkte in x-Richtung von 2 auf drei erhöht, um mehr Deformationen zuzulassen, in denen der breiteste Punkt weiter vorne oder hinten liegt.
+Da diese eine der Features der MAP-Elites-Karte ist und die Karte im vorigen Experiment entlang dieser Dimension nicht vollständig ausgefüllt wurde, wurde die Anzahl der Deformationspunkte in x-Richtung von zwei auf drei erhöht, um mehr Deformationen zuzulassen, in denen der breiteste Punkt weiter vorne oder hinten liegt.
 Insgesamt ergeben sich dadurch 6 Deformationspunkte, welche in alle drei Richtungen bewegt werden können, wodurch sich 18 Freiheitsgrade ergeben.
 %Diese Erhöhung ist groß genug
 
@@ -203,13 +205,13 @@ Der erste Unterschied, der im Vergleich zum ersten Experiment auftritt, sind die
 	\label{fig:2ndmapDrag}
 \end{figure}
 
-In Abbildungen \cref{fig:2ndmapCon} \cref{fig:2ndmapDrag} ist klar zu Erkennen, dass die Karte aus Lösungen weitaus besser gefüllt wird als beim ersten Experiment.
+In \cref{fig:2ndmapCon,fig:2ndmapDrag} ist klar zu Erkennen, dass die Karte aus Lösungen weitaus besser gefüllt wird als beim ersten Experiment.
 Die bessere Füllung entlang der Vertikalen ist leicht zu erklären.
 Die Aufteilung in 6 Deformationspunkte führt dazu, dass die beiden vorderen weiter vorne liegen, als der vordere aus dem vorigen Experiment und die beiden hinteren entsprechend auch weiter hinten liegen.
 Deformationen mit diesen Deformationspunkten können also mehr Lösungen generieren, in denen der breiteste Punkt sehr weit vorne oder sehr weit hinten liegt.
 Interessant ist allerdings, dass die Karte auch entlang der Horizontalen  besser gefüllt wird.
 An der Stärke der Deformationen in y-Richtung wurde allerdings nichts geändert, es sollte also nicht möglich sein wesentlich breitere Velomobile zu generieren.
-\todo{Erklärung warum mehr horiz}
+
 
 \begin{figure}[h]
 	\includegraphics[width=1\linewidth]{bilder/6pt500Samples/constraintMapComparison}
@@ -231,7 +233,7 @@ Dass der Effekt in der Variante ohne Constraint aber stärker ist bestätigt, da
 \end{figure}
 
 Es fällt ein interessanter Unterschied zum ersten Experiment auf.
-Die Karten der Variante ohne Constraint und der mit Constraint sind im Gegensatz diesen nicht mehr gleich.
+Die Karten der Variante ohne Constraint und der mit Constraint sind im Gegensatz diesem nicht mehr gleich gefüllt.
 Stattdessen ist die Karte ohne Constraint besser gefüllt als die mit Constraint.
 Dies fällt vor allem an den Rändern der Karten auf.
 Das kann damit zusammenhängen, dass durch die Einführung des Constraints Exploration in Bereichen in denen der Constraint verletzt ist weniger stattfindet.
@@ -272,7 +274,7 @@ Um eine definitive Aussage über Konvergenz treffen zu können sollte das Experi
 Die zweite Einschränkung der beiden vorigen Experimente war die Beschränkung auf eine kleinere Anzahl an ausgewerteten Samples und Generationen in Akquise- und Ergebnis-MAP-Elites.
 Durch die Beschränkung auf eine kleinere Anzahl an Samples besteht die Möglichkeit, dass der Suchraum nicht präzise genug und/oder nicht weitläufig genug abgebildet wurde.
 Die Beschränkung in Generationen des Akquise- und Ergebnis-MAP-Elites kann dazu führen, dass diese noch nicht vollständig konvergiert sind.
-Da die Überlegung nahe liegt, dass die Variante mit Constraint länger benötigen könnte um ausreichend zu konvergieren, sollte untersucht werden ob die Erhöhung dieser Parameter zu signifikanten Änderung im Vergleich zur kürzeren Version führt, indem die Gewinne nach 500 Samples und 1024 bzw. 2048 Generationen quantifiziert werden.
+Da die Überlegung nahe liegt, dass die Variante mit Constraint länger benötigen könnte um ausreichend zu konvergieren, sollte untersucht werden, ob die Erhöhung dieser Parameter zu Änderung im Vergleich zur kürzeren Version führt, indem die Gewinne nach 500 Samples und 1024 bzw. 2048 Generationen quantifiziert werden.
 
 Auf ersten Blick sehen die Ergebnisse des dritten Experiments denen des zweiten Experiments sehr ähnlich.
 Die Karten werden etwas besser gefüllt, was durch Erhöhung der Zahl der ausgewerteten Samples und der Akquise- und Ergebnisgenerationen grundsätzlich zu erwarten war.
@@ -328,6 +330,102 @@ Dass eine Erhöhung der Generationen für Akquise und Ergebnis-MAP-Elites die Ve
 
 \begin{figure}[h]
 	\centering
+	\begin{subfigure}[t]{0.5\textwidth}
+		\centering
+		\includegraphics[width=1\linewidth]{bilder/6pt1000Samples/cDRegressionUncon}
+	\end{subfigure}\hfill
+	\begin{subfigure}[t]{0.5\textwidth}
+		\centering
+		\includegraphics[width=1\linewidth]{bilder/6pt1000Samples/cDRegressionCon}
+	\end{subfigure}
+	\caption{Regression von Spaltenindex und Luftwiderstand}
+	\label{fig:regCDCol}
+\end{figure}
+
+In \cref{fig:regCDCol} ist eine Regression der Lösungen nach Spaltenindex und Luftwiderstandswert zu sehen.
+Daneben ist für beide Versionen die Regressionsgrade zwischen Spaltenindex und Luftwiderstand aufgetragen.
+In der Version ohne Constraint ist eine starke Tendenz zu schlechteren Luftwiderstandswerten bei höheren Spaltenindexen, sprich breiteren Velomobilen, zu erkennen.
+Die Korrelation zwischen der Breite des Velomobils und schlechteren Luftwiderstandswerten\footnote{Größere Luftwiderstandswerte sind schlechter} wurde in Hypothese \textbf{H2} aufgestellt.
+Der Korrelationskoeffizient von $0,79$ verifiziert diese Hypothese.
+Die Korrelation zwischen Spaltenindex und Luftwiderstand fällt in der Variante mit Constraint wesentlich schwächer aus.
+Der Korrelationskoeffizient beträgt hier nur $0,27$, was allerdings immer noch eine moderate Korrelation zwischen Breite und Luftwiderstand darstellt.
+Einige Unterschiede zwischen den beiden Versionen sind interessant.
+Erstens findet eine Verschlechterung der Individuen der linken Hälfte statt.
+Während in der Version ohne Constraint hier noch verlässlich Wert zwischen $-3,5$ und $-3,45$ erreicht werden, schafft die Version mit Constraint dies nur in einzelnen Ausreißern.
+Zweitens ist die glatten Ober- und Unterränder in der Variante ohne Constraint zu betonen, die in der Variante ohne Constraint nicht existieren.
+Zuletzt ist die Spannweite zwischen bestem und schlechtestem Ergebnis in einer Spalte in der Version mit Constraint tendenziell größer, was zum niedrigeren Luftwiderstandskoeffizienten beiträgt.
+
+\begin{figure}[h]
+	\centering
+	\begin{subfigure}[t]{0.5\textwidth}
+		\centering
+		\includegraphics[width=1\linewidth]{bilder/6pt1000Samples/cDRegressionRowUncon}
+	\end{subfigure}\hfill
+	\begin{subfigure}[t]{0.5\textwidth}
+		\centering
+		\includegraphics[width=1\linewidth]{bilder/6pt1000Samples/cDRegressionRowCon}
+	\end{subfigure}
+	\caption{Quadratische Regression von Zeilenindex und Luftwiderstand}
+	\label{fig:regCDRow}
+\end{figure}
+
+In \cref{fig:regCDRow} hingegen sind die Luftwiderstandswerte gegen die Zeilenindizes aufgetragen.
+An den Daten ist klar erkennbar, dass eine lineare Regression nicht angemessen ist, weshalb hier eine quadratische Regression durchgeführt wurde.
+An den Daten ist die oben bereits gemachte Beobachtung erkennbar, dass ein Optimum für den aerodynamischen Eigenschaften im Bereich $[10;15]$ existiert.
+Das heißt Radkästen bei denen der breiteste Punkt zu weit vorne oder zu weit hinten liegt, sind weniger gut als solche bei denen dieser Punkt mittiger liegt.
+Interessant ist, dass hier ein gleichförmiger und ein gegensätzlicher Trend zur Regression über die Spaltenindizes zu beobachten ist.
+Auch hier verschwinden die relativ glatten Ober- und Unterbegrenzer von der Version ohne Constraint zur Version mit Constraint.
+Im Gegensatz zur Regression über die Spalten verringert sich aber die Varianz der Werte und diese klumpen mehr um die Regressionskurve.
+
+\begin{figure}[h]
+	\centering
+	\begin{subfigure}[t]{0.5\textwidth}
+		\centering
+		\includegraphics[width=1\linewidth]{bilder/6pt1000Samples/conRegressionUnconCol}
+	\end{subfigure}\hfill
+	\begin{subfigure}[t]{0.5\textwidth}
+		\centering
+		\includegraphics[width=1\linewidth]{bilder/6pt1000Samples/conRegressionConCol}
+	\end{subfigure}
+	\caption{Regression von Spaltenindex und Constraint}
+	\label{fig:regConCol}
+\end{figure}
+
+In \cref{fig:regConCol} ist die Constrainterfüllung über die Spaltenindizes für beide Versionen aufgeführt.
+Oben wurde die Hypothese \textbf{H1} aufgestellt, dass breiteren Velomobile grundsätzlich mit einer besseren Constrainterfüllung korreliert sind.
+Ein Korrelationskoeffizient von $-0,47$ zwischen Spaltenindizes und Constrainterfüllung kann auch diese Hypothese bestätigen.
+Der Korrelationskoeffizient ist hier zwar nicht so groß wie bei der ersten Hypothese, wo eine sehr starke Korrelation erkennbar war.
+Unter Beachtung der Tatsache, dass die zweite Kategorie aber die Varianz erhöht, ist er trotzdem groß genug, um von einer starke Korrelation zu sprechen.
+Auch hier ist der Korrelationskoeffizient der Version mit Constraint niedriger, es ist aber eine klare Verbesserung der erzielten Constraintwerte zu beobachten.
+Der niedrigere Korrelationskoeffizient hängt hier mit den Individuen in den Spalten 4\&5 zusammen, die schlechte Constrainterfüllungen aufweisen.
+Dadurch, dass die durchschnittliche Constrainterfüllung wesentlich besser ist und die Regressionsgerade tiefer liegt und flacher ist, können diese Punkte durch die Regressionsgerade nicht gut beschrieben wereden, wodurch sich ein Korrelationskoeffizient von $-0,28$ ergibt.
+Daneben ist interessant, dass die Korrelationsgerade in der Version mit Constraint wesentlich flacher ist, was bedeutet, dass die Schwierigkeit der Constrainterfüllung weniger stark abnimmt.
+Da die Gerade aber auch wesentliche tiefer beginnt, ist dass hauptsächlich als Gewinn im linken Bereich (ohne Spalten 4\&5) einzuordnen.
+
+\begin{figure}[h]
+	\centering
+	\begin{subfigure}[t]{0.5\textwidth}
+		\centering
+		\includegraphics[width=1\linewidth]{bilder/6pt1000Samples/conRegressionUnconRow}
+	\end{subfigure}\hfill
+	\begin{subfigure}[t]{0.5\textwidth}
+		\centering
+		\includegraphics[width=1\linewidth]{bilder/6pt1000Samples/conRegressionConRow}
+	\end{subfigure}
+	\caption{Regression von Zeilenindex und Constraint}
+	\label{fig:regConRow}
+\end{figure}
+
+Zuletzt wird auch noch für den Constraint die Korrelation zwischen Zeilenindizes, sprich der Position des breitesten Punkts, betrachtet.
+Die starke Korrelation zwischen einem weiter vorne liegenden breitesten Punkt und einer besseren Constraint interessant.
+Ein Korrelationskoeffizient von $0,72$ ist sehr stark, besonders, da im Voraus keine Vermutungen bezüglich eines so starken Zusammenhangs aufgestellt wurden.
+Auch hier ist die Regressionsgerade in der Version mit Constraint flacher und niedriger, die beträchtliche Anzahl an Ausreißern nach oben führt zu einem niedrigeren Korrelationskoeffizienten $0,32$.
+Interessant ist die beachtliche Verbesserung bezüglich des Constraints für Individuen, bei denen der breiteste Punkt weiter hinten liegt.
+Dies ist dadurch zu begründen, dass die Variante mit Constraint mehr Radkästen mit gleichförmigen Breiten generiert.
+In der Variante ohne Constraint dominieren hingegen  Radkästen, die in einem recht kleinen Bereich breit sind.
+
+\begin{figure}[h]
+	\centering
 	\begin{minipage}{0.45\textwidth}
 		\centering
 		\includegraphics[width=1\linewidth]{bilder/6pt1000Samples/acqImprovementsUncon}
@@ -361,7 +459,7 @@ Da in dieser Variante mit 18 Freiheitsgraden gearbeitet wurde ergeben sich 18 Ge
 Alle Werte sind auf das Intervall $[0;1]$ skaliert wobei 0 die minimale (negative) Deformation und 1 die maximale Deformation darstellt.
 Zuerst ist festzustellen, dass der genetische Raum in beiden Varianten gut ausgefüllt wird.
 Der Großteil der Gene deckt das gesamte Intervall $[0;1]$ in deren $2\sigma$ Intervall ab.
-In beiden Varianten existieren fünf unterschiedliche Gene, die das nicht tun, alle dieser Gene weisen allerdings Ausreißer über das gesamte Intervall aus und mit Ausnahme der Gene 13-15 der Variante mit Constraint decken sie das Intervall mit ihrem $2\sigma$ Intervall beinahe ab.
+In beiden Varianten existieren fünf unterschiedliche Gene, die das nicht tun, alle dieser Gene weisen allerdings Ausreißer über das gesamte Intervall aus und mit Ausnahme der Gene 13-15 in der Variante mit Constraint decken sie das Intervall mit ihrem $2\sigma$ Intervall beinahe ab.
 Die Tatsache, dass der genetische Problemraum vollständig ausgefüllt wird, ist ein Zeichen, dass nicht zu viele Freiheitsgrade oder zu wenige präzise Funktionsauswertungen genutzt wurden.
 Das Mapping von Genotyp auf FFD-Deformation fand nach dem folgenden Schema statt:
 \begin{enumerate}
@@ -389,23 +487,23 @@ Es ist naheliegend, dass die Deformationen in y-Richtung die sind, die den stär
 Ebenso ist naheliegend, dass negative Deformationen in y-Richtung den Constraint voraussichtlich nicht gut erfüllen werden.
 An der Beobachtung, dass der Trend nicht nur neutralisiert, sondern umgekehrt wird, ist erkennbar wie wichtig diese Deformationen zur Erfüllung des Constraints sind.
 
-Diese Beobachtung ist vor allem im Vergleich zu den anderen drei Genen, die auf eine y-Deformation abgebildet werden (7-9) signifikant.
+Diese Beobachtung ist vor allem im Vergleich zu den anderen drei Genen, die auf eine y-Deformation abgebildet werden (7-9), interessant.
 Bei diesen sind weder so starke Tendenzen, noch eine so starke Umkehr zu beobachten.
-Daraus kann geschlussfolgert werden, dass y-Deformationen der oberen Reihe signifikante Teile der Lösung des Problems darstellen.
-Besonders unter dem Blick das diese Gene sowohl zur Optimierung des Luftwiderstands, als auch zur Optimierung des Constraints wichtig sind und diese Gene damit ein Spannungsfeld zwischen diesen beiden Zielen darstellt sollte die Signifikanz dieser Gene für das Problem herausgestellt werden.
+Daraus kann geschlussfolgert werden, dass y-Deformationen der oberen Reihe wichtige Teile der Lösung des Problems darstellen.
+Besonders unter dem Blick das diese Gene sowohl zur Optimierung des Luftwiderstands, als auch zur Optimierung des Constraints wichtig sind und diese Gene damit ein Spannungsfeld zwischen diesen beiden Zielen darstellt sollte der Einfluss dieser Gene für das Problem herausgestellt werden.
 
 Das zweite interessante Triplett sind die Gene 13-15.
 Diese werden Deformationen der unteren Reihe an Deformationspunkten in z-Richtung abgebildet.
 In der Variante ohne Constraint ist der Unterschied zwischen dem den Genen 13,15 und 14 durchaus interessant.
 Offensichtlich scheint das Sampling von Individuen in denen die beiden äußeren Punkte nach oben deformiert werden bevorzugt werden.
-Gleichzeitig gilt für den mittleren Punkt das Gegenteil, dieser scheint eher nach unten deformiert\footnote{z-Deformationen sind symmetrisch um $0.5$, alles größer $0,5$ ist Deformation nach oben, alles kleiner $0,5$ Deformation nach unten} zu werden.
+Gleichzeitig gilt für den mittleren Punkt das Gegenteil, dieser scheint eher nach unten deformiert\footnote{z-Deformationen sind symmetrisch um $0,5$, alles größer $0,5$ ist Deformation nach oben, alles kleiner $0,5$ Deformation nach unten} zu werden.
 
 Diese Werte dieser Gene sind aber besonders in der Variante mit Constraint interessant.
 Hier ist ein sehr starker Trend zu negativen Deformationen erkennbar.
 Der Median der Werte dieser Gene liegt für all unter $0,2$.
 Die Tendenz den mittleren Punkt stärker nach unten zu deformieren bleibt erhalten
 Aber zumindest für die Gene 13 \& 15 ist eine Umkehr von positiven Deformationen in der Variante ohne Constraint zu stark negativen Deformationen in der Variante mit Constraint erkennbar.
-Die Gene 13 \& 15 scheinen also moderat wichtig zur Optimierung des Luftwiderstands zu sein, gleichzeitig aber auch signifikant zur Optimierung des Constraints zu sein.
+Die Gene 13 \& 15 scheinen also moderat wichtig zur Optimierung des Luftwiderstands zu sein, gleichzeitig aber auch eine Priorität bei der Optimierung des Constraints zu sein.
 Gleiches gilt auch für Gen 14, nur dass hier die gleichen Tendenzen für beide Optimierungen entstehen.
 Im Gegensatz zu dem vorigen Triplett und den Genen 13 \& 15 entsteht hier also kein Spannungsfeld.
 
@@ -426,8 +524,8 @@ Insgesamt ist auch hier festzustellen, dass die Gerne 16 \& 17 wichtig für beid
 Zusammenfassend kann man feststellen, dass die ersten 6 Gene, die auf x-Deformationen abgebildet werden eher unwichtig zu sein scheinen.
 Stattdessen schienen die größten Spannungsfelder in den Genen zu liegen, die auf y- und z-Deformationen abgebildet werden.
 Hier sind beträchtliche Änderungen bezüglich der Auswahl der Akquiseindividuen zwischen den beiden Varianten zu erkennen.
-Interessant ist das die oberen y-Deformationen dabei wichtiger zu sein scheinen als die unteren y-Deformationen und z-Deformationen signifikanter sind als eingangs vermutet.
-Auch wichtig ist, dass nicht alle z-Deformationen gleich signifikant sind.
+Interessant ist das die oberen y-Deformationen dabei wichtiger zu sein scheinen als die unteren y-Deformationen und z-Deformationen mehr Einfluss haben als Eingangs vermutet.
+Auch wichtig ist, dass nicht alle z-Deformationen gleich wichtig sind.
 Die Gene 14 und 18 scheinen weniger wichtig zu sein, während für die anderen vier Gene Spannungen erkennbar sind.
 
 \begin{figure}[h]
@@ -451,7 +549,7 @@ Die Dimensionen sind dieselben wie in den vorigen Karten.
 Zuerst ist zu beiden Varianten zu sagen, dass diese den Problemraum weitestgehend abdecken.
 Einzig in der obere rechten und der unteren linke Ecke scheint weniger Exploration stattzufinden.
 Abgesehen von diesen beiden Bereichen wird der Problemraum allerdings gut abgedeckt.
-Interessant ist allerdings, dass die Abdeckung des Problemraums in der Variante ohne Constraint wesentlich regelmäßiger ist, als in der Variante mit Constraint
+Interessant ist allerdings, dass die Abdeckung des Problemraums in der Variante ohne Constraint wesentlich regelmäßiger ist, als in der Variante mit Constraint.
 Zwar existieren einige Stellen an denen in der Variante ohne Constraint viele Auswertungen nah beieinander liegen, vor allem im linken Bereich des Graphen, insgesamt wird der Problemraum aber ausreichend weit erkundet.
 
 Im Gegensatz dazu ist eine große Häufung an Akquiseindividuen im mittigen Bereich in der Version mit Constraint zu erkennen
@@ -461,35 +559,31 @@ Durch die Einführung des Constraints, der effektiv eine Manipulation des Mittel
 Dies ist grundsätzlich so gewollt, die Anhäufung von Punkten im mittleren Bereich kann allerdings ein Zeichen dafür sein, dass der Constraint im Vergleich zum Luftwiderstand zu stark gewichtet ist.
 Gegebenenfalls wäre es sinnvoll den Constraint schwächer zu gewichten oder in der Akquisefunktion vollkommen wegzulassen und nur in der finalen Auswertung mit MAP-Elites zu betrachten.
 
-\newcommand{\wheelcasepheno}[1]{
+\newcommand{\wheelcasepheno}[3]{
 	\begin{figure}[h]
 		\centering
 		\begin{subfigure}[t]{0.5\textwidth}
 			\centering
 			\includegraphics[width=1\linewidth]{bilder/6pt1000Samples/#1-uncon-top.png}
-			\subcaption{oben, ohne Constraint}
-%			\label{fig:wheelcasepheno#1-uncon-front}
+			\subcaption{oben, ohne Constraint, $c_D$=#2}
 		\end{subfigure}\hfill
 		\begin{subfigure}[t]{0.5\textwidth}
 			\centering
 			\includegraphics[width=1\linewidth]{bilder/6pt1000Samples/#1-uncon-angled.png}
 			\subcaption{perspektivisch, ohne Constraint}
-%			\label{fig:wheelcasepheno#1-uncon-angled}
 		\end{subfigure}
 		\begin{subfigure}[b]{0.5\textwidth}
 			\centering
 			\includegraphics[width=1\linewidth]{bilder/6pt1000Samples/#1-con-top.png}
-			\subcaption{oben, mit Constraint}
-%			\label{fig:wheelcasepheno#1-con-front}
+			\subcaption{oben, mit Constraint, $c_D$=#3}
 		\end{subfigure}\hfill
 		\begin{subfigure}[b]{0.5\textwidth}
 			\centering
 			\includegraphics[width=1\linewidth]{bilder/6pt1000Samples/#1-con-angled.png}
 			\subcaption{perspektivisch, mit Constraint}
-%			\label{fig:wheelcasepheno#1-con-angled}
 		\end{subfigure}
 		\caption{Die Phänotypen des Individuums (#1) mit und ohne Constraint}
-		\label{wheelcasepheno#1}
+		\label{fig:wheelcasepheno#1}
 	\end{figure}
 }
 
@@ -505,9 +599,9 @@ Im Folgenden werden die Phänotypen einiger Individuen betrachtet und jeweils di
 In den folgenden Abbildungen sind jeweils die Draufsicht sowie eine perspektivische Sicht auf den rechten Radkasten abgebildet.
 Neben dem Velomobil ist auch das modellierte Constraintvolumen dargestellt und zur Differenzierung rot hervorgehoben.
 
-\wheelcasepheno{4-2}
+\wheelcasepheno{4-3}{0,0315}{0,0336}
 
-In \wref{4-2} sind die von MAP-Elites gefundenen Lösungen der Zelle (4-2) beider Versionen abgebildet.
+In \wref{4-3} sind die von MAP-Elites gefundenen Lösungen der Zelle (4-3) beider Versionen abgebildet.
 Lösungen in dieser Zelle sind schmal, haben allerdings einen weit vorne liegenden breitesten Punkt.
 Es ist ersichtlich, dass dies der Fall ist.
 Es ist allerdings auch erkennbar, dass der Constraint in beiden Versionen nicht nur nicht erfüllt wird, sondern sogar sehr stark verletzt wird.
@@ -520,23 +614,23 @@ Die in der Variante ohne Constraint generierte Lösung stellt hierbei die in die
 Ein Abweichen von dieser Form muss jede Verschlechterung der aerodynamischen Eigenschaften durch eine Verbesserung des Constraint aufwiegen.
 Dadurch entsteht aber das Problem der Gewichtung der beiden Ziele gegeneinander, welches enorm schwer zu lösen ist.
 Will man Lösungen generieren, die den Constraint so gut wie möglich erfüllen unabhängig der damit verbundenen Kosten in der Aerodynamik, oder will man einen Kompromiss, wie er hier generiert wurde finden.
-Wenn man einen Kompromiss finden will, muss man sich die Frage stellen, wo dieser liegen soll, bei einer 1:1-Gewichtung wie hier oder beispielsweise bei eine 2:1-Gewichtung.
+Wenn man einen Kompromiss finden will, muss man sich die Frage stellen, wo dieser liegen soll, bei einer 1:1-Gewichtung wie hier oder beispielsweise bei einer 2:1-Gewichtung.
 
 
-\wheelcasepheno{4-25}
+\wheelcasepheno{4-24}{0,0321}{0,0327}
 
-In \wref{4-25} sind schmale Velomobile, deren breitester Punkt im Gegensatz zum vorherigen Beispiel weit hinten liegt, dargestellt.
-Trotzdem sind viele der in \wref{4-2} bereits beobachteten Tendenzen auch hier zu finden.
+In \wref{4-24} sind schmale Velomobile, deren breitester Punkt im Gegensatz zum vorherigen Beispiel weit hinten liegt, dargestellt.
+Trotzdem sind viele der in \wref{4-3} bereits beobachteten Tendenzen auch hier zu finden.
 In beiden Varianten wird der Constraint auch hier nicht erfüllt.
 Es ist zwar auch hier eine leichte Verbesserung zu erkennen, diese ist aber eher gering.
 Besonders dadurch, dass die schmalen Velomobile den Constraint in der Variante ohne Constraint so stark verletzen lässt eigentlich viel Raum für Verbesserung, der offensichtlich nicht genutzt wird.
-Dies ist hängt genau wie im vorigen Beispiel mit der Gewichtung zwischen Luftwiderstand und Constraint zusammen, durch die nur geringfügige Verbesserungen ermöglicht werden.
+Dies ist, hängt genau wie im vorigen Beispiel mit der Gewichtung zwischen Luftwiderstand und Constraint zusammen, durch die nur geringfügige Verbesserungen ermöglicht werden.
 Auch ist interessant, dass dieser Phänotyp genau wie der im ersten Beispiel oben breiter und unten schmaler ist.
 
 
 %\wheelcasepheno{25-1}
 
-\wheelcasepheno{25-22}
+\wheelcasepheno{25-22}{0,0365}{0,0377}
 
 In \wref{25-22} ist ein Individuum des anderen Extremes dargestellt.
 Der dargestellte Phänotyp ist sehr breit und dessen breitester Punkt liegt weit hinten.
@@ -549,25 +643,25 @@ Diese Lösung ist unten breiter und oben schmaler, es ist also ersichtlich, dass
 Trotzdem stellen diese breiten Phänotypen aerodynamisch suboptimale Lösungen dar, gerade hier ist die Erzeugung von Lösungen zwar einfach aber eher uninteressant.
 Das Ziel wäre schmalere Lösungen zu generieren die sowohl aerodynamische als auch Constraintoptimalität aufweisen.
 
-\wheelcasepheno{12-12}
+\wheelcasepheno{12-12}{0,0311}{0,0327}
 
 Alle vorigen Individuen befanden sich an den Rändern der Karte und stellten damit Extrema dar, zum Verständnis sollten sich daneben allerdings auch zentraler gelegene Individuen angeschaut werden.
 In \wref{12-12} sind zwei solcher weniger extremen Individuen abgebildet.
-Die größte Sache, die im Vergleich zu den vorher betrachteten Individuen auffällt, ist die signifikante Änderung bezüglich des Constraints.
+Die größte Sache, die im Vergleich zu den vorher betrachteten Individuen auffällt, ist die auffällig starke Änderung bezüglich des Constraints.
 Sowohl bei sehr schmalen als auch bei sehr breiten Individuen waren nur relativ kleine Änderungen bezüglich des Constraints zu erkennen.
 Bei schmaleren Velomobilen lag dies daran, dass die geringe Breite eine vollständige Constrainterfüllung nicht zulässt und dass die Gewichtung zwischen Aerodynamik und Constraint so gewählt wurde, dass keine weiteren Verschlechterungen der Aerodynamik für Constraintgewinne in Kauf genommen wurden.
-Bei breiten Velomobilen war der Constraint in der Variante ohne Constraint bereits weitestgehend erfüllt, wodurch keine signifikante Verbesserung durch die Einführung eines Constraints erreicht werden konnte.
+Bei breiten Velomobilen war der Constraint in der Variante ohne Constraint bereits weitestgehend erfüllt, wodurch nur minimale Verbesserungen durch die Einführung eines Constraints erreicht werden konnte.
 
 Beide dieser Dinge gelten nicht für ein ausgeglichenes Individuum.
 In der Variante ohne Constraint ist dieser offensichtlich nicht erfüllt.
-Die Verbesserung in der Variante mit Constraint ist allerdings wesentlich signifikanter.
+Die Verbesserung in der Variante mit Constraint ist allerdings wesentlich größer.
 Der Constraint ist in dieser Variante bereits nahezu erfüllt, es sind noch zwei leichte Bänder auszumachen, in denen das Constraintvolumen aus dem Velomobil ragt, allerdings sind diese sehr klein.
 Interessant ist auch der Unterschied zwischen der Lösungsklassen.
 Während in der Variante ohne Constraint noch eine unten breitere oben schmalere Form präferiert wird -- Im Gegensatz zu dem bei schmaleren Lösungen präferierten Form, die oben breiter und unten schmaler war -- ist die Form in der Variante mit Constraint wesentlich gleichmäßig breiter.
 Dies gilt in der Vertikalen, in der sowohl der untere Teil des Radkastens als auch der obere Teil breit sind, aber auch in der Horizontalen, in der der Radkasten wesentlich länger breit bleibt.
 
 Was sich aus den betrachteten Phänotypen ablesen lässt ist, dass der Constraint überall beachtet wird und sich verbessert oder zumindest nicht verschlechtert.
-Bei besonders breiten Velomobilen konnten keine signifikanten Verbesserungen erreicht werden, da der Constraint bei solchen breiten Lösungen meist schon fast vollständig erfüllt ist.
+Bei besonders breiten Velomobilen konnten keine starken Verbesserungen erreicht werden, da der Constraint bei solchen breiten Lösungen meist schon fast vollständig erfüllt ist.
 Hauptgewinne bezüglich des Constraints konnten bei zentraler Individuen gesehen werden, besonders bezüglich der Breite.
 Bei schmaleren Individuen wurden die Constraintgewinne schmaler was auf eine Kombination aus Konflikt zwischen Aerodynamik und Constraint und in der Tatsache, dass constrainterfüllende Individuen schwerer zu generieren sind, je schmaler diese sein sollen.
 
@@ -614,7 +708,7 @@ Bei schmaleren Individuen wurden die Constraintgewinne schmaler was auf eine Kom
 In \cref{fig:dragMapEscooter} ist die von SAIL für die E-Roller-Domäne produzierte Karte abgebildet.
 Es ist erkennbar, dass die berechneten Fitnesswerte einen erstaunlich großen Bereich abdecken, dafür, dass nur ein eher kleines Bauteil an der Unterseite des E-Rollers deformiert wird.
 Aufgrund der oben erwähnten Einschränkung bezüglich der Ergebnisse, sollte dies nicht als Zeichen gedeutet werden, dass Deformationen in diesem Bauteil tatsächlich so große Änderungen bewirken können.
-Dass solche signifikante Änderungen existieren ist zur Anwendung von SAIL allerdings gut, sind die Variationen zwischen Individuen zu gering kann SAIL nicht korrekt arbeiten, da der als Surrogatmodell genutzte Gaußprozess auf solchen Daten nur schlecht trainiert werden kann.
+Dass solche Unterschiede existieren ist zur Anwendung von SAIL allerdings gut, sind die Variationen zwischen Individuen zu gering kann SAIL nicht korrekt arbeiten, da der als Surrogatmodell genutzte Gaußprozess auf solchen Daten nur schlecht trainiert werden kann.
 Der Gradient der auf den generierten Daten erkennbar ist lässt allerdings auch darauf schließen, dass die Ergebnisse von Openfoam nicht zu stark Rauschen.
 Wäre alle Varianz der Ergebnisse von Openfoam bloß auf Rauschen zurückzuführen, wäre es nicht zu erwarten, dass eine Karte mit einem relativ glatten Gradienten erzeugt wird.
 \begin{table}[h]
@@ -630,7 +724,7 @@ Wäre alle Varianz der Ergebnisse von Openfoam bloß auf Rauschen zurückzuführ
 \end{table}
 Diese Tatsache kann auch an den Hyperparametern, die für die E-Roller-Daten optimiert, werden abgelesen werden.
 Diese sind in \cref{tab:hyperparamsEscooter} aufgeführt.
-Das benötigte Signalrauschen, welches von der Optimierungsfunktion berechnet wird um die Daten ausreichend beschreiben zu können beträgt $0,0114$, und ist damit ungefähr zehnmal kleiner als die Reichweite der Lösungen in der Karte.
+Das benötigte Signalrauschen, welches von der Optimierungsfunktion berechnet, wird um die Daten ausreichend beschreiben zu können beträgt $0,0114$, und ist damit ungefähr zehnmal kleiner als die Reichweite der Lösungen in der Karte.
 Aus diesen Beobachtungen kann geschlossen werden, dass die Ergebnisse der Openfoam-Simulation zumindest ausreichen um SAIL mit diesen durchführen zu können.
 Dies sagt selbstverständlich nichts über die Korrektheit der Openfoam-Simulation aus nur, dass die vorliegenden Daten von ihren qualitativen Eigenschaften für SAIL geeignet sind.
 
@@ -640,10 +734,12 @@ Ein Längenmaß von $\ell=2,28$ ist zwar eher groß, problematischer wäre es al
 Ein typisches Zeichen von einem zu groß gewählten Längenmaß ist, dass starkes Rauschen benötigt wird, um die Daten zu erklären.
 Da das Rauschen, durch $\sigma_n$ bestimmt, allerdings relativ klein ist, ist ein solches Längenmaß nicht außergewöhnlich.
 
+
+
 Unter der Annahme, das die Werte aus den Openfoam-Simulationen ausreichen präzise sind, lassen sich einige Dinge aus der Karte ablesen.
 Das erste ist der Gradient in der Horizontalen.
 Lösungen deren tiefster Punkt tiefer liegt weisen schlechtere Luftwiderstandskoeffizienten auf als solche, die flacher sind.
-Die zweite Sache die in der Horizontalen auffällt, ist der strenge Abriss von Lösungen nach der 23ten Spalte.
+Die zweite Sache, die in der Horizontalen auffällt, ist der strenge Abriss von Lösungen nach der 23ten Spalte.
 Dies ist durch die Auswahl der ersten Kategorie zu erklären.
 So ändert sich der tiefste Punkt für Deformationen nach unten, und wird meist einer der deformierten Punkte sein.
 Für Deformationen nach oben gilt dies nicht, stattdessen wird dort ein Punk am Rand der FFD-Box zum tiefsten Punkt, der unabhängig von der Stärke der Deformation immer der tiefste Punkt bleiben wird.
@@ -653,7 +749,34 @@ Hier scheint eine Optimum, etwa in der fünften Zeile, zu existieren.
 Sowohl Lösungen deren tiefster Punkt weiter vorne liegt, als auch solche, deren tiefster Punkt weiter hinten liegt besitzen leicht schlechtere Luftwiderstandswerte.
 Die zweite auffällige Eigenschaft in der Vertikalen ist, dass die Anzahl an Lösungen pro Spalte nicht vergleichbar ist, sondern zunimmt, je höher der tiefste Punkt der Bauteile der Spalte liegt.
 Dies ist durchaus interessant, da die momentanen Deformationspunkte grundsätzlich in der Lage sein sollten einen tiefsten Punkt weiter vorne zu generieren.
-\todo{warum trotzdem?}
+Der Grund dafür ist die Grundform des Bauteils.
+Dieses ist hinten bereits tiefer als vorne.
+Dadurch, dass das Bauteil trotzdem sehr flach ist, wurde auch die FFD-Box flach gewählt.
+Da die Verschiebung der Meshpunkte abhängig von ihrer relativen Position  zu den Deformationspunkten erfolgt führt dies dazu, dass die vorderen Bereiche, die weiter entfernt von den unteren Deformationspunkten sind, niemals vergleichbar weit nach unten deformiert werden können, wie es für Punkte im hinteren Bereich geschehen kann. 
+
+\begin{figure}[h]
+	\centering
+	\begin{subfigure}[t]{0.5\textwidth}
+		\centering
+		\includegraphics[width=1\linewidth]{bilder/escooter/regressionCol}
+	\end{subfigure}\hfill
+	\begin{subfigure}[t]{0.5\textwidth}
+		\centering
+		\includegraphics[width=1\linewidth]{bilder/escooter/regressionRow}
+	\end{subfigure}
+	\caption{Regression für $c_D$ gegen Spaltenindex und Zeilenindex}
+	\label{fig:regEscooter}
+\end{figure}
+
+In \cref{fig:regEscooter} sind die Luftwiderstandswerte gegen Spalten- beziehungsweise Zeilenindizes aufgeführt.
+Auch ist jeweils die Regressionsgerade und der Korrelationskoeffizient dargestellt.
+Wie bereits oben erwähnt ist eine klare Tendenz zu besseren Luftwiderstandswerten bei weniger stark nach unten deformierten Bauteilen zu erkennen.
+Diese Tendenz wird auch durch einen Korrelationskoeffizienten von $-0,92$ bestätigt, der auf eine sehr starke Korrelation schließen lässt.
+Entlang der Zeilen, sprich der Position des tiefsten Punkts, wird zwar auch eine moderate Korrelation mit einem Korrelationskoeffizienten von $-0,38$ ermittelt.
+Diese sollte allerdings skeptisch betrachtet werden, da die Anzahl an Datenpunkten für höhere Zeilenindizes abnimmt.
+Dadurch der Schein eines Musters erweckt, das allerdings nur ein Produkt der ungleichmäßig gefüllten Karte sein kann.
+Ob sich der Luftwiderstand tatsächlich bei steigendem Zeilenindex verbessert kann nur bewertet werden, wenn die Karte gleichmäßiger gefüllt wird.
+Da in der momentanen Version für größere Zeilenindizes vorrangig weniger stark deformierte Bauteile erzeugt werden, kann der positive Effekt durch steigende Zeilenindizes nur Nebenprodukt, der Korrelation zwischen Spaltenindex und Luftwiderstand sein.
 
 \begin{figure}[h]
 	\centering
@@ -666,7 +789,7 @@ In \cref{fig:escooteracqImprovement} ist die prozentuale Verbesserung über die 
 Auch diese sieht so weit nicht uncharakteristisch aus.
 Es werden Verbesserungen zu Lösungen gefunden und über die Generationen konvergiert die Anzahl an Verbesserungen immer stärker, wodurch die charakteristische logarithmische Form entsteht.
 
-\newcommand{\escooterpheno}[1]{
+\newcommand{\escooterpheno}[2]{
 \begin{figure}[h]
 	\centering
 	\begin{subfigure}[t]{0.5\textwidth}
@@ -681,7 +804,7 @@ Es werden Verbesserungen zu Lösungen gefunden und über die Generationen konver
 		\subcaption{Seite}
 %		\label{fig:escooterpheno#1-side}
 	\end{subfigure}
-\caption{Die Phänotypen des Individuums (#1)}
+\caption{Die Phänotypen des Individuums (#1), $c_D$=#2}
 \label{fig:escooterpheno#1}
 \end{figure}
 }
@@ -690,7 +813,7 @@ Es werden Verbesserungen zu Lösungen gefunden und über die Generationen konver
 	\cref{fig:escooterpheno#1}
 }
 
-\escooterpheno{1-1}
+\escooterpheno{1-1}{0,2255}
 
 In \escref{1-1} (a) ist der Phänotyp des ersten Individuums in der ersten Spalte von vorne dargestellt.
 In \escref{1-1} (b) ist derselbe Phänotyp von der Seite dargestellt.
@@ -699,13 +822,13 @@ Individuen der ersten Zeile zeichnet aus, dass deren tiefster Punkt weiter hinte
 Es ist sehr klar erkennbar, dass der dargestellte Phänotyp diese Kategorien erfüllt.
 
 
-\escooterpheno{23-22}
+\escooterpheno{23-22}{0,1979}
 
 Der Phänotyp in Zelle (23,22)(3. Spalte von links, 4. Zeile von unten) dargestellt in \escref{23-22} stellt das Gegenteil des vorigen Phänotyps dar.
 Dessen tiefster Punkt sollte besonders weit oben und eher vorne liegen.
 Insgesamt ergibt sich dadurch eine sehr flache Form, deren tiefster Punkt weit vorne liegt und die sogar leicht das Gestänge der Radhalterung schneidet.
 
-\escooterpheno{9-16}
+\escooterpheno{9-16}{0,2091}
 
 Das dritte Beispiel ist im Gegensatz zu den vorigen beiden keines der Extrema, sondern ein Individuum aus dem mittigen Bereich der Karte.
 Das Individuum (9,16) dargestellt in \escref{23-22} befindet sich am Dreiecksrand der Karte.
@@ -715,27 +838,28 @@ Sehr interessant ist auch, dass das Individuum (9-16) nach hinten wieder abflach
 Dies steht im Gegensatz zum ersten Beispielindividuum, welches nach hinten geöffnet war.
 Das bedeutet, dass das Ziel von SAIL nicht nur morphologisch unterschiedliche Lösungen derselben Lösungsklasse zu generieren, sondern eine Diversität an Lösungsklassen zu generieren teilweise erfüllt wird.
 
-\escooterpheno{20-5}
+\escooterpheno{20-5}{0,1970}
 
 Das letzte Beispiel, dessen Phänotyp genauer angeschaut wird liegt im letzten Bereich der Karte auf den bisher noch kein Blick geworfen wurde, der oberen rechten Ecke.
-In \escref{20-5} ist das Individuum (20,5) abgebildet, welches nicht das extremste Individuum der rechten Ecke ist, sondern, das welches den optimalen Fitnesswert aufweist.
+In \escref{20-5} ist das Individuum (20,5) abgebildet, welches nicht das extremste Individuum der rechten Ecke ist, sondern, dass welches den optimalen Fitnesswert aufweist.
 Es ist herauszustellen wie ähnlich dieses Individuum dem Individuum (23,22) ist.
-Zwar liegt der tiefste Punkt weiter hinten, da beide Individuen allerdings sehr flach sind, ändert die Position des tiefsten Punkts, der nur leicht unter dem restlichen Bauteil liegt, die Form nicht signifikant.
+Zwar liegt der tiefste Punkt weiter hinten, da beide Individuen allerdings sehr flach sind, ändert die Position des tiefsten Punkts, der nur leicht unter dem restlichen Bauteil liegt, die Form nicht besonders stark.
 Dadurch fallen beide in die gleiche Lösungsklasse.
 
 Dies zeigt eine Problematik der gewählten Kategorien auf.
 Da die Position des tiefsten Punktes bei einer Platte keinen wirklichen Einfluss auf den erzeugten Phänotypen hat, werden hier am rechten Rand eine Reihe von Lösungen entwickelt, die am Ende keine wirkliche phänotypische Diversität aufweisen.
-Dies bezieht sich zwar nur auf den rechten Rand und weiter links entstehen signifikante phänotypische Unterschiede zwischen Individuen in einer Spalte, allerdings sind die Spalten, weiter links in der Karte immer spärlicher gefüllt.
+Dies bezieht sich zwar nur auf den rechten Rand und weiter links entstehen phänotypische Unterschiede zwischen Individuen in einer Spalte, allerdings sind die Spalten, weiter links in der Karte immer spärlicher gefüllt.
 Das heißt, sowohl zum linken Rand als auch zum rechten Rand der Karte nimmt die Diversität der Spalten aus unterschiedlichen Gründen ab.
 Das ist ein klares Indiz, dafür, dass die x-Position des tiefsten Punktes keine gute Kategorie darstellt und vermutlich durch eine andere Kategorie, die in der Lage ist, mehr Diversität zu erzeugen ausgetauscht werden sollte.
 Auch ist die Anzahl an verschiedenen Lösungsklassen gering. Die Lösungen lassen sich hauptsächlich in nach hinten offene, nach hinten geschlossene und flache Lösungen aufteilen.
 
-Zudem ist interessant, dass die generierten Lösungen alle fast symmetrisch sind.
+Eingangs wurde für das Bauteil die Hypothese \textbf{H3} aufgestellt, dass symmetrische Bauteile die besten Lösungen für den symmetrischen E-Roller darstellen.
+Alle vom Algorithmus generierten Lösungen sind nahezu symmetrisch.
 Die Lösungen sind so nah an einer symmetrischen Lösung, dass die Asymmetrie nicht auf einen expliziten Vorteil dieser hindeutet, sondern dass die Erzeugung perfekter symmetrischer Bauteile bei 20 Freiheitsgraden aufwendig für den evolutionären Algorithmus ist und deshalb nur fast symmetrische Bauteile entstehen.
 Besonders in Anbetracht der Tatsache wie viele asymmetrische Lösungen theoretisch möglich sind, stellt die Erzeugung von nur praktisch symmetrischen Teilen einen Trend dar.
 Das war zwar grundsätzlich zu erwarten, da der E-Roller symmetrisch ist und damit die Erwartung besteht, dass Strömungen um diesen auch symmetrisch sind.
 In solchen Strömungen wären Bauteile die symmetrisch sind erwartungsgemäß optimal. 
-Die Ergebnisse bestätigen diese Erwartungen weites gehend.
+Die Ergebnisse bestätigen die aufgestellte Hypothese also weitestgehend.
 
 \begin{figure}[h]
 	\centering
@@ -751,12 +875,12 @@ Insgesamt wurden in jeder der 44 Schleifeniterationen 10 Individuen\footnote{500
 Die dargestellten Zeiten sind nicht nur die für die Openfoam, sprich Zerlegung snappyHexMesh, Simulation etc., benötigten Zeiten, sondern beinhalten einen Overhead von Matlab, wie die Datenverteilung auf 10 Worker und die Fitnessberechnung.
 Nichtsdestotrotz stellen die Openfoam-Funktionen den größten Teil des Zeitbedarfs dar.
 Die beträchtliche Laufzeit, die für Openfoam benötigt wird erzeugt eine Obergrenze an präzisen Funktionsauswertungen die durchgeführt werden können.
-Ein großer Teil der Laufzeit ist auf die 1000 simulierten Sekunden zurückzuführen.
-Eine Analyse der Darstellung durch Openfoam sollte aber neben einer qualitativen Untersuchung der Korrektheit der Simulation auch eine Untersuchung der Laufzeit umfangen.
-Die Verbesserung der Laufzeit ist durch unterschiedliche Methoden möglich.
-Kann eine Openfoamparametrisierung gefunden werden in der die cD-Werte schneller konvergieren, könnte die simulierte Dauer vermindert werden.
-Es könnte unnötiger File-I/O in Openfoam minimiert werden und die Dekomposition zur parallelen Bearbeitung der Cases analysiert werden.
-Zuletzt wäre eine Analyse welche Teile des E-Rollers einen signifikanten Einfluss auf die Strömung um das Bauteil habe und welche das nicht haben und folglich ohne Präzisionsverlust wegrationalisiert werden können angebracht.
+%Ein großer Teil der Laufzeit ist auf die 1000 simulierten Sekunden zurückzuführen.
+%Eine Analyse der Darstellung durch Openfoam sollte aber neben einer qualitativen Untersuchung der Korrektheit der Simulation auch eine Untersuchung der Laufzeit umfangen.
+%Die Verbesserung der Laufzeit ist durch unterschiedliche Methoden möglich.
+%Kann eine Openfoamparametrisierung gefunden werden in der die $c_D$-Werte schneller konvergieren, könnte die simulierte Dauer vermindert werden.
+%Es könnte unnötiger File-I/O in Openfoam minimiert werden und die Dekomposition zur parallelen Bearbeitung der Cases analysiert werden.
+%Zuletzt wäre eine Analyse welche Teile des E-Rollers einen signifikanten Einfluss auf die Strömung um das Bauteil habe und welche das nicht haben und folglich ohne Präzisionsverlust wegrationalisiert werden können angebracht.
 
 
 %\begin{figure}
