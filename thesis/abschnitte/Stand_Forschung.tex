@@ -306,7 +306,7 @@ Durch die große Varianz wird dieser Punkt trotz des niedrigen Mittelwerts ausge
 \State $evaluatedSamples \gets evaluate(randomSampling())$ \Comment Evaluate is the real costly Fitness-Function.
 \Else
 \State $surrogate \gets trainSurrogate(evaluatedSamples)$
-\State $acquisitionMap \gets MapElites(acquisitionFunction,categorizationFunction,hyperparameters)$
+\State $acquisitionMap \gets MapElites(acqFunc,categorizationFunc,hyperparameters)$
 \State $nextSamples \gets sampleRandomFromMap(acquisitionMap)$ \Comment SAIL utilizes Sobol-sequences to achieve optimal spread of the Sampling
 \State $evaluatedSamples \gets evaluatedSamples \cup evaluate(nextSamples)$
 \EndIf
@@ -742,7 +742,7 @@ Zwar besteht keine direkte Kausalität zwischen diesem Volumen und dem maximalen
 %als Constraint das Differenzvolumen des Radausschlags minus verformten Radkastens gewählt.
 
 Da alle generierten Verformungen der Radkästen symmetrisch sind, wird der Constraint jeweils nur für den rechten Radkasten berechnet.
-Zur Berechnung der Differenz zwischen Radausschlagsvolumen und Radkasten wird die Bibliothek \textit{gptoolbox} ()\cite{gptoolbox.b}) genutzt, zur Generierung von Tetraedermeshes zur Volumenberechnung \textit{TetGen} (\cite{Si.2015}).
+Zur Berechnung der Differenz zwischen Radausschlagsvolumen und Radkasten wird die Bibliothek \textit{gptoolbox} (\cite{gptoolbox.b}) genutzt, zur Generierung von Tetraedermeshes zur Volumenberechnung \textit{TetGen} (\cite{Si.2015}).
 %Ein Beispiel des Differenzvolumens zur Constraintberechnung ist in \cref{fig:diff_volume} zu sehen.
 %Dieses Volumen stellt die Differenz des Radausschlagvolumens und des unverformten Radkastens dar.
 Um die Meshdifferenz berechnen zu können wurde der rechte Radkasten zudem geschlossen.
