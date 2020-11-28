@@ -36,6 +36,9 @@
 		\item Generierung von Radkästen die aerodynamisch gut sind und trotzdem den maximalen Radausschlag ermöglichen 
 	\end{itemize}
 }
+\note[itemize]{
+	divergent, surrogatassistenz
+}
 \subsection{Methode}
 \frame{\frametitle{SAIL}
 \begin{figure}
@@ -74,6 +77,11 @@
 		\begin{enumerate}
 			\item Breite des Velomobils/Radkastens
 			\item x-Position des breitesten Punkts\footnote{Das Velomobil zeigt in -X-Richtung}
+		\end{enumerate}
+		\item Hypothesen
+		\begin{enumerate}
+			\item Breitere Velomobile weisen einen stärkeren Luftwiderstand auf
+			\item Breitere Velomobile erfüllen eher den Constraint
 		\end{enumerate}
 	\end{itemize}
 }
@@ -146,12 +154,57 @@
 \end{figure}
 }
 
+\frame{\frametitle{Luftwiderstand gegen Spalten}
+
+\begin{figure}[h]
+	\centering
+	\begin{subfigure}[t]{0.5\textwidth}
+		\centering
+		\includegraphics[width=1\linewidth]{../thesis/bilder/6pt1000Samples/cDRegressionUncon}
+	\end{subfigure}\hfill
+	\begin{subfigure}[t]{0.5\textwidth}
+		\centering
+		\includegraphics[width=1\linewidth]{../thesis/bilder/6pt1000Samples/cDRegressionCon}
+	\end{subfigure}
+	\label{fig:regCDCol}
+\end{figure}
+}
+
+\frame{\frametitle{Luftwiderstand gegen Zeilen}
+\begin{figure}[h]
+	\centering
+	\begin{subfigure}[t]{0.5\textwidth}
+		\centering
+		\includegraphics[width=1\linewidth]{../thesis/bilder/6pt1000Samples/cDRegressionRowUncon}
+	\end{subfigure}\hfill
+	\begin{subfigure}[t]{0.5\textwidth}
+		\centering
+		\includegraphics[width=1\linewidth]{../thesis/bilder/6pt1000Samples/cDRegressionRowCon}
+	\end{subfigure}
+	\label{fig:regCDRow}
+\end{figure}}
+
 \frame{\frametitle{Constraintkarten}
 	\begin{figure}[h]
 		\includegraphics[width=1\linewidth]{../thesis/bilder/6pt1000Samples/constraintMapComparison}
 %		\caption{Maps of final constraint values}
 		\label{fig:3rdmapCon}
 	\end{figure}
+}
+
+\frame{\frametitle{Constraint gegen Spalten}
+\begin{figure}[h]
+	\centering
+	\begin{subfigure}[t]{0.5\textwidth}
+		\centering
+		\includegraphics[width=1\linewidth]{../thesis/bilder/6pt1000Samples/conRegressionUnconCol}
+	\end{subfigure}\hfill
+	\begin{subfigure}[t]{0.5\textwidth}
+		\centering
+		\includegraphics[width=1\linewidth]{../thesis/bilder/6pt1000Samples/conRegressionConCol}
+	\end{subfigure}
+	\label{fig:regConCol}
+\end{figure}
 }
 
 \newcommand{\wheelcasepheno}[3]{
@@ -206,7 +259,7 @@
 		\item x-Deformationen scheinen weitestgehend unwichtig zu sein
 	\end{itemize}
 }
-
+\subsection{Ausblick}
 \frame{\frametitle{Ausblick}
 	\begin{itemize}
 		\item Freiheitsgrade
